@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+# result artifacts are regenerable; keep the repo lean
+*.json
+smoke*
+sweep.log

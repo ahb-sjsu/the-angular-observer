@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wob-sweep
+  namespace: ssu-atlas-ai
+spec:
+  completions: 20
+  parallelism: 20
+  completionMode: Indexed
+  backoffLimit: 6
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: wob-sweep
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: worker
+        image: python:3.12-slim
+        command: ["/bin/sh", "-c"]
+        args:
+          - "pip install --no-cache-dir -q numpy scipy && cd /app && python sweep_pod.py"
+        env:
+        - name: N_SHARDS
+          value: "20"
+        - name: DRAWS_TOTAL
+          value: "20000"
+        - name: TOPK
+          value: "50"
+        - name: PYTHONDONTWRITEBYTECODE
+          value: "1"
+        resources:
+          requests:
+            cpu: "1"
+            memory: 2Gi
+          limits:
+            cpu: "1"
+            memory: 2Gi
+        volumeMounts:
+        - name: code
+          mountPath: /app
+      volumes:
+      - name: code
+        configMap:
+          name: wob-code
