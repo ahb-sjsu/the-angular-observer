@@ -14,10 +14,16 @@ tree-like) growth; that is a real feature, and we report it honestly.
 Matcher supports LHS of 1-2 edges with variable unification, standard
 generational (non-overlapping) updating.
 """
+
 import numpy as np
 from scipy.sparse import csr_matrix
-from rung0_validate import (dim_ball_growth, dim_spectral, dim_effective_rank,
-                            _norm_laplacian_eigs, RNG)
+from rung0_validate import (
+    dim_ball_growth,
+    dim_spectral,
+    dim_effective_rank,
+    _norm_laplacian_eigs,
+    RNG,
+)
 from rung1_proxy import geodesic_preservation
 
 
@@ -54,14 +60,17 @@ def rewrite(lhs, rhs, init_edges, max_edges=3000, max_gen=400, seed=1):
             if b1 is None:
                 continue
             if len(lhs) == 1:
-                matches.append(([i], b1)); used.add(i)
+                matches.append(([i], b1))
+                used.add(i)
                 continue
-            for j in order:                      # second edge, sharing vars
+            for j in order:  # second edge, sharing vars
                 if j == i or j in used:
                     continue
                 b2 = _unify(edges[j], lhs[1], b1)
                 if b2 is not None:
-                    matches.append(([i, j], b2)); used.add(i); used.add(j)
+                    matches.append(([i, j], b2))
+                    used.add(i)
+                    used.add(j)
                     break
 
         if not matches:
@@ -77,7 +86,8 @@ def rewrite(lhs, rhs, init_edges, max_edges=3000, max_gen=400, seed=1):
                         e.append(b[tok])
                     else:
                         if tok not in local:
-                            local[tok] = next_id; next_id += 1
+                            local[tok] = next_id
+                            next_id += 1
                         e.append(local[tok])
                 new_edges.append(tuple(e))
         edges = new_edges
@@ -95,6 +105,7 @@ def edges_to_csr(edges, n):
 
 def largest_component(A):
     from scipy.sparse.csgraph import connected_components
+
     k, lab = connected_components(A, directed=False)
     if k == 1:
         return A
@@ -123,12 +134,14 @@ def study(name, lhs, rhs):
     w, V = _norm_laplacian_eigs(A)
     db, ds, de = dim_ball_growth(A), dim_spectral(w), dim_effective_rank(A, w, V)
     deg = np.asarray(A.sum(1)).ravel().mean()
-    print(f"rule={name:7s} | N={n:5d} E={len(edges):5d} <deg>={deg:4.1f} | "
-          f"emergent d: ball={db:5.2f} spectral={ds:5.2f} eff_rank={de:5.2f}")
+    print(
+        f"rule={name:7s} | N={n:5d} E={len(edges):5d} <deg>={deg:4.1f} | "
+        f"emergent d: ball={db:5.2f} spectral={ds:5.2f} eff_rank={de:5.2f}"
+    )
 
-    if n >= 400:                       # coarse-graining test if big enough
+    if n >= 400:  # coarse-graining test if big enough
         anchors = RNG.choice(n, size=min(250, n), replace=False)
-        print(f"           coarse-graining  rho(low)/rho(random):", end="")
+        print("           coarse-graining  rho(low)/rho(random):", end="")
         for m in (5, 20, 80):
             lo, rd = geodesic_preservation(A, w, V, m, anchors)
             print(f"  m={m}:{lo:.2f}/{rd:.2f}", end="")
@@ -139,5 +152,7 @@ if __name__ == "__main__":
     print("Rung 1b — faithful hyperedge rewriter, emergent dimension\n")
     for name, (lhs, rhs) in RULES.items():
         study(name, lhs, rhs)
-    print("\n(dimension is measured, not assumed; small-world rules give "
-          "high/ill-defined d by design)")
+    print(
+        "\n(dimension is measured, not assumed; small-world rules give "
+        "high/ill-defined d by design)"
+    )

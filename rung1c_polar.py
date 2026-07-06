@@ -15,6 +15,7 @@ preservation of three decompositions of the SAME low-mode embedding:
     angle     = direction only          (rows normalized to unit sphere)  <- PolarQuant
     magnitude = radius only             (||row||, a 1-D scalar)
 """
+
 import numpy as np
 from scipy.stats import spearmanr
 from scipy.sparse.csgraph import shortest_path
@@ -27,10 +28,10 @@ def preservation(A, w, V, m, anchors):
     iu = np.triu_indices(len(anchors), k=1)
     g = G[iu]
     modes = np.arange(1, 1 + m)
-    Y = commute_time_embed(w, V, modes)[anchors]          # full: mag x dir
+    Y = commute_time_embed(w, V, modes)[anchors]  # full: mag x dir
 
     r = np.linalg.norm(Y, axis=1, keepdims=True)
-    ang = Y / np.maximum(r, 1e-12)                         # direction only
+    ang = Y / np.maximum(r, 1e-12)  # direction only
 
     def corr(Z):
         d = np.sqrt(((Z[:, None, :] - Z[None, :, :]) ** 2).sum(-1))[iu]
@@ -47,9 +48,11 @@ if __name__ == "__main__":
     A, _, _ = torus_graph(2500, 2)
     w, V = _norm_laplacian_eigs(A)
     anchors = RNG.choice(A.shape[0], size=300, replace=False)
-    print(f"    geodesic preservation |rho|")
-    print(f"    {'m':>4} | {'full (mag x dir)':>16} | {'ANGLE only':>11} | "
-          f"{'magnitude only':>14}")
+    print("    geodesic preservation |rho|")
+    print(
+        f"    {'m':>4} | {'full (mag x dir)':>16} | {'ANGLE only':>11} | "
+        f"{'magnitude only':>14}"
+    )
     for m in (5, 10, 20, 40):
         f, a, mg = preservation(A, w, V, m, anchors)
         print(f"    {m:4d} | {f:16.3f} | {a:11.3f} | {mg:14.3f}")

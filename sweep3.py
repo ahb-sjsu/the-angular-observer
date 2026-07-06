@@ -1,16 +1,22 @@
 """Arity-3 sweep worker logic (draw + score one rule with timeout)."""
+
 import os
-for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
-           "NUMEXPR_NUM_THREADS"):
+
+for _v in (
+    "OMP_NUM_THREADS",
+    "OPENBLAS_NUM_THREADS",
+    "MKL_NUM_THREADS",
+    "NUMEXPR_NUM_THREADS",
+):
     os.environ[_v] = "1"
 
 import signal
 import numpy as np
 from arity3 import gen_rule3, score_rule3
 
-MAX_EDGES = 1200          # hyperedges; clique-expansion keeps graph tractable for eigh
+MAX_EDGES = 1200  # hyperedges; clique-expansion keeps graph tractable for eigh
 TIMEOUT_S = 25
-SEED_BASE = 200_000       # distinct from arity-2 sweep -> independent draws
+SEED_BASE = 200_000  # distinct from arity-2 sweep -> independent draws
 
 
 class _Timeout(Exception):

@@ -1,5 +1,6 @@
 """Runs ON ATLAS. Pulls each wob-sweep pod's log, extracts the JSON block
 between the markers, merges + ranks globally, writes merged + prints top rules."""
+
 import json
 import math
 import subprocess
@@ -9,12 +10,14 @@ S, E = "###RESULTS_JSON_START###", "###RESULTS_JSON_END###"
 
 
 def kc(*args):
-    return subprocess.run(["kubectl", "-n", NS, *args],
-                          capture_output=True, text=True).stdout
+    return subprocess.run(
+        ["kubectl", "-n", NS, *args], capture_output=True, text=True
+    ).stdout
 
 
-pods = [p for p in kc("get", "pods", "-l", "job-name=wob-sweep",
-                      "-o", "name").split() if p]
+pods = [
+    p for p in kc("get", "pods", "-l", "job-name=wob-sweep", "-o", "name").split() if p
+]
 merged, ok, bad = [], 0, 0
 for p in pods:
     log = kc("logs", p)
@@ -27,8 +30,10 @@ for p in pods:
     else:
         bad += 1
 
-merged.sort(key=lambda d: d["score"] if math.isfinite(d.get("score", float("nan")))
-            else -1e9, reverse=True)
+merged.sort(
+    key=lambda d: d["score"] if math.isfinite(d.get("score", float("nan"))) else -1e9,
+    reverse=True,
+)
 with open("/home/claude/wolfram-observer-bridge/merged_results.json", "w") as f:
     json.dump(merged, f, indent=2)
 
@@ -41,8 +46,10 @@ for m in merged:
     if key in seen:
         continue
     seen.add(key)
-    print(f"  {m['score']:6.3f} {m['angle_rho']:9.3f} {m['spread']:7.2f} "
-          f"{m['dim']:5.2f} {m['N']:5d}   {m['lhs']} -> {m['rhs']}")
+    print(
+        f"  {m['score']:6.3f} {m['angle_rho']:9.3f} {m['spread']:7.2f} "
+        f"{m['dim']:5.2f} {m['N']:5d}   {m['lhs']} -> {m['rhs']}"
+    )
     shown += 1
     if shown >= 25:
         break

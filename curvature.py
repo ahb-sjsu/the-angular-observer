@@ -22,6 +22,7 @@ Honest by construction: whatever the correlation is, it gets printed with its
 p-value, and the controls are printed first so the OR numbers can be trusted (or
 distrusted).
 """
+
 import numpy as np
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path, connected_components
@@ -43,7 +44,7 @@ def _lazy_measure(A_indptr, A_indices, x, alpha):
     alpha=0 -> classic Ollivier one-step walk; alpha=0.5 -> lazy.
     Returns (nodes ndarray, mass ndarray).
     """
-    nb = A_indices[A_indptr[x]:A_indptr[x + 1]]
+    nb = A_indices[A_indptr[x] : A_indptr[x + 1]]
     deg = len(nb)
     if deg == 0:
         return np.array([x]), np.array([1.0])
@@ -70,8 +71,12 @@ def _w1(supp_a, mass_a, supp_b, mass_b, D):
     rows, cols, vals = [], [], []
     for i in range(p):
         for j in range(q):
-            rows.append(i);         cols.append(i * q + j); vals.append(1.0)
-            rows.append(p + j);     cols.append(i * q + j); vals.append(1.0)
+            rows.append(i)
+            cols.append(i * q + j)
+            vals.append(1.0)
+            rows.append(p + j)
+            cols.append(i * q + j)
+            vals.append(1.0)
     A_eq = csr_matrix((vals, (rows, cols)), shape=(p + q, p * q))
     b_eq = np.concatenate([mass_a, mass_b])
     res = linprog(c, A_eq=A_eq, b_eq=b_eq, bounds=(0, None), method="highs")
@@ -93,7 +98,7 @@ def ollivier_ricci_edges(A, edges, alpha=0.5, seed=0, max_edges=None):
         edges = [edges[i] for i in idx]
 
     used, kappas = [], []
-    for (x, y) in edges:
+    for x, y in edges:
         sa, ma = _lazy_measure(indptr, indices, x, alpha)
         sb, mb = _lazy_measure(indptr, indices, y, alpha)
         # ground metric between the two supports: BFS from supp_a, read cols supp_b
@@ -105,7 +110,7 @@ def ollivier_ricci_edges(A, edges, alpha=0.5, seed=0, max_edges=None):
         if not np.isfinite(w1):
             continue
         used.append((x, y))
-        kappas.append(1.0 - w1)          # d(x,y)=1
+        kappas.append(1.0 - w1)  # d(x,y)=1
     return used, np.array(kappas)
 
 
@@ -136,8 +141,10 @@ def square_grid(L):
     pairs = []
     for r in range(L):
         for c in range(L):
-            if c + 1 < L: pairs.append((idx(r, c), idx(r, c + 1)))
-            if r + 1 < L: pairs.append((idx(r, c), idx(r + 1, c)))
+            if c + 1 < L:
+                pairs.append((idx(r, c), idx(r, c + 1)))
+            if r + 1 < L:
+                pairs.append((idx(r, c), idx(r + 1, c)))
     return _csr_from_pairs(L * L, pairs)
 
 
@@ -148,7 +155,7 @@ def triangular_lattice(L):
     pairs = set()
     for r in range(L):
         for c in range(L):
-            for dr, dc in ((0, 1), (1, 0), (1, -1)):   # 3 of 6 dirs, undirected
+            for dr, dc in ((0, 1), (1, 0), (1, -1)):  # 3 of 6 dirs, undirected
                 a, b = idx(r, c), idx(r + dr, c + dc)
                 pairs.add((min(a, b), max(a, b)))
     return _csr_from_pairs(L * L, list(pairs))
@@ -161,7 +168,9 @@ def balanced_tree(depth, branch=2):
         new = []
         for p in frontier:
             for _ in range(branch):
-                pairs.append((p, nxt)); new.append(nxt); nxt += 1
+                pairs.append((p, nxt))
+                new.append(nxt)
+                nxt += 1
         frontier = new
     return _csr_from_pairs(nxt, pairs)
 
@@ -170,8 +179,7 @@ def balanced_tree(depth, branch=2):
 #  LOCAL rewrite loop WITH per-node update-density instrumentation
 #  (a copy of rung1b_rewriter.rewrite; rung1b is NOT modified)
 # =====================================================================
-def rewrite_instrumented(lhs, rhs, init_edges, max_edges=3000, max_gen=400,
-                         seed=1):
+def rewrite_instrumented(lhs, rhs, init_edges, max_edges=3000, max_gen=400, seed=1):
     """Same semantics as rung1b_rewriter.rewrite, but returns, in addition to
     (edges, next_id):
       activity  : dict node-id -> number of rewrite events that TOUCHED it
@@ -198,14 +206,17 @@ def rewrite_instrumented(lhs, rhs, init_edges, max_edges=3000, max_gen=400,
             if b1 is None:
                 continue
             if len(lhs) == 1:
-                matches.append(([i], b1)); used.add(i)
+                matches.append(([i], b1))
+                used.add(i)
                 continue
             for j in order:
                 if j == i or j in used:
                     continue
                 b2 = _unify(edges[j], lhs[1], b1)
                 if b2 is not None:
-                    matches.append(([i, j], b2)); used.add(i); used.add(j)
+                    matches.append(([i, j], b2))
+                    used.add(i)
+                    used.add(j)
                     break
         if not matches:
             break
@@ -228,7 +239,7 @@ def rewrite_instrumented(lhs, rhs, init_edges, max_edges=3000, max_gen=400,
                             next_id += 1
                         e.append(local[tok])
                 new_edges.append(tuple(e))
-            touched |= set(local.values())          # minted nodes also touched
+            touched |= set(local.values())  # minted nodes also touched
             for n in touched:
                 activity[n] = activity.get(n, 0) + 1
         edges = new_edges
@@ -249,61 +260,74 @@ def largest_component_keep(A):
 #  DRIVERS
 # =====================================================================
 def run_controls(alpha, n_sample, seed=0):
-    print(f"\n=== OR-curvature CONTROLS (lazy alpha={alpha}, "
-          f"<= {n_sample} edges each) ===")
-    print(f"  {'graph':<22}{'N':>6}{'edges':>8}{'mean kappa':>12}"
-          f"{'median':>9}{'std':>8}   expected")
+    print(
+        f"\n=== OR-curvature CONTROLS (lazy alpha={alpha}, "
+        f"<= {n_sample} edges each) ==="
+    )
+    print(
+        f"  {'graph':<22}{'N':>6}{'edges':>8}{'mean kappa':>12}"
+        f"{'median':>9}{'std':>8}   expected"
+    )
     controls = [
-        ("path / line",        path_graph(400),        "~0  (1D flat)"),
-        ("square grid",        square_grid(30),        "~0  (2D flat tiling)"),
+        ("path / line", path_graph(400), "~0  (1D flat)"),
+        ("square grid", square_grid(30), "~0  (2D flat tiling)"),
         ("triangular lattice", triangular_lattice(24), "~0  (2D flat tiling!)"),
-        ("RGG torus (d=2)",    torus_graph(1500, 2)[0],">0  (ball-overlap bias)"),
-        ("balanced tree b=2",  balanced_tree(11, 2),   "<0  (mean; leaves=0)"),
+        ("RGG torus (d=2)", torus_graph(1500, 2)[0], ">0  (ball-overlap bias)"),
+        ("balanced tree b=2", balanced_tree(11, 2), "<0  (mean; leaves=0)"),
     ]
     for name, A, exp in controls:
         Alc, _ = largest_component_keep(A)
         es = edge_list(Alc)
-        _, k = ollivier_ricci_edges(Alc, es, alpha=alpha, seed=seed,
-                                    max_edges=n_sample)
-        print(f"  {name:<22}{Alc.shape[0]:>6}{len(k):>8}{k.mean():>12.4f}"
-              f"{np.median(k):>9.4f}{k.std():>8.4f}   {exp}")
+        _, k = ollivier_ricci_edges(Alc, es, alpha=alpha, seed=seed, max_edges=n_sample)
+        print(
+            f"  {name:<22}{Alc.shape[0]:>6}{len(k):>8}{k.mean():>12.4f}"
+            f"{np.median(k):>9.4f}{k.std():>8.4f}   {exp}"
+        )
 
 
 def run_emergent(rule, rule_name, alpha, n_sample, max_edges=2500, seed=1):
     print(f"\n=== EMERGENT GRAPH — rule '{rule_name}' ===")
     lhs, rhs = rule
     tris, nid, activity, birth = rewrite_instrumented(
-        lhs, rhs, SEED3, max_edges=max_edges, max_gen=400, seed=seed)
+        lhs, rhs, SEED3, max_edges=max_edges, max_gen=400, seed=seed
+    )
     A = hyper_to_csr(tris, nid)
     Alc, keep = largest_component_keep(A)
     n = Alc.shape[0]
     # map local graph index -> original node id, then to activity / birth
-    act_arr   = np.array([activity.get(int(o), 0)  for o in keep], float)
-    birth_arr = np.array([birth.get(int(o), 0)     for o in keep], float)
-    deg_arr   = np.asarray(Alc.sum(1)).ravel()
-    max_gen   = birth_arr.max() if birth_arr.max() > 0 else 1.0
-    print(f"  triples={len(tris)}  nodes(nid)={nid}  largest comp N={n}  "
-          f"<deg>={deg_arr.mean():.2f}  max birth-gen={int(max_gen)}")
-    print(f"  node activity: min={act_arr.min():.0f} med={np.median(act_arr):.0f}"
-          f" max={act_arr.max():.0f}")
+    act_arr = np.array([activity.get(int(o), 0) for o in keep], float)
+    birth_arr = np.array([birth.get(int(o), 0) for o in keep], float)
+    deg_arr = np.asarray(Alc.sum(1)).ravel()
+    max_gen = birth_arr.max() if birth_arr.max() > 0 else 1.0
+    print(
+        f"  triples={len(tris)}  nodes(nid)={nid}  largest comp N={n}  "
+        f"<deg>={deg_arr.mean():.2f}  max birth-gen={int(max_gen)}"
+    )
+    print(
+        f"  node activity: min={act_arr.min():.0f} med={np.median(act_arr):.0f}"
+        f" max={act_arr.max():.0f}"
+    )
 
     es = edge_list(Alc)
-    used, kappa = ollivier_ricci_edges(Alc, es, alpha=alpha, seed=seed,
-                                       max_edges=n_sample)
-    print(f"  OR curvature on {len(used)} sampled edges: "
-          f"mean={kappa.mean():.4f} median={np.median(kappa):.4f} "
-          f"std={kappa.std():.4f} [{kappa.min():.3f},{kappa.max():.3f}]")
+    used, kappa = ollivier_ricci_edges(
+        Alc, es, alpha=alpha, seed=seed, max_edges=n_sample
+    )
+    print(
+        f"  OR curvature on {len(used)} sampled edges: "
+        f"mean={kappa.mean():.4f} median={np.median(kappa):.4f} "
+        f"std={kappa.std():.4f} [{kappa.min():.3f},{kappa.max():.3f}]"
+    )
 
-    ex = np.array([e[0] for e in used]); ey = np.array([e[1] for e in used])
+    ex = np.array([e[0] for e in used])
+    ey = np.array([e[1] for e in used])
     # per-edge update-density proxies
     proxies = {
         "mean activity (event count)": 0.5 * (act_arr[ex] + act_arr[ey]),
-        "mean birth-gen (recency)":    0.5 * (birth_arr[ex] + birth_arr[ey]),
-        "mean degree":                 0.5 * (deg_arr[ex] + deg_arr[ey]),
+        "mean birth-gen (recency)": 0.5 * (birth_arr[ex] + birth_arr[ey]),
+        "mean degree": 0.5 * (deg_arr[ex] + deg_arr[ey]),
     }
-    print(f"\n  correlation of per-edge OR curvature vs update-density proxy:")
-    print(f"    {'proxy':<30}{'Pearson r':>11}{'p':>10}"
-          f"{'Spearman r':>12}{'p':>10}")
+    print("\n  correlation of per-edge OR curvature vs update-density proxy:")
+    print(f"    {'proxy':<30}{'Pearson r':>11}{'p':>10}" f"{'Spearman r':>12}{'p':>10}")
     results = {}
     for pname, pv in proxies.items():
         if np.std(pv) < 1e-12:
@@ -323,6 +347,7 @@ def run_emergent(rule, rule_name, alpha, n_sample, max_edges=2500, seed=1):
     act = proxies["mean activity (event count)"]
     deg = proxies["mean degree"]
     rank = lambda v: spearmanr(v, v)[0] * 0 + np.argsort(np.argsort(v))  # ranks
+
     def partial_spearman(a, b, c):
         ra, rb, rc = rank(a).astype(float), rank(b).astype(float), rank(c).astype(float)
         res_a = ra - np.polyval(np.polyfit(rc, ra, 1), rc)
@@ -330,24 +355,33 @@ def run_emergent(rule, rule_name, alpha, n_sample, max_edges=2500, seed=1):
         if np.std(res_a) < 1e-9 or np.std(res_b) < 1e-9:
             return np.nan, np.nan
         return pearsonr(res_a, res_b)
+
     corr_ad, _ = spearmanr(act, deg)
     pr_partial, pp_partial = partial_spearman(kappa, act, deg)
-    print(f"\n  DEFLATION CHECK:")
-    print(f"    activity vs degree Spearman = {corr_ad:+.4f}  "
-          f"(if ~1, 'activity' IS degree here)")
+    print("\n  DEFLATION CHECK:")
+    print(
+        f"    activity vs degree Spearman = {corr_ad:+.4f}  "
+        f"(if ~1, 'activity' IS degree here)"
+    )
     if not np.isfinite(pr_partial):
-        print(f"    partial Spearman(curvature, activity | degree) = UNDEFINED "
-              f"-- activity is a perfect monotone function of degree (collinear)")
+        print(
+            "    partial Spearman(curvature, activity | degree) = UNDEFINED "
+            "-- activity is a perfect monotone function of degree (collinear)"
+        )
     else:
-        print(f"    partial Spearman(curvature, activity | degree) = "
-              f"{pr_partial:+.4f}  p={pp_partial:.2e}")
-    print(f"    -> if ~0 / undefined, curvature<->activity is just "
-          f"curvature<->degree, NOT independent dynamical curvature")
+        print(
+            f"    partial Spearman(curvature, activity | degree) = "
+            f"{pr_partial:+.4f}  p={pp_partial:.2e}"
+        )
+    print(
+        "    -> if ~0 / undefined, curvature<->activity is just "
+        "curvature<->degree, NOT independent dynamical curvature"
+    )
     return results
 
 
 if __name__ == "__main__":
-    ALPHA = 0.0        # uniform 1-step measure (classic Ollivier; cleanest signs)
+    ALPHA = 0.0  # uniform 1-step measure (classic Ollivier; cleanest signs)
     N_SAMPLE = 300
 
     print("Task #5 — Ollivier-Ricci curvature vs rewrite-update density")
@@ -356,8 +390,14 @@ if __name__ == "__main__":
     run_controls(ALPHA, N_SAMPLE)
 
     # emergent graph via the canonical 2D-surface subdivision rule
-    run_emergent(CANONICAL, "canonical subdivision {abc}->{abx}{bcx}{cax}",
-                 ALPHA, N_SAMPLE, max_edges=2500, seed=1)
+    run_emergent(
+        CANONICAL,
+        "canonical subdivision {abc}->{abx}{bcx}{cax}",
+        ALPHA,
+        N_SAMPLE,
+        max_edges=2500,
+        seed=1,
+    )
 
     # a second, randomly generated arity-3 growth rule for cross-check
     rng = np.random.default_rng(3)
@@ -367,16 +407,24 @@ if __name__ == "__main__":
         if cand is None:
             continue
         try:
-            t, nn, _, _ = rewrite_instrumented(cand[0], cand[1], SEED3,
-                                               max_edges=1500, max_gen=120, seed=1)
+            t, nn, _, _ = rewrite_instrumented(
+                cand[0], cand[1], SEED3, max_edges=1500, max_gen=120, seed=1
+            )
             Alc, _ = largest_component_keep(hyper_to_csr(t, nn))
-            if Alc.shape[0] >= 600:          # needs a big CONNECTED manifold
-                r2 = cand; break
+            if Alc.shape[0] >= 600:  # needs a big CONNECTED manifold
+                r2 = cand
+                break
         except Exception:
             continue
     if r2 is not None:
-        run_emergent(r2, f"random gen_rule3 {r2[0]}->{r2[1]}",
-                     ALPHA, N_SAMPLE, max_edges=2000, seed=1)
+        run_emergent(
+            r2,
+            f"random gen_rule3 {r2[0]}->{r2[1]}",
+            ALPHA,
+            N_SAMPLE,
+            max_edges=2000,
+            seed=1,
+        )
     else:
         print("\n(no fast-growing random rule found for cross-check)")
 

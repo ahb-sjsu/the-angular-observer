@@ -4,11 +4,12 @@ Indexed Job: JOB_COMPLETION_INDEX picks the slice; results printed to stdout as
 JSON between markers for log-based aggregation (no PVC needed). Single process
 (pod is cpu=1); BLAS pinned to 1 thread via sweep.py's import-time env set.
 """
+
 import os
 import json
 import math
 import numpy as np
-from sweep import worker            # reuses gen+score+SIGALRM-timeout logic
+from sweep import worker  # reuses gen+score+SIGALRM-timeout logic
 
 IDX = int(os.environ.get("JOB_COMPLETION_INDEX", "0"))
 N_SHARDS = int(os.environ.get("N_SHARDS", "1"))
@@ -26,8 +27,9 @@ for i in range(start, end):
     if m is not None:
         results.append(m)
 
-results.sort(key=lambda d: d["score"] if np.isfinite(d["score"]) else -1e9,
-             reverse=True)
+results.sort(
+    key=lambda d: d["score"] if np.isfinite(d["score"]) else -1e9, reverse=True
+)
 top = results[:TOPK]
 print(f"shard {IDX}: {len(results)} scored, emitting top {len(top)}", flush=True)
 print("###RESULTS_JSON_START###", flush=True)

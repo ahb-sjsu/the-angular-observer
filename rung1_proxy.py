@@ -25,17 +25,26 @@ Proxy honesty: latent coordinates drive a local growth rule but are hidden
 from every estimator (they see only adjacency). The faithful rewriter
 (Rung 1b) removes latent coordinates entirely.
 """
+
 import numpy as np
 from scipy.stats import spearmanr
 from scipy.sparse.csgraph import shortest_path
-from rung0_validate import (torus_graph, dim_ball_growth, dim_spectral,
-                            dim_effective_rank, _norm_laplacian_eigs, RNG)
+from rung0_validate import (
+    torus_graph,
+    dim_ball_growth,
+    dim_spectral,
+    dim_effective_rank,
+    _norm_laplacian_eigs,
+    RNG,
+)
 
 
 # ------------------------------------------------------- (A) emergent trajectory
 def trajectory(dim, sizes=(500, 1000, 2000, 4000)):
-    print(f"(A) emergent-dimension trajectory, latent d={dim} "
-          f"(estimators see adjacency only)\n")
+    print(
+        f"(A) emergent-dimension trajectory, latent d={dim} "
+        f"(estimators see adjacency only)\n"
+    )
     print(f"    {'N':>6} | {'ball':>6} {'spectral':>8} {'eff_rank':>8}")
     for n in sizes:
         A, _, _ = torus_graph(n, dim)
@@ -44,8 +53,10 @@ def trajectory(dim, sizes=(500, 1000, 2000, 4000)):
         ds = dim_spectral(w)
         de = dim_effective_rank(A, w, V)
         print(f"    {n:6d} | {db:6.2f} {ds:8.2f} {de:8.2f}")
-    print(f"    -> converging toward d={dim}; ball-growth carries the most "
-          f"finite-size bias.\n")
+    print(
+        f"    -> converging toward d={dim}; ball-growth carries the most "
+        f"finite-size bias.\n"
+    )
 
 
 # ------------------------------------------------------- (B) coarse-graining test
@@ -63,7 +74,7 @@ def geodesic_preservation(A, w, V, m, anchors):
     iu = np.triu_indices(len(anchors), k=1)
     g_true = G[iu]
 
-    nontrivial = np.arange(1, len(w))                 # skip lambda=0 constant
+    nontrivial = np.arange(1, len(w))  # skip lambda=0 constant
     low = nontrivial[:m]
     rand = RNG.choice(nontrivial, size=m, replace=False)
 
@@ -81,15 +92,17 @@ def coarse_graining_test(dim=2, n=2500, n_anchor=300):
     w, V = _norm_laplacian_eigs(A)
     anchors = RNG.choice(n, size=n_anchor, replace=False)
 
-    print(f"    geodesic preservation |rho_Spearman(embed dist, true geodesic)|")
+    print("    geodesic preservation |rho_Spearman(embed dist, true geodesic)|")
     print(f"    {'m modes':>8} | {'LOW subspace':>13} | {'RANDOM subspace':>15}")
     for m in (5, 10, 20, 40, 80):
         lo, rd = geodesic_preservation(A, w, V, m, anchors)
         print(f"    {m:8d} | {lo:13.3f} | {rd:15.3f}")
-    print(f"\n    Thesis prediction: LOW rises fast and saturates at small m "
-          f"(geometry\n    is compressible into a few low modes); RANDOM stays "
-          f"flat/low\n    (a random basis of the same size destroys the "
-          f"geometry).")
+    print(
+        "\n    Thesis prediction: LOW rises fast and saturates at small m "
+        "(geometry\n    is compressible into a few low modes); RANDOM stays "
+        "flat/low\n    (a random basis of the same size destroys the "
+        "geometry)."
+    )
 
 
 if __name__ == "__main__":

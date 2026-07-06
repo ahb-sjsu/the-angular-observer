@@ -1,5 +1,11 @@
 # The Angular Observer
 
+[![CI](https://github.com/ahb-sjsu/the-angular-observer/actions/workflows/ci.yml/badge.svg)](https://github.com/ahb-sjsu/the-angular-observer/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Linter: ruff](https://img.shields.io/badge/linter-ruff-261230.svg)](https://github.com/astral-sh/ruff)
+
 **Scale-invariant coarse-graining as a universal observer basis for emergent geometry.**
 
 > *Keep the angle, drop the magnitude.* Given the graph normalized-Laplacian

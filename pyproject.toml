@@ -1,0 +1,31 @@
+[project]
+name = "the-angular-observer"
+version = "0.1.0"
+description = "Scale-invariant coarse-graining as a universal observer basis for emergent geometry"
+authors = [{ name = "Andrew H. Bond", email = "andrew.bond@sjsu.edu" }]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "scipy>=1.10"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "black>=24", "ty"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+# E402: sweep workers set BLAS env vars before importing numpy; E501: black owns
+# line length; E741/E731: single-letter math names & inline lambdas in numeric code.
+ignore = ["E402", "E501", "E741", "E731"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

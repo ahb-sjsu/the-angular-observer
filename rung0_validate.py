@@ -22,6 +22,7 @@ Estimators:
 No GPU, no cluster. If (3) recovers d and tracks (1), the bridge is worth
 scaling to real hypergraphs (Rung 1) on Atlas.
 """
+
 import numpy as np
 from scipy.spatial import cKDTree
 from scipy.sparse import csr_matrix
@@ -50,16 +51,16 @@ def torus_graph(n, dim, mean_deg=14):
         r = np.sqrt(mean_deg / (n * np.pi))
     else:
         r = (3 * mean_deg / (4 * np.pi * n)) ** (1 / 3)
-    tree = cKDTree(pts, boxsize=1.0)          # periodic box -> flat torus
+    tree = cKDTree(pts, boxsize=1.0)  # periodic box -> flat torus
     pairs = tree.query_pairs(r)
     return _edges_to_csr(n, pairs), pts, r
 
 
 def sphere_graph(n, mean_deg=14):
     v = RNG.normal(size=(n, 3))
-    pts = v / np.linalg.norm(v, axis=1, keepdims=True)   # uniform on S^2
-    theta = np.sqrt(4 * mean_deg / n)                    # geodesic cap radius
-    r = 2 * np.sin(theta / 2)                            # chordal threshold
+    pts = v / np.linalg.norm(v, axis=1, keepdims=True)  # uniform on S^2
+    theta = np.sqrt(4 * mean_deg / n)  # geodesic cap radius
+    r = 2 * np.sin(theta / 2)  # chordal threshold
     tree = cKDTree(pts)
     pairs = tree.query_pairs(r)
     return _edges_to_csr(n, pairs), pts, r
@@ -90,14 +91,14 @@ def _norm_laplacian_eigs(A):
     Ad = A.toarray() * dinv[:, None] * dinv[None, :]
     L = np.eye(A.shape[0]) - Ad
     L = 0.5 * (L + L.T)
-    w, V = eigh(L)                       # full spectrum, symmetric normalized L
+    w, V = eigh(L)  # full spectrum, symmetric normalized L
     w = np.clip(w, 0, None)
     return w, V
 
 
 def dim_spectral(w):
     """P(t) = mean(exp(-w t)) ~ t^-(d_s/2) in the intermediate-t regime."""
-    ts = np.logspace(0.3, 2.2, 40)                 # intermediate diffusion times
+    ts = np.logspace(0.3, 2.2, 40)  # intermediate diffusion times
     P = np.array([np.mean(np.exp(-w * t)) for t in ts])
     x, y = np.log(ts), np.log(P)
     # fit the middle 60% where power-law scaling lives
@@ -116,9 +117,13 @@ def dim_effective_rank(A, w, V, m_modes=40, n_probe=200, k_hop=2):
     'effective rank in a learned eigenbasis' compressibility estimator.
     """
     n = A.shape[0]
-    coords = V[:, 1:1 + m_modes]                    # skip constant mode
-    D = shortest_path(A, method="D", unweighted=True,
-                      indices=RNG.choice(n, size=n_probe, replace=False))
+    coords = V[:, 1 : 1 + m_modes]  # skip constant mode
+    D = shortest_path(
+        A,
+        method="D",
+        unweighted=True,
+        indices=RNG.choice(n, size=n_probe, replace=False),
+    )
     prs = []
     for row in D:
         nb = np.where(row <= k_hop)[0]
@@ -126,9 +131,9 @@ def dim_effective_rank(A, w, V, m_modes=40, n_probe=200, k_hop=2):
             continue
         X = coords[nb]
         X = X - X.mean(0)
-        s = np.linalg.svd(X, compute_uv=False) ** 2   # PCA variances
+        s = np.linalg.svd(X, compute_uv=False) ** 2  # PCA variances
         s = s[s > 1e-12]
-        pr = (s.sum() ** 2) / (s ** 2).sum()          # participation ratio
+        pr = (s.sum() ** 2) / (s**2).sum()  # participation ratio
         prs.append(pr)
     return float(np.mean(prs))
 
@@ -140,16 +145,23 @@ def run(name, A, pts, r, d_true):
     d_spec = dim_spectral(w)
     d_eff = dim_effective_rank(A, w, V)
     deg = np.asarray(A.sum(1)).ravel().mean()
-    print(f"{name:>10} | N={A.shape[0]:5d} <deg>={deg:4.1f} | "
-          f"d_true={d_true} | ball={d_ball:5.2f}  spectral={d_spec:5.2f}  "
-          f"eff_rank={d_eff:5.2f}")
+    print(
+        f"{name:>10} | N={A.shape[0]:5d} <deg>={deg:4.1f} | "
+        f"d_true={d_true} | ball={d_ball:5.2f}  spectral={d_spec:5.2f}  "
+        f"eff_rank={d_eff:5.2f}"
+    )
     return d_ball, d_spec, d_eff
 
 
 if __name__ == "__main__":
     print("Rung 0 — estimator validation on ground-truth manifolds\n")
-    A, p, r = torus_graph(2000, 2);  run("2-torus", A, p, r, 2)
-    A, p, r = sphere_graph(2000);    run("2-sphere", A, p, r, 2)
-    A, p, r = torus_graph(3000, 3);  run("3-torus", A, p, r, 3)
-    print("\nPASS criterion: eff_rank tracks ball-growth and both land near "
-          "d_true (within ~0.3).")
+    A, p, r = torus_graph(2000, 2)
+    run("2-torus", A, p, r, 2)
+    A, p, r = sphere_graph(2000)
+    run("2-sphere", A, p, r, 2)
+    A, p, r = torus_graph(3000, 3)
+    run("3-torus", A, p, r, 3)
+    print(
+        "\nPASS criterion: eff_rank tracks ball-growth and both land near "
+        "d_true (within ~0.3)."
+    )
