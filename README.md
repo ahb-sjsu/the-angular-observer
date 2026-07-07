@@ -20,6 +20,35 @@ falsifiable operation, and shows the same operation is what makes meaning
 compressible across unrelated domains (spectral clustering, hyperbolic taxonomy
 embedding, and — empirically — cultural/aesthetic embedding trajectories).
 
+## How the observer sees
+
+```mermaid
+flowchart LR
+    G["graph / hypergraph"] --> L["normalized Laplacian"]
+    L --> E["low-mode<br/>eigen-embedding"]
+    E --> R["radius<br/>(magnitude)"]
+    E --> A["angle<br/>(direction)"]
+    R -.->|"von Luxburg:<br/>to 1/sqrt(degree)"| X["geometry-free density"]
+    A ==>|"geodesics preserved<br/>rho ~ 0.93"| Y["the perceived geometry"]
+    style A fill:#ddffff,stroke:#0088aa
+    style Y fill:#ddffdd,stroke:#00aa00
+    style X fill:#ffdddd,stroke:#aa0000
+```
+
+Four independent literatures perform the *same* move — keep the scale-invariant
+direction, discard the magnitude — which is why the result feels inevitable once
+you see it:
+
+```mermaid
+flowchart TD
+    P["PolarQuant (KV-cache):<br/>keep direction"] --> K
+    N["Ng-Jordan-Weiss spectral<br/>clustering: row-normalize"] --> K
+    AV["aversion angle<br/>(preference geometry)"] --> K
+    W["Wolfram observer<br/>coarse-graining"] --> K
+    K{{"keep the angle,<br/>drop the magnitude"}}
+    style K fill:#ddffff,stroke:#0088aa,stroke-width:2px
+```
+
 ## The result in one table
 
 Angle-only low-mode Laplacian coarse-graining preserves graph geodesics
@@ -38,6 +67,21 @@ The control fails everywhere required; the metric degrades exactly where geometr
 is Lorentzian or destroyed. It is a *geometry detector*, not a magic wand.
 
 ## The five findings
+
+```mermaid
+flowchart TD
+    R0["estimators vs<br/>ground truth"] --> R1["polar split:<br/>angle 0.93 / random 0 / magnitude 0.03"]
+    R1 --> EM["emergent geometry<br/>(arity-2/3 rewriting)"]
+    EM --> D2["clean 2D:<br/>borrowed + evolved rules"]
+    R1 --> U["universality:<br/>lattice / swiss-roll / torus"]
+    D2 --> LAW["scaling law:<br/>rho ~ const - 0.157 x dim"]
+    U --> LAW
+    LAW --> T["Keep-the-Angle Theorem<br/>(von Luxburg degeneracy)"]
+    R1 --> NEG["honest negatives:<br/>hyperbolic rejected / curvature null"]
+    style R1 fill:#ddffff,stroke:#0088aa
+    style LAW fill:#ddffdd,stroke:#00aa00
+    style NEG fill:#ffefdd,stroke:#cc7700
+```
 
 1. **Universal, not Wolfram-specific** (`crosssubstrate.py`). The effect holds on
    lattices, manifold-embedding trajectories, and tori — substrates with no

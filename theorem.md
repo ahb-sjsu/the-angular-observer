@@ -19,6 +19,19 @@ pure local-degree quantity. This is the constructive flip side of von Luxburg,
 Radl & Hein's degeneracy theorem, and it is exactly the row-normalization move of
 Ng–Jordan–Weiss spectral clustering.
 
+```mermaid
+flowchart LR
+    E["low-mode<br/>eigen-embedding"] --> M["magnitude<br/>(radius)"]
+    E --> A["angle<br/>(direction)"]
+    M -->|"rho ~ 0.03"| Mo["throwaway<br/>(local degree)"]
+    A -->|"rho ~ 0.92<br/>(flat in m)"| Ao["carries geometry"]
+    E -->|"full: rho ~ 0.75<br/>decays with m"| F["von Luxburg<br/>degeneracy"]
+    style A fill:#ddffff,stroke:#0088aa
+    style Ao fill:#ddffdd,stroke:#00aa00
+    style Mo fill:#ffdddd,stroke:#aa0000
+    style F fill:#ffefdd,stroke:#cc7700
+```
+
 ---
 
 ## 1. Definitions
