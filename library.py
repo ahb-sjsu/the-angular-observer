@@ -162,7 +162,7 @@ if __name__ == "__main__":
         print(
             f"(B) angle_rho vs emergent dim (n={len(pts)} manifolds, d~"
             f"{pts[:,0].min():.1f}..{pts[:,0].max():.1f}): "
-            f"slope={slope:+.3f}/dim, Spearman={r:+.3f}"
+            f"angle_rho ~ {inter:+.3f} {slope:+.3f}*dim, Spearman={r:+.3f}"
         )
         print(
             f"    => observer fidelity {'FALLS' if slope<0 else 'RISES'} "

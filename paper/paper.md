@@ -5,7 +5,7 @@
 **Andrew H. Bond**
 San José State University · ORCID 0009-0003-2599-6158 · andrew.bond@sjsu.edu
 
-*Working draft — v0.2. All numerical results reproduce from the accompanying
+*Working draft — v0.3. All numerical results reproduce from the accompanying
 code (`pip install numpy scipy`).*
 
 ---
@@ -21,20 +21,19 @@ direction preserves graph geodesics at Spearman ρ ≈ 0.93 on a reference manif
 while the magnitude preserves ρ ≈ 0.03 and a random-mode basis of equal size
 preserves ρ ≈ 0. Keeping only the angle is exactly the row-normalization of
 Ng–Jordan–Weiss spectral clustering — previously justified heuristically; we give
-it a geometric reason. We prove (via von Luxburg–Radl–Hein) that the radial
+it a geometric reason. We **prove** (via von Luxburg–Radl–Hein) that the radial
 coordinate must degenerate to a local-degree quantity for intrinsic dimension
-d ≥ 2, and verify that the angular fidelity is instead **flat** in both mode-count
-and graph size where the raw embedding decays. The basis is **universal**: it
+d ≥ 2, and **conjecture**, with strong empirical support, that the angular
+coordinate stays bi-Lipschitz to geodesic distance — flat in both mode-count and
+graph size where the raw embedding decays. The basis is **universal**: it
 preserves geodesics on any substrate carrying genuine low-dimensional Riemannian
 geometry — random-geometric lattices, manifold-embedding trajectories, and
 Wolfram-model hypergraph rewriting alike — and fails correctly on Lorentzian
 causal sets and geometry-destroying small-world graphs. Across 20 independent
-emergent manifolds (d ≈ 1–3.6) fidelity obeys ρ ≈ const − 0.157·d (Spearman
-−0.881). The same "keep the scale-invariant direction" operation recurs in
-KV-cache compression and, as a motivating interpretation, in the coarse-graining
-of a bounded observer in Wolfram's emergent-geometry program; we develop that
-reading in the discussion and bound it with a clean negative — emergent curvature
-is *not* dynamical beyond graph structure.
+emergent manifolds (d ≈ 1–3.6) fidelity obeys ρ ≈ 1.09 − 0.157·d over
+that range (Spearman −0.881). The same scale-invariant-direction operation appears
+in KV-cache compression; a bounded-observer interpretation (Wolfram's emergent
+geometry) is developed, and bounded, in the discussion.
 
 ---
 
@@ -59,25 +58,23 @@ magnitude — so it is not a heuristic but the geometrically correct projection,
 its fidelity is flat in both the number of modes and the graph size precisely
 where the raw embedding decays.
 
-This "keep the scale-invariant direction, drop the magnitude" operation recurs,
-apparently independently, well beyond clustering: in KV-cache compression
-(PolarQuant transfers the scale-invariant direction); in preference geometry (a
-scale-invariant "aversion angle" transfers across decision domains); and — as a
-broad motivating interpretation — in observer theory, where a bounded observer
-perceives geometry only after coarse-graining a discrete substrate
-[Wolfram 2026]. We show these are the same operation and that it is *universal*:
-it preserves geodesics on any graph carrying genuine low-dimensional Riemannian
-geometry, independent of how the graph was generated.
+This "keep the scale-invariant direction, drop the magnitude" operation recurs
+beyond clustering — in KV-cache compression (PolarQuant transfers the
+scale-invariant direction) and in preference geometry (a scale-invariant
+"aversion angle" that transfers across decision domains). It also admits a
+physical reading: in observer theory a bounded observer perceives geometry only
+after coarse-graining a discrete substrate [Wolfram 2026], and the angular
+projection is a candidate for that coarse-graining. We keep that interpretation to
+the discussion (§7) and let the spectral result stand on its own; the empirical
+core is that the basis is *universal*, preserving geodesics on any graph carrying
+genuine low-dimensional Riemannian geometry, independent of how it was generated.
 
-**Contributions.** (1) the Keep-the-Angle theorem (§3), separating a proven
-radial-degeneracy half from a conjectured angular-recovery half; (2) a measurement
-with controls (§5.1); (3) universality across five substrate types including
-hypergraph rewriting (§5.3); (4) a fidelity-vs-dimension scaling law (§5.4); and
-(5) two honest negatives (§6) — a rejected hyperbolic reframe and a null test of
-the observer interpretation's strongest (dynamical-curvature) claim. We do **not**
-claim to derive physics; the core result is a basis-level fact about spectral
-embeddings, and the observer reading is an interpretation we develop and bound
-honestly.
+**Contributions.** (1) the **Keep-the-Angle Principle** (§3) — a proven
+Radial-Degeneracy *theorem* and an empirically-supported Angular-Preservation
+*conjecture*; (2) a measurement with controls (§5.1); (3) universality across five
+substrate types (§5.3); (4) a fidelity-vs-dimension scaling law (§5.4); and (5)
+two honest negatives (§6). We do **not** claim to derive physics; the core result
+is a basis-level fact about spectral embeddings.
 
 ## 2. Background and Related Work
 
@@ -97,11 +94,11 @@ algorithmic aesthetics [Schmidhuber 2009]. **Emergent geometry & observer
 theory.** In the Wolfram model [Wolfram 2002, 2020; Gorard 2020] space is a
 hypergraph and law is what a bounded observer perceives after coarse-graining the
 ruliad [Wolfram 2026]; that coarse-graining is left qualitative, and our angular
-projection is a candidate for it (developed in §7). **Hyperbolic embedding.**
-Trees embed in ℍ² at low distortion [Gromov 1987; Sarkar 2011; Nickel & Kiela
-2017]; we test and reject a hyperbolic reframe of emergent "tangles" in §6.1.
+projection is a candidate for it (§7). **Hyperbolic embedding.** Trees embed in
+ℍ² at low distortion [Gromov 1987; Sarkar 2011; Nickel & Kiela 2017]; we test and
+reject a hyperbolic reframe of emergent "tangles" in §6.1.
 
-## 3. The Keep-the-Angle Theorem
+## 3. The Keep-the-Angle Principle
 
 **Setup.** Let G be a connected graph on n nodes with symmetric-normalized
 Laplacian L = I − D^{−1/2} A D^{−1/2}, eigenpairs (λₖ, vₖ) with
@@ -112,42 +109,56 @@ places node i at
 
 Write Ψᵢ = rᵢ · ûᵢ with radius rᵢ = ‖Ψᵢ‖ and angle ûᵢ = Ψᵢ/‖Ψᵢ‖.
 
-**Theorem (Keep-the-Angle, informal).** For graphs of intrinsic dimension d ≥ 2,
-as n → ∞:
+**Intrinsic dimension.** Throughout, *d* is the intrinsic dimension of the
+substrate. For the random-geometric benchmarks (tori, king-lattices, sphere) it is
+the manifold dimension *by construction*. For emergent graphs it is the value at
+which the three independent estimators of §4.1 — ball-growth (Hausdorff-type),
+spectral dimension (heat-kernel), and effective rank — mutually agree; we report
+that value with its inter-estimator spread, and treat *only* graphs of low spread
+as manifolds. The regime d ≥ 2 below refers to this measured intrinsic dimension;
+§5.5 confirms the d = 1 boundary behaves as the theory predicts.
 
-1. *(radius, proven).* The full commute distance degenerates to an additively
-   separable degree function [von Luxburg–Radl–Hein]; its single surviving
-   per-node coordinate is the radius, with rᵢ → 1/√dᵢ (dᵢ the node degree). The
-   radius is therefore geometry-free — it is a local-density coordinate, not a
-   geodesic one.
-2. *(angle, conjectured).* Row-normalization deletes precisely that degenerate
-   density factor, leaving the direction of the low-mode eigenmap, which embeds
-   the manifold and — empirically — remains bi-Lipschitz to geodesic distance
-   uniformly in m and n.
+The Principle has a proven half (the radius) and a conjectural half (the angle).
+
+**Theorem 1 (Radial Degeneracy).** For a graph of intrinsic dimension d ≥ 2, as
+n → ∞ the commute distance degenerates to an additively separable degree function
+[von Luxburg–Radl–Hein 2014], and the radial coordinate satisfies rᵢ → 1/√dᵢ (dᵢ
+the node degree). The radius is therefore geometry-free — a local-density
+coordinate carrying no geodesic information.
+
+*Proof (sketch).* Direct corollary of the von Luxburg–Radl–Hein degeneracy
+theorem: for d ≥ 2 the resistance distance R(i,j) → 1/dᵢ + 1/dⱼ, an additively
+separable form whose only per-node content is the self-term, which is exactly rᵢ².
+Verified numerically in §5.5: ρ(rᵢ, 1/√dᵢ) = 0.92–0.99 and radius-only geodesic
+preservation ρ ≤ 0.08. ∎
+
+**Conjecture 1 (Angular Preservation).** Row-normalization ûᵢ = Ψᵢ/‖Ψᵢ‖ deletes
+the degenerate density factor of Theorem 1, and the resulting direction of the
+low-mode eigenmap remains bi-Lipschitz to geodesic distance *uniformly in* the
+mode-count m and size n.
+
+*Status.* Empirically strong (§5) but **not proven**. It rests on
+eigenmap-embedding results plus a heuristic; the honest gap is that Theorem 1
+explains why the radius *dies* for d ≥ 2, not by itself why the angle *lives* —
+indeed the angular fidelity persists (ρ ≈ 0.88–0.90) even on quasi-1D graphs where
+Theorem 1 does not apply, so the angular half is carried by the eigenmap-embedding
+mechanism, not degeneracy alone.
+
+Together these are the **Keep-the-Angle Principle**: keep ûᵢ, discard rᵢ.
 
 ```mermaid
 flowchart LR
     Psi["embedding<br/>Psi_i = r_i . u_i"] --> r["radius r_i"]
     Psi --> u["angle u_i"]
-    r -->|"PROVEN (von Luxburg):<br/>r_i to 1/sqrt(deg_i)"| dead["geometry-free<br/>density coordinate"]
-    u -->|"CONJECTURED (empirical):<br/>bi-Lipschitz to geodesics"| alive["carries the geometry"]
+    r -->|"Theorem 1 (proven):<br/>r_i to 1/sqrt(deg_i)"| dead["geometry-free<br/>density coordinate"]
+    u -->|"Conjecture 1 (empirical):<br/>bi-Lipschitz to geodesics"| alive["carries the geometry"]
     style alive fill:#ddffdd,stroke:#00aa00
     style dead fill:#ffdddd,stroke:#aa0000
 ```
 
-**Proven vs conjectured.** Part (1) is a corollary of the von Luxburg degeneracy
-theorem and is verified below (the radius correlates with node degree at
-ρ = 0.92–0.99). Part (2) rests on eigenmap-embedding results plus a heuristic and
-is stated as an **empirically strong conjecture**, not a theorem. The honest gap:
-von Luxburg explains why the radius/full-distance *dies* for d ≥ 2; it does not by
-itself explain why the *angle lives*. Notably the angular fidelity is *more*
-universal than the degeneracy — it persists (ρ ≈ 0.88–0.90) even on quasi-1D
-graphs where the radial degeneracy does not occur — which indicates the angular
-half is carried by the eigenmap-embedding mechanism, not by degeneracy alone.
-
-**Dimension gating.** The degeneracy is a d ≥ 2 phenomenon. In (quasi-)1D,
-resistance equals path length, so the radius *stays* geodesic-informative and the
-theorem's part (1) correctly does not apply — a prediction, not a failure (§5.5).
+**Dimension gating.** Theorem 1 is a d ≥ 2 phenomenon. In (quasi-)1D, resistance
+equals path length, so the radius *stays* geodesic-informative and Theorem 1
+correctly does not apply — a prediction, not a failure, confirmed in §5.5.
 
 ## 4. Methods
 
@@ -156,7 +167,8 @@ Three independent estimators, agreement among which is our manifold detector:
 (i) **ball-growth** N(r) ∼ r^d (Wolfram/Gorard); (ii) **spectral dimension** from
 the heat-kernel return probability P(t) = ⟨e^{−Lt}⟩ ∼ t^{−d_s/2}; (iii)
 **effective rank** via the participation ratio of a local-PCA of the Laplacian
-eigenmap. Low inter-estimator spread ⇒ clean manifold.
+eigenmap. Low inter-estimator spread ⇒ clean manifold; the agreed value is our
+measured intrinsic dimension d (§3).
 
 ### 4.2 The angular metric and its controls
 For anchor nodes we compare embedded pairwise distances to true graph geodesics
@@ -228,19 +240,22 @@ cone) or destroyed (3% rewiring). On the torus the angular basis (0.89) beats
 classical MDS (0.67), since a torus is not flat-embeddable and the eigenmodes
 capture the wraparound. The swiss-roll trajectory is the "sequential-embedding"
 case (data embedded line-by-line): the angular basis is the *same* whether the
-manifold comes from hypergraph physics or from cultural sequential data.
+manifold comes from hypergraph rewriting or from cultural sequential data.
 
 ### 5.4 The scaling law
 Across 20 independent emergent manifolds (d ≈ 1.0–3.6, four rewriter seeds each),
 angular fidelity falls linearly with emergent dimension:
 
-  **angle-ρ ≈ const − 0.157 · d,  Spearman = −0.881.**
+  **angle-ρ ≈ 1.09 − 0.157 · d,  Spearman = −0.881  (d ∈ [1.0, 3.6]).**
 
-Fidelity is highest at low dimension (≈ 0.93 at d ≈ 1) and softens as the space
-grows higher-dimensional and rougher (≈ 0.56 at d ≈ 3.4). §3's dimension-gated
-degeneracy is the mechanism. (Robustness note: the *borrowed* R_3D is stable
-across seeds, 0.822 ± 0.008; the *evolved* 2D rule is seed-sensitive,
-0.72 ± 0.20 — guided search finds candidates that require seed-averaging.)
+The fit is *empirical and local*: ρ is a rank correlation bounded by 1, so the
+linear form holds only within the measured range — the intercept 1.09 is
+an extrapolation, not a literal d → 0 fidelity, and the slope may vary with
+substrate roughness. Within range, fidelity is highest at low dimension (≈ 0.93 at
+d ≈ 1) and softens toward ≈ 0.56 at d ≈ 3.4; §3's dimension-gated degeneracy is
+the mechanism. (Robustness: the *borrowed* R_3D is stable across seeds,
+0.822 ± 0.008; the *evolved* 2D rule is seed-sensitive, 0.72 ± 0.20 — guided
+search finds candidates that require seed-averaging.)
 
 ![The scaling law](figures/fig2_scaling.png)
 
@@ -248,7 +263,7 @@ across seeds, 0.822 ± 0.008; the *evolved* 2D rule is seed-sensitive,
 independent manifolds (ring, tori, and Wolfram-model rules), reproducing the
 library's slope of ≈ −0.15/dim.*
 
-### 5.5 Theorem verification
+### 5.5 Verifying Theorem 1 and Conjecture 1
 angle-ρ is flat in graph size while the full commute distance decays, and the
 radius tracks degree exactly:
 
@@ -258,12 +273,13 @@ radius tracks degree exactly:
 | 3-torus (500→4000) | 0.766→0.830 (flat) | 0.496→0.453 | 0.261→0.120 | 0.965→0.979 |
 | rewrite ~1.5D (513→8193) | 0.900→0.883 (flat) | — | 0.957→0.952 | 0.132→0.049 |
 
-The d = 3 degeneracy is clean (VL → 0.98, commute collapses); d = 2 is the
+Theorem 1 holds cleanly at d = 3 (VL → 0.98, commute collapses); d = 2 is the
 borderline case with log corrections; the quasi-1D case correctly shows *no*
-degeneracy (VL → 0.05, commute stays geodesic-informative). Radius-only ρ ≤ 0.08
-everywhere; ρ(‖Ψᵢ‖, 1/√dᵢ) = 0.92–0.99 — the radius *is* the degree quantity. In
-an m-sweep at n = 4000, angle-ρ is flat ≈ 0.93 across m = 5…80 while the full
-embedding decays monotonically 0.773 → 0.437.
+degeneracy (VL → 0.05, commute stays geodesic-informative), as predicted by the
+dimension gating. Radius-only ρ ≤ 0.08 everywhere; ρ(‖Ψᵢ‖, 1/√dᵢ) = 0.92–0.99 —
+the radius *is* the degree quantity. Conjecture 1: in an m-sweep at n = 4000,
+angle-ρ is flat ≈ 0.93 across m = 5…80 while the full embedding decays
+monotonically 0.773 → 0.437.
 
 ## 6. Honest Negatives
 
@@ -295,7 +311,7 @@ row-normalization a geometric justification it previously lacked, unifies it wit
 the scale-invariant direction of KV-cache compression, and — crucially — holds
 *universally* across substrates with genuine low-d Riemannian geometry,
 independent of graph origin. That the same basis works identically on
-hypergraph-physics and cultural-sequential substrates is evidence that
+hypergraph-rewriting and cultural-sequential substrates is evidence that
 scale-invariant angular coarse-graining is a general law of how relational data
 carries geometric structure.
 
@@ -309,14 +325,14 @@ core contribution therefore stands independent of the physics reading.
 
 ## 8. Limitations and Future Work
 
-The angular half of the theorem (§3.2) is conjectural: von Luxburg proves the
-radius dies, not by itself why the angle lives. Clean emergent manifolds above
-d ≈ 2 remain hard to synthesize; a curvature-controlled rule-design program is
-open. The scaling law's mechanism suggests a **dimension-adaptive angular basis** —
-tuning mode-count and diffusion time to the substrate's dimension — to counter the
-fidelity decay; this is the natural next experiment. Large-n survival of the
-angle-only recovery (via Chebyshev heat-kernel diffusion distance) should be
-established on the clean 2D rules.
+Conjecture 1 is unproven: von Luxburg proves the radius dies, not by itself why
+the angle lives. Clean emergent manifolds above d ≈ 2 remain hard to synthesize; a
+curvature-controlled rule-design program is open. The scaling law's mechanism
+suggests a **dimension-adaptive angular basis** — tuning mode-count and diffusion
+time to the substrate's dimension — to counter the fidelity decay; this is the
+natural next experiment. Large-n survival of the angle-only recovery (via
+Chebyshev heat-kernel diffusion distance) should be established on the clean 2D
+rules.
 
 ## 9. Conclusion
 
