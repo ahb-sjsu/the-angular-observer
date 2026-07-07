@@ -1,125 +1,105 @@
-# The Angular Observer: Scale-Invariant Coarse-Graining as a Universal Observer Basis for Emergent Geometry
+# Keep the Angle: A Universal Geometry-Preserving Basis in Spectral Embeddings
+
+*The angular coordinate, commute-time degeneracy, and observer coarse-graining*
 
 **Andrew H. Bond**
 San José State University · ORCID 0009-0003-2599-6158 · andrew.bond@sjsu.edu
 
-*Working draft — v0.1. All numerical results reproduce from the accompanying
+*Working draft — v0.2. All numerical results reproduce from the accompanying
 code (`pip install numpy scipy`).*
 
 ---
 
 ## Abstract
 
-A bounded observer embedded in a discrete substrate does not perceive the
-substrate; it perceives a coarse-graining of it. Wolfram's physics program makes
-this the load-bearing move — coherent physical law is *what survives* an
-observer's coarse-graining of the hypergraph — but leaves the coarse-graining
-itself unspecified. We give it an explicit, measurable form and show it is not
-special to physics. Writing the graph normalized-Laplacian eigen-embedding in
-polar form (magnitude × direction), we show that the **angular** coordinates of
-the low-eigenvalue subspace carry the graph's geodesic geometry, while the
-**radial** coordinate is asymptotically geometry-free. Keeping only the angle —
-the row-normalization of Ng–Jordan–Weiss spectral clustering, and the
-scale-invariant "direction" of PolarQuant KV-cache compression — recovers
-geodesic structure at Spearman ρ ≈ 0.93 on a reference manifold, versus ρ ≈ 0 for
-a random-mode basis of equal size and ρ ≈ 0.03 for the magnitude alone. We prove
-(via the von Luxburg–Radl–Hein resistance-degeneracy theorem) that the radial
-coordinate must degenerate to a local-degree quantity for graphs of intrinsic
-dimension d ≥ 2, and verify that the angular coordinate's fidelity is instead
-flat in both mode-count and graph size. The result is **universal across
-substrates that carry genuine low-dimensional Riemannian geometry** — Wolfram-
-model rewriting, king-move lattices, and manifold-embedding trajectories alike —
-and fails correctly on Lorentzian causal sets and geometry-destroying small-world
-graphs. Across 20 independent emergent manifolds spanning dimension ≈ 1–3.6,
-observer fidelity obeys a linear law, ρ ≈ const − 0.157·d (Spearman −0.881).
-Finally, we report a clean negative: emergent curvature is **not** dynamical
-beyond graph structure, so this is a result about the *observer*, not about the
-Einstein tensor. We call the surviving object the **angular observer**.
+The commute-time (resistance) embedding built from the low eigenvectors of a
+graph Laplacian is a workhorse of spectral geometry, yet its distances are known
+to *degenerate* on large graphs [von Luxburg–Radl–Hein]. We show the geometry
+does not vanish — it migrates entirely into the **angular** coordinate. Writing
+each node's low-mode embedding in polar form (magnitude × direction), the
+direction preserves graph geodesics at Spearman ρ ≈ 0.93 on a reference manifold,
+while the magnitude preserves ρ ≈ 0.03 and a random-mode basis of equal size
+preserves ρ ≈ 0. Keeping only the angle is exactly the row-normalization of
+Ng–Jordan–Weiss spectral clustering — previously justified heuristically; we give
+it a geometric reason. We prove (via von Luxburg–Radl–Hein) that the radial
+coordinate must degenerate to a local-degree quantity for intrinsic dimension
+d ≥ 2, and verify that the angular fidelity is instead **flat** in both mode-count
+and graph size where the raw embedding decays. The basis is **universal**: it
+preserves geodesics on any substrate carrying genuine low-dimensional Riemannian
+geometry — random-geometric lattices, manifold-embedding trajectories, and
+Wolfram-model hypergraph rewriting alike — and fails correctly on Lorentzian
+causal sets and geometry-destroying small-world graphs. Across 20 independent
+emergent manifolds (d ≈ 1–3.6) fidelity obeys ρ ≈ const − 0.157·d (Spearman
+−0.881). The same "keep the scale-invariant direction" operation recurs in
+KV-cache compression and, as a motivating interpretation, in the coarse-graining
+of a bounded observer in Wolfram's emergent-geometry program; we develop that
+reading in the discussion and bound it with a clean negative — emergent curvature
+is *not* dynamical beyond graph structure.
 
 ---
 
 ## 1. Introduction
 
-Every account of emergent space shares a common shape: a structureless discrete
-substrate, a bounded agent that cannot resolve it in full, and a smooth geometry
-that appears at the agent's resolution. Wolfram's hypergraph-rewriting program
-[Wolfram 2002, 2020; Gorard 2020] is the most developed instance — space is a
-hypergraph, time is rewriting, and, crucially, *physical law is what a
-computationally bounded observer perceives after coarse-graining the ruliad*
-[Wolfram 2026]. The observer is doing the decisive work, yet across this
-literature the coarse-graining itself is described only qualitatively:
-"equivalencing microstates," "sampling a slice," "perceiving aggregate behavior."
+Spectral embeddings — Laplacian eigenmaps [Belkin & Niyogi 2003], diffusion and
+commute-time maps [Coifman & Lafon 2006] — represent a graph by the low
+eigenvectors of its Laplacian and underpin much of manifold learning and spectral
+clustering. They carry a well-known pathology: on large geometric graphs the
+commute (resistance) distance degenerates to a function of local degrees alone,
+losing all global geometry [von Luxburg, Radl & Hein 2014]. Yet the most
+successful spectral-clustering algorithm [Ng, Jordan & Weiss 2002] *row-
+normalizes* the embedding — projects each node to the unit sphere — and works
+well, with the normalization justified largely by heuristic. **This paper asks
+what row-normalization recovers, and why.**
 
-This paper makes the observer's coarse-graining explicit, measurable, and — we
-argue — universal. Our starting point is a decomposition that recurs, apparently
-independently, in four disparate settings:
+Our answer is a clean decomposition. Write each node's low-mode embedding in polar
+form, magnitude × direction. The *magnitude* is exactly the degenerate radial
+coordinate that von Luxburg's theorem kills; the *direction* carries the graph's
+geodesic geometry. Row-normalization keeps the direction and discards the
+magnitude — so it is not a heuristic but the geometrically correct projection, and
+its fidelity is flat in both the number of modes and the graph size precisely
+where the raw embedding decays.
 
-- **Spectral clustering** [Ng, Jordan & Weiss 2002] row-normalizes the Laplacian
-  eigen-embedding to the unit sphere before clustering — it keeps the *direction*
-  and discards the magnitude.
-- **PolarQuant** KV-cache compression splits a vector into scale-variant
-  magnitude and scale-invariant direction and transfers only the direction.
-- **Preference geometry** [Bond, *Geometric Economics*] finds that a
-  scale-invariant "aversion angle" transfers across decision domains while the
-  magnitude is domain-specific.
-- **Observer theory** [Wolfram 2026] holds that perceived geometry is a
-  coarse-graining artifact of a bounded observer.
+This "keep the scale-invariant direction, drop the magnitude" operation recurs,
+apparently independently, well beyond clustering: in KV-cache compression
+(PolarQuant transfers the scale-invariant direction); in preference geometry (a
+scale-invariant "aversion angle" transfers across decision domains); and — as a
+broad motivating interpretation — in observer theory, where a bounded observer
+perceives geometry only after coarse-graining a discrete substrate
+[Wolfram 2026]. We show these are the same operation and that it is *universal*:
+it preserves geodesics on any graph carrying genuine low-dimensional Riemannian
+geometry, independent of how the graph was generated.
 
-We show these are the same operation, and that the operation has a precise
-geometric meaning: **keep the angle of the low-eigenvalue Laplacian embedding,
-drop the radius.** Our contributions:
-
-1. **The Keep-the-Angle Theorem (§3).** The radial coordinate of the commute-time
-   Laplacian embedding is provably geometry-free for d ≥ 2 (von Luxburg
-   degeneracy); the angular coordinate carries the geometry. We state exactly what
-   is proven and what remains an empirically strong conjecture.
-2. **A measurement and its controls (§4–5).** An angle-only observer metric that
-   preserves graph geodesics at ρ ≈ 0.93 on a torus, against a random-mode control
-   at ρ ≈ 0 and a magnitude-only control at ρ ≈ 0.03.
-3. **Universality (§5.3).** The effect holds across Wolfram-model rewriting,
-   lattices, and embedding trajectories, and fails correctly on Lorentzian and
-   small-world substrates.
-4. **A scaling law (§5.4).** Observer fidelity falls linearly with emergent
-   dimension across 20 independent manifolds.
-5. **An honest boundary (§6).** Two pre-registered negatives: a hyperbolic
-   reframe of "tangled" emergent graphs, rejected under controls; and a test of
-   dynamical (Einstein-like) curvature, a clean null.
-
-The claim we defend is deliberately bounded. We do **not** claim to derive
-general relativity, nor that compressibility is ontologically fundamental. We
-claim that *scale-invariant angular coarse-graining is a universal, measurable
-model of the bounded observer* — and that this is exactly the layer at which
-Wolfram's program locates physical law.
+**Contributions.** (1) the Keep-the-Angle theorem (§3), separating a proven
+radial-degeneracy half from a conjectured angular-recovery half; (2) a measurement
+with controls (§5.1); (3) universality across five substrate types including
+hypergraph rewriting (§5.3); (4) a fidelity-vs-dimension scaling law (§5.4); and
+(5) two honest negatives (§6) — a rejected hyperbolic reframe and a null test of
+the observer interpretation's strongest (dynamical-curvature) claim. We do **not**
+claim to derive physics; the core result is a basis-level fact about spectral
+embeddings, and the observer reading is an interpretation we develop and bound
+honestly.
 
 ## 2. Background and Related Work
 
-**Emergent geometry from discrete substrates.** In the Wolfram model, dimension
-is estimated from geodesic-ball growth V(r) ∼ r^d and curvature from the
-correction term; Gorard [2020] made these estimators rigorous. Our dimension
-estimators (§4.1) are of this family. What that program lacks is a quantitative
-observer; that is our target.
-
 **Spectral geometry.** Laplacian eigenmaps [Belkin & Niyogi 2003] and diffusion
 maps [Coifman & Lafon 2006] embed a graph via the low eigenvectors of its
-Laplacian. Ng, Jordan & Weiss [2002] row-normalize this embedding — the angular
-projection we study. We supply a geometric reason *why* that normalization is the
-right one for recovering geodesics.
-
-**Commute-time degeneracy.** von Luxburg, Radl & Hein [2010, 2014] proved that
-the commute (resistance) distance of a large geometric graph degenerates,
-R(i,j) → 1/dᵢ + 1/dⱼ, losing all global geometry. We read this result *backwards*:
-the degeneracy is exactly the collapse of the **radial** coordinate to local
-degree, which is why deleting it (keeping the angle) rescues the geometry.
-
-**Compression and meaning.** The thesis that meaningful structure is
-compressibility in a learned eigenbasis appears in algorithmic aesthetics
-[Schmidhuber 2009] and across the author's geometric series. The present paper is
-its physical instantiation.
-
-**Hyperbolic embedding.** Trees and exponentially-growing structures embed in
-hyperbolic space at low distortion [Gromov 1987; Sarkar 2011; Nickel & Kiela
-2017]. We tested whether "tangled" emergent graphs are secretly hyperbolic; §6.1
-reports the controlled rejection.
+Laplacian; the commute-time embedding scales mode k by 1/√λₖ. **Commute-time
+degeneracy.** von Luxburg, Radl & Hein [2014] proved that the commute (resistance)
+distance of a large geometric graph degenerates, R(i,j) → 1/dᵢ + 1/dⱼ, losing all
+global geometry. We read this result *backwards*: the degeneracy is exactly the
+collapse of the **radial** coordinate to local degree, which is why deleting it
+(keeping the angle) rescues the geometry. **Row-normalization.** Ng, Jordan &
+Weiss [2002] row-normalize the eigen-embedding before clustering — the angular
+projection we study; we supply the geometric reason it recovers geodesics.
+**Compression.** The same scale-invariant-direction move appears in KV-cache
+quantization (PolarQuant) and in the compressibility-as-meaning thesis of
+algorithmic aesthetics [Schmidhuber 2009]. **Emergent geometry & observer
+theory.** In the Wolfram model [Wolfram 2002, 2020; Gorard 2020] space is a
+hypergraph and law is what a bounded observer perceives after coarse-graining the
+ruliad [Wolfram 2026]; that coarse-graining is left qualitative, and our angular
+projection is a candidate for it (developed in §7). **Hyperbolic embedding.**
+Trees embed in ℍ² at low distortion [Gromov 1987; Sarkar 2011; Nickel & Kiela
+2017]; we test and reject a hyperbolic reframe of emergent "tangles" in §6.1.
 
 ## 3. The Keep-the-Angle Theorem
 
@@ -178,10 +158,10 @@ the heat-kernel return probability P(t) = ⟨e^{−Lt}⟩ ∼ t^{−d_s/2}; (iii
 **effective rank** via the participation ratio of a local-PCA of the Laplacian
 eigenmap. Low inter-estimator spread ⇒ clean manifold.
 
-### 4.2 The observer metric and its controls
+### 4.2 The angular metric and its controls
 For anchor nodes we compare embedded pairwise distances to true graph geodesics
 by Spearman ρ:
-- **angle-ρ** — unit-normalized low-mode commute-time embedding (the observer);
+- **angle-ρ** — unit-normalized low-mode commute-time embedding (the angular basis);
 - **random-ρ** — same, but m *randomly chosen* modes (basis control, expect ≈ 0);
 - **magnitude-ρ** — radius only (expect ≈ 0);
 - **euclid-ρ** — classical 2D MDS (Euclidean baseline).
@@ -228,8 +208,8 @@ Random arity-2 rules yield clean but only ≈ 1.5-dimensional manifolds (82
 manifold-grade rules in a 20k-rule sweep; none at d ≥ 2.5). Clean 2D is *rare, not
 absent*: it is reached by two independent routes — a borrowed Wolfram-2020 rule
 (R_3D: measured d = 2.07 ± 0.01, inter-estimator spread 0.05, angle-ρ = 0.82) and
-a from-scratch evolutionary search (clean 2D within ≈ 3 generations). The
-principle holds on genuine 2D emergent space.
+a from-scratch evolutionary search (clean 2D within ≈ 3 generations). The angular
+basis holds on genuine 2D emergent space.
 
 ### 5.3 Universality across substrates
 | substrate | measured d | angle-ρ | random | euclid |
@@ -247,12 +227,12 @@ geometry is Lorentzian (causal set — undirected BFS short-circuits the light
 cone) or destroyed (3% rewiring). On the torus the angular basis (0.89) beats
 classical MDS (0.67), since a torus is not flat-embeddable and the eigenmodes
 capture the wraparound. The swiss-roll trajectory is the "sequential-embedding"
-case (data embedded line-by-line): the observer basis is the *same* whether the
-manifold comes from physics or from cultural sequential data.
+case (data embedded line-by-line): the angular basis is the *same* whether the
+manifold comes from hypergraph physics or from cultural sequential data.
 
 ### 5.4 The scaling law
 Across 20 independent emergent manifolds (d ≈ 1.0–3.6, four rewriter seeds each),
-observer fidelity falls linearly with emergent dimension:
+angular fidelity falls linearly with emergent dimension:
 
   **angle-ρ ≈ const − 0.157 · d,  Spearman = −0.881.**
 
@@ -264,7 +244,7 @@ across seeds, 0.822 ± 0.008; the *evolved* 2D rule is seed-sensitive,
 
 ![The scaling law](figures/fig2_scaling.png)
 
-*Figure 2. Observer fidelity falls linearly with emergent dimension across
+*Figure 2. Angular fidelity falls linearly with emergent dimension across
 independent manifolds (ring, tori, and Wolfram-model rules), reproducing the
 library's slope of ≈ −0.15/dim.*
 
@@ -302,41 +282,52 @@ positive on the torus) shows a raw Spearman of −0.98 against rewrite-update
 density — which *deflates to a tautology*: update-count equals node degree
 (ρ = +1.00), and hubs are negatively curved. Controlling for degree, the
 independent signal is partial-ρ = −0.14. There is no evidence that curvature
-responds to activity beyond structure. This result is about the observer, **not**
-about an emergent Einstein tensor.
+responds to activity beyond structure. This **bounds the observer-theory
+interpretation** (§7) — it does not reach an emergent Einstein tensor — and leaves
+the spectral result untouched.
 
 ## 7. Discussion
 
-The angular observer unifies four independently-discovered "keep the direction,
-drop the magnitude" moves and grounds them in a single geometric fact: for a
-bounded observer of a d ≥ 2 substrate, the radial (density) coordinate is noise
-and the angular (geometric) coordinate is signal. In Wolfram's framework, where
-ontology is observer-relative, "the observer's coarse-graining basis" is as close
-to a physical principle as the framework permits — so identifying that basis is a
-substantive contribution to observer theory, even though (§6.2) it does not reach
-the dynamical-curvature claim. The universality result (§5.3), and in particular
-the identical behavior on physics-rewriting and cultural-sequential substrates,
-supports the stronger reading that scale-invariant angular coarse-graining is a
-general law of how bounded systems represent geometric structure.
+**The primary result is basis-level and substrate-agnostic.** The angular
+coordinate of the low-Laplacian embedding preserves geodesics while the radial
+coordinate is von-Luxburg-degenerate noise. This gives Ng–Jordan–Weiss
+row-normalization a geometric justification it previously lacked, unifies it with
+the scale-invariant direction of KV-cache compression, and — crucially — holds
+*universally* across substrates with genuine low-d Riemannian geometry,
+independent of graph origin. That the same basis works identically on
+hypergraph-physics and cultural-sequential substrates is evidence that
+scale-invariant angular coarse-graining is a general law of how relational data
+carries geometric structure.
+
+**One interpretation is observer-theoretic.** In Wolfram's observer-relative
+framework, the coarse-graining a bounded observer performs to perceive geometry is
+exactly this angular projection — making "the observer's basis" a concrete
+candidate for the coarse-graining the program leaves unspecified. We offer this as
+motivation and interpretation, and bound it honestly: the interpretation's
+strongest claim — dynamical, energy-responsive curvature — is a null (§6.2). The
+core contribution therefore stands independent of the physics reading.
 
 ## 8. Limitations and Future Work
 
-The angular half of the theorem (§3.2) is conjectural. Clean emergent manifolds
-above d ≈ 2 remain hard to synthesize; a curvature-controlled rule-design program
-is open. The scaling law's mechanism suggests a **theorem-guided observer** —
+The angular half of the theorem (§3.2) is conjectural: von Luxburg proves the
+radius dies, not by itself why the angle lives. Clean emergent manifolds above
+d ≈ 2 remain hard to synthesize; a curvature-controlled rule-design program is
+open. The scaling law's mechanism suggests a **dimension-adaptive angular basis** —
 tuning mode-count and diffusion time to the substrate's dimension — to counter the
-degradation and push high-d fidelity toward the ceiling; this is the natural next
-experiment. Large-n survival of the angle-only recovery (via Chebyshev
-heat-kernel diffusion distance) should be established on the clean 2D rules.
+fidelity decay; this is the natural next experiment. Large-n survival of the
+angle-only recovery (via Chebyshev heat-kernel diffusion distance) should be
+established on the clean 2D rules.
 
 ## 9. Conclusion
 
-Keep the angle, drop the magnitude. The scale-invariant direction of the
-low-eigenvalue Laplacian embedding is a measurable, universal model of the bounded
-observer's coarse-graining — provably shedding a degenerate density coordinate,
-empirically preserving geodesic geometry across every genuinely-Riemannian
-substrate we tested, and obeying a clean dimensional law. It is the observer's
-basis, not the world's ontology; that boundary is where we leave it.
+Keep the angle, drop the magnitude. In the low-eigenvalue Laplacian embedding the
+angular coordinate carries the geometry while the radial coordinate is degenerate;
+row-normalization is therefore the geometrically correct projection, not a
+heuristic. The basis is universal across Riemannian substrates and obeys a clean
+dimensional law. It admits an observer-theoretic reading — a candidate for the
+bounded observer's coarse-graining — which we develop and bound with an honest
+null. The basis-level fact is the contribution; the interpretation is where we
+leave the door open.
 
 ## References
 
