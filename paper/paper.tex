@@ -1,0 +1,275 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\graphicspath{{figures/}}
+
+\title{\textbf{The Angular Observer}\\[2pt]
+\large Scale-Invariant Coarse-Graining as a Universal Observer Basis for Emergent Geometry}
+\author{Andrew H. Bond\\ San Jos\'e State University\\
+\texttt{andrew.bond@sjsu.edu} \quad ORCID 0009-0003-2599-6158}
+\date{Working draft --- v0.1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A bounded observer embedded in a discrete substrate perceives not the substrate
+but a coarse-graining of it. Wolfram's physics program makes this the
+load-bearing move---coherent law is \emph{what survives} an observer's
+coarse-graining of the hypergraph---but leaves the coarse-graining unspecified.
+We give it an explicit, measurable form and show it is not special to physics.
+Writing the graph normalized-Laplacian eigen-embedding in polar form (magnitude
+$\times$ direction), the \emph{angular} coordinates of the low-eigenvalue
+subspace carry the graph's geodesic geometry while the \emph{radial} coordinate
+is asymptotically geometry-free. Keeping only the angle---the row-normalization
+of Ng--Jordan--Weiss spectral clustering, and the scale-invariant direction of
+PolarQuant compression---recovers geodesics at Spearman $\rho \approx 0.93$ on a
+reference manifold, versus $\rho \approx 0$ for a random-mode basis of equal size
+and $\rho \approx 0.03$ for the magnitude alone. We prove, via the
+von~Luxburg--Radl--Hein resistance-degeneracy theorem, that the radial
+coordinate must degenerate to a local-degree quantity for intrinsic dimension
+$d \ge 2$, and verify that the angular coordinate's fidelity is instead flat in
+both mode-count and graph size. The effect is \textbf{universal across substrates
+carrying genuine low-dimensional Riemannian geometry}---Wolfram-model rewriting,
+king-move lattices, and manifold-embedding trajectories alike---and fails
+correctly on Lorentzian causal sets and geometry-destroying small-world graphs.
+Across $20$ independent emergent manifolds ($d \approx 1$--$3.6$), fidelity obeys
+$\rho \approx \text{const} - 0.157\,d$ (Spearman $-0.881$). Finally we report a
+clean negative: emergent curvature is \emph{not} dynamical beyond graph
+structure, so this is a result about the observer, not the Einstein tensor.
+\end{abstract}
+
+\section{Introduction}
+Every account of emergent space shares a shape: a structureless discrete
+substrate, a bounded agent that cannot resolve it in full, and a smooth geometry
+that appears at the agent's resolution. Wolfram's hypergraph-rewriting program
+\cite{wolfram2002,wolfram2020,gorard2020} is the most developed instance---space
+is a hypergraph, time is rewriting, and physical law is what a computationally
+bounded observer perceives after coarse-graining the ruliad \cite{wolfram2026}.
+The observer does the decisive work, yet the coarse-graining is described only
+qualitatively.
+
+We make it explicit. Our starting point is a decomposition that recurs,
+apparently independently, in four settings: spectral clustering
+\cite{ng2002} row-normalizes the Laplacian embedding (keeps the direction);
+PolarQuant KV-cache compression transfers the scale-invariant direction; the
+``aversion angle'' of preference geometry transfers across decision domains while
+magnitude is domain-specific; and observer theory \cite{wolfram2026} holds that
+perceived geometry is a coarse-graining artifact. We show these are the same
+operation---\emph{keep the angle of the low-eigenvalue Laplacian embedding, drop
+the radius}---and that it has a precise geometric meaning. Contributions: the
+Keep-the-Angle theorem (\S\ref{sec:thm}); a measurement with controls
+(\S\ref{sec:results}); universality (\S\ref{sec:univ}); a scaling law
+(\S\ref{sec:law}); and two honest negatives (\S\ref{sec:neg}). We do \emph{not}
+claim to derive general relativity, nor that compressibility is ontologically
+fundamental; we claim that scale-invariant angular coarse-graining is a
+universal, measurable model of the bounded observer.
+
+\section{Background}
+\textbf{Emergent geometry.} Dimension is estimated from ball growth
+$V(r)\sim r^d$ and curvature from its correction \cite{gorard2020}; our
+estimators are of this family. \textbf{Spectral geometry.} Laplacian eigenmaps
+\cite{belkin2003} and diffusion maps \cite{coifman2006} embed via low
+eigenvectors; Ng--Jordan--Weiss \cite{ng2002} row-normalize---the angular
+projection we study. \textbf{Commute-time degeneracy.} von~Luxburg et al.\
+\cite{vonluxburg2014} proved the commute distance of a large geometric graph
+degenerates, $R(i,j)\to 1/d_i + 1/d_j$; we read this backwards as the collapse of
+the \emph{radial} coordinate. \textbf{Hyperbolic embedding.} Trees embed in
+$\mathbb{H}^2$ at low distortion \cite{gromov1987,sarkar2011,nickel2017}; we test
+and reject a hyperbolic reframe in \S\ref{sec:neg}.
+
+\section{The Keep-the-Angle Theorem}\label{sec:thm}
+Let $G$ be connected on $n$ nodes with symmetric-normalized Laplacian
+$L = I - D^{-1/2} A D^{-1/2}$, eigenpairs $(\lambda_k, v_k)$,
+$0=\lambda_0<\lambda_1\le\cdots$. The commute-time embedding using the lowest $m$
+nontrivial modes places node $i$ at
+$\Psi_i = \big(v_1(i)/\sqrt{\lambda_1},\dots,v_m(i)/\sqrt{\lambda_m}\big)$.
+Write $\Psi_i = r_i\,\hat u_i$ with radius $r_i=\lVert\Psi_i\rVert$ and angle
+$\hat u_i = \Psi_i/\lVert\Psi_i\rVert$.
+
+\begin{theorem}[Keep-the-Angle, informal]
+For graphs of intrinsic dimension $d\ge 2$, as $n\to\infty$:
+(1) \emph{(radius, proven)} the full commute distance degenerates to an
+additively separable degree function \cite{vonluxburg2014}; its surviving
+per-node coordinate is the radius, with $r_i\to 1/\sqrt{d_i}$ ($d_i$ the degree),
+hence geometry-free. (2) \emph{(angle, conjectured)} row-normalization deletes
+that degenerate density factor, leaving the direction of the low-mode eigenmap,
+which embeds the manifold and---empirically---remains bi-Lipschitz to geodesic
+distance uniformly in $m$ and $n$.
+\end{theorem}
+
+\noindent\textbf{Proven vs.\ conjectured.} Part (1) is a corollary of
+\cite{vonluxburg2014}, verified below ($\rho(r_i,\text{degree})=0.92$--$0.99$).
+Part (2) rests on eigenmap-embedding results plus a heuristic and is an
+\emph{empirically strong conjecture}. The honest gap: von~Luxburg explains why
+the radius \emph{dies} for $d\ge 2$, not by itself why the angle \emph{lives}---
+indeed the angular fidelity persists ($\rho\approx0.88$--$0.90$) even on quasi-1D
+graphs where no radial degeneracy occurs, so the angular half is carried by the
+eigenmap mechanism, not degeneracy alone. \textbf{Dimension gating:} in
+(quasi-)1D, resistance equals path length, so the radius stays
+geodesic-informative and part (1) correctly does not apply.
+
+\section{Methods}
+\textbf{Estimators.} Ball-growth $N(r)\sim r^d$; spectral dimension from the
+heat-kernel return probability $P(t)=\langle e^{-Lt}\rangle\sim t^{-d_s/2}$;
+effective rank via local-PCA participation ratio. Low inter-estimator spread
+$\Rightarrow$ clean manifold. \textbf{Observer metric.} Spearman $\rho$ between
+embedded pairwise distances and true graph geodesics for: \emph{angle} (unit-
+normalized low-mode embedding), \emph{random} ($m$ random modes; control),
+\emph{magnitude} (radius only), \emph{euclid} (classical 2D MDS).
+\textbf{Substrates.} Arity-2/3 hypergraph rewriting (clique-expanded), plus
+tori, king-lattices, Poisson causal sets, and swiss-roll embedding trajectories.
+
+\section{Results}\label{sec:results}
+\subsection{The core result}
+Estimators recover ground-truth dimension within $\approx 0.3$. On a 2-torus the
+polar decomposition of the low-mode embedding (Fig.~\ref{fig:core}) gives:
+
+\begin{center}
+\begin{tabular}{rccc}
+\toprule
+$m$ & full (mag.$\times$dir.) & \textbf{angle only} & magnitude only \\
+\midrule
+5  & 0.761 & \textbf{0.926} & 0.025 \\
+10 & 0.650 & \textbf{0.913} & 0.035 \\
+20 & 0.550 & \textbf{0.891} & 0.028 \\
+40 & 0.517 & \textbf{0.928} & 0.034 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The angle carries the geometry ($\approx 0.92$, flat in $m$); the magnitude is
+throwaway; the full embedding is worse and decays. A random-mode basis
+reconstructs geodesics at $\rho\approx 0$ (Fig.~\ref{fig:control}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\linewidth]{fig1_core.pdf}
+\caption{Angle carries the geometry; magnitude is throwaway; the full commute
+embedding decays with $m$.}
+\label{fig:core}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\linewidth]{fig3_control.pdf}
+\caption{Geometry lives in the low-eigenvalue subspace: lowest-$m$ modes preserve
+geodesics; a random-mode basis of equal size does not.}
+\label{fig:control}
+\end{figure}
+
+\subsection{Emergent 2D geometry}
+Random arity-2 rules yield clean but only $\approx 1.5$D manifolds (82
+manifold-grade rules in a 20k sweep; none at $d\ge 2.5$). Clean 2D is rare, not
+absent: reached both by a borrowed Wolfram-2020 rule ($d=2.07\pm0.01$, spread
+$0.05$, angle-$\rho=0.82$) and by from-scratch evolutionary search ($\approx 3$
+generations). The principle holds on genuine 2D emergent space.
+
+\subsection{Universality across substrates}\label{sec:univ}
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+substrate & meas.\ $d$ & angle-$\rho$ & random & euclid \\
+\midrule
+2-torus (reference) & 2 & 0.89 & 0.01 & 0.67 \\
+king-lattice & 2 & 0.82 & 0.01 & 0.95 \\
+swiss-roll trajectory & 2 & 0.93 & 0.01 & 0.99 \\
+emergent $R_{3D}$ (Wolfram) & 2.07 & 0.82 & 0.01 & 0.81 \\
+causal set (Lorentzian) & 3.9 & 0.57 & 0.01 & 0.55 \\
+small-world (destroyed) & 3.0 & 0.45 & 0.00 & --- \\
+\bottomrule
+\end{tabular}
+\end{center}
+Substrates with genuine low-$d$ Riemannian geometry all show the effect,
+independent of graph origin; the metric fails correctly where geometry is
+Lorentzian or destroyed. The swiss-roll trajectory is the sequential-embedding
+case: the observer basis is the same whether the manifold comes from physics or
+cultural sequential data.
+
+\subsection{The scaling law}\label{sec:law}
+Across 20 independent emergent manifolds ($d\approx 1$--$3.6$),
+\[
+\text{angle-}\rho \;\approx\; \text{const} - 0.157\,d, \qquad
+\text{Spearman} = -0.881 .
+\]
+Fidelity is highest at low dimension and softens as the space grows
+higher-dimensional (Fig.~\ref{fig:law}); the dimension-gated degeneracy of
+\S\ref{sec:thm} is the mechanism.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\linewidth]{fig2_scaling.pdf}
+\caption{Observer fidelity falls linearly with emergent dimension across ring,
+tori, and Wolfram-model rules.}
+\label{fig:law}
+\end{figure}
+
+\subsection{Theorem verification}
+angle-$\rho$ is flat in graph size while the full commute distance decays, and
+the radius tracks degree exactly ($\rho(\lVert\Psi_i\rVert,1/\sqrt{d_i})=
+0.92$--$0.99$; radius-only $\rho\le0.08$). The $d=3$ degeneracy is clean
+($\rho(R,1/d_i+1/d_j)\to0.98$); $d=2$ is borderline (log corrections); the
+quasi-1D case correctly shows no degeneracy.
+
+\section{Honest Negatives}\label{sec:neg}
+\textbf{Not secretly hyperbolic (rejected).} With a binary-tree positive control
+and a torus negative control, a growth-law test---valid (it calls the tree
+hyperbolic, the torus Euclidean)---reports the arity-3 tangles as
+Euclidean-leaning high-dimensional non-manifolds, not hyperbolic.
+\textbf{Curvature is not dynamical (null).} Ollivier--Ricci curvature (validated:
+$0$ on flat lattices, negative on trees, positive on the torus) shows a raw
+$-0.98$ against update density that deflates to a tautology (update-count equals
+degree, $\rho=+1.00$; hubs are negatively curved); controlling for degree, the
+independent signal is partial-$\rho=-0.14$. No evidence of an emergent Einstein
+tensor.
+
+\section{Discussion and Conclusion}
+The angular observer unifies four ``keep the direction, drop the magnitude''
+moves and grounds them in one fact: for a bounded observer of a $d\ge2$
+substrate, the radial (density) coordinate is noise and the angular (geometric)
+coordinate is signal. In Wolfram's observer-relative ontology, identifying the
+observer's coarse-graining basis is a substantive contribution to observer
+theory, even though it does not reach the dynamical-curvature claim. The
+identical behavior on physics-rewriting and cultural-sequential substrates
+supports the reading that scale-invariant angular coarse-graining is a general
+law of how bounded systems represent geometric structure. Open problems: proving
+the angular half; synthesizing clean manifolds above $d\approx2$; and a
+theorem-guided observer that tunes mode-count and diffusion time to the
+substrate's dimension to counter the fidelity decay. Keep the angle, drop the
+magnitude: it is the observer's basis, not the world's ontology.
+
+\begin{thebibliography}{99}
+\bibitem{belkin2003} M.~Belkin and P.~Niyogi. Laplacian eigenmaps for
+dimensionality reduction and data representation. \emph{Neural Computation},
+2003.
+\bibitem{coifman2006} R.~Coifman and S.~Lafon. Diffusion maps. \emph{Applied and
+Computational Harmonic Analysis}, 2006.
+\bibitem{gorard2020} J.~Gorard. Some relativistic and gravitational properties of
+the Wolfram model. \emph{Complex Systems}, 2020.
+\bibitem{gromov1987} M.~Gromov. Hyperbolic groups. In \emph{Essays in Group
+Theory}, 1987.
+\bibitem{ng2002} A.~Ng, M.~Jordan, and Y.~Weiss. On spectral clustering.
+\emph{NeurIPS}, 2002.
+\bibitem{nickel2017} M.~Nickel and D.~Kiela. Poincar\'e embeddings for learning
+hierarchical representations. \emph{NeurIPS}, 2017.
+\bibitem{sarkar2011} R.~Sarkar. Low-distortion delta-hyperbolic embedding in the
+hyperbolic plane. \emph{Graph Drawing}, 2011.
+\bibitem{vonluxburg2014} U.~von~Luxburg, A.~Radl, and M.~Hein. Hitting and
+commute times in large random neighborhood graphs. \emph{JMLR}, 2014.
+\bibitem{wolfram2002} S.~Wolfram. \emph{A New Kind of Science}. 2002.
+\bibitem{wolfram2020} S.~Wolfram. Finally we may have a path to the fundamental
+theory of physics. 2020.
+\bibitem{wolfram2026} S.~Wolfram. What ultimately is there? Metaphysics and the
+ruliad. 2026.
+\end{thebibliography}
+
+\end{document}

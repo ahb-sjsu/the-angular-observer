@@ -6,3 +6,12 @@ venv/
 *.json
 smoke*
 sweep.log
+
+# LaTeX build artifacts (keep .pdf and figures/)
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz

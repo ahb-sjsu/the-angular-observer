@@ -212,6 +212,17 @@ The angle carries the geometry (≈ 0.92, flat in m); the magnitude is throwaway
 degeneracy. A random-mode basis reconstructs geodesics at ρ ≈ 0 (5 low modes:
 0.75; 40 random modes: −0.01).
 
+![The core result](figures/fig1_core.png)
+
+*Figure 1. On a 2-torus, the angle-only embedding preserves geodesics at ρ ≈ 0.92
+flat in mode-count m; the full commute embedding is worse and decays; the
+magnitude alone is throwaway (≈ 0.03).*
+
+![Basis control](figures/fig3_control.png)
+
+*Figure 3. Geometry lives in the low-eigenvalue subspace: the lowest m modes
+preserve geodesics; a random-mode basis of equal size does not.*
+
 ### 5.2 Emergent 2D geometry
 Random arity-2 rules yield clean but only ≈ 1.5-dimensional manifolds (82
 manifold-grade rules in a 20k-rule sweep; none at d ≥ 2.5). Clean 2D is *rare, not
@@ -250,6 +261,12 @@ grows higher-dimensional and rougher (≈ 0.56 at d ≈ 3.4). §3's dimension-ga
 degeneracy is the mechanism. (Robustness note: the *borrowed* R_3D is stable
 across seeds, 0.822 ± 0.008; the *evolved* 2D rule is seed-sensitive,
 0.72 ± 0.20 — guided search finds candidates that require seed-averaging.)
+
+![The scaling law](figures/fig2_scaling.png)
+
+*Figure 2. Observer fidelity falls linearly with emergent dimension across
+independent manifolds (ring, tori, and Wolfram-model rules), reproducing the
+library's slope of ≈ −0.15/dim.*
 
 ### 5.5 Theorem verification
 angle-ρ is flat in graph size while the full commute distance decays, and the
