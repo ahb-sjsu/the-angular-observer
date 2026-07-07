@@ -6,7 +6,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Linter: ruff](https://img.shields.io/badge/linter-ruff-261230.svg)](https://github.com/astral-sh/ruff)
 
-**Scale-invariant coarse-graining as a universal observer basis for emergent geometry.**
+**Keep the Angle: a universal geometry-preserving basis in spectral embeddings.**
 
 > *Keep the angle, drop the magnitude.* Given the graph normalized-Laplacian
 > eigen-embedding, the **angular** coordinates of the low-eigenvalue subspace
@@ -14,13 +14,17 @@
 > Row-normalizing to the unit sphere — the Ng–Jordan–Weiss / PolarQuant move — is
 > the coarse-graining a bounded observer performs to perceive a smooth space.
 
-This repository operationalizes a claim from Wolfram's observer theory ("a bounded
-observer coarse-grains the hypergraph and perceives geometry") into a measured,
-falsifiable operation, and shows the same operation is what makes meaning
-compressible across unrelated domains (spectral clustering, hyperbolic taxonomy
-embedding, and — empirically — cultural/aesthetic embedding trajectories).
+The commute-time Laplacian embedding degenerates on large graphs (von Luxburg):
+its distances collapse to local degree. This repository shows the geometry does
+not vanish — it survives entirely in the **angular** coordinate. Keeping only the
+angle (the Ng–Jordan–Weiss row-normalization) preserves graph geodesics
+*universally* across substrates with genuine low-dimensional Riemannian geometry,
+while the radial coordinate is provably degenerate. The same "keep the direction"
+operation recurs in KV-cache compression and — as a motivating interpretation,
+developed and bounded honestly — in the coarse-graining of a bounded observer in
+Wolfram's emergent-geometry program.
 
-## How the observer sees
+## The core decomposition
 
 ```mermaid
 flowchart LR

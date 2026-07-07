@@ -1,16 +1,17 @@
 cff-version: 1.2.0
 message: "If you use this software or its results, please cite it as below."
 title: >-
-  The Angular Observer: Scale-Invariant Coarse-Graining as a
-  Universal Observer Basis for Emergent Geometry
+  Keep the Angle: A Universal Geometry-Preserving Basis in
+  Spectral Embeddings
 abstract: >-
-  Writing the graph normalized-Laplacian eigen-embedding in polar form, the
-  angular coordinates of the low-eigenvalue subspace carry a graph's geodesic
-  geometry while the radial coordinate is asymptotically geometry-free
-  (von Luxburg degeneracy). Keeping only the angle — the Ng-Jordan-Weiss /
-  PolarQuant move — is a measurable, universal model of a bounded observer's
-  coarse-graining, holding across Wolfram-model rewriting, lattices, and
-  embedding trajectories, and obeying a linear observer-fidelity-vs-dimension law.
+  The commute-time Laplacian embedding degenerates on large graphs (von Luxburg):
+  its distances collapse to local degree. The geometry survives in the angular
+  coordinate — keeping only the angle (the Ng-Jordan-Weiss row-normalization) is
+  the geometrically correct projection, preserving graph geodesics universally
+  across Riemannian substrates (lattices, embedding trajectories, Wolfram-model
+  rewriting) while the radius is provably degenerate, and obeying a linear
+  fidelity-vs-dimension law. It admits an observer-theoretic reading, developed
+  and bounded with a clean negative.
 type: software
 authors:
   - family-names: Bond
