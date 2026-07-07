@@ -11,15 +11,15 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{conjecture}{Conjecture}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
 \graphicspath{{figures/}}
 
 \title{\textbf{Keep the Angle}\\[2pt]
-\large A Universal Geometry-Preserving Basis in Spectral Embeddings\\[3pt]
-\normalsize\textit{the angular coordinate, commute-time degeneracy, and observer
-coarse-graining}}
+\large A Universal Geometry-Preserving Basis in Spectral Embeddings}
 \author{Andrew H. Bond\\ San Jos\'e State University\\
 \texttt{andrew.bond@sjsu.edu} \quad ORCID 0009-0003-2599-6158}
-\date{Working draft --- v0.3}
+\date{Working draft --- v0.4}
 
 \begin{document}
 \maketitle
@@ -31,24 +31,22 @@ to \emph{degenerate} on large graphs \cite{vonluxburg2014}. We show the geometry
 does not vanish---it migrates entirely into the \emph{angular} coordinate.
 Writing each node's low-mode embedding in polar form (magnitude $\times$
 direction), the direction preserves graph geodesics at Spearman
-$\rho \approx 0.93$ on a reference manifold, while the magnitude preserves
+$\rho \approx 0.89$ on a reference manifold, while the magnitude preserves
 $\rho \approx 0.03$ and a random-mode basis of equal size preserves
-$\rho \approx 0$. Keeping only the angle is exactly the row-normalization of
-Ng--Jordan--Weiss spectral clustering \cite{ng2002}, previously justified
-heuristically; we give it a geometric reason. We \textbf{prove} (via
-von~Luxburg--Radl--Hein) that the radial coordinate must degenerate to a
-local-degree quantity for intrinsic dimension $d \ge 2$, and \textbf{conjecture},
-with strong empirical support, that the angular coordinate stays bi-Lipschitz to
-geodesic distance---flat in both mode-count and graph size where the raw
-embedding decays. The basis is \textbf{universal}: it preserves geodesics on any
-substrate carrying genuine low-dimensional Riemannian geometry---random-geometric
-lattices, manifold-embedding trajectories, and Wolfram-model hypergraph rewriting
-alike---and fails correctly on Lorentzian causal sets and geometry-destroying
-small-world graphs. Across $20$ independent emergent manifolds ($d \approx 1$--
-$3.6$) fidelity obeys $\rho \approx 1.09 - 0.157\,d$ over that range (Spearman
-$-0.881$). The same scale-invariant-direction operation appears in KV-cache
-compression; a bounded-observer interpretation (Wolfram's emergent geometry) is
-developed, and bounded, in the discussion.
+$\rho \approx 0.04$. Keeping only the angle is exactly the row-normalization of
+Ng--Jordan--Weiss spectral clustering \cite{ng2002}, whose existing theory
+concerns cluster separation \cite{schiebinger2015}; we give it a geodesic
+justification. We show, as a corollary of von~Luxburg--Radl--Hein, that the
+radial coordinate of the full embedding degenerates to a local-degree quantity
+for intrinsic dimension $d \ge 2$, and \textbf{conjecture}, with strong empirical
+support, that the angular coordinate remains rank-faithful to geodesic
+distance---flat in both mode-count and graph size where the raw embedding decays.
+The basis is \textbf{universal}: it preserves geodesics on any substrate carrying
+genuine low-dimensional Riemannian geometry---random-geometric lattices,
+manifold-embedding trajectories, and Wolfram-model hypergraph rewriting alike---
+and fails correctly on Lorentzian causal sets and geometry-destroying small-world
+graphs. Across $20$ independent emergent manifolds ($d \approx 1$--$3.6$),
+fidelity falls approximately linearly with intrinsic dimension.
 \end{abstract}
 
 \section{Introduction}
@@ -59,24 +57,27 @@ They carry a well-known pathology: on large geometric graphs the commute
 (resistance) distance degenerates to a function of local degrees alone, losing
 all global geometry \cite{vonluxburg2014}. Yet the most successful
 spectral-clustering algorithm \cite{ng2002} \emph{row-normalizes} the
-embedding---projects each node to the unit sphere---and works well, with the
-normalization justified largely by heuristic. \textbf{This paper asks what
-row-normalization recovers, and why.}
+embedding---projects each node to the unit sphere---and works well. The existing
+theory of that normalization concerns cluster geometry: it explains why
+row-normalized embeddings of well-separated clusters concentrate in nearly
+orthogonal directions on the sphere \cite{schiebinger2015,vonluxburg2008}. It
+does not address metric geometry. \textbf{This paper asks what row-normalization
+recovers of the graph's geodesic structure, and why.}
 
 Our answer is a clean decomposition. Write each node's low-mode embedding in polar
 form, magnitude $\times$ direction. The \emph{magnitude} is exactly the degenerate
 radial coordinate that von~Luxburg's theorem kills; the \emph{direction} carries
 the graph's geodesic geometry. Row-normalization keeps the direction and discards
-the magnitude---so it is not a heuristic but the geometrically correct projection,
-and its fidelity is flat in both mode-count and graph size precisely where the raw
-embedding decays.
+the magnitude---so beyond its cluster-separation role it is also the geodesically
+correct projection, and its fidelity is flat in both mode-count and graph size
+precisely where the raw embedding decays.
 
-This ``keep the scale-invariant direction'' operation recurs beyond clustering---in
-KV-cache compression (PolarQuant transfers the scale-invariant direction) and in
-preference geometry (a scale-invariant ``aversion angle'' that transfers across
-decision domains). It also admits a physical reading: in observer theory a bounded
-observer perceives geometry only after coarse-graining a discrete substrate
-\cite{wolfram2026}, and the angular projection is a candidate for that
+This ``keep the scale-invariant direction'' operation has analogues beyond
+clustering---for example polar-coordinate KV-cache quantization, which represents
+key vectors in magnitude--direction form and quantizes the two parts separately
+\cite{polarquant2025}. It also admits a physical reading: in observer theory a
+bounded observer perceives geometry only after coarse-graining a discrete
+substrate \cite{wolfram2026}, and the angular projection is a candidate for that
 coarse-graining. We keep that interpretation to the discussion
 (\S\ref{sec:disc}) and let the spectral result stand on its own; the empirical
 core is that the basis is \emph{universal}, preserving geodesics on any graph
@@ -84,9 +85,10 @@ carrying genuine low-dimensional Riemannian geometry, independent of how it was
 generated.
 
 \textbf{Contributions:} (1) the \textbf{Keep-the-Angle Principle}
-(\S\ref{sec:thm})---a proven Radial-Degeneracy \emph{theorem} and an
-empirically-supported Angular-Preservation \emph{conjecture}; (2) a measurement
-with controls (\S\ref{sec:results}); (3) universality across five substrate types
+(\S\ref{sec:thm})---a Radial-Degeneracy \emph{theorem} (for the full embedding, as
+a corollary of \cite{vonluxburg2014}) and an empirically-supported
+Angular-Preservation \emph{conjecture}; (2) a measurement with controls
+(\S\ref{sec:results}); (3) universality across five substrate types
 (\S\ref{sec:univ}); (4) a fidelity-vs-dimension scaling law (\S\ref{sec:law}); and
 (5) two honest negatives (\S\ref{sec:neg}). We do \emph{not} claim to derive
 physics; the core result is a basis-level fact about spectral embeddings.
@@ -96,72 +98,99 @@ physics; the core result is a basis-level fact about spectral embeddings.
 maps \cite{coifman2006} embed a graph via low eigenvectors; the commute-time
 embedding scales mode $k$ by $1/\sqrt{\lambda_k}$. \textbf{Commute-time
 degeneracy.} von~Luxburg et al.\ \cite{vonluxburg2014} proved the commute distance
-of a large geometric graph degenerates, $R(i,j)\to 1/d_i + 1/d_j$; we read this
-backwards as the collapse of the \emph{radial} coordinate to local degree.
-\textbf{Row-normalization.} Ng--Jordan--Weiss \cite{ng2002} row-normalize the
-eigen-embedding---the angular projection we study; we supply the geometric reason
-it recovers geodesics. \textbf{Emergent geometry and observer theory.} In the
-Wolfram model \cite{wolfram2002,wolfram2020,gorard2020} space is a hypergraph and
-law is what a bounded observer perceives after coarse-graining the ruliad
-\cite{wolfram2026}; that coarse-graining is left qualitative, and our angular
-projection is a candidate for it (\S\ref{sec:disc}). \textbf{Hyperbolic
-embedding.} Trees embed in $\mathbb{H}^2$ at low distortion
+of a large geometric graph degenerates, $R(i,j)\to 1/k_i + 1/k_j$ ($k_i$ the
+degree of node $i$); we read this backwards as the collapse of the \emph{radial}
+coordinate to local degree. \textbf{Row-normalization.} Ng--Jordan--Weiss
+\cite{ng2002} row-normalize the eigen-embedding---the angular projection we study.
+Schiebinger, Wainwright and Yu \cite{schiebinger2015} give the sharpest existing
+account: under a mixture model, row-normalized embeddings concentrate clusters in
+orthogonal directions, explaining $k$-means' post-normalization success;
+consistency of spectral clustering is treated in \cite{vonluxburg2008}. Both
+analyses are about cluster separation on the sphere. Our question---whether the
+normalized embedding preserves \emph{geodesic distances} on a manifold-like
+graph---is complementary, and to our knowledge open. \textbf{Emergent geometry and
+observer theory.} In the Wolfram model \cite{wolfram2002,wolfram2020,gorard2020}
+space is a hypergraph and law is what a bounded observer perceives after
+coarse-graining the ruliad \cite{wolfram2026}; that coarse-graining is left
+qualitative, and our angular projection is a candidate for it (\S\ref{sec:disc}).
+\textbf{Hyperbolic embedding.} Trees embed in $\mathbb{H}^2$ at low distortion
 \cite{gromov1987,sarkar2011,nickel2017}; we test and reject a hyperbolic reframe
 in \S\ref{sec:neg}.
 
 \section{The Keep-the-Angle Principle}\label{sec:thm}
 Let $G$ be connected on $n$ nodes with symmetric-normalized Laplacian
 $L = I - D^{-1/2} A D^{-1/2}$, eigenpairs $(\lambda_k, v_k)$,
-$0=\lambda_0<\lambda_1\le\cdots$. The commute-time embedding using the lowest $m$
-nontrivial modes places node $i$ at
-$\Psi_i = \big(v_1(i)/\sqrt{\lambda_1},\dots,v_m(i)/\sqrt{\lambda_m}\big)$.
-Write $\Psi_i = r_i\,\hat u_i$ with radius $r_i=\lVert\Psi_i\rVert$ and angle
-$\hat u_i = \Psi_i/\lVert\Psi_i\rVert$.
+$0=\lambda_0<\lambda_1\le\cdots$. The low-mode spectral embedding using the lowest
+$m$ nontrivial modes places node $i$ at
+$\Psi_i = \big(v_1(i)/\sqrt{\lambda_1},\dots,v_m(i)/\sqrt{\lambda_m}\big)$. Write
+$\Psi_i = r_i\,\hat u_i$ with radius $r_i=\lVert\Psi_i\rVert$ and angle
+$\hat u_i = \Psi_i/\lVert\Psi_i\rVert$.\footnote{We call $\Psi$
+``commute-style'' rather than the commute-time embedding proper: the classical
+commute embedding uses the pseudoinverse of the \emph{unnormalized} Laplacian and
+all $n-1$ modes, so that $\lVert\Psi_i-\Psi_j\rVert^2$ equals the resistance
+$R(i,j)$ exactly. Our $\Psi$ is the truncated, normalized analogue standard in
+spectral clustering; the distinction matters for Theorem~\ref{thm:radial} and is
+handled there.}
 
-\paragraph{Intrinsic dimension.} Throughout, $d$ is the intrinsic dimension of the
-substrate: the manifold dimension \emph{by construction} for the random-geometric
-benchmarks (tori, king-lattices, sphere), and for emergent graphs the value at
-which the three independent estimators of \S4.1 (ball-growth, spectral dimension,
+\paragraph{Intrinsic dimension and degree notation.} Throughout, $d$ is the
+intrinsic dimension of the substrate, and $k_i$ denotes the degree of node $i$ (we
+reserve $d$ for dimension to avoid the collision $d$ vs.\ $d_i$): the manifold
+dimension \emph{by construction} for the random-geometric benchmarks (tori,
+king-lattices, sphere), and for emergent graphs the value at which the three
+independent estimators of \S\ref{sec:methods} (ball-growth, spectral dimension,
 effective rank) mutually agree---reported with their inter-estimator spread, with
 only low-spread graphs treated as manifolds. The regime $d\ge2$ refers to this
 measured intrinsic dimension; \S\ref{sec:law} confirms the $d=1$ boundary behaves
 as predicted.
 
-\begin{theorem}[Radial Degeneracy]
-For a graph of intrinsic dimension $d\ge2$, as $n\to\infty$ the commute distance
-degenerates to an additively separable degree function \cite{vonluxburg2014}, and
-the radial coordinate satisfies $r_i\to 1/\sqrt{d_i}$ ($d_i$ the node degree). The
-radius is therefore geometry-free---a local-density coordinate carrying no
+\begin{theorem}[Radial Degeneracy]\label{thm:radial}
+Let $G_n$ be random geometric graphs of intrinsic dimension $d\ge2$ satisfying the
+conditions of \cite{vonluxburg2014}, and let $\Phi_i$ be the \emph{full}
+commute-time embedding built from the unnormalized Laplacian, so that
+$\lVert\Phi_i\rVert^2 = L^{+}_{ii}$. As $n\to\infty$ the resistance distance
+degenerates, $R(i,j)\to 1/k_i + 1/k_j$; since the only per-node content of this
+additively separable form is the self-term $L^{+}_{ii}$, the radius satisfies
+$\lVert\Phi_i\rVert \to 1/\sqrt{k_i}$. The radius of the full commute embedding is
+therefore asymptotically geometry-free---a local-density coordinate carrying no
 geodesic information.
 \end{theorem}
-\noindent\emph{Proof (sketch).} A direct corollary of the von~Luxburg--Radl--Hein
-degeneracy theorem: for $d\ge2$ the resistance distance $R(i,j)\to 1/d_i + 1/d_j$,
-an additively separable form whose only per-node content is the self-term, which
-is exactly $r_i^2$. Verified numerically (\S\ref{sec:verify}):
-$\rho(r_i,1/\sqrt{d_i})=0.92$--$0.99$ and radius-only geodesic preservation
-$\rho\le0.08$. $\square$
 
-\begin{conjecture}[Angular Preservation]
+\begin{remark}[Truncated, normalized radius]
+Our experiments use the truncated radius $r_i=\lVert\Psi_i\rVert$ ($m$ lowest
+modes of $L_{\mathrm{sym}}$), not $\lVert\Phi_i\rVert$. Transferring
+Theorem~\ref{thm:radial} to this setting requires (i) the normalized analogue of
+the degeneracy in \cite{vonluxburg2014} and (ii) control of the truncation error,
+and we do not prove either here; we state the truncated statement as an empirical
+observation. Numerically it holds tightly: $\rho(r_i,1/\sqrt{k_i})=0.92$--$0.99$
+and radius-only geodesic preservation $\rho\le0.08$ (\S\ref{sec:verify}).
+\end{remark}
+
+\begin{conjecture}[Angular Preservation]\label{conj:angle}
 Row-normalization $\hat u_i = \Psi_i/\lVert\Psi_i\rVert$ deletes the degenerate
-density factor of Theorem~1, and the resulting direction of the low-mode eigenmap
-remains bi-Lipschitz to geodesic distance \emph{uniformly in} the mode-count $m$
-and size $n$.
+density factor of Theorem~\ref{thm:radial}, and the pairwise distances among the
+resulting directions remain \emph{rank-faithful} to geodesic distance---Spearman
+correlation bounded away from zero (empirically $\approx0.9$)---\emph{uniformly
+in} the mode-count $m$ and size $n$. A stronger, metric form of the
+conjecture---that the angular map is bi-Lipschitz to geodesic distance with
+constants uniform in $m$ and $n$---is consistent with our data but untested; our
+evidence is rank-based and cannot by itself bound metric distortion.
 \end{conjecture}
+
 \noindent\emph{Status.} Empirically strong (\S\ref{sec:results}) but \textbf{not
 proven}. It rests on eigenmap-embedding results plus a heuristic; the honest gap
-is that Theorem~1 explains why the radius \emph{dies} for $d\ge2$, not by itself
-why the angle \emph{lives}---indeed the angular fidelity persists
-($\rho\approx0.88$--$0.90$) even on quasi-1D graphs where Theorem~1 does not apply,
-so the angular half is carried by the eigenmap-embedding mechanism, not degeneracy
-alone. Together these are the \textbf{Keep-the-Angle Principle}: keep $\hat u_i$,
-discard $r_i$.
+is that Theorem~\ref{thm:radial} explains why the radius \emph{dies} for
+$d\ge2$, not by itself why the angle \emph{lives}---indeed the angular fidelity
+persists ($\rho\approx0.88$--$0.90$) even on quasi-1D graphs where
+Theorem~\ref{thm:radial} does not apply, so the angular half is carried by the
+eigenmap-embedding mechanism, not degeneracy alone. Together these are the
+\textbf{Keep-the-Angle Principle}: keep $\hat u_i$, discard $r_i$.
 
-\paragraph{Dimension gating.} Theorem~1 is a $d\ge2$ phenomenon. In (quasi-)1D,
-resistance equals path length, so the radius \emph{stays} geodesic-informative and
-Theorem~1 correctly does not apply---a prediction, not a failure, confirmed in
-\S\ref{sec:verify}.
+\paragraph{Dimension gating.} Theorem~\ref{thm:radial} is a $d\ge2$ phenomenon.
+In (quasi-)1D, resistance equals path length, so the radius \emph{stays}
+geodesic-informative and Theorem~\ref{thm:radial} correctly does not apply---a
+prediction, not a failure, confirmed in \S\ref{sec:verify}.
 
-\section{Methods}
+\section{Methods}\label{sec:methods}
 \textbf{Estimators.} Ball-growth $N(r)\sim r^d$; spectral dimension from the
 heat-kernel return probability $P(t)=\langle e^{-Lt}\rangle\sim t^{-d_s/2}$;
 effective rank via local-PCA participation ratio. Low inter-estimator spread
@@ -169,9 +198,20 @@ $\Rightarrow$ clean manifold, and the agreed value is our measured intrinsic
 dimension $d$. \textbf{Angular metric.} Spearman $\rho$ between embedded pairwise
 distances and true graph geodesics for: \emph{angle} (unit-normalized low-mode
 embedding), \emph{random} ($m$ random modes; control), \emph{magnitude} (radius
-only), \emph{euclid} (classical 2D MDS). \textbf{Substrates.} Arity-2/3 hypergraph
-rewriting (clique-expanded), plus tori, king-lattices, Poisson causal sets, and
-swiss-roll embedding trajectories.
+only), \emph{euclid} (classical 2D MDS). \textbf{Uncertainty.} Each $\rho$ is a
+Spearman correlation over the $\binom{a}{2}$ pairs of $a$ anchor nodes ($a=150$
+unless noted; $11{,}175$ pairs), with bootstrap $95\%$ CIs over pair resampling
+($2000$ resamples). On the 2-torus ($n=2000$) the angular basis gives
+$\rho=0.894$, CI $[0.888,0.899]$, and $0.897\pm0.012$ across $8$ independent graph
+draws; the magnitude control gives $0.006$ $[0.000,0.025]$ and the random-mode
+control $0.037$ $[0.018,0.055]$. \textbf{Substrates.} Arity-2/3 hypergraph
+rewriting (clique-expanded), plus tori, king-lattices, Poisson causal sets, and a
+swiss-roll embedding trajectory: a synthetic 2D manifold (spiral angle
+$u\in[1.5\pi,4.5\pi]$, height $v\in[0,20]$) carried into $\mathbb{R}^{12}$ by a
+random orthogonal map with isotropic Gaussian noise ($\sigma=0.03$), connected as
+a $k=10$ nearest-neighbour graph over $n=2000$ points---the analogue of embedding
+a corpus line-by-line onto a low-dimensional semantic manifold and joining nearest
+lines.
 
 \section{Results}\label{sec:results}
 \subsection{The core result}
@@ -198,8 +238,9 @@ reconstructs geodesics at $\rho\approx 0$ (Fig.~\ref{fig:control}).
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.72\linewidth]{fig1_core.pdf}
-\caption{Angle carries the geometry; magnitude is throwaway; the full commute
-embedding decays with $m$.}
+\caption{Spearman correlation with graph geodesics on a 2-torus ($n=2000$) versus
+mode-count $m$: angle carries the geometry, magnitude is throwaway, and the full
+commute embedding decays with $m$.}
 \label{fig:core}
 \end{figure}
 
@@ -229,45 +270,65 @@ king-lattice & 2 & 0.82 & 0.01 & 0.95 \\
 swiss-roll trajectory & 2 & 0.93 & 0.01 & 0.99 \\
 emergent $R_{3D}$ (Wolfram) & 2.07 & 0.82 & 0.01 & 0.81 \\
 causal set (Lorentzian) & 3.9 & 0.57 & 0.01 & 0.55 \\
-small-world (destroyed) & 3.0 & 0.45 & 0.00 & --- \\
+small-world (destroyed) & 3.0$^{*}$ & 0.45 & 0.00 & --- \\
 \bottomrule
 \end{tabular}
 \end{center}
 Substrates with genuine low-$d$ Riemannian geometry all show the effect,
 independent of graph origin; the metric fails correctly where geometry is
-Lorentzian or destroyed. The swiss-roll trajectory is the sequential-embedding
-case: the angular basis is the same whether the manifold comes from hypergraph
-rewriting or cultural sequential data.
+Lorentzian or destroyed. $^{*}$For the small-world graph the three dimension
+estimators do \emph{not} strongly disagree (spread $0.21$, comparable to the clean
+lattice's $0.22$); rather, $3\%$ rewiring inflates the measured dimension from the
+construction value $2$ to $\approx3$ and collapses angle-$\rho$ to $0.45$. Here the
+fidelity metric itself---not the spread criterion---detects the destroyed
+geometry: this is the predicted failure, not an exception.
+
+Two caveats keep the universality claim honest. First, on the two flat substrates
+(king-lattice, swiss-roll) classical MDS \emph{beats} the angular basis ($0.95$
+and $0.99$ vs.\ $0.82$ and $0.93$): MDS wins whenever the manifold embeds
+near-isometrically in low-dimensional Euclidean space, while the angle wins where
+topology obstructs such an embedding (the torus: $0.89$ vs.\ $0.67$) and, unlike
+MDS, is uniform in $m$ and $n$ (\S\ref{sec:verify}). Universality here means the
+angular basis never \emph{loses} the geometry on a genuine low-$d$ Riemannian
+substrate---not that it dominates every baseline on every substrate. Second, the
+swiss-roll trajectory is the sequential-embedding case: the angular basis is the
+same whether the manifold comes from hypergraph rewriting or sequential-trajectory
+data.
 
 \subsection{The scaling law}\label{sec:law}
 Across 20 independent emergent manifolds ($d\approx 1$--$3.6$),
 \[
 \text{angle-}\rho \;\approx\; 1.09 - 0.157\,d, \qquad
-\text{Spearman} = -0.881, \quad d\in[1.0,3.6].
+\text{slope } -0.157 \pm 0.028,\quad R^2 = 0.64,\quad d\in[1.0,3.6].
 \]
-The fit is \emph{empirical and local}: $\rho$ is a rank correlation bounded by 1,
-so the linear form holds only within the measured range---the intercept $1.09$ is
-an extrapolation, not a literal $d\to0$ fidelity, and the slope may vary with
-substrate roughness. Within range, fidelity is highest at low dimension and
-softens toward $\approx0.56$ at $d\approx3.4$ (Fig.~\ref{fig:law}); the
-dimension-gated degeneracy of \S\ref{sec:thm} is the mechanism.
+(Spearman $-0.881$ between $\rho$ and $d$ serves as a distribution-free
+monotonicity check; the linear fit itself should be judged by its slope
+uncertainty and $R^2$.) The fit is \emph{empirical and local}: $\rho$ is a rank
+correlation bounded by 1, so the linear form holds only within the measured
+range---the intercept $1.09$ is an extrapolation, not a literal $d\to0$ fidelity,
+and the slope may vary with substrate roughness. Within range, fidelity is highest
+at low dimension and softens toward $\approx0.56$ at $d\approx3.4$
+(Fig.~\ref{fig:law}); the dimension-gated degeneracy of \S\ref{sec:thm} is the
+mechanism.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.72\linewidth]{fig2_scaling.pdf}
-\caption{Angular fidelity falls linearly with emergent dimension across ring,
-tori, and Wolfram-model rules.}
+\caption{Angular fidelity falls approximately linearly with emergent dimension
+across ring, tori, and Wolfram-model rules (slope $-0.157\pm0.028$, $R^2=0.64$
+over 20 manifolds). Per-point error bars from pair-resampling are left to future
+work.}
 \label{fig:law}
 \end{figure}
 
 \subsection{Verifying Theorem 1 and Conjecture 1}\label{sec:verify}
 angle-$\rho$ is flat in graph size while the full commute distance decays, and
-the radius tracks degree exactly ($\rho(\lVert\Psi_i\rVert,1/\sqrt{d_i})=
-0.92$--$0.99$; radius-only $\rho\le0.08$). Theorem~1 holds cleanly at $d=3$
-($\rho(R,1/d_i+1/d_j)\to0.98$); $d=2$ is borderline (log corrections); the
-quasi-1D case correctly shows no degeneracy, as the dimension gating predicts.
-Conjecture~1: in an $m$-sweep at $n=4000$, angle-$\rho$ is flat $\approx0.93$
-across $m=5$--$80$ while the full embedding decays $0.773\to0.437$.
+the radius tracks degree exactly ($\rho(\lVert\Psi_i\rVert,1/\sqrt{k_i})=
+0.92$--$0.99$; radius-only $\rho\le0.08$). Theorem~\ref{thm:radial} holds cleanly
+at $d=3$ ($\rho(R,1/k_i+1/k_j)\to0.98$); $d=2$ is borderline (log corrections);
+the quasi-1D case correctly shows no degeneracy, as the dimension gating predicts.
+Conjecture~\ref{conj:angle}: in an $m$-sweep at $n=4000$, angle-$\rho$ is flat
+$\approx0.93$ across $m=5$--$80$ while the full embedding decays $0.773\to0.437$.
 
 \section{Honest Negatives}\label{sec:neg}
 \textbf{Not secretly hyperbolic (rejected).} With a binary-tree positive control
@@ -286,12 +347,13 @@ untouched.
 \textbf{The primary result is basis-level and substrate-agnostic.} The angular
 coordinate of the low-Laplacian embedding preserves geodesics while the radial
 coordinate is von-Luxburg-degenerate noise. This gives Ng--Jordan--Weiss
-row-normalization a geometric justification it previously lacked, unifies it with
-the scale-invariant direction of KV-cache compression, and holds \emph{universally}
-across substrates with genuine low-$d$ Riemannian geometry, independent of graph
-origin. That the same basis works identically on hypergraph-rewriting and
-cultural-sequential substrates is evidence that scale-invariant angular
-coarse-graining is a general law of how relational data carries geometric
+row-normalization a geodesic justification complementary to the cluster-separation
+theory of \cite{schiebinger2015}, unifies it with the scale-invariant direction of
+KV-cache compression \cite{polarquant2025}, and holds \emph{universally} across
+substrates with genuine low-$d$ Riemannian geometry, independent of graph origin.
+That the same basis works identically on hypergraph-rewriting and
+sequential-trajectory substrates is evidence that scale-invariant angular
+coarse-graining is a general mechanism by which relational data carries geometric
 structure.
 
 \textbf{One interpretation is observer-theoretic.} In Wolfram's observer-relative
@@ -300,35 +362,51 @@ exactly this angular projection---making ``the observer's basis'' a concrete
 candidate for the coarse-graining the program leaves unspecified. We offer this as
 motivation and bound it honestly: its strongest claim---dynamical, energy-
 responsive curvature---is a null (\S\ref{sec:neg}). The core contribution stands
-independent of the physics reading. Open problems: proving Conjecture~1;
-synthesizing clean manifolds above $d\approx2$; and a dimension-adaptive angular
-basis that tunes mode-count and diffusion time to counter the fidelity decay. Keep
-the angle, drop the magnitude: the basis-level fact is the contribution; the
-observer interpretation is where we leave the door open.
+independent of the physics reading. Open problems: proving
+Conjecture~\ref{conj:angle} (in its rank form, and ideally the bi-Lipschitz
+strengthening); extending Theorem~\ref{thm:radial} to the truncated, normalized
+radius actually used in practice; synthesizing clean manifolds above $d\approx2$;
+and a dimension-adaptive angular basis that tunes mode-count and diffusion time to
+counter the fidelity decay. Keep the angle, drop the magnitude: the basis-level
+fact is the contribution; the observer interpretation is where we leave the door
+open.
 
 \begin{thebibliography}{99}
 \bibitem{belkin2003} M.~Belkin and P.~Niyogi. Laplacian eigenmaps for
 dimensionality reduction and data representation. \emph{Neural Computation},
-2003.
+15(6):1373--1396, 2003.
 \bibitem{coifman2006} R.~Coifman and S.~Lafon. Diffusion maps. \emph{Applied and
-Computational Harmonic Analysis}, 2006.
+Computational Harmonic Analysis}, 21(1):5--30, 2006.
 \bibitem{gorard2020} J.~Gorard. Some relativistic and gravitational properties of
-the Wolfram model. \emph{Complex Systems}, 2020.
+the Wolfram model. \emph{Complex Systems}, 29(2):107--192, 2020.
 \bibitem{gromov1987} M.~Gromov. Hyperbolic groups. In \emph{Essays in Group
-Theory}, 1987.
-\bibitem{ng2002} A.~Ng, M.~Jordan, and Y.~Weiss. On spectral clustering.
-\emph{NeurIPS}, 2002.
+Theory}, MSRI Publications 8, pp.~75--263, Springer, 1987.
+\bibitem{ng2002} A.~Ng, M.~Jordan, and Y.~Weiss. On spectral clustering: analysis
+and an algorithm. \emph{Advances in Neural Information Processing Systems 14
+(NeurIPS)}, 2002.
 \bibitem{nickel2017} M.~Nickel and D.~Kiela. Poincar\'e embeddings for learning
-hierarchical representations. \emph{NeurIPS}, 2017.
+hierarchical representations. \emph{Advances in Neural Information Processing
+Systems 30 (NeurIPS)}, 2017.
+\bibitem{polarquant2025} I.~Han, P.~Kacham, A.~Karbasi, V.~Mirrokni, and
+A.~Zandieh. PolarQuant: Quantizing KV caches with polar transformation.
+\emph{arXiv:2502.02617}, 2025.
 \bibitem{sarkar2011} R.~Sarkar. Low-distortion delta-hyperbolic embedding in the
-hyperbolic plane. \emph{Graph Drawing}, 2011.
-\bibitem{vonluxburg2014} U.~von~Luxburg, A.~Radl, and M.~Hein. Hitting and
-commute times in large random neighborhood graphs. \emph{JMLR}, 2014.
-\bibitem{wolfram2002} S.~Wolfram. \emph{A New Kind of Science}. 2002.
+hyperbolic plane. \emph{Graph Drawing}, LNCS 7034, pp.~355--366, Springer, 2011.
+\bibitem{schiebinger2015} G.~Schiebinger, M.~J.~Wainwright, and B.~Yu. The
+geometry of kernelized spectral clustering. \emph{Annals of Statistics},
+43(2):819--846, 2015.
+\bibitem{vonluxburg2008} U.~von~Luxburg, M.~Belkin, and O.~Bousquet. Consistency
+of spectral clustering. \emph{Annals of Statistics}, 36(2):555--586, 2008.
+\bibitem{vonluxburg2014} U.~von~Luxburg, A.~Radl, and M.~Hein. Hitting and commute
+times in large random neighborhood graphs. \emph{JMLR}, 15:1751--1798, 2014.
+\bibitem{wolfram2002} S.~Wolfram. \emph{A New Kind of Science}. Wolfram Media,
+2002.
 \bibitem{wolfram2020} S.~Wolfram. Finally we may have a path to the fundamental
-theory of physics. 2020.
+theory of physics. Writings blog, April 2020.
+\url{https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/}. Accessed July 2026.
 \bibitem{wolfram2026} S.~Wolfram. What ultimately is there? Metaphysics and the
-ruliad. 2026.
+ruliad. Writings blog, February 2026.
+\url{https://writings.stephenwolfram.com/2026/02/what-ultimately-is-there-metaphysics-and-the-ruliad/}. Accessed July 2026.
 \end{thebibliography}
 
 \end{document}

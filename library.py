@@ -157,12 +157,20 @@ if __name__ == "__main__":
     )
     # (B) degradation law: angle_rho vs dimension
     if len(pts) >= 3:
-        slope, inter = np.polyfit(pts[:, 0], pts[:, 1], 1)
+        (slope, inter), cov = np.polyfit(pts[:, 0], pts[:, 1], 1, cov=True)
+        se = float(np.sqrt(cov[0, 0]))
+        yhat = slope * pts[:, 0] + inter
+        r2 = float(
+            1
+            - ((pts[:, 1] - yhat) ** 2).sum()
+            / ((pts[:, 1] - pts[:, 1].mean()) ** 2).sum()
+        )
         r = spearmanr(pts[:, 0], pts[:, 1]).statistic
         print(
             f"(B) angle_rho vs emergent dim (n={len(pts)} manifolds, d~"
             f"{pts[:,0].min():.1f}..{pts[:,0].max():.1f}): "
-            f"angle_rho ~ {inter:+.3f} {slope:+.3f}*dim, Spearman={r:+.3f}"
+            f"angle_rho ~ {inter:+.3f} {slope:+.3f}*dim (slope SE {se:.3f}), "
+            f"R2={r2:.3f}, Spearman={r:+.3f}"
         )
         print(
             f"    => observer fidelity {'FALLS' if slope<0 else 'RISES'} "
