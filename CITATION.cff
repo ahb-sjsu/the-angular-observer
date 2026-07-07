@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite it as below."
+title: >-
+  The Angular Observer: Scale-Invariant Coarse-Graining as a
+  Universal Observer Basis for Emergent Geometry
+abstract: >-
+  Writing the graph normalized-Laplacian eigen-embedding in polar form, the
+  angular coordinates of the low-eigenvalue subspace carry a graph's geodesic
+  geometry while the radial coordinate is asymptotically geometry-free
+  (von Luxburg degeneracy). Keeping only the angle — the Ng-Jordan-Weiss /
+  PolarQuant move — is a measurable, universal model of a bounded observer's
+  coarse-graining, holding across Wolfram-model rewriting, lattices, and
+  embedding trajectories, and obeying a linear observer-fidelity-vs-dimension law.
+type: software
+authors:
+  - family-names: Bond
+    given-names: Andrew H.
+    orcid: "https://orcid.org/0009-0003-2599-6158"
+    affiliation: "San José State University"
+    email: andrew.bond@sjsu.edu
+version: "0.1.0"
+date-released: "2026-07-06"
+license: MIT
+repository-code: "https://github.com/ahb-sjsu/the-angular-observer"
+url: "https://github.com/ahb-sjsu/the-angular-observer"
+keywords:
+  - spectral geometry
+  - observer theory
+  - Wolfram model
+  - Laplacian embedding
+  - coarse-graining
+  - emergent geometry
+# doi: 10.5281/zenodo.XXXXXXX   # filled in once Zenodo mints the release DOI
