@@ -29,7 +29,7 @@ substrates with genuine low-dimensional Riemannian geometry (lattices,
 manifold-embedding trajectories, Wolfram-model hypergraph rewriting) and fails
 correctly on Lorentzian causal sets and geometry-destroying small-world graphs.
 Across 20 independent emergent manifolds (d ≈ 1–3.6), fidelity falls approximately
-linearly with intrinsic dimension (slope −0.157 ± 0.028, R² = 0.64).
+linearly with intrinsic dimension (slope −0.153 ± 0.027, R² = 0.65).
 
 ## The core result
 

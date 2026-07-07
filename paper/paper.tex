@@ -298,14 +298,14 @@ data.
 \subsection{The scaling law}\label{sec:law}
 Across 20 independent emergent manifolds ($d\approx 1$--$3.6$),
 \[
-\text{angle-}\rho \;\approx\; 1.09 - 0.157\,d, \qquad
-\text{slope } -0.157 \pm 0.028,\quad R^2 = 0.64,\quad d\in[1.0,3.6].
+\text{angle-}\rho \;\approx\; 1.08 - 0.153\,d, \qquad
+\text{slope } -0.153 \pm 0.027,\quad R^2 = 0.65,\quad d\in[1.0,3.6].
 \]
 (Spearman $-0.881$ between $\rho$ and $d$ serves as a distribution-free
 monotonicity check; the linear fit itself should be judged by its slope
 uncertainty and $R^2$.) The fit is \emph{empirical and local}: $\rho$ is a rank
 correlation bounded by 1, so the linear form holds only within the measured
-range---the intercept $1.09$ is an extrapolation, not a literal $d\to0$ fidelity,
+range---the intercept $1.08$ is an extrapolation, not a literal $d\to0$ fidelity,
 and the slope may vary with substrate roughness. Within range, fidelity is highest
 at low dimension and softens toward $\approx0.56$ at $d\approx3.4$
 (Fig.~\ref{fig:law}); the dimension-gated degeneracy of \S\ref{sec:thm} is the
@@ -315,9 +315,10 @@ mechanism.
 \centering
 \includegraphics[width=0.72\linewidth]{fig2_scaling.pdf}
 \caption{Angular fidelity falls approximately linearly with emergent dimension
-across ring, tori, and Wolfram-model rules (slope $-0.157\pm0.028$, $R^2=0.64$
-over 20 manifolds). Per-point error bars from pair-resampling are left to future
-work.}
+across 20 independent emergent manifolds (5 rules $\times$ 4 seeds). Error bars
+are pair-bootstrap $95\%$ CIs; the shaded region is a $95\%$ regression
+confidence band (slope $-0.153\pm0.027$, $R^2=0.65$; the one outlier at
+$d\approx2$ is a seed-sensitive evolved rule, \S\ref{sec:law}).}
 \label{fig:law}
 \end{figure}
 
