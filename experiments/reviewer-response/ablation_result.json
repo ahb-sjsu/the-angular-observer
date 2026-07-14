@@ -1,0 +1,136 @@
+{
+  "torus_d2": {
+    "substrate": "2-torus",
+    "n": 2000,
+    "m10": {
+      "plain": {
+        "angle_rho": 0.554,
+        "bilip": 2.58
+      },
+      "commute": {
+        "angle_rho": 0.914,
+        "bilip": 2.51
+      },
+      "diffusion_t1": {
+        "angle_rho": 0.895,
+        "bilip": 2.46
+      },
+      "diffusion_t3": {
+        "angle_rho": 0.946,
+        "bilip": 2.82
+      },
+      "deg_div": {
+        "angle_rho": 0.914,
+        "bilip": 2.51
+      },
+      "deg_mul": {
+        "angle_rho": 0.914,
+        "bilip": 2.51
+      }
+    },
+    "m20": {
+      "plain": {
+        "angle_rho": 0.055,
+        "bilip": 2.22
+      },
+      "commute": {
+        "angle_rho": 0.889,
+        "bilip": 2.25
+      },
+      "diffusion_t1": {
+        "angle_rho": 0.707,
+        "bilip": 2.26
+      },
+      "diffusion_t3": {
+        "angle_rho": 0.961,
+        "bilip": 2.46
+      },
+      "deg_div": {
+        "angle_rho": 0.889,
+        "bilip": 2.25
+      },
+      "deg_mul": {
+        "angle_rho": 0.889,
+        "bilip": 2.25
+      }
+    },
+    "euclid_isomap": {
+      "isomap_dim2": 0.619,
+      "isomap_dim10": 0.969,
+      "isomap_dim20": 0.971
+    },
+    "random_mode_control": {
+      "mean": 0.084,
+      "std": 0.158,
+      "max": 0.399,
+      "n_draws": 10
+    }
+  },
+  "torus_d3": {
+    "substrate": "3-torus",
+    "n": 3000,
+    "m10": {
+      "plain": {
+        "angle_rho": 0.757,
+        "bilip": 2.02
+      },
+      "commute": {
+        "angle_rho": 0.867,
+        "bilip": 1.92
+      },
+      "diffusion_t1": {
+        "angle_rho": 0.886,
+        "bilip": 1.89
+      },
+      "diffusion_t3": {
+        "angle_rho": 0.87,
+        "bilip": 1.97
+      },
+      "deg_div": {
+        "angle_rho": 0.867,
+        "bilip": 1.92
+      },
+      "deg_mul": {
+        "angle_rho": 0.867,
+        "bilip": 1.92
+      }
+    },
+    "m20": {
+      "plain": {
+        "angle_rho": 0.463,
+        "bilip": 2.01
+      },
+      "commute": {
+        "angle_rho": 0.827,
+        "bilip": 1.83
+      },
+      "diffusion_t1": {
+        "angle_rho": 0.845,
+        "bilip": 1.81
+      },
+      "diffusion_t3": {
+        "angle_rho": 0.902,
+        "bilip": 1.79
+      },
+      "deg_div": {
+        "angle_rho": 0.827,
+        "bilip": 1.83
+      },
+      "deg_mul": {
+        "angle_rho": 0.827,
+        "bilip": 1.83
+      }
+    },
+    "euclid_isomap": {
+      "isomap_dim2": 0.512,
+      "isomap_dim10": 0.944,
+      "isomap_dim20": 0.953
+    },
+    "random_mode_control": {
+      "mean": 0.069,
+      "std": 0.128,
+      "max": 0.325,
+      "n_draws": 10
+    }
+  }
+}

@@ -53,8 +53,8 @@ radial coordinate of the full embedding} degenerates to a local-degree quantity
 for intrinsic dimension $d \ge 2$, and \textbf{conjecture}, with strong
 empirical support, that the angular coordinate \rev{remains rank-faithful to
 geodesic distance}---flat in both mode-count and graph size where the raw
-embedding decays. The basis is \textbf{universal}: it preserves geodesics on any
-substrate carrying genuine low-dimensional Riemannian geometry---random-geometric
+embedding decays. The basis is \textbf{substrate-independent}: it preserves
+geodesics on any graph carrying genuine low-dimensional Riemannian geometry---random-geometric
 lattices, manifold-embedding trajectories, and Wolfram-model hypergraph rewriting
 alike---and fails correctly on Lorentzian causal sets and geometry-destroying
 small-world graphs. \rev{Across $20$ independent emergent manifolds
@@ -132,7 +132,9 @@ embedding scales mode $k$ by $1/\sqrt{\lambda_k}$. \textbf{Commute-time
 degeneracy.} von~Luxburg et al.\ \cite{vonluxburg2014} proved the commute distance
 of a large geometric graph degenerates, \rev{$R(i,j)\to 1/k_i + 1/k_j$ ($k_i$ the
 degree of node $i$)}; we read this backwards as the collapse of the \emph{radial}
-coordinate to local degree. \textbf{Row-normalization.} Ng--Jordan--Weiss
+coordinate to local degree. \rev{They also propose an \emph{amplified} commute
+distance as a correction, the natural competitor to ours; rather than repair the
+radius we discard it and keep the angle.} \textbf{Row-normalization.} Ng--Jordan--Weiss
 \cite{ng2002} row-normalize the eigen-embedding---the angular projection we
 study\rev{. Schiebinger, Wainwright and Yu \cite{schiebinger2015} give the
 sharpest existing account: under a mixture model, row-normalized embeddings
@@ -141,7 +143,14 @@ post-normalization success; consistency of spectral clustering is treated in
 \cite{vonluxburg2008}. Both analyses are about cluster separation on the sphere.
 Our question---whether the normalized embedding preserves \emph{geodesic
 distances} on a manifold-like graph---is complementary, and to our knowledge
-open.} \textbf{Emergent geometry and observer theory.} In the
+open. The same normalization removes degree as a nuisance in degree-corrected
+block models---SCORE \cite{jin2015score} cancels it through eigenvector ratios,
+and spherical spectral clustering under the DCBM \cite{qinrohe2013} projects to
+the sphere---but those are community-recovery guarantees, not geodesic ones. The
+embedding $\Psi$ itself is Rustamov's Global Point Signature \cite{rustamov2007}
+from shape analysis, and the magnitude we discard is used in its own right for
+cluster and anomaly detection \cite{chengmishne}; we keep the direction and give
+it a metric reading.} \textbf{Emergent geometry and observer theory.} In the
 Wolfram model \cite{wolfram2002,wolfram2020,gorard2020} space is a hypergraph and
 law is what a bounded observer perceives after coarse-graining the ruliad
 \cite{wolfram2026}; that coarse-graining is left qualitative, and our angular
@@ -178,15 +187,19 @@ boundary behaves as predicted.
 
 {\color{teal}% entire theorem + remark are new in this revision
 \begin{corollary}[Radial Degeneracy]\label{thm:radial}
-Let $G_n$ be random geometric graphs of intrinsic dimension $d\ge2$ satisfying
-the conditions of \cite{vonluxburg2014}, and let $\Phi_i$ be the \emph{full}
-commute-time embedding built from the unnormalized Laplacian, so that
+Let $G_n$ be random geometric graphs of intrinsic dimension $d\ge3$ satisfying
+the conditions of \cite{vonluxburg2014} \rev{(the $d=2$ case is marginal: at the
+recurrent boundary the resistance carries logarithmic corrections, matching the
+borderline behaviour we measure in \S\ref{sec:verify})}, and let $\Phi_i$ be the
+\emph{full} commute-time embedding built from the unnormalized Laplacian, so that
 $\lVert\Phi_i\rVert^2 = L^{+}_{ii}$. As $n\to\infty$ the resistance distance
-degenerates, $R(i,j)\to 1/k_i + 1/k_j$; since the only per-node content of this
-additively separable form is the self-term $L^{+}_{ii}$, the radius satisfies
-$\lVert\Phi_i\rVert \to 1/\sqrt{k_i}$. The radius of the full commute embedding
-is therefore asymptotically geometry-free---a local-density coordinate carrying
-no geodesic information.
+degenerates, $R(i,j)=L^{+}_{ii}+L^{+}_{jj}-2L^{+}_{ij}\to 1/k_i + 1/k_j$.
+\rev{The pseudoinverse is gauge-fixed by $\sum_j L^{+}_{ij}=0$ (as $L\mathbf 1=0$);
+averaging the degenerate limit against this constraint pins the off-diagonal to
+$L^{+}_{ij}\to o(1)$ and hence the self-term to} $L^{+}_{ii}\to 1/k_i$, so the
+radius satisfies $\lVert\Phi_i\rVert \to 1/\sqrt{k_i}$. The radius of the full
+commute embedding is therefore asymptotically geometry-free---a local-density
+coordinate carrying no geodesic information.
 \end{corollary}
 
 \begin{remark}[Truncated, normalized radius]
@@ -224,13 +237,20 @@ $\lambda_{m+1}^{-1}\sum_{k>m}(v_k(i)-v_k(j))^2$ respectively. The eigenvectors
 $\{v_k\}_{k=0}^{n-1}$ are orthonormal, so $VV^{\top}=I$ gives $\sum_k v_k(i)^2=1$
 and, for $i\neq j$, $\sum_k v_k(i)v_k(j)=0$; hence $\sum_{k>m}v_k(i)^2\le1$ and
 $\sum_{k>m}(v_k(i)-v_k(j))^2\le\sum_k(v_k(i)-v_k(j))^2
-=\sum_k v_k(i)^2+\sum_k v_k(j)^2-2\sum_k v_k(i)v_k(j)=2$.
+=\sum_k v_k(i)^2+\sum_k v_k(j)^2-2\sum_k v_k(i)v_k(j)=2$. These identity sums run
+over all $k=0,\dots,n-1$, including the trivial mode $k=0$ that $\Psi$ omits; it
+sits only in the subtracted low-mode partial sums, and dropping its nonnegative
+terms can only tighten the tail bounds.
 \end{proof}
 
-\rev{Two consequences. First, the truncation error is \emph{bounded independently
-of $n$}: it is controlled entirely by the inverse spectral gap $1/\lambda_{m+1}$,
-so refining the graph at fixed $m$ cannot amplify it---the mechanism behind the
-continuum survival of \S\ref{sec:continuum}. Second, the deleted content is
+\rev{Two consequences. First, the error is controlled by the inverse spectral gap
+$1/\lambda_{m+1}$ alone. This is \emph{not} an $n$-independent absolute bound: on a
+fixed-degree neighbourhood graph refined toward the continuum $\lambda_{m+1}$
+itself shrinks, so $1/\lambda_{m+1}$ grows. What it controls is the truncation
+error \emph{relative to the embedding scale}, which is fixed by the same low
+eigenvalues; since the angular and rank statistics we report are invariant to
+global scale, that relative control is what transfers, and is why the continuum
+refinement of \S\ref{sec:continuum} does not degrade. Second, the deleted content is
 high-frequency (large-$\lambda$); the geometry lives in the retained low modes
 (an equal-size random-mode basis preserves $\rho\approx0$, \S\ref{sec:results}),
 so the bound formalizes why aggressive truncation does not lose the geometry---it
@@ -319,16 +339,18 @@ angular bi-Lipschitz constant is $2.2$. Lemma~\ref{lem:norm} links the two halve
 of the principle and reduces the conjecture to standard ingredients.}
 
 \begin{theorem}[Conditional local form of Conjecture~\ref{conj:angle}]\label{thm:cond}
-\rev{Let $M$ be a compact $d$-manifold ($d\ge2$) with a graph sampled under the
-conditions of \cite{garciatrillos2018}, and fix $m$. Assume \textbf{(H1)} the
-lowest-$m$ Laplace--Beltrami eigenfunctions scaled by $1/\sqrt{\mu_k}$ are
-$L_0$-bi-Lipschitz to $(M,d_M)$ on geodesic balls of radius $r_0$
-\textup{(}Jones--Maggioni--Schul \cite{jones2010}\textup{)}, and \textbf{(H2)}
-the associated truncated radius is $\Lambda_0$-Lipschitz with $\Lambda_0<1/L_0$
-and lies in $[\rho^-,\rho^+]$. Then there exist constants $0<A\le B$ independent
-of $n$ such that, with high probability as $n\to\infty$, the graph angular map
-obeys $A\,d_M(x,y)\le\lVert\hat u_x-\hat u_y\rVert\le B\,d_M(x,y)$ for all sampled
-$x,y$ with $d_M(x,y)\le r_0$.}
+\rev{Let $M$ be a compact $d$-manifold whose graph Laplacian spectrally converges
+to $M$'s (\cite{garciatrillos2018} for $\varepsilon$-graphs, \cite{calder2022}
+for $k$-NN graphs), and fix a mode-count $m$ \emph{at a spectral gap} of $M$.
+Assume \textbf{(H1)} the truncated eigenmap
+$x\mapsto(\varphi_k(x)/\sqrt{\mu_k})_{k=1}^m$ is $L_0$-bi-Lipschitz onto its image
+on geodesic balls of radius $r_0$---the quantitative truncated-eigenmap embedding
+property of \cite{berard1994,bates2014,portegies2016}---and \textbf{(H2)} the
+associated truncated radius is $\Lambda_0$-Lipschitz with $\Lambda_0<1/L_0$ and
+lies in $[\rho^-,\rho^+]$. Then there exist constants $0<A\le B$ independent of
+$n$ such that, with high probability as $n\to\infty$, the graph angular map obeys
+$A\,d_M(x,y)\le\lVert\hat u_x-\hat u_y\rVert\le B\,d_M(x,y)$ for all sampled $x,y$
+with $d_M(x,y)\le r_0$.}
 \end{theorem}
 
 \begin{proof}[Proof (assembly)]
@@ -336,17 +358,23 @@ $x,y$ with $d_M(x,y)\le r_0$.}
 Lemma~\ref{lem:norm} its normalization, the continuum angular map, is locally
 bi-Lipschitz. Spectral convergence \cite{belkin2007,garciatrillos2018} transfers
 the low eigenpairs to the graph Laplacian with error vanishing as $n\to\infty$
-at the admissible bandwidth rate, and Proposition~\ref{prop:trunc} bounds the
-$m$-truncation uniformly in $n$. Composing the three controlled approximations
-yields the constants.}
+(scale-relative, cf.\ Proposition~\ref{prop:trunc}), and
+Proposition~\ref{prop:trunc} bounds the $m$-truncation. Composing the three
+controlled approximations yields the constants.}
 \end{proof}
 
-\rev{What remains is delimited. \textbf{(H1)} is the Jones--Maggioni--Schul
-theorem, proved there for a well-chosen $d$-subset of eigenfunctions; the open
-work is that the \emph{lowest} $m$ suffice with constants uniform in $m$ (the
-empirical ``flat in $m$'' of \S\ref{sec:verify}). \textbf{(H2)} is the truncated,
-normalized analogue of von~Luxburg--Radl--Hein---the radius flat enough that
-$\Lambda_0<1/L_0$---which we verify on the torus and conjecture generally.
+\rev{What remains is delimited. \textbf{(H1)} is subtle: Jones--Maggioni--Schul
+\cite{jones2010} guarantee bi-Lipschitz charts only from a \emph{well-chosen}
+$d$-subset of eigenfunctions per ball, because the lowest modes can degenerate at
+critical points; the truncated-eigenmap results \cite{berard1994,bates2014,%
+portegies2016} give quantitative control but the constants' uniformity in $m$ (our
+empirical ``flat in $m$,'' \S\ref{sec:verify}) is open. Low-spectrum multiplicity
+compounds this---the square torus's first nontrivial eigenvalue has multiplicity
+four, so a truncation \emph{inside} a multiplet ($m=5$) is basis-dependent;
+distances are well-defined only for whole eigenspaces, so $m$ should be taken at a
+spectral gap, or the map phrased through spectral projectors. \textbf{(H2)} is the
+truncated, normalized analogue of von~Luxburg--Radl--Hein---the radius flat enough
+that $\Lambda_0<1/L_0$---which we verify on the torus and conjecture generally.
 Globally a torus admits no bi-Lipschitz Euclidean embedding, so no global metric
 statement can hold; the global claim is necessarily the rank-faithful one this
 paper measures. Conjecture~\ref{conj:angle} is thereby reduced to a local-chart
@@ -381,9 +409,11 @@ $\Rightarrow$ clean manifold, and the agreed value is our measured intrinsic
 dimension $d$. \textbf{Angular metric.} Spearman $\rho$ between embedded pairwise
 distances and true graph geodesics for: \emph{angle} (unit-normalized low-mode
 embedding), \emph{random} ($m$ random modes; control), \emph{magnitude} (radius
-only), \emph{euclid} (classical 2D MDS). \rev{\textbf{Uncertainty.} Each $\rho$ is a
-rank correlation over $\binom{n_{\mathrm{anchor}}}{2}$ node pairs
-($n_{\mathrm{anchor}}=150$ throughout, $200$ for the cross-domain probe of
+only), \emph{euclid} (classical MDS of the graph geodesics, i.e.\ Isomap; the
+table of \S\ref{sec:univ} reports it at $\dim{=}2$). \rev{\textbf{Uncertainty.}
+Each $\rho$ is a rank correlation over $\binom{n_{\mathrm{anchor}}}{2}$ node pairs
+($n_{\mathrm{anchor}}=150$ for the substrate benchmarks, $200$ for the torus
+metric tests (\S\ref{sec:towardproof}) and the cross-domain probe of
 \S\ref{sec:moral}---$11{,}175$ and $19{,}900$ pairs respectively). Bootstrap
 $95\%$ confidence intervals over pair resampling are tight ($\le\pm0.005$ on the
 headline numbers); the dominant source of variation is the graph draw itself, so
@@ -418,7 +448,9 @@ $m$ & full (mag.$\times$dir.) & \textbf{angle only} & magnitude only \\
 
 The angle carries the geometry ($\approx 0.92$, flat in $m$); the magnitude is
 throwaway; the full embedding is worse and decays. A random-mode basis
-reconstructs geodesics at $\rho\approx 0$ (Fig.~\ref{fig:control}).
+reconstructs geodesics at $\rho\approx 0$ (Fig.~\ref{fig:control})\rev{; averaged
+over ten random draws $\rho=0.08\pm0.16$, individual draws occasionally catching
+a low mode and spiking to $\sim0.4$}.
 
 \begin{figure}[t]
 \centering
@@ -463,7 +495,7 @@ Substrates with genuine low-$d$ Riemannian geometry all show the effect,
 independent of graph origin; the metric fails correctly where geometry is
 Lorentzian or destroyed. \rev{$^{*}$For the small-world graph the three
 dimension estimators disagree sharply (ball $3.7$, spectral $3.6$,
-effective-rank $4.3$; spread $0.77$ versus $\le0.14$ on the clean substrates);
+effective-rank $4.3$; spread $0.77$ versus $0.14$--$0.51$ across the clean substrates);
 by our own manifold-grade criterion this graph is \emph{not} a manifold, and the
 low angle-$\rho$ is the predicted failure, not an exception. The two-factor
 screen below makes this quantitative.}
@@ -473,12 +505,17 @@ substrates (king-lattice, swiss-roll) classical MDS \emph{beats} the angular
 basis (0.95 and 0.99 vs.\ 0.82 and 0.93): MDS wins whenever the manifold embeds
 near-isometrically in low-dimensional Euclidean space, while the angle wins
 where topology obstructs such an embedding (the torus: 0.89 vs.\ 0.67) and,
-unlike MDS, is uniform in $m$ and $n$ (\S\ref{sec:verify}). Universality here
-means the angular basis never \emph{loses} the geometry on a genuine
-low-$d$ Riemannian substrate---not that it dominates every baseline on every
-substrate. Second,} the swiss-roll trajectory is the sequential-embedding
-case: the angular basis is the same whether the manifold comes from hypergraph
-rewriting or \rev{sequential trajectory data}.
+unlike MDS, is uniform in $m$ and $n$ (\S\ref{sec:verify}). \rev{That $0.67$ is
+Isomap forced into $\dim{=}2$; matched to $\dim{=}m$ it reaches $\approx0.97$ and
+edges the angle even on the torus---but Isomap is \emph{given} the geodesic matrix
+as input, whereas the angular basis recovers it from the spectrum alone, so the
+two solve different problems.} Universality here means the angular basis never
+\emph{loses} the geometry on a genuine low-$d$ Riemannian substrate---not that it
+dominates every baseline on every substrate. Second,} the swiss-roll is a
+manifold-embedding case (a smooth 2D manifold carried into $\mathbb{R}^{12}$): the
+angular basis is the same whether the manifold comes from hypergraph rewriting or
+from points sampled on a continuous manifold. \rev{No sequential or temporal
+structure enters the graph construction, so we make no sequential-data claim.}
 % CUT: "cultural sequential data" -- undefined; swiss-roll now defined in Methods.
 
 \rev{\paragraph{A two-factor small-world screen.} To make ``destroyed'' precise
@@ -505,7 +542,7 @@ manifolds sit firmly on the lattice side; the tangles do not:}
 \end{center}
 
 \rev{The screen robustly separates the genuine manifolds ($\omega\le-0.50$) from
-strongly destroyed geometry ($\omega\ge+0.24$), and the inter-estimator dimension
+strongly destroyed geometry ($\omega\ge+0.23$), and the inter-estimator dimension
 spread corroborates ($\le0.51$ clean versus $\ge0.77$ contaminated): the low
 angle-$\rho$ on the rewired and Lorentzian substrates is small-world/non-manifold
 contamination, not a failure of the basis on genuine geometry. A king-lattice
@@ -563,6 +600,22 @@ the quasi-1D case correctly shows no degeneracy, as the dimension gating
 predicts. Conjecture~\ref{conj:angle}: in an $m$-sweep at $n=4000$, angle-$\rho$
 is flat $\approx0.93$ across $m=5$--$80$ while the full embedding decays
 $0.773\to0.437$.
+
+\subsection{\rev{Which weighting carries the angle?}}\label{sec:ablation}
+\rev{The direction depends on the per-mode weight, so we ablate it on the torus
+($d{=}2$) and a $3$-torus ($d{=}3$). Plain eigenmaps ($w_k{=}1$) give an angle
+that \emph{collapses} with mode count---angle-$\rho$ falls from $0.55$ at $m{=}10$
+to $0.06$ at $m{=}20$ ($d{=}2$)---because equal weighting lets high modes swamp the
+direction. The commute weight $1/\sqrt{\lambda_k}$ is flat instead
+($0.91\!\to\!0.89$), as is diffusion $e^{-\lambda_k t}$; both suppress high modes,
+which is what the geometry needs. The ``flat in $m$'' property is thus a property
+of the weighting, not of angles in general---and it selects the commute (or
+diffusion) weight, not the plain eigenmap. Degree correction, by contrast, is
+\emph{invisible} to the angle: dividing or multiplying each row by $\sqrt{k_i}$
+(the diffusion-map convention and its opposite) leaves angle-$\rho$ unchanged to
+three digits ($0.889$ either way), because a per-node radial factor cancels under
+row-normalization---a direct confirmation that the degree lives in the radius
+(Corollary~\ref{thm:radial}), not the angle.}
 
 % ---- NEW in this revision: two pre-registered experiments (rungs 3a-XL, 4) ----
 \subsection{\rev{Stability across substrate evolution}}\label{sec:stability}
@@ -752,6 +805,29 @@ theory of physics\rev{\ldots and it's beautiful. Writings blog, April} 2020.
 Wolfram Writings blog, November 2021.
 \url{https://writings.stephenwolfram.com/2021/11/the-concept-of-the-ruliad/}.
 Accessed July 2026.}
+\rev{\bibitem{berard1994} P.~B\'erard, G.~Besson, and S.~Gallot. Embedding
+Riemannian manifolds by their heat kernel. \emph{Geometric and Functional
+Analysis (GAFA)}, 4(4):373--398, 1994.}
+\rev{\bibitem{bates2014} J.~Bates. The embedding dimension of Laplacian
+eigenfunction maps. \emph{Applied and Computational Harmonic Analysis},
+37(3):516--530, 2014.}
+\rev{\bibitem{portegies2016} J.~W.~Portegies. Embeddings of Riemannian manifolds
+with heat kernels and eigenfunctions. \emph{Communications on Pure and Applied
+Mathematics}, 69(3):478--518, 2016.}
+\rev{\bibitem{calder2022} J.~Calder and N.~Garc\'ia Trillos. Improved spectral
+convergence rates for graph Laplacians on $\varepsilon$-graphs and $k$-NN graphs.
+\emph{Applied and Computational Harmonic Analysis}, 60:123--175, 2022.}
+\rev{\bibitem{rustamov2007} R.~M.~Rustamov. Laplace--Beltrami eigenfunctions for
+deformation invariant shape representation. \emph{Proceedings of the Fifth
+Eurographics Symposium on Geometry Processing (SGP)}, pp.~225--233, 2007.}
+\rev{\bibitem{jin2015score} J.~Jin. Fast community detection by SCORE.
+\emph{The Annals of Statistics}, 43(1):57--89, 2015.}
+\rev{\bibitem{qinrohe2013} T.~Qin and K.~Rohe. Regularized spectral clustering
+under the degree-corrected stochastic blockmodel. \emph{Advances in Neural
+Information Processing Systems 26 (NIPS)}, 2013.}
+\rev{\bibitem{chengmishne} X.~Cheng and G.~Mishne. Spectral embedding norm:
+looking deep into the spectrum of the graph Laplacian. \emph{SIAM Journal on
+Imaging Sciences}, 13(2):1015--1048, 2020.}
 \end{thebibliography}
 
 \end{document}

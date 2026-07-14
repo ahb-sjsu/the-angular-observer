@@ -70,3 +70,19 @@ radius Lipschitz constant Λ=0.092 sits just under the map's lower stretch A=0.0
 with **0 of 9,200 local pairs violating** it (median Λ 5× smaller). Local angular
 bi-Lipschitz constant 2.2. This is the empirical support for hypothesis (H2) of
 the conditional Theorem 1. CPU-only, reuses the torus builder.
+
+## `ablation_experiments.py` → `ablation_result.json`
+
+Weighting ablation (referee comment 1), paper §5.5.1. On the 2-torus and 3-torus,
+scores angle-ρ under per-mode weightings: plain `v_k`, commute `v_k/√λ_k`,
+diffusion `v_k·e^{−λt}`, and degree-corrected `÷√k_i` / `×√k_i`.
+- **Commute weighting is essential**: plain eigenmaps collapse with mode count
+  (torus angle-ρ 0.55→0.06 as m 10→20) while commute stays flat (0.91→0.89).
+  "Flat in m" is a property of the weighting, and it selects commute/diffusion.
+- **Degree correction is invisible to the angle**: `deg_div` = `deg_mul` =
+  `commute` = 0.889 identically, since a per-node radial factor cancels under
+  row-normalization — direct confirmation the degree lives in the radius.
+- **euclid/Isomap** at dim=2 = 0.62 but dim-matched (dim=m) = 0.97: the dim-2
+  baseline was unfair; Isomap edges the angle when given the geodesics as input.
+- Random-mode control averaged over 10 draws: 0.08±0.16 (max 0.40).
+CPU-only, reuses torus builder.
