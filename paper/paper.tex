@@ -18,6 +18,7 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
 \newtheorem{conjecture}{Conjecture}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
@@ -38,7 +39,7 @@
 The commute-time (resistance) embedding built from the low eigenvectors of a
 graph Laplacian is a workhorse of spectral geometry, yet its distances are known
 to \emph{degenerate} on large graphs \cite{vonluxburg2014}. We show the geometry
-does not vanish---it migrates entirely into the \emph{angular} coordinate.
+does not vanish; it migrates entirely into the \emph{angular} coordinate.
 Writing each node's low-mode embedding in polar form (magnitude $\times$
 direction), the direction preserves graph geodesics at Spearman
 $\rho \approx 0.93$ on a reference manifold, while the magnitude preserves
@@ -106,16 +107,22 @@ coarse-graining. We keep that interpretation to the discussion
 (\S\ref{sec:disc}) and let the spectral result stand on its own; the empirical
 core is that the basis is \emph{universal}, preserving geodesics on any graph
 carrying genuine low-dimensional Riemannian geometry, independent of how it was
-generated.
+generated\rev{---and, we show in \S\ref{sec:moral}, the same angular diagnostic
+reads out on a real semantic embedding space, a language model's moral-text
+vectors}.
 
 \textbf{Contributions:} (1) the \textbf{Keep-the-Angle Principle}
-(\S\ref{sec:thm})---a Radial-Degeneracy \emph{theorem} \rev{(for the full
-embedding, as a corollary of \cite{vonluxburg2014})} and an
-empirically-supported Angular-Preservation \emph{conjecture}; (2) a measurement
-with controls (\S\ref{sec:results}); (3) universality across five substrate types
-(\S\ref{sec:univ}); (4) a fidelity-vs-dimension scaling law (\S\ref{sec:law}); and
-(5) two honest negatives (\S\ref{sec:neg}). We do \emph{not} claim to derive
-physics; the core result is a basis-level fact about spectral embeddings.
+(\S\ref{sec:thm})---a Radial-Degeneracy \emph{corollary} \rev{(for the full
+embedding, from \cite{vonluxburg2014}) with a spectral-gap bound on the
+truncation error (Proposition~\ref{prop:trunc})} and an empirically-supported
+Angular-Preservation \emph{conjecture} \rev{now with first metric-distortion
+evidence}; (2) a measurement with controls (\S\ref{sec:results}); (3)
+universality across five substrate types \rev{with a two-factor small-world
+screen} (\S\ref{sec:univ}); (4) a fidelity-vs-dimension scaling law
+(\S\ref{sec:law}); \rev{(5) a cross-domain probe on a language-model semantic
+embedding (\S\ref{sec:moral});} and (6) two honest negatives (\S\ref{sec:neg}). We
+do \emph{not} claim to derive physics; the core result is a basis-level fact about
+spectral embeddings.
 
 \section{Background}
 \textbf{Spectral geometry.} Laplacian eigenmaps \cite{belkin2003} and diffusion
@@ -184,13 +191,56 @@ no geodesic information.
 \begin{remark}[Truncated, normalized radius]
 Our experiments use the truncated radius $r_i=\lVert\Psi_i\rVert$ ($m$ lowest
 modes of $L_{\mathrm{sym}}$), not $\lVert\Phi_i\rVert$. Transferring
-Corollary~\ref{thm:radial} to this setting requires (i) the normalized analogue of
-the degeneracy in \cite{vonluxburg2014} and (ii) control of the truncation
-error, and we do not prove either here; we state the truncated statement as an
-empirical observation. Numerically it holds tightly:
+Corollary~\ref{thm:radial} to this setting needs (i) the normalized analogue of
+the degeneracy \cite{vonluxburg2014} and (ii) control of the truncation error.
+We settle (ii) unconditionally below and support (i) numerically; the residual
+gap is then the angular claim itself (Conjecture~\ref{conj:angle}).
+Numerically the degeneracy holds tightly:
 $\rho(r_i,1/\sqrt{k_i})=0.92$--$0.99$ and radius-only geodesic preservation
 $\rho\le0.08$ (\S\ref{sec:verify}).
 \end{remark}
+
+\begin{proposition}[Truncation is spectral-gap bounded]\label{prop:trunc}
+Let $\Psi^{\infty}_i=\big(v_k(i)/\sqrt{\lambda_k}\big)_{k=1}^{n-1}$ be the full
+symmetric-normalized commute-style embedding and $\Psi^{m}_i$ its truncation to
+the lowest $m$ nontrivial modes. Then for all nodes $i\neq j$,
+\[
+0 \le \lVert\Psi^{\infty}_i\rVert^2 - \lVert\Psi^{m}_i\rVert^2
+   \le \frac{1}{\lambda_{m+1}},
+\qquad
+0 \le \lVert\Psi^{\infty}_i-\Psi^{\infty}_j\rVert^2
+     - \lVert\Psi^{m}_i-\Psi^{m}_j\rVert^2 \le \frac{2}{\lambda_{m+1}} .
+\]
+\end{proposition}
+
+\begin{proof}
+Each left inequality is termwise: truncation deletes only the summands with
+$k>m$, of the form $v_k(i)^2/\lambda_k\ge0$ or
+$(v_k(i)-v_k(j))^2/\lambda_k\ge0$. For the right inequalities,
+$\lambda_k\ge\lambda_{m+1}$ for every $k>m$, so the deleted mass is at most
+$\lambda_{m+1}^{-1}\sum_{k>m}v_k(i)^2$ and
+$\lambda_{m+1}^{-1}\sum_{k>m}(v_k(i)-v_k(j))^2$ respectively. The eigenvectors
+$\{v_k\}_{k=0}^{n-1}$ are orthonormal, so $VV^{\top}=I$ gives $\sum_k v_k(i)^2=1$
+and, for $i\neq j$, $\sum_k v_k(i)v_k(j)=0$; hence $\sum_{k>m}v_k(i)^2\le1$ and
+$\sum_{k>m}(v_k(i)-v_k(j))^2\le\sum_k(v_k(i)-v_k(j))^2
+=\sum_k v_k(i)^2+\sum_k v_k(j)^2-2\sum_k v_k(i)v_k(j)=2$.
+\end{proof}
+
+\rev{Two consequences. First, the truncation error is \emph{bounded independently
+of $n$}: it is controlled entirely by the inverse spectral gap $1/\lambda_{m+1}$,
+so refining the graph at fixed $m$ cannot amplify it---the mechanism behind the
+continuum survival of \S\ref{sec:continuum}. Second, the deleted content is
+high-frequency (large-$\lambda$); the geometry lives in the retained low modes
+(an equal-size random-mode basis preserves $\rho\approx0$, \S\ref{sec:results}),
+so the bound formalizes why aggressive truncation does not lose the geometry---it
+discards a spectral-gap-bounded, high-$\lambda$ remainder. On the 2-torus
+($n=2000$) the bound holds with room to spare: the realized radius error is
+$3.5$--$17\%$ of $1/\lambda_{m+1}$ across $m\in\{5,10,20,40\}$, the full
+normalized radius is near-constant (coefficient of variation $0.09$), and the
+truncated radius stays rank-correlated with $1/\sqrt{k_i}$. What remains open is
+not the radius but the angle: Proposition~\ref{prop:trunc} bounds how far
+truncation moves the metric, not that the surviving \emph{angular} coordinate
+equals the geodesic---that is Conjecture~\ref{conj:angle}.}
 }%
 % CUT: the previous Theorem 1 + proof sketch, which claimed the truncated,
 % normalized radius as a "direct corollary" of von Luxburg--Radl--Hein. The
@@ -211,6 +261,20 @@ distortion.}
 % CUT: the bare "remains bi-Lipschitz" claim -- the headline conjecture now
 % matches the evidence type (rank correlation), with bi-Lipschitz demoted to a
 % stated stronger form.
+
+\rev{\paragraph{Metric evidence on the torus.} The metric form is no longer
+entirely untested. On the 2-torus we compare embedded distance to graph geodesic
+directly. After a single global scale, the angular map has a robust empirical
+bi-Lipschitz constant $\kappa\approx2.6$ (ratio of the $97.5$th to $2.5$th
+percentile of $d_{\mathrm{emb}}/d_{\mathrm{geo}}$ over $19{,}900$ pairs), tighter
+than the full commute embedding ($3.1$), an equal-size random-mode basis ($8.3$),
+or the magnitude coordinate ($125$); and its leading four coordinates
+Procrustes-match the canonical flat-torus embedding in $\mathbb{R}^{4}$ at
+disparity $0.07$, versus $0.995$ for random modes. This is genuine metric
+distortion, not rank correlation---one substrate, but a well-understood one. (The
+full-range constant is inflated by the few near-antipodal pairs the torus folds
+together, hence the percentile-robust $\kappa$.) A uniform-in-$(m,n)$ bi-Lipschitz
+bound remains the open metric conjecture; this is one datapoint toward it.}
 
 \noindent\emph{Status.} Empirically strong (\S\ref{sec:results}) but \textbf{not
 proven}. It rests on eigenmap-embedding results plus a heuristic; the honest gap
@@ -363,12 +427,19 @@ manifolds sit firmly on the lattice side; the tangles do not:}
 \end{tabular}
 \end{center}
 
-\rev{The gate---clean iff $\omega<0$---separates the two groups without reference
-to $\rho$, and the inter-estimator dimension spread corroborates it ($\le0.51$
-for the clean group versus $\ge0.77$ for the contaminated). The low angle-$\rho$
-on the rewired and Lorentzian substrates is thus diagnosed as
-small-world/non-manifold contamination, not a failure of the basis on genuine
-geometry---the mechanism behind the scaling-law outlier below.}
+\rev{The screen robustly separates the genuine manifolds ($\omega\le-0.50$) from
+strongly destroyed geometry ($\omega\ge+0.24$), and the inter-estimator dimension
+spread corroborates ($\le0.51$ clean versus $\ge0.77$ contaminated): the low
+angle-$\rho$ on the rewired and Lorentzian substrates is small-world/non-manifold
+contamination, not a failure of the basis on genuine geometry. A king-lattice
+rewiring sweep both sharpens and honestly bounds this. As the rewire probability
+rises, angle-$\rho$ collapses almost at once ($0.81\!\to\!0.47$ by $1\%$ rewiring)
+while $\omega$ does not cross zero until $\approx5\%$; so $\omega<0$ is a
+\emph{conservative} flag for destruction, and in the transition band ($1$--$3\%$)
+angular fidelity is in fact the \emph{more} sensitive detector of geometric
+corruption than either clustering or dimension spread. We therefore read the
+screen as confirming gross contamination, with angle-$\rho$ itself the finer
+instrument---the mechanism behind the scaling-law outlier below.}
 
 \subsection{The scaling law}\label{sec:law}
 Across 20 independent emergent manifolds ($d\approx 1$--$3.6$),
@@ -386,7 +457,13 @@ shortcut-contaminated rather than clean geometry.)}
 The fit is \emph{empirical and local}: $\rho$ is a rank correlation bounded by 1,
 so the linear form holds only within the measured range---the intercept $1.09$ is
 an extrapolation, not a literal $d\to0$ fidelity, and the slope may vary with
-substrate roughness. Within range, fidelity is highest at low dimension and
+substrate roughness. \rev{A bounded model fits essentially as well and respects
+$0<\rho<1$: the logistic $\rho\approx\big[1+e^{\,0.82\,(d-3.66)}\big]^{-1}$ gives
+$\rho(0)=0.95$ and $\rho\to0$ at $R^2=0.62$, against the linear $0.64$.
+Exponential forms do not help---an unoffset $A e^{-kd}$ still has $A=1.18>1$ and
+an offset version drives the asymptote negative. Within range the two are visually
+indistinguishable; we keep the linear coefficient as the local slope and note the
+logistic as the boundary-respecting global form.} Within range, fidelity is highest at low dimension and
 softens toward $\approx0.56$ at $d\approx3.4$ (Fig.~\ref{fig:law}); the
 dimension-gated degeneracy of \S\ref{sec:thm} is the mechanism.
 

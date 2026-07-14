@@ -1,0 +1,187 @@
+{
+  "torus_truncation_distortion": {
+    "n": 2000,
+    "n_anchor": 200,
+    "n_pairs": 19900,
+    "truncation_bound": [
+      {
+        "m": 5,
+        "lambda_gap": 0.01574,
+        "radius_bound_holds": true,
+        "radius_max_over_bound": 0.035,
+        "pair_bound_holds": true,
+        "pair_max_over_bound": 0.032
+      },
+      {
+        "m": 10,
+        "lambda_gap": 0.03272,
+        "radius_bound_holds": true,
+        "radius_max_over_bound": 0.06,
+        "pair_bound_holds": true,
+        "pair_max_over_bound": 0.057
+      },
+      {
+        "m": 20,
+        "lambda_gap": 0.05836,
+        "radius_bound_holds": true,
+        "radius_max_over_bound": 0.095,
+        "pair_bound_holds": true,
+        "pair_max_over_bound": 0.091
+      },
+      {
+        "m": 40,
+        "lambda_gap": 0.11494,
+        "radius_bound_holds": true,
+        "radius_max_over_bound": 0.166,
+        "pair_bound_holds": true,
+        "pair_max_over_bound": 0.162
+      }
+    ],
+    "degeneracy_transfer": {
+      "full_radius_mean": 1.7723,
+      "full_radius_cv": 0.0949,
+      "rho_full_radius_vs_invk": 0.706,
+      "rho_trunc_radius_vs_invk": {
+        "5": 0.855,
+        "10": 0.867,
+        "20": 0.855,
+        "40": 0.787
+      }
+    },
+    "bilipschitz": {
+      "angle": {
+        "kappa_full": 1101548444334657.0,
+        "kappa_robust": 2.64
+      },
+      "full": {
+        "kappa_full": 1268755540506396.5,
+        "kappa_robust": 3.09
+      },
+      "magnitude": {
+        "kappa_full": 2419639048301250.0,
+        "kappa_robust": 125.06
+      },
+      "random": {
+        "kappa_full": 12416150361345.83,
+        "kappa_robust": 8.33
+      }
+    },
+    "bilip_note": "kappa = (max d/g)/(min d/g); kappa_robust uses 2.5/97.5 pct. Lower = tighter bi-Lipschitz. Rank fidelity for reference:",
+    "rank_rho": {
+      "angle": 0.889,
+      "full": 0.547,
+      "magnitude": 0.009,
+      "random": 0.003
+    },
+    "procrustes_disparity_vs_torus_R4": {
+      "angle": 0.0699,
+      "full": 0.0906,
+      "random": 0.9953
+    }
+  },
+  "nonlinear_scaling": {
+    "n_points": 20,
+    "models": {
+      "linear": {
+        "form": "a + b d",
+        "a": 1.092,
+        "b": -0.157,
+        "r2": 0.641,
+        "at_d0": 1.092,
+        "bounded_le1": false
+      },
+      "exponential": {
+        "form": "A exp(-k d)",
+        "A": 1.178,
+        "k": 0.215,
+        "r2": 0.642,
+        "at_d0": 1.178,
+        "bounded_le1": false,
+        "limit_dinf": "0"
+      },
+      "offset_exp": {
+        "form": "c + A exp(-k d)",
+        "c": -0.639,
+        "A": 1.775,
+        "k": 0.115,
+        "r2": 0.643,
+        "at_d0": 1.136,
+        "bounded_le1": false,
+        "limit_dinf": -0.639
+      },
+      "logistic": {
+        "form": "1/(1+exp(k(d-d0)))",
+        "k": 0.819,
+        "d0": 3.661,
+        "r2": 0.62,
+        "at_d0": 0.953,
+        "bounded_le1": true,
+        "limit_dinf": "0"
+      }
+    }
+  },
+  "omega_sensitivity": {
+    "sweep": [
+      {
+        "rewire_p": 0.0,
+        "omega": -0.504,
+        "omega_std": 0.003,
+        "angle_rho": 0.805,
+        "dim_spread": 0.454
+      },
+      {
+        "rewire_p": 0.01,
+        "omega": -0.218,
+        "omega_std": 0.007,
+        "angle_rho": 0.47,
+        "dim_spread": 0.445
+      },
+      {
+        "rewire_p": 0.02,
+        "omega": -0.117,
+        "omega_std": 0.006,
+        "angle_rho": 0.449,
+        "dim_spread": 0.469
+      },
+      {
+        "rewire_p": 0.03,
+        "omega": -0.055,
+        "omega_std": 0.014,
+        "angle_rho": 0.433,
+        "dim_spread": 0.423
+      },
+      {
+        "rewire_p": 0.05,
+        "omega": 0.053,
+        "omega_std": 0.018,
+        "angle_rho": 0.409,
+        "dim_spread": 0.464
+      },
+      {
+        "rewire_p": 0.1,
+        "omega": 0.242,
+        "omega_std": 0.014,
+        "angle_rho": 0.396,
+        "dim_spread": 0.815
+      },
+      {
+        "rewire_p": 0.2,
+        "omega": 0.485,
+        "omega_std": 0.003,
+        "angle_rho": 0.397,
+        "dim_spread": 2.336
+      },
+      {
+        "rewire_p": 0.3,
+        "omega": 0.661,
+        "omega_std": 0.002,
+        "angle_rho": 0.382,
+        "dim_spread": 4.419
+      }
+    ],
+    "gate_margin": {
+      "max_omega_clean": -0.504,
+      "min_omega_contaminated": -0.218
+    }
+  }
+}
