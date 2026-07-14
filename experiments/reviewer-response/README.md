@@ -60,3 +60,13 @@ Second reviewer round.
 
 Dependency: same wolfram-observer-bridge builders as `todo_experiments.py`, plus
 it reloads `todo_experiments_result.json` for the 20 scaling points. CPU-only.
+
+## `normalization_check.py` → `normalization_check_result.json`
+
+Tests the Normalization Lemma (paper §3.3, Lemma 1) on the 2-torus. Verifies the
+exact identity `‖û−v̂‖² = (‖u−v‖²−(a−b)²)/(ab)` to machine precision
+(max abs err 8.9e-16) and the deterministic sufficient condition `Λ < 1/L`: the
+radius Lipschitz constant Λ=0.092 sits just under the map's lower stretch A=0.092,
+with **0 of 9,200 local pairs violating** it (median Λ 5× smaller). Local angular
+bi-Lipschitz constant 2.2. This is the empirical support for hypothesis (H2) of
+the conditional Theorem 1. CPU-only, reuses the torus builder.

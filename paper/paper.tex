@@ -19,6 +19,7 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
 \newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
 \newtheorem{conjecture}{Conjecture}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
@@ -275,6 +276,82 @@ distortion, not rank correlation---one substrate, but a well-understood one. (Th
 full-range constant is inflated by the few near-antipodal pairs the torus folds
 together, hence the percentile-robust $\kappa$.) A uniform-in-$(m,n)$ bi-Lipschitz
 bound remains the open metric conjecture; this is one datapoint toward it.}
+
+\subsection{\rev{Toward a proof of Conjecture~\ref{conj:angle}}}\label{sec:towardproof}
+\rev{Proposition~\ref{prop:trunc} controls truncation; the remaining question is
+whether row-normalization preserves the geometry the low modes carry. It does,
+and the mechanism is an exact identity.}
+
+\begin{lemma}[Normalization preserves bi-Lipschitz geometry]\label{lem:norm}
+\rev{For nonzero $u,v\in\mathbb{R}^m$ with $\hat u=u/\lVert u\rVert$,
+\[
+\lVert\hat u-\hat v\rVert^2
+=\frac{\lVert u-v\rVert^2-\big(\lVert u\rVert-\lVert v\rVert\big)^2}
+      {\lVert u\rVert\,\lVert v\rVert}.
+\]
+If $F:(X,d)\to\mathbb{R}^m$ satisfies $L^{-1}d(x,y)\le\lVert F(x)-F(y)\rVert\le
+L\,d(x,y)$ with $\rho^-\le\lVert F\rVert\le\rho^+$ and radius $\Lambda$-Lipschitz,
+then $\hat F=F/\lVert F\rVert$ obeys $\lVert\hat F(x)-\hat F(y)\rVert\le
+(L/\rho^-)\,d(x,y)$, and if $\Lambda<1/L$,
+\[
+\lVert\hat F(x)-\hat F(y)\rVert\ \ge\ \frac{\sqrt{L^{-2}-\Lambda^2}}{\rho^+}\,d(x,y).
+\]}
+\end{lemma}
+
+\begin{proof}
+\rev{The identity combines $\lVert\hat u-\hat v\rVert^2=2-2\langle u,v\rangle/
+(\lVert u\rVert\lVert v\rVert)$ with $\langle u,v\rangle=\tfrac12(\lVert u\rVert^2
++\lVert v\rVert^2-\lVert u-v\rVert^2)$. The upper bound uses numerator
+$\le\lVert u-v\rVert^2\le L^2d^2$ and $\lVert u\rVert\lVert v\rVert\ge(\rho^-)^2$.
+For the lower bound, $(\lVert u\rVert-\lVert v\rVert)^2\le\Lambda^2d^2$ and
+$\lVert u-v\rVert^2\ge d^2/L^2$ give numerator $\ge d^2(L^{-2}-\Lambda^2)$;
+divide by $\lVert u\rVert\lVert v\rVert\le(\rho^+)^2$.}
+\end{proof}
+
+\rev{The condition $\Lambda<1/L$ is a quantitative radial degeneracy: the radius
+must vary \emph{slower} than the embedding moves. As $\Lambda\to0$ (radius $\to$
+constant, the limit of Corollary~\ref{thm:radial}) the lower constant tends to
+$1/(L\rho^+)$ and normalization becomes a pure scaling. On the 2-torus this holds
+pointwise: the identity is exact to $10^{-15}$, the radius Lipschitz constant
+$\Lambda=0.092$ sits just under the map's lower stretch $A=0.092$ ($0/9200$ local
+pairs violate it; the median $\Lambda$ is $5\times$ smaller), and the local
+angular bi-Lipschitz constant is $2.2$. Lemma~\ref{lem:norm} links the two halves
+of the principle and reduces the conjecture to standard ingredients.}
+
+\begin{theorem}[Conditional local form of Conjecture~\ref{conj:angle}]\label{thm:cond}
+\rev{Let $M$ be a compact $d$-manifold ($d\ge2$) with a graph sampled under the
+conditions of \cite{garciatrillos2018}, and fix $m$. Assume \textbf{(H1)} the
+lowest-$m$ Laplace--Beltrami eigenfunctions scaled by $1/\sqrt{\mu_k}$ are
+$L_0$-bi-Lipschitz to $(M,d_M)$ on geodesic balls of radius $r_0$
+\textup{(}Jones--Maggioni--Schul \cite{jones2010}\textup{)}, and \textbf{(H2)}
+the associated truncated radius is $\Lambda_0$-Lipschitz with $\Lambda_0<1/L_0$
+and lies in $[\rho^-,\rho^+]$. Then there exist constants $0<A\le B$ independent
+of $n$ such that, with high probability as $n\to\infty$, the graph angular map
+obeys $A\,d_M(x,y)\le\lVert\hat u_x-\hat u_y\rVert\le B\,d_M(x,y)$ for all sampled
+$x,y$ with $d_M(x,y)\le r_0$.}
+\end{theorem}
+
+\begin{proof}[Proof (assembly)]
+\rev{By (H1) the continuum eigenmap is locally bi-Lipschitz; by (H2) and
+Lemma~\ref{lem:norm} its normalization, the continuum angular map, is locally
+bi-Lipschitz. Spectral convergence \cite{belkin2007,garciatrillos2018} transfers
+the low eigenpairs to the graph Laplacian with error vanishing as $n\to\infty$
+at the admissible bandwidth rate, and Proposition~\ref{prop:trunc} bounds the
+$m$-truncation uniformly in $n$. Composing the three controlled approximations
+yields the constants.}
+\end{proof}
+
+\rev{What remains is delimited. \textbf{(H1)} is the Jones--Maggioni--Schul
+theorem, proved there for a well-chosen $d$-subset of eigenfunctions; the open
+work is that the \emph{lowest} $m$ suffice with constants uniform in $m$ (the
+empirical ``flat in $m$'' of \S\ref{sec:verify}). \textbf{(H2)} is the truncated,
+normalized analogue of von~Luxburg--Radl--Hein---the radius flat enough that
+$\Lambda_0<1/L_0$---which we verify on the torus and conjecture generally.
+Globally a torus admits no bi-Lipschitz Euclidean embedding, so no global metric
+statement can hold; the global claim is necessarily the rank-faithful one this
+paper measures. Conjecture~\ref{conj:angle} is thereby reduced to a local-chart
+hypothesis (H1) and a radius-flatness hypothesis (H2), neither of which mentions
+the angle directly.}
 
 \noindent\emph{Status.} Empirically strong (\S\ref{sec:results}) but \textbf{not
 proven}. It rests on eigenmap-embedding results plus a heuristic; the honest gap

@@ -1,0 +1,16 @@
+{
+  "_note": "Normalization Lemma hypothesis check on 2-torus (n=2000, m=20, local pairs geodesic<=8). The exact identity ||hat u - hat v||^2 = (||u-v||^2 - (a-b)^2)/(ab) verified to machine precision; the deterministic sufficient condition Lambda < 1/L (here Lambda < A) holds with 0/9200 local pairs violating.",
+  "n": 2000,
+  "m": 20,
+  "r0": 8,
+  "n_local_pairs": 9200,
+  "identity_max_abs_err": 8.881784197001252e-16,
+  "A_lower_stretch_F": 0.092,
+  "B_upper_stretch_F": 0.2203,
+  "Lambda_radius_lip": 0.0918,
+  "Lambda_median": 0.0191,
+  "deterministic_condition_Lambda_lt_A": true,
+  "frac_local_pairs_violating": 0.0,
+  "angular_local_bilip_robust": 2.223,
+  "rho_radius_vs_invsqrtk": 0.816
+}
