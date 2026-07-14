@@ -108,6 +108,25 @@ trend (≤ −0.6) with angle_ρ crossing below the floor is **decay**.
   conclusion):** report as a sparse-eigensolver instrument-failure, re-tool the
   solver under a new amendment; no geometric claim either way.
 
+## Amendment 1 (2026-07-14, registered BEFORE any rung-4 run)
+
+Building the harness exposed that the original control — "random_ρ = m modes
+drawn from the WHOLE spectrum" — needs the full dense eigendecomposition, which
+is exactly what does not exist at N ≥ 50 000 (the reason this rung uses sparse
+`eigsh`). Registered fix, before any run:
+
+- Compute the **lowest K = 64** non-trivial modes in one sparse solve.
+- **angle_ρ** uses the lowest m = 10 (unchanged).
+- **higher_ρ** (replaces random_ρ) uses the **top m of that lowest-64 band**
+  (modes 54–63): non-lowest modes that, if the low subspace is special, must
+  carry no geodesic signal. Same bar: **higher_ρ ≤ 0.15** at every N.
+- **magnitude_ρ** (radius-only) unchanged, bar ≤ 0.30.
+
+Rationale: the claim under test is that the *lowest* modes are geometrically
+special; a non-lowest computed band is a faithful, sparse-computable control for
+that, and avoids fabricating a whole-spectrum draw we cannot afford. All primary
+survival bars are unchanged.
+
 ## Compute (registered)
 
 - N ≤ 20 000: single Atlas run or an NRP CPU Indexed Job (one pod per
