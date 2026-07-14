@@ -1,0 +1,300 @@
+{
+  "scaling_law": {
+    "n_manifolds": 20,
+    "d_min": 1.0311955352985143,
+    "d_max": 3.62190360204026,
+    "pairs_per_point": 11175,
+    "slope": -0.15699129809881063,
+    "slope_se": 0.02771282158852522,
+    "slope_ci95": [
+      -0.18541410324819702,
+      -0.13170607965250816
+    ],
+    "intercept": 1.0916187715753556,
+    "intercept_se": 0.058940218393916166,
+    "r2": 0.6406574122306072,
+    "spearman": -0.8812030075187969,
+    "spearman_ci95": [
+      -0.9711689834921153,
+      -0.6666287878787881
+    ],
+    "points": [
+      [
+        1.061,
+        0.93
+      ],
+      [
+        1.031,
+        0.935
+      ],
+      [
+        1.068,
+        0.936
+      ],
+      [
+        1.071,
+        0.941
+      ],
+      [
+        1.387,
+        0.877
+      ],
+      [
+        1.387,
+        0.873
+      ],
+      [
+        1.364,
+        0.859
+      ],
+      [
+        1.385,
+        0.89
+      ],
+      [
+        2.0,
+        0.764
+      ],
+      [
+        1.974,
+        0.387
+      ],
+      [
+        1.676,
+        0.885
+      ],
+      [
+        1.887,
+        0.85
+      ],
+      [
+        2.086,
+        0.816
+      ],
+      [
+        2.054,
+        0.818
+      ],
+      [
+        2.071,
+        0.817
+      ],
+      [
+        2.067,
+        0.836
+      ],
+      [
+        3.392,
+        0.58
+      ],
+      [
+        3.363,
+        0.576
+      ],
+      [
+        3.321,
+        0.637
+      ],
+      [
+        3.622,
+        0.461
+      ]
+    ]
+  },
+  "small_world": [
+    {
+      "substrate": "2-torus",
+      "dim_ball": 1.905,
+      "dim_spectral": 1.894,
+      "dim_effrank": 2.032,
+      "dim_mean": 1.944,
+      "dim_spread": 0.138,
+      "dim_std": 0.063,
+      "angle_rho": 0.909,
+      "n": 2000,
+      "kbar": 13.91,
+      "C": 0.586,
+      "L": 10.642,
+      "C_rand": 0.0073,
+      "L_rand": 3.164,
+      "C_latt": 0.6923,
+      "sigma": 23.838,
+      "omega": -0.549
+    },
+    {
+      "substrate": "king-lattice p=0",
+      "dim_ball": 1.587,
+      "dim_spectral": 1.905,
+      "dim_effrank": 2.092,
+      "dim_mean": 1.861,
+      "dim_spread": 0.505,
+      "dim_std": 0.208,
+      "angle_rho": 0.829,
+      "n": 2025,
+      "kbar": 7.74,
+      "C": 0.4443,
+      "L": 21.026,
+      "C_rand": 0.0037,
+      "L_rand": 3.938,
+      "C_latt": 0.6429,
+      "sigma": 22.399,
+      "omega": -0.504
+    },
+    {
+      "substrate": "king-lattice p=0.03",
+      "dim_ball": 3.032,
+      "dim_spectral": 2.563,
+      "dim_effrank": 2.887,
+      "dim_mean": 2.827,
+      "dim_spread": 0.47,
+      "dim_std": 0.196,
+      "angle_rho": 0.428,
+      "n": 2025,
+      "kbar": 7.74,
+      "C": 0.4074,
+      "L": 7.057,
+      "C_rand": 0.0039,
+      "L_rand": 3.944,
+      "C_latt": 0.6429,
+      "sigma": 58.554,
+      "omega": -0.075
+    },
+    {
+      "substrate": "king-lattice p=0.10",
+      "dim_ball": 3.715,
+      "dim_spectral": 3.573,
+      "dim_effrank": 4.341,
+      "dim_mean": 3.876,
+      "dim_spread": 0.769,
+      "dim_std": 0.334,
+      "angle_rho": 0.415,
+      "n": 2025,
+      "kbar": 7.73,
+      "C": 0.3284,
+      "L": 5.354,
+      "C_rand": 0.0038,
+      "L_rand": 3.954,
+      "C_latt": 0.6429,
+      "sigma": 62.997,
+      "omega": 0.228
+    },
+    {
+      "substrate": "king-lattice p=0.30",
+      "dim_ball": 4.378,
+      "dim_spectral": 3.579,
+      "dim_effrank": 7.925,
+      "dim_mean": 5.294,
+      "dim_spread": 4.346,
+      "dim_std": 1.889,
+      "angle_rho": 0.384,
+      "n": 2025,
+      "kbar": 7.73,
+      "C": 0.1552,
+      "L": 4.363,
+      "C_rand": 0.0037,
+      "L_rand": 3.949,
+      "C_latt": 0.6429,
+      "sigma": 38.008,
+      "omega": 0.664
+    },
+    {
+      "substrate": "causal-set 1+1D",
+      "dim_ball": 3.955,
+      "dim_spectral": 2.876,
+      "dim_effrank": 10.749,
+      "dim_mean": 5.86,
+      "dim_spread": 7.873,
+      "dim_std": 3.485,
+      "angle_rho": 0.567,
+      "n": 2000,
+      "kbar": 11.86,
+      "C": 0.0927,
+      "L": 3.798,
+      "C_rand": 0.0061,
+      "L_rand": 3.355,
+      "C_latt": 0.6818,
+      "sigma": 13.499,
+      "omega": 0.748
+    },
+    {
+      "substrate": "swiss-roll R12",
+      "dim_ball": 1.52,
+      "dim_spectral": 1.741,
+      "dim_effrank": 1.972,
+      "dim_mean": 1.744,
+      "dim_spread": 0.452,
+      "dim_std": 0.184,
+      "angle_rho": 0.931,
+      "n": 2000,
+      "kbar": 11.45,
+      "C": 0.5699,
+      "L": 19.131,
+      "C_rand": 0.0058,
+      "L_rand": 3.394,
+      "C_latt": 0.6818,
+      "sigma": 17.403,
+      "omega": -0.658
+    }
+  ],
+  "headline": {
+    "n_pairs": 11175,
+    "table": [
+      {
+        "m": 5,
+        "n_pairs": 11175,
+        "angle": 0.916,
+        "angle_ci95": [
+          0.912,
+          0.919
+        ],
+        "magnitude": 0.05,
+        "full": 0.759
+      },
+      {
+        "m": 10,
+        "n_pairs": 11175,
+        "angle": 0.915,
+        "angle_ci95": [
+          0.911,
+          0.919
+        ],
+        "magnitude": 0.034,
+        "full": 0.644
+      },
+      {
+        "m": 20,
+        "n_pairs": 11175,
+        "angle": 0.893,
+        "angle_ci95": [
+          0.887,
+          0.898
+        ],
+        "magnitude": 0.049,
+        "full": 0.542
+      },
+      {
+        "m": 40,
+        "n_pairs": 11175,
+        "angle": 0.928,
+        "angle_ci95": [
+          0.925,
+          0.931
+        ],
+        "magnitude": 0.051,
+        "full": 0.514
+      }
+    ],
+    "m10_over_draws": {
+      "mean": 0.914,
+      "std": 0.009,
+      "n_draws": 5,
+      "values": [
+        0.907,
+        0.911,
+        0.933,
+        0.912,
+        0.909
+      ]
+    }
+  }
+}

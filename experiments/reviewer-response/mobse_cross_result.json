@@ -1,0 +1,10 @@
+{
+  "_note": "MoBSE cross-program experiment: angular-observer diagnostic applied to the Atlas ethics_chunks BGE-M3 (1024-d) moral embedding space. Stratified 6-tradition sample, kNN k=10 graph, run on Atlas 2026-07-14.",
+  "n_items": 2400,
+  "ambient_dim": 1024,
+  "traditions": {"jewish": 400, "greco_roman": 400, "hindu": 400, "american_advice": 400, "buddhist": 400, "vedic": 400},
+  "knn": 10,
+  "moral": {"name": "moral-embedding", "n": 2400, "dim_ball": 2.299, "dim_spectral": 1.176, "dim_effrank": 3.798, "dim_mean": 2.425, "dim_spread": 2.622, "n_pairs": 19900, "angle": 0.893, "higher": 0.01, "magnitude": 0.559, "random": 0.069, "kbar": 15.46, "C": 0.2588, "L": 5.947, "C_rand": 0.0062, "L_rand": 3.113, "sigma": 21.687, "omega": 0.154},
+  "shuffle_control": {"name": "shuffle", "n": 2400, "dim_ball": 2.101, "dim_spectral": 0.86, "dim_effrank": 36.071, "dim_mean": 13.011, "dim_spread": 35.211, "n_pairs": 19900, "angle": 0.233, "higher": 0.155, "magnitude": 0.03, "random": 0.176, "kbar": 17.55, "C": 0.0452, "L": 2.768, "C_rand": 0.0071, "L_rand": 2.987, "sigma": 6.871, "omega": 1.015},
+  "isotropic_control": {"name": "isotropic", "n": 2400, "dim_ball": 4.172, "dim_spectral": 1.292, "dim_effrank": 26.501, "dim_mean": 10.655, "dim_spread": 25.208, "n_pairs": 19900, "angle": 0.311, "higher": 0.218, "magnitude": 0.004, "random": 0.268, "kbar": 11.76, "C": 0.0082, "L": 3.464, "C_rand": 0.0048, "L_rand": 3.438, "sigma": 1.687, "omega": 0.981}
+}

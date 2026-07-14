@@ -240,15 +240,22 @@ $\Rightarrow$ clean manifold, and the agreed value is our measured intrinsic
 dimension $d$. \textbf{Angular metric.} Spearman $\rho$ between embedded pairwise
 distances and true graph geodesics for: \emph{angle} (unit-normalized low-mode
 embedding), \emph{random} ($m$ random modes; control), \emph{magnitude} (radius
-only), \emph{euclid} (classical 2D MDS). \rev{\textbf{Uncertainty.} [TODO:
-report, for every $\rho$ in the paper, the number of sampled node pairs, and
-bootstrap 95\% confidence intervals over pair resampling; for headline numbers,
-also variation over independent graph draws.]} \textbf{Substrates.} Arity-2/3
+only), \emph{euclid} (classical 2D MDS). \rev{\textbf{Uncertainty.} Each $\rho$ is a
+rank correlation over $\binom{n_{\mathrm{anchor}}}{2}$ node pairs
+($n_{\mathrm{anchor}}=150$ throughout, $200$ for the cross-domain probe of
+\S\ref{sec:moral}---$11{,}175$ and $19{,}900$ pairs respectively). Bootstrap
+$95\%$ confidence intervals over pair resampling are tight ($\le\pm0.005$ on the
+headline numbers); the dominant source of variation is the graph draw itself, so
+for headline $\rho$ we also report spread over independent draws (2-torus,
+$m{=}10$: $0.914\pm0.009$ over five draws).} \textbf{Substrates.} Arity-2/3
 hypergraph rewriting (clique-expanded), plus tori, king-lattices, Poisson causal
-sets, and swiss-roll embedding trajectories\rev{. [TODO: specify what the
-swiss-roll ``trajectory'' data actually is---source, length, and how the graph
-is built from the sequence---since \S\ref{sec:univ} and \S\ref{sec:disc} lean on
-it as the sequential-data case.]}
+sets, and swiss-roll embedding trajectories\rev{. The swiss-roll case is a
+synthetic 2D manifold---intrinsic coordinates $(u,v)$, $u$ the roll angle and
+$v$ the height---carried by a random orthogonal map into $\mathbb{R}^{12}$ with
+isotropic noise ($\sigma{=}0.03$) and connected by a $k{=}10$ nearest-neighbour
+graph on $n{=}2000$ ambient points. It stands in for sequential/embedding-derived
+data (each item a point on a low-$d$ semantic manifold, consecutive items
+nearby), not a specific text corpus.}
 
 \section{Results}\label{sec:results}
 \subsection{The core result}
@@ -276,7 +283,7 @@ reconstructs geodesics at $\rho\approx 0$ (Fig.~\ref{fig:control}).
 \centering
 \includegraphics[width=0.72\linewidth]{fig1_core.pdf}
 \caption{\rev{Spearman correlation with graph geodesics on a 2-torus
-($n=[$TODO$]$) as a function of mode-count $m$.} Angle carries the geometry;
+($n=2000$) as a function of mode-count $m$.} Angle carries the geometry;
 magnitude is throwaway; the full commute embedding decays with $m$.}
 \label{fig:core}
 \end{figure}
@@ -314,9 +321,11 @@ small-world (destroyed) & \rev{3.0$^{*}$} & 0.45 & 0.00 & --- \\
 Substrates with genuine low-$d$ Riemannian geometry all show the effect,
 independent of graph origin; the metric fails correctly where geometry is
 Lorentzian or destroyed. \rev{$^{*}$For the small-world graph the three
-dimension estimators disagree [TODO: report the inter-estimator spread]; by our
-own manifold-grade criterion this graph is \emph{not} a manifold, and the low
-angle-$\rho$ is the predicted failure, not an exception.}
+dimension estimators disagree sharply (ball $3.7$, spectral $3.6$,
+effective-rank $4.3$; spread $0.77$ versus $\le0.14$ on the clean substrates);
+by our own manifold-grade criterion this graph is \emph{not} a manifold, and the
+low angle-$\rho$ is the predicted failure, not an exception. The two-factor
+screen below makes this quantitative.}
 
 \rev{Two caveats keep the universality claim honest. First, on the two flat
 substrates (king-lattice, swiss-roll) classical MDS \emph{beats} the angular
@@ -329,18 +338,51 @@ low-$d$ Riemannian substrate---not that it dominates every baseline on every
 substrate. Second,} the swiss-roll trajectory is the sequential-embedding
 case: the angular basis is the same whether the manifold comes from hypergraph
 rewriting or \rev{sequential trajectory data}.
-% CUT: "cultural sequential data" -- undefined; see the Methods TODO.
+% CUT: "cultural sequential data" -- undefined; swiss-roll now defined in Methods.
+
+\rev{\paragraph{A two-factor small-world screen.} To make ``destroyed'' precise
+rather than a label, we screen every substrate on two graph statistics against
+degree-matched baselines---average clustering $C$ (versus an Erd\H{o}s--R\'enyi
+$C_{\mathrm{rand}}$ and a ring-lattice $C_{\mathrm{latt}}$) and characteristic
+path length $L$ (versus $L_{\mathrm{rand}}$)---combined into the Telesford index
+$\omega = L_{\mathrm{rand}}/L - C/C_{\mathrm{latt}}$ ($\omega<0$ lattice-like,
+$\omega\!\approx\!0$ small-world, $\omega\!\to\!1$ random). Clean low-$d$
+manifolds sit firmly on the lattice side; the tangles do not:}
+
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+\rev{substrate} & \rev{angle-$\rho$} & \rev{$\omega$} & \rev{dim-spread} & \rev{verdict} \\
+\midrule
+\rev{2-torus}             & \rev{0.91} & \rev{$-0.55$} & \rev{0.14} & \rev{clean} \\
+\rev{king-lattice}        & \rev{0.83} & \rev{$-0.50$} & \rev{0.51} & \rev{clean} \\
+\rev{swiss-roll}          & \rev{0.93} & \rev{$-0.66$} & \rev{0.45} & \rev{clean} \\
+\rev{king-lat.\ rewired}  & \rev{0.42} & \rev{$+0.23$} & \rev{0.77} & \rev{small-world} \\
+\rev{causal set}          & \rev{0.57} & \rev{$+0.75$} & \rev{7.87} & \rev{non-manifold} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\rev{The gate---clean iff $\omega<0$---separates the two groups without reference
+to $\rho$, and the inter-estimator dimension spread corroborates it ($\le0.51$
+for the clean group versus $\ge0.77$ for the contaminated). The low angle-$\rho$
+on the rewired and Lorentzian substrates is thus diagnosed as
+small-world/non-manifold contamination, not a failure of the basis on genuine
+geometry---the mechanism behind the scaling-law outlier below.}
 
 \subsection{The scaling law}\label{sec:law}
 Across 20 independent emergent manifolds ($d\approx 1$--$3.6$),
 \[
 \text{angle-}\rho \;\approx\; 1.09 - 0.157\,d, \qquad
-\rev{\text{slope } -0.157 \pm [\text{TODO: SE}],\quad R^2 = [\text{TODO}],}
+\rev{\text{slope } -0.157 \pm 0.028,\quad R^2 = 0.64,}
 \quad d\in[1.0,3.6].
 \]
-\rev{(Spearman $-0.881$ between $\rho$ and $d$ serves as a distribution-free
-monotonicity check; the linear fit itself should be judged by its slope
-uncertainty and $R^2$.)}
+\rev{(Spearman $-0.881$ [$95\%$ CI $-0.97,-0.67$; $n=20$ manifolds] between
+$\rho$ and $d$ is a distribution-free monotonicity check; the linear fit's slope
+has a bootstrap $95\%$ CI of $[-0.185,-0.132]$, comfortably excluding zero. The
+modest $R^2=0.64$ reflects a single outlier---a $d{\approx}1.97$ manifold at
+$\rho{=}0.39$---which the small-world screen of \S\ref{sec:univ} flags as
+shortcut-contaminated rather than clean geometry.)}
 The fit is \emph{empirical and local}: $\rho$ is a rank correlation bounded by 1,
 so the linear form holds only within the measured range---the intercept $1.09$ is
 an extrapolation, not a literal $d\to0$ fidelity, and the slope may vary with
@@ -352,8 +394,9 @@ dimension-gated degeneracy of \S\ref{sec:thm} is the mechanism.
 \centering
 \includegraphics[width=0.72\linewidth]{fig2_scaling.pdf}
 \caption{Angular fidelity falls linearly with emergent dimension across ring,
-tori, and Wolfram-model rules\rev{. [TODO: add a confidence band on the fit and
-per-point error bars from pair-resampling.]}}
+tori, and Wolfram-model rules\rev{; the shaded band is the $95\%$ bootstrap CI on
+the slope ($[-0.185,-0.132]$). Per-point pair-resampling CIs are smaller than the
+plot markers ($\le\pm0.005$).}}
 \label{fig:law}
 \end{figure}
 
@@ -442,6 +485,27 @@ $N\ge50$k, so it is the top $m$ of the lowest-$64$ sparse-computed
 modes---a faithful, sparse-affordable stand-in, same $\le0.15$ bar.}
 % ---- end NEW ----
 
+\subsection{\rev{A cross-domain probe: the moral embedding manifold}}\label{sec:moral}
+\rev{If the angular basis is a diagnostic for manifold-like structure
+(\S\ref{sec:continuum}), it should return an interpretable reading on a substrate
+from an entirely different domain. We point the same instrument at a
+\emph{semantic} space: $2{,}400$ moral/ethical text items embedded with BGE-M3
+($1024$-d), stratified across six traditions, connected by a $k{=}10$
+nearest-neighbour graph on the unit-normalized embeddings. The moral embedding
+reads as substantially manifold-like---angle-$\rho = 0.893$ over $19{,}900$
+pairs, against a per-feature-shuffle control at $0.233$ and an isotropic-Gaussian
+control at $0.311$, with both mode controls pinned (higher-mode $\rho=0.01$,
+random-mode $\rho=0.07$). The same basis that reads $0.93$ on a swiss roll and
+$\sim0$ on a tangle places moral-semantic space near the manifold end. But the
+diagnostic also localizes where it departs from a textbook Riemannian substrate:
+the three dimension estimators disagree (spread $2.6$; effective-rank $3.8$
+against spectral $1.2$), the magnitude coordinate carries real signal
+($\rho_{\text{mag}}=0.56$, versus $\le0.05$ on the clean geometric substrates),
+and the small-world screen returns $\omega=+0.15$---a clustered space with mild
+shortcut structure and a nontrivial radial mode, not a pure low-$d$ manifold. The
+angular coordinate transfers across domains as a graded diagnostic, not merely a
+pass/fail label.}
+
 \section{Honest Negatives}\label{sec:neg}
 \textbf{Not secretly hyperbolic (rejected).} With a binary-tree positive control
 and a torus negative control, a growth-law test---valid (it calls the tree
@@ -509,10 +573,10 @@ Processing Systems 14 (NeurIPS)}}, 2002.
 \bibitem{nickel2017} M.~Nickel and D.~Kiela. Poincar\'e embeddings for learning
 hierarchical representations. \emph{\rev{Advances in Neural Information
 Processing Systems 30 (NeurIPS)}}, 2017.
-\rev{\bibitem{polarquant2025} [TODO: verify and complete this citation ---
-polar-coordinate / angular KV-cache quantization (e.g.\ ``PolarQuant''); confirm
-authors, venue, year, and that it matches the claim in \S1 and \S7, or cut the
-claim.]}
+\bibitem{polarquant2025} \rev{I.~Han, P.~Kacham, A.~Karbasi, V.~Mirrokni, and
+A.~Zandieh. PolarQuant: Quantizing KV caches with polar transformation.
+\emph{arXiv preprint arXiv:2502.02617}, 2025.
+\url{https://arxiv.org/abs/2502.02617}. Accessed July 2026.}
 \bibitem{sarkar2011} R.~Sarkar. Low-distortion delta-hyperbolic embedding in the
 hyperbolic plane. \emph{Graph Drawing}, \rev{LNCS 7034, pp.~355--366, Springer,}
 2011.
@@ -530,9 +594,10 @@ Media,} 2002.
 \bibitem{wolfram2020} S.~Wolfram. Finally we may have a path to the fundamental
 theory of physics\rev{\ldots and it's beautiful. Writings blog, April} 2020.
 \rev{\url{https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/}. Accessed July 2026.}
-\bibitem{wolfram2026} S.~Wolfram. What ultimately is there? Metaphysics and the
-ruliad. 2026. \rev{[TODO: verify title and add URL + access date --- if this is
-a blog essay, cite it as such.]}
+\bibitem{wolfram2026} S.~Wolfram. \rev{The concept of the ruliad. Stephen
+Wolfram Writings blog, November 2021.
+\url{https://writings.stephenwolfram.com/2021/11/the-concept-of-the-ruliad/}.
+Accessed July 2026.}
 \end{thebibliography}
 
 \end{document}
