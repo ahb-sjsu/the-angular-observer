@@ -315,3 +315,46 @@ Geodesic Spearman ρ; `R` = exact resistance over all modes; `VL` =
   hypotheses hold**; the **angular half remains an empirically strong conjecture**
   whose robustness (it holds even where degeneracy does not) suggests the eigenmap-
   embedding mechanism of §3.2, not degeneracy alone, is what makes the angle work.
+
+---
+
+## 8. The circuit-theory reading (exact), and two engineering analogies (structural)
+
+**Exact.** The radial half of the theorem is literally a statement about
+resistor networks. Commute distance is proportional to effective resistance
+when every edge is a 1 Ω resistor, and von Luxburg–Radl–Hein says that in
+large graphs of dimension ≥ 2,
+
+`R_eff(i, j) → 1/dᵢ + 1/dⱼ`
+
+— the two nodes' local **contact resistances**. Every two-terminal
+measurement of a large mesh is dominated by the probe contacts; all the
+distributed structure of the mesh vanishes from the reading. That is exactly
+why the radial coordinate dies: `‖Ψᵢ‖ → 1/√dᵢ` is the local admittance, a
+lumped one-port property. "Keep the angle" is therefore the answer to a
+familiar EE problem — *how do you sense the topology of a big resistor mesh
+when every two-terminal measurement reads only contact resistance?* — and
+§7's VL column (ρ(R, 1/dᵢ+1/dⱼ) up to 0.98) is that sentence measured.
+
+**Structural (intuition pumps, not identities).**
+- *Constant-envelope receivers.* Row-normalizing the embedding to the unit
+  sphere is a hard limiter: clip the envelope, keep the phase. FM receivers
+  do this deliberately because amplitude is corrupted by every nonlinearity
+  and fade in the chain while the phase survives; PSK goes further and puts
+  all information in angle by design. Same engineering judgment here:
+  magnitude = scale-variant nuisance (degree noise), angle = the robust
+  information carrier.
+- *Mode shapes.* The graph Laplacian eigenmodes are the discrete analogue of
+  cavity/Helmholtz modes; coarse-graining to low modes is a low-pass filter,
+  and each node's embedding row is its amplitude pattern across those modes.
+  Normalizing compares **mode shapes** instead of raw local gains.
+
+**Boundary (kept deliberately).** The angles here are real unit-vector
+directions in `R^m`, not a single U(1) phase, and nothing in the pipeline
+gives them interference behavior. In fact the Born-rule observer performs the
+*opposite* compression — `|ψ|²` keeps the magnitude and discards the phase —
+so no quantum-phase identification is available from this construction. The
+defensible cross-domain claim is the recurrence of one design rule:
+**scale-invariant direction = transferable signal; magnitude = gauge/
+nuisance** — the judgment that made FM and PSK work, rediscovered by the
+spectral observer.
