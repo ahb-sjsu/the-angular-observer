@@ -86,8 +86,13 @@ and the "PolarQuant" keep-the-direction move.
 The rigorous half assumes the setting of von Luxburg, Radl & Hein (2014):
 
 - **(M)** Points are sampled i.i.d. from a density `p` bounded away from 0 and ∞
-  on a smooth compact `d`-dimensional manifold `M` (`d ≥ 2` for their main
-  theorem; the `d = 1` and low-`d` cases are boundary regimes).
+  on a smooth compact `d`-dimensional manifold `M` (`d ≥ 3` for the clean
+  statement; `d = 2` is the recurrent borderline with logarithmic corrections,
+  treated empirically in the paper, and `d = 1` is a boundary regime where the
+  radius stays geodesic-informative). This matches the paper's convention
+  (Corollary 1 is gated at `d ≥ 3`).
+  *Notation note:* this file writes `d_i` for the degree of node `i`; the paper
+  uses `k_i` to avoid colliding with the intrinsic dimension `d`.
 - **(G)** `G` is a random neighborhood graph (`ε`-graph or `k`-NN) with the
   connectivity parameter in the admissible regime of their theorem
   (`ε → 0`, `N ε^{d+2} → ∞`, etc.), so `G` is connected and locally `d`-dimensional.

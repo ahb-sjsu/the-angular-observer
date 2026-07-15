@@ -11,14 +11,21 @@ environments now share one counter). The current resolution, for convenience:
 
 | label | number | name |
 |---|---|---|
-| `thm:radial` | Corollary 1 | Radial Degeneracy (§3) |
+| `thm:radial` | Corollary 1 | Radial Degeneracy (§3; full proof Appendix A, `app:radial`) |
 | `prop:trunc` | Proposition 2 | Truncation is spectral-gap bounded (§3) |
 | `conj:angle` | Conjecture 3 | Angular Preservation (§3) |
 | `lem:norm` | Lemma 4 | Normalization preserves bi-Lipschitz (§3.1) |
 | `prop:angdist` | Proposition 5 | Exact angular distortion (§3.1) |
-| `thm:cond` | Theorem 6 | Conditional local form of Conjecture 3 (§3.1) |
+| `thm:transfer` | Theorem 6 | Deterministic angular transfer — (A1) radius bounds, (A2) two-point tangential noncollapse, (A3) uniform calibration (§3.1) |
+| `cor:filtered` | Corollary 7 | Filtered spectral embeddings (general filter h; commute/diffusion/plain) (§3.1) |
+| `thm:cond` | Theorem 8 | Conditional angular transfer for the commute-weighted eigenmap (§3.1; full proof Appendix B, `app:proof`) |
+| `cor:global` | Corollary 9 | Global conditional form, under injectivity (H3) (§3.1) |
+| `cor:torus` | Corollary 10 | Unconditional instance: the flat torus / Clifford embedding (§3.1) |
+| `prop:rank` | Proposition 11 | Distortion controls rank (Daniels' inequality) (§3.1) |
+| `thm:heat` | Theorem 12 | Uniform-in-truncation angular embedding, heat filter (§3.1; proof Appendix C, `app:uniform`) |
+| `prop:weyl` | Proposition 13 | Commute cutoff: tangential noncollapse is scale-dependent; fixed-scale uniform-in-m metric REFUTED via S¹ (§3.1; proof Appendix C) |
 | `sec:methods` | §4 | Methods (headline CIs / uncertainty live here) |
-| `sec:univ` | §5.3 | Universality + two-factor small-world screen |
+| `sec:univ` | §5.3 | Robustness across substrates + two-factor small-world screen |
 | `sec:law` | §5.4 | The scaling law |
 | `sec:verify` | §5.5 | Verifying Corollary 1 and Conjecture 3 |
 | `sec:ablation` | §5.6 | Which weighting carries the angle? |
@@ -26,7 +33,13 @@ environments now share one counter). The current resolution, for convenience:
 | `sec:density` | §5.8 | Radius is density, angle is geometry |
 | `sec:stability` | §5.9 | Stability across substrate evolution |
 | `sec:continuum` | §5.10 | Continuum survival, and a dissociation |
-| `sec:moral` | §5.11 | Cross-domain probe: the moral embedding |
+| `sec:moral` | Appendix (exploratory) | Cross-domain probe: the moral embedding — moved out of §5 (third review); not in the main evidence chain until the embeddings are vendored |
+
+`CHECKSUMS.sha256` records SHA-256 digests of the committed `*_result.json`
+files; verify with `sha256sum -c CHECKSUMS.sha256` from this directory.
+Optional dependencies are declared in `pyproject.toml`: `pip install -e
+".[experiments]"` for the NetworkX-using scripts, `".[moral]"` for the
+(internal-infra) moral scripts.
 
 **Dependency (builders are in this repo).** The substrate builders and
 estimators these scripts import---`rung0_validate.py`, `library.py`,

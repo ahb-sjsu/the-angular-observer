@@ -10,6 +10,12 @@ dependencies = ["numpy>=1.24", "scipy>=1.10"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.6", "black>=24", "ty"]
+# Reviewer-response experiment scripts (experiments/reviewer-response/) need
+# networkx for the small-world screen and graph baselines.
+experiments = ["networkx>=3"]
+# The moral-embedding scripts (mobse_*.py) pull from an internal pgvector
+# table; not externally runnable until the embedding export is vendored.
+moral = ["psycopg2-binary>=2.9"]
 
 [tool.black]
 line-length = 88
