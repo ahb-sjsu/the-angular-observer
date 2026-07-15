@@ -17,10 +17,10 @@
 % -----------------------------------------------------------------------------
 
 \newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\newtheorem{proposition}{Proposition}
-\newtheorem{lemma}{Lemma}
-\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \graphicspath{{figures/}}
@@ -57,17 +57,21 @@ empirical support, that the angular coordinate \rev{remains rank-faithful to
 geodesic distance}---flat in both mode-count and graph size where the raw
 embedding decays. The basis is \textbf{substrate-independent}: it preserves
 geodesics on any graph carrying genuine low-dimensional Riemannian geometry---random-geometric
-lattices, manifold-embedding trajectories, and Wolfram-model hypergraph rewriting
+lattices, manifold-embedding samples, and Wolfram-model hypergraph rewriting
 alike---and degrades on Lorentzian causal sets and geometry-destroying
-small-world graphs. \rev{Across $20$ independent emergent manifolds
-($d \approx 1$--$3.6$), fidelity falls approximately linearly with intrinsic
+small-world graphs. \rev{The angular fidelity is invariant to sampling density
+only after a Coifman--Lafon $\alpha{=}1$ normalization; the raw angle stays
+rank-faithful but its level drifts under strongly non-uniform sampling
+(\S\ref{sec:density}). Across $20$ manifolds ($5$ rules $\times\,4$ seeds,
+$d \approx 1$--$3.6$), fidelity falls approximately linearly with intrinsic
 dimension. Refined toward the continuum ($N$ up to $5\times10^{4}$) at a fixed
 mode budget, the basis \emph{sharpens} on sampled Riemannian substrates (angular
 fidelity monotone increasing across the five sizes) yet \emph{decays} below a
 pre-registered floor on a coordinate-free Wolfram-model manifold---a
-budget-relative dissociation (it inverts when the budget is scaled) that recasts
-the angular coordinate as a \emph{diagnostic} for whether a substrate's fine
-structure stays manifold-like under refinement.}
+budget-relative dissociation (single-seed runs suggest it inverts when the mode
+budget is scaled with $N$) that recasts the angular coordinate as a
+\emph{diagnostic} for whether a substrate's fine structure stays manifold-like
+under refinement.}
 % CUT: exact scaling coefficients from the abstract (kept in \S5.4) and the
 % KV-cache / observer sentence -- the abstract now ends on the empirical claim.
 \end{abstract}
@@ -100,8 +104,8 @@ graph size precisely where the raw embedding decays.
 
 This ``keep the scale-invariant direction'' operation recurs beyond
 clustering\rev{---for example in polar-coordinate KV-cache quantization, which
-transfers the scale-invariant direction and quantizes the radius separately
-\cite{polarquant2025}.}
+splits each key vector into a radial magnitude and an angular direction and
+quantizes them separately in that polar form \cite{polarquant2025}.}
 % CUT: the "preference geometry / aversion angle" clause -- uncited and
 % unexplained; restore only with a citation and a sentence of substance.
 It also admits a physical reading: in observer theory a bounded
@@ -181,7 +185,7 @@ the distinction matters for Corollary~\ref{thm:radial} and is handled there.}
 intrinsic dimension of the substrate\rev{, and $k_i$ denotes the degree of node
 $i$ (we reserve $d$ for dimension to avoid the collision $d$ vs.\ $d_i$)}: the
 manifold dimension \emph{by construction} for the random-geometric benchmarks
-(tori, king-lattices, sphere), and for emergent graphs the value at which the
+(tori, king-lattices), and for emergent graphs the value at which the
 three independent estimators of \rev{\S\ref{sec:methods}} (ball-growth, spectral
 dimension, effective rank) mutually agree---reported with their inter-estimator
 spread, with only low-spread graphs treated as manifolds. The regime $d\ge2$
@@ -201,7 +205,9 @@ degenerates, $R(i,j)=L^{+}_{ii}+L^{+}_{jj}-2L^{+}_{ij}\to 1/k_i + 1/k_j$.
 $L\mathbf 1=0$) gives $\sum_j R(i,j)=n\,L^{+}_{ii}+\operatorname{tr}L^{+}$; matched
 against $\sum_j(1/k_i+1/k_j)=n/k_i+\sum_j 1/k_j$ this forces $L^{+}_{ii}=1/k_i+C$
 with $C$ independent of $i$, and taking the trace of that relation gives $C=0$
-(the sum is legitimate because the vL--R--H limit is uniform over the $n$ pairs).
+(the sum is legitimate because the vL--R--H limit is uniform over the $n$ pairs;
+the $j{=}i$ term, where $R(i,i)=0$ while $1/k_i+1/k_j=2/k_i$, contributes a single
+$O(1/k_i)$ discrepancy that vanishes after dividing by $n$).
 Hence} $L^{+}_{ii}\to 1/k_i$, so the radius satisfies
 $\lVert\Phi_i\rVert \to 1/\sqrt{k_i}$. The radius of the full
 commute embedding is therefore asymptotically geometry-free---a local-density
@@ -286,7 +292,12 @@ $\approx0.9$)---\emph{uniformly in} the mode-count $m$ and size $n$. (We reserve
 ``rank-faithful'' for Spearman $\ge\rho_0>0$ over the stated class; the diagnostic
 reading---using the $\omega$-screen and dimension spread to decide whether a
 \emph{given} graph lies in the class---is a separate corollary-in-use, kept out of
-the conjecture to avoid circularity.) A stronger,
+the conjecture to avoid circularity.) The empirical level $\approx0.9$ is uniform
+in sampling density only after the Coifman--Lafon $\alpha{=}1$ normalization
+(\S\ref{sec:density}); under strongly non-uniform sampling the raw
+$L_{\mathrm{sym}}$ angle stays rank-faithful (Spearman bounded away from zero) but
+its level drifts with density contrast, so the $\approx0.9$ clause is asserted for
+near-uniform density or, generally, the $\alpha{=}1$ angle. A stronger,
 metric form of the conjecture---that the angular map is bi-Lipschitz to geodesic
 distance with constants uniform in $m$ and $n$---is consistent with our data but
 untested; our evidence is rank-based and cannot by itself bound metric
@@ -306,8 +317,9 @@ or the magnitude coordinate ($125$); and its leading four coordinates
 Procrustes-match the canonical flat-torus embedding in $\mathbb{R}^{4}$ at
 disparity $0.07$, versus $0.995$ for random modes. This is genuine metric
 distortion, not rank correlation---one substrate, but a well-understood one. (The
-full-range constant is inflated by the few near-antipodal pairs the torus folds
-together, hence the percentile-robust $\kappa$.) A uniform-in-$(m,n)$ bi-Lipschitz
+full-range constant is inflated by a few near-antipodal pairs, where the
+chord/arc ratio dips; the map stays injective---nothing is folded together---so
+we report the percentile-robust $\kappa$.) A uniform-in-$(m,n)$ bi-Lipschitz
 bound remains the open metric conjecture; this is one datapoint toward it.}
 
 \subsection{\rev{Toward a proof of Conjecture~\ref{conj:angle}}}\label{sec:towardproof}
@@ -353,8 +365,7 @@ bound is not the operative one. Proposition~\ref{prop:angdist} shows the lower
 stretch is the pointwise \emph{tangential} component of $dF$, which stays bounded
 away from zero ($0/9200$ local pairs are radially degenerate, median $\Lambda$
 five times below $A$), giving a measured local angular bi-Lipschitz constant of
-$2.2$ that is an empirical fact, not a consequence of the crude lemma. Lemma~\ref{lem:norm} links the two halves
-of the principle and reduces the conjecture to standard ingredients.}
+$2.2$ that is an empirical fact, not a consequence of the crude lemma.}
 
 \begin{proposition}[Exact angular distortion]\label{prop:angdist}
 \rev{Let $F$ be differentiable with $r=\lVert F\rVert>0$ and $\hat F=F/r$. Taking
@@ -420,9 +431,16 @@ the immersion (H1) makes generic, and the truncated analogue of
 von~Luxburg--Radl--Hein. It holds on the torus (tangential lower stretch bounded,
 local constant $2.2$); whether the eigenmap image ever develops a radial fold on
 some manifold is the sharp remaining question.
-Globally a torus admits no bi-Lipschitz Euclidean embedding, so no global metric
-statement can hold; the global claim is necessarily the rank-faithful one this
-paper measures. Conjecture~\ref{conj:angle} is thereby reduced to a local-chart
+Truncated eigenmaps of a general manifold are guaranteed only to be
+\emph{locally} injective---(H1) supplies bi-Lipschitz charts on geodesic balls,
+whereas global injectivity would require Portegies-style mode counts
+\cite{portegies2016}---so no \emph{global} metric statement follows from the
+local hypotheses alone, and the global claim retreats to the rank-faithful one
+this paper measures. This is a limitation of the local hypotheses, not of the
+torus: the flat torus does admit a global bi-Lipschitz Euclidean embedding (the
+Clifford embedding into $\mathbb{R}^{4}$), exactly as our own Procrustes match
+(disparity $0.07$) and finite empirical $\kappa\approx2.6$ confirm.
+Conjecture~\ref{conj:angle} is thereby reduced to a local-chart
 hypothesis (H1) and a radius-flatness hypothesis (H2), neither of which mentions
 the angle directly.}
 
@@ -439,7 +457,9 @@ and eigenfunction coordinates furnish locally bi-Lipschitz charts of the
 underlying manifold \cite{jones2010}, the angular map's geodesic fidelity should
 follow from the chart geometry---the natural route to a proof of
 Conjecture~\ref{conj:angle}, and this paper's central open problem.} Together
-these are the \textbf{Keep-the-Angle Principle}: keep $\hat u_i$, discard $r_i$.
+these are the \textbf{Keep-the-Angle Principle}: keep $\hat u_i$, discard $r_i$
+\rev{---and, under strongly non-uniform sampling, keep the $\alpha{=}1$
+density-normalized angle (\S\ref{sec:density})}.
 
 \paragraph{Dimension gating.} Corollary~\ref{thm:radial} is a $d\ge2$ phenomenon.
 In (quasi-)1D, resistance equals path length, so the radius \emph{stays}
@@ -454,8 +474,8 @@ $\Rightarrow$ clean manifold, and the agreed value is our measured intrinsic
 dimension $d$. \textbf{Angular metric.} Spearman $\rho$ between embedded pairwise
 distances and true graph geodesics for: \emph{angle} (unit-normalized low-mode
 embedding), \emph{random} ($m$ random modes; control), \emph{magnitude} (radius
-only), \emph{euclid} (classical MDS of the graph geodesics, i.e.\ Isomap; the
-table of \S\ref{sec:univ} reports it at $\dim{=}2$). \rev{\textbf{Uncertainty.}
+only), \emph{Isomap} (classical MDS of the graph geodesics; the
+table of \S\ref{sec:univ} reports it at $\dim{=}2$, column Isomap$_{d=2}$). \rev{\textbf{Uncertainty.}
 Each $\rho$ is a rank correlation over $\binom{n_{\mathrm{anchor}}}{2}$ node pairs
 ($n_{\mathrm{anchor}}=150$ for the substrate benchmarks, $200$ for the torus
 metric tests (\S\ref{sec:towardproof}) and the cross-domain probe of
@@ -463,15 +483,27 @@ metric tests (\S\ref{sec:towardproof}) and the cross-domain probe of
 $95\%$ confidence intervals over pair resampling are tight ($\le\pm0.005$ on the
 headline numbers); the dominant source of variation is the graph draw itself, so
 for headline $\rho$ we also report spread over independent draws (2-torus,
-$m{=}10$: $0.914\pm0.009$ over five draws).} \textbf{Substrates.} Arity-2/3
+$m{=}10$: $0.914\pm0.009$ over five draws). The reference torus therefore appears
+at slightly different angle-$\rho$ across tables ($0.89$--$0.93$): mode-count,
+anchor count, and the graph draw itself vary by section and dominate at this
+precision. Each table uses its section's protocol---$m{=}20$,
+$n_{\mathrm{anchor}}{=}150$ unless stated (core table \S\ref{sec:results}
+sweeps $m{=}5$--$40$; the bake-off \S\ref{sec:bakeoff} uses
+$n_{\mathrm{anchor}}{=}250$).} \textbf{Substrates.} Arity-2/3
 hypergraph rewriting (clique-expanded), plus tori, king-lattices, Poisson causal
-sets, and swiss-roll embedding trajectories\rev{. The swiss-roll case is a
+sets, and swiss-roll embedding samples\rev{. The swiss-roll case is a
 synthetic 2D manifold---intrinsic coordinates $(u,v)$, $u$ the roll angle and
 $v$ the height---carried by a random orthogonal map into $\mathbb{R}^{12}$ with
 isotropic noise ($\sigma{=}0.03$) and connected by a $k{=}10$ nearest-neighbour
 graph on $n{=}2000$ ambient points. It stands in for sequential/embedding-derived
 data (each item a point on a low-$d$ semantic manifold, consecutive items
-nearby), not a specific text corpus.}
+nearby), not a specific text corpus. The Lorentzian causal set is an
+$n{=}2000$ Poisson sprinkling in a $1{+}1$D Minkowski diamond (light-cone
+coordinates $u,v$ uniform on the unit square); $p\prec q$ iff $u_p<u_q$ and
+$v_p<v_q$, and each point is linked to its $k{=}6$ nearest causal-\emph{past}
+neighbours in proper time $\tau^2=\Delta t^2-\Delta x^2$, symmetrized for the
+undirected geodesic BFS---so edges encode causal \emph{links}, and the intrinsic
+$d{=}2$ is the sprinkling dimension.}
 
 \section{Results}\label{sec:results}
 \subsection{The core result}
@@ -527,25 +559,26 @@ generations). The angular basis holds on genuine 2D emergent space.
 \begin{center}
 \begin{tabular}{lcccc}
 \toprule
-substrate & meas.\ $d$ & angle-$\rho$ & random & euclid \\
+substrate & meas.\ $d$ & angle-$\rho$ & random & Isomap$_{d=2}$ \\
 \midrule
 2-torus (reference) & 2 & 0.89 & 0.01 & 0.67 \\
 king-lattice & 2 & 0.82 & 0.01 & 0.95 \\
-swiss-roll trajectory & 2 & 0.93 & 0.01 & 0.99 \\
+swiss-roll (embedding) & 2 & 0.93 & 0.01 & 0.99 \\
 emergent $R_{3D}$ (Wolfram) & 2.07 & 0.82 & 0.01 & 0.81 \\
 causal set (Lorentzian) & 3.9 & 0.57 & 0.01 & 0.55 \\
-small-world (destroyed) & \rev{3.0$^{*}$} & 0.45 & 0.00 & --- \\
+small-world (destroyed) & \rev{$3.6$--$4.3^{*}$} & 0.45 & 0.00 & --- \\
 \bottomrule
 \end{tabular}
 \end{center}
 Substrates with genuine low-$d$ Riemannian geometry all show the effect,
 independent of graph origin; the metric degrades where geometry is
-Lorentzian ($\rho=0.57$, a degradation not a failure) or destroyed. \rev{$^{*}$For the small-world graph the three
-dimension estimators disagree sharply (ball $3.7$, spectral $3.6$,
-effective-rank $4.3$; spread $0.77$ versus $0.14$--$0.51$ across the clean substrates);
-by our own manifold-grade criterion this graph is \emph{not} a manifold, and the
-low angle-$\rho$ is the predicted failure, not an exception. The two-factor
-screen below makes this quantitative.}
+Lorentzian ($\rho=0.57$, a degradation not a failure) or destroyed. \rev{$^{*}$The small-world substrate is a heavily rewired $2$D king-lattice; the
+rewiring inflates and scatters the three dimension estimators (ball $3.7$,
+spectral $3.6$, effective-rank $4.3$; spread $0.77$ versus $0.14$--$0.51$ across
+the clean substrates), so no single manifold dimension is well-defined---we
+tabulate their range. By our own manifold-grade criterion this graph is
+\emph{not} a manifold, and the low angle-$\rho$ is the predicted failure, not an
+exception. The two-factor screen below makes this quantitative.}
 
 \rev{Two caveats keep the universality claim honest. First, on the two flat
 substrates (king-lattice, swiss-roll) classical MDS \emph{beats} the angular
@@ -603,18 +636,26 @@ screen as confirming gross contamination, with angle-$\rho$ itself the finer
 instrument---the mechanism behind the scaling-law outlier below.}
 
 \subsection{The scaling law}\label{sec:law}
-Across 20 independent emergent manifolds ($d\approx 1$--$3.6$),
+Across 20 manifolds \rev{($5$ rules $\times\,4$ seeds; the four seeds within a rule
+are not independent draws)}, $d\approx 1$--$3.6$,
 \[
 \text{angle-}\rho \;\approx\; 1.09 - 0.157\,d, \qquad
-\rev{\text{slope } -0.157 \pm 0.028,\quad R^2 = 0.64,}
+\rev{\text{slope } -0.157\ (\text{rule-clustered SE }0.061),\quad R^2 = 0.64,}
 \quad d\in[1.0,3.6].
 \]
-\rev{(Spearman $-0.881$ [$95\%$ CI $-0.97,-0.67$; $n=20$ manifolds] between
-$\rho$ and $d$ is a distribution-free monotonicity check; the linear fit's slope
-has a bootstrap $95\%$ CI of $[-0.185,-0.132]$, comfortably excluding zero. The
+\rev{(Spearman $-0.881$ between $\rho$ and $d$ is a distribution-free monotonicity
+check. Because the $20$ points are clustered by rule, we bootstrap the slope at
+the \emph{rule} level---resampling the five rules with replacement, then the four
+seeds within each drawn rule---giving an honest $95\%$ CI of $[-0.343,-0.094]$,
+still excluding zero but four times wider than the naive point bootstrap
+$[-0.185,-0.132]$ that wrongly treats the $20$ points as exchangeable. The
 modest $R^2=0.64$ reflects a single outlier---a $d{\approx}1.97$ manifold at
 $\rho{=}0.39$---which the small-world screen of \S\ref{sec:univ} flags as
-shortcut-contaminated rather than clean geometry.)}
+shortcut-contaminated rather than clean geometry. And because the abscissa $d$ is
+itself measured (estimator spread $0.14$--$0.51$), ordinary least squares
+\emph{attenuates} the slope; an errors-in-variables correction steepens it
+modestly (to $\approx-0.17$ under a spread-implied error variance), so $-0.157$
+is a conservative magnitude, not an inflated one.)}
 The fit is \emph{empirical and local}: $\rho$ is a rank correlation bounded by 1,
 so the linear form holds only within the measured range---the intercept $1.09$ is
 an extrapolation, not a literal $d\to0$ fidelity, and the slope may vary with
@@ -633,17 +674,21 @@ dimension-gated degeneracy of \S\ref{sec:thm} is the mechanism.
 \includegraphics[width=0.72\linewidth]{fig2_scaling.pdf}
 \caption{Angular fidelity falls linearly with emergent dimension across
 \rev{the $20$ library manifolds (five Wolfram-model rules $\times$ four seeds,
-$d\approx1$--$3.6$); the shaded band is the $95\%$ bootstrap CI on the slope
-($[-0.185,-0.132]$), drawn as its envelope about the data centroid. Per-point
-pair-resampling CIs are smaller than the plot markers ($\le\pm0.005$). The red
-diamond ($d{\approx}1.97$, $\rho{=}0.39$) is the single shortcut-contaminated
-manifold flagged by the small-world screen (\S\ref{sec:univ}), which drives the
-modest $R^2$.}}
+$d\approx1$--$3.6$); the shaded band is the $95\%$ \emph{rule-clustered} slope CI
+($[-0.34,-0.09]$), drawn as its envelope about the data centroid---four times
+wider than a naive point bootstrap, since the independent unit is the rule, not
+the point. Per-point pair-resampling CIs are smaller than the plot markers
+($\le\pm0.005$). The red diamond ($d{\approx}1.97$, $\rho{=}0.39$) is the single
+shortcut-contaminated manifold flagged by the small-world screen
+(\S\ref{sec:univ}), which drives the modest $R^2$.}}
 \label{fig:law}
 \end{figure}
 
-\subsection{Verifying Corollary 1 and Conjecture 1}\label{sec:verify}
-angle-$\rho$ is flat in graph size while the full commute distance decays, and
+\subsection{\texorpdfstring{Verifying Corollary~\ref{thm:radial} and
+Conjecture~\ref{conj:angle}}{Verifying the degeneracy corollary and the angular
+conjecture}}\label{sec:verify}
+\rev{We check the two claims directly.} The angle-$\rho$ is flat in graph size
+while the full commute distance decays, and
 the radius tracks degree exactly ($\rho(\lVert\Psi_i\rVert,1/\sqrt{k_i})=
 0.92$--$0.99$; radius-only $\rho\le0.08$). Corollary~\ref{thm:radial} holds cleanly
 at $d=3$ ($\rho(R,1/k_i+1/k_j)\to0.98$); $d=2$ is borderline (log corrections);
@@ -700,7 +745,14 @@ improves on raw commute ($0.628$ vs.\ $0.601$) and stays far below the angle.
 radial factor at once, which is what the geometry needs (Lemma~\ref{lem:norm},
 Corollary~\ref{thm:radial}). Isomap wins, but only because it is handed the
 geodesics as input---it is an oracle ceiling, not a competitor; the angle
-recovers $0.83$--$0.89$ of that ceiling from the graph alone.}
+recovers $0.83$--$0.89$ of that ceiling from the graph alone. We do not tabulate
+the $p$-resistance family \cite{alamgir2011} as a separate row because its
+informative endpoints are already present: $p{=}2$ is the full-commute row, and
+$p{=}1$ is the shortest-path distance---i.e.\ the geodesic \emph{target} itself,
+not a competitor. Intermediate $p$ has no closed form (each pair needs its own
+convex $q$-Dirichlet solve) and off $p\in\{1,2\}$ need not satisfy the triangle
+inequality, so it buys no fair comparison the two endpoints do not already
+frame.}
 
 \subsection{\rev{Radius is density, angle is geometry: a non-uniform torus}}\label{sec:density}
 \rev{The decomposition ``degree/density in the radius, geometry in the angle''
@@ -732,8 +784,9 @@ compare, between consecutive snapshots, the Spearman persistence of the
 \emph{angular} pairwise structure (\texttt{consec}) against the persistence of
 the underlying \emph{geodesic} structure itself (\texttt{churn})---the
 substrate's own rate of change is the baseline the basis must keep pace with.
-On all $143$ rules resolvable at protocol scale ($8$ never yield $\ge 3$
-distinct snapshots and are excluded from the denominator but reported), the
+On all $143$ rules resolvable at protocol scale ($8$, all arity-3, never yield
+$\ge 3$ distinct snapshots and are excluded from the denominator but reported;
+all $95$ arity-2 rules resolve), the
 angular structure tracks the evolving geometry at least as stably as the graph's
 own geodesics, $\overline{\texttt{consec}} \ge 0.9\,\overline{\texttt{churn}}$:
 a $143/143 = 100\%$ pass against a pre-registered $80\%$ bar, with zero
@@ -781,7 +834,8 @@ $\text{angle-}\rho: 0.749 \to 0.654$
 ($\mathrm{Spearman}=-1.00$), falling below a pre-registered floor of $0.75$; and
 at the largest $N$ its magnitude control begins to break the clean angle/radius
 separation that holds exactly on the RGGs (one $50$k seed crosses
-$\rho_{\text{mag}}=0.33$ and is gated out). A sampled manifold refines to a
+$\rho_{\text{mag}}=0.33$ and is gated out; the sub-floor decay verdict holds with
+or without it). A sampled manifold refines to a
 clean continuum; an emergent hypergraph, under this basis, does not---its fine
 structure drifts away from a manifold as it grows. We read this not as a
 limitation but as a result: the angular basis is a \emph{diagnostic} for whether
@@ -856,7 +910,7 @@ cluster-separation theory of \cite{schiebinger2015}}, unifies it with
 the scale-invariant direction of KV-cache compression \rev{\cite{polarquant2025}},
 and holds \emph{universally} across substrates with genuine low-$d$ Riemannian
 geometry, independent of graph origin. That the same basis works identically on
-hypergraph-rewriting and \rev{sequential-trajectory} substrates is
+hypergraph-rewriting and \rev{manifold-sampled} substrates is
 \rev{evidence that scale-invariant angular coarse-graining is a general
 mechanism by which} relational data carries geometric structure.
 % CUT: "a general law of how relational data carries geometric structure" --
@@ -882,8 +936,10 @@ RUNG3/4} with dated amendments), all experiment scripts and per-run result files
 (the torus and universality benchmarks, the weighting ablation, the small-world
 screen, the continuum and scaled-budget refinements, the truncation/normalization
 checks, and the cross-domain probe), the manifold-rule sets behind the $20$-point
-scaling law and the $151$ evolution rules, and the random seeds and solver
-settings are released in the accompanying repository.}
+scaling law (five rules---\texttt{R\_2D}, \texttt{R\_frac}, \texttt{evolved-2D},
+\texttt{R\_3D}, \texttt{R\_SR}---each at four seeds) and the $151$ evolution
+rules, and the random seeds and solver settings are released in the accompanying
+repository, \url{https://github.com/ahb-sjsu/the-angular-observer}.}
 
 \begin{thebibliography}{99}
 \bibitem{belkin2003} M.~Belkin and P.~Niyogi. Laplacian eigenmaps for
@@ -966,6 +1022,9 @@ T.~A.~Funkhouser. Biharmonic distance. \emph{ACM Transactions on Graphics},
 \rev{\bibitem{hein2007} M.~Hein, J.-Y.~Audibert, and U.~von~Luxburg. Graph
 Laplacians and their convergence on random neighborhood graphs. \emph{Journal
 of Machine Learning Research}, 8:1325--1368, 2007.}
+\rev{\bibitem{alamgir2011} M.~Alamgir and U.~von~Luxburg. Phase transition in the
+family of $p$-resistances. \emph{Advances in Neural Information Processing
+Systems 24 (NIPS)}, 2011.}
 \end{thebibliography}
 
 \end{document}

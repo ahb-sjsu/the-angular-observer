@@ -63,7 +63,12 @@ def fig1_core():
     }
     fig, ax = plt.subplots(figsize=(5.2, 3.6))
     ax.plot(
-        ms, curves["angle"], "o-", color="#0088aa", lw=2, label="angle only (observer)"
+        ms,
+        curves["angle"],
+        "o-",
+        color="#0088aa",
+        lw=2,
+        label="angle only (normalized)",
     )
     ax.plot(
         ms, curves["full"], "s--", color="#cc7700", label="full (magnitude x direction)"
@@ -82,20 +87,30 @@ def fig2_scaling():
     """The scaling law over the *exact* 20 library manifolds the paper cites.
 
     Plots the committed reviewer-response data (5 rules x 4 seeds) so the figure
-    is guaranteed consistent with section 5.4: slope -0.157 +/- 0.028, R^2 0.64,
-    Spearman -0.881, slope 95% CI [-0.185, -0.132]. The shaded band is that
-    slope CI, drawn as the envelope of the CI-bound slopes pivoting about the
-    data centroid (a slope-only confidence band, matching the caption).
+    is guaranteed consistent with section 5.4: slope -0.157, R^2 0.64, Spearman
+    -0.881. The shaded band is the RULE-CLUSTERED 95% slope CI [-0.343, -0.094]
+    (5 rules are the independent unit, not 20 points), drawn as the envelope of
+    the CI-bound slopes pivoting about the data centroid.
     """
     src = os.path.join(
         ROOT, "experiments", "reviewer-response", "todo_experiments_result.json"
     )
     sl = json.load(open(src))["scaling_law"]
+    cb = json.load(
+        open(
+            os.path.join(
+                ROOT,
+                "experiments",
+                "reviewer-response",
+                "clustered_bootstrap_result.json",
+            )
+        )
+    )
     P = np.array(sl["points"])
     d, r = P[:, 0], P[:, 1]
     slope, inter = sl["slope"], sl["intercept"]
-    se, r2, sp = sl["slope_se"], sl["r2"], sl["spearman"]
-    lo_s, hi_s = sl["slope_ci95"]  # [-0.185, -0.132]
+    r2, sp = sl["r2"], sl["spearman"]
+    lo_s, hi_s = cb["cluster_ci95"]  # rule-clustered, [-0.343, -0.094]
     dbar, rbar = d.mean(), r.mean()  # centroid the slope band pivots through
 
     # flag the one shortcut-contaminated outlier the text calls out (d~1.97, rho 0.39)
@@ -105,7 +120,13 @@ def fig2_scaling():
     fig, ax = plt.subplots(figsize=(5.2, 3.6))
     keep = np.ones(len(d), bool)
     keep[out] = False
-    ax.scatter(d[keep], r[keep], c="#0088aa", zorder=3, label="20 manifolds")
+    ax.scatter(
+        d[keep],
+        r[keep],
+        c="#0088aa",
+        zorder=3,
+        label="20 manifolds (5 rules x 4 seeds)",
+    )
     ax.scatter(
         d[out],
         r[out],
@@ -120,7 +141,7 @@ def fig2_scaling():
         slope * xs + inter,
         "--",
         color="#aa0000",
-        label=f"fit: slope ${slope:+.3f}\\pm{se:.3f}$\n$R^2={r2:.2f}$, Spearman ${sp:+.2f}$",
+        label=f"fit: slope ${slope:+.3f}$\n$R^2={r2:.2f}$, Spearman ${sp:+.2f}$",
     )
     ax.fill_between(
         xs,
@@ -128,11 +149,11 @@ def fig2_scaling():
         hi_s * (xs - dbar) + rbar,
         color="#aa0000",
         alpha=0.15,
-        label=f"95% slope CI [{lo_s:.3f}, {hi_s:.3f}]",
+        label=f"95% rule-clustered\nslope CI [{lo_s:.2f}, {hi_s:.2f}]",
     )
     ax.set_xlabel("emergent dimension (ball/spectral mean)")
     ax.set_ylabel(r"angle-only $\rho$")
-    ax.set_title("Observer fidelity falls with emergent dimension")
+    ax.set_title("Angular fidelity falls with emergent dimension")
     ax.set_ylim(0.3, 1.0)
     ax.grid(alpha=0.3)
     ax.legend(frameon=False, fontsize=7, loc="upper right")

@@ -119,9 +119,21 @@ competitor. Amplified-commute + resistance use the UNNORMALIZED Laplacian
 pseudoinverse (formulas verbatim from vonLuxburg-Radl-Hein NIPS 2010 §4). Reuses
 `rung0_validate.torus_graph`. CPU-only, dense eigh.
 
+## `clustered_bootstrap.py` → `clustered_bootstrap_result.json`
+
+Rule-clustered bootstrap for the scaling-law slope (referee delta comment 3). The
+20 scaling manifolds are 5 rules x 4 seeds, so the points are clustered, not
+independent; a naive point bootstrap that resamples 20 exchangeable points
+understates the slope uncertainty. Recomputes the OLS slope (-0.157) and its 95%
+CI two ways: **point** (resample 20 points i.i.d.) gives [-0.185, -0.132]
+(matching the old figure), **cluster** (two-stage: resample the 5 rules, then the
+4 seeds within each drawn rule) gives the honest **[-0.343, -0.094]** -- still
+excluding zero, four times wider. Fig. 3 now draws the clustered band; paper §5.4
+reports it. Reuses library.LIB / measure. Deterministic (fixed integer seeds).
+
 ## `density_torus.py` → `density_torus_result.json`
 
-Non-uniform-density torus (paper §5.6, referee's "most valuable new experiment").
+Non-uniform-density torus (paper §5.7, referee's "most valuable new experiment").
 Samples the flat 2-torus with density p(x)∝1+a·cos2πx, fixed-radius RGG, sweeps
 contrast a (degree ratio up to 45× at a=0.9), scoring against the TRUE flat-torus
 geodesics. Confirms **radius = density** (ρ(radius, 1/√p) = 0.53–0.67) and shows

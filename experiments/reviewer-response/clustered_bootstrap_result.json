@@ -1,0 +1,23 @@
+{
+  "n_rules": 5,
+  "n_seeds_per_rule": 4,
+  "n_points": 20,
+  "slope": -0.157,
+  "point_ci95": [
+    -0.1854,
+    -0.1323
+  ],
+  "point_se": 0.0147,
+  "cluster_ci95": [
+    -0.3433,
+    -0.0943
+  ],
+  "cluster_se": 0.0612,
+  "rule_names": [
+    "R_2D  (borrowed)",
+    "R_frac(borrowed)",
+    "evolved-2D (#2)",
+    "R_3D  (borrowed)",
+    "R_SR  (borrowed)"
+  ]
+}
