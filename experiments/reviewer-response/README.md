@@ -1,7 +1,7 @@
 # Reviewer-response experiments
 
 Reproducibility artifacts for the numbers folded into `paper/paper.tex`
-(corresponds to paper **v0.7**). Each script emits a JSON blob between
+(corresponds to paper **v0.8**). Each script emits a JSON blob between
 `###RESULTS_JSON_START###` / `###RESULTS_JSON_END###`; the committed
 `*_result.json` files are the exact outputs the paper cites.
 
