@@ -31,7 +31,7 @@
 \large A Geometry-Preserving Basis in Spectral Embeddings}
 \author{Andrew H. Bond\\ San Jos\'e State University\\
 \texttt{andrew.bond@sjsu.edu} \quad ORCID 0009-0003-2599-6158}
-\date{Working draft --- v0.6}
+\date{Working draft --- v0.7}
 
 \begin{document}
 \maketitle
@@ -221,9 +221,10 @@ Corollary~\ref{thm:radial} to this setting needs (i) the normalized analogue of
 the degeneracy \cite{vonluxburg2014} and (ii) control of the truncation error.
 We settle (ii) unconditionally below and support (i) numerically; the residual
 gap is then the angular claim itself (Conjecture~\ref{conj:angle}).
-Numerically the degeneracy holds tightly:
-$\rho(r_i,1/\sqrt{k_i})=0.92$--$0.99$ and radius-only geodesic preservation
-$\rho\le0.08$ (\S\ref{sec:verify}).
+Numerically the truncated radius tracks the local degree,
+$\rho(r_i,1/\sqrt{k_i})=0.79$--$0.87$ across $m=5$--$40$, while the full
+normalized radius is near-constant (coefficient of variation $0.09$) and
+radius-only geodesic preservation is $\rho\le0.08$ (\S\ref{sec:verify}).
 \end{remark}
 
 \begin{proposition}[Truncation is spectral-gap bounded]\label{prop:trunc}
@@ -689,8 +690,10 @@ Conjecture~\ref{conj:angle}}{Verifying the degeneracy corollary and the angular
 conjecture}}\label{sec:verify}
 \rev{We check the two claims directly.} The angle-$\rho$ is flat in graph size
 while the full commute distance decays, and
-the radius tracks degree exactly ($\rho(\lVert\Psi_i\rVert,1/\sqrt{k_i})=
-0.92$--$0.99$; radius-only $\rho\le0.08$). Corollary~\ref{thm:radial} holds cleanly
+the truncated radius tracks degree ($\rho(\lVert\Psi_i\rVert,1/\sqrt{k_i})=
+0.79$--$0.87$ across $m=5$--$40$; radius-only $\rho\le0.08$). For the full
+\emph{unnormalized} commute radius the degeneracy is exact,
+Corollary~\ref{thm:radial} holding cleanly
 at $d=3$ ($\rho(R,1/k_i+1/k_j)\to0.98$); $d=2$ is borderline (log corrections);
 the quasi-1D case correctly shows no degeneracy, as the dimension gating
 predicts. Conjecture~\ref{conj:angle}: in an $m$-sweep at $n=4000$, angle-$\rho$
@@ -883,7 +886,12 @@ $0.85$ but \emph{within}-tradition pairs, the ones that speak to local manifold
 structure, read only $0.67$ (still above the controls, well below the all-pairs
 figure). Second, the informative magnitude is mostly hubness: $\rho(r_i,\text{kNN
 in-degree})=0.58$, so the radius tracks node degree (Corollary~\ref{thm:radial}),
-not a moral-specific scale. We read the moral embedding as manifold-like
+not a moral-specific scale. The two-factor screen of \S\ref{sec:univ} delivers
+the same verdict in its own units: the moral graph sits at $\omega=+0.15$ with
+dimension spread $2.6$---between the clean manifolds ($\omega\le-0.50$, spread
+$\le0.51$) and the destroyed substrates ($\omega\ge+0.23$, spread $\ge0.77$), so
+the instrument itself, not just prose, places it as an intermediate, graded case.
+We read the moral embedding as manifold-like
 \emph{within} traditions and the cross-domain transfer as a graded diagnostic, not
 a headline; a generic-text control at matched $n$ and model, $k$-sensitivity, and
 dataset documentation are deferred (\S\ref{sec:disc}).}
