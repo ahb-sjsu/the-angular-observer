@@ -1,0 +1,9 @@
+{
+  "_note": "MoBSE §5.8 within/between-tradition decomposition + hubness (referee comment 7). Ran on Atlas 2026-07-14. Confirms the confound: all-pairs angle-rho (0.90) is inflated by between-tradition pairs (0.85); within-tradition is 0.67. Magnitude tracks kNN in-degree (hubness) at 0.58.",
+  "n_items": 2400, "knn": 10, "m_modes": 20,
+  "angle_rho_all": 0.904, "n_pairs_all": 44850,
+  "angle_rho_within_tradition": 0.669, "n_pairs_within": 7483,
+  "angle_rho_between_tradition": 0.853, "n_pairs_between": 37367,
+  "hubness": {"rho_magnitude_vs_indegree": 0.581, "rho_magnitude_vs_degree": 0.629, "rho_magnitude_vs_invsqrt_deg": 0.629},
+  "per_tradition_counts": {"jewish": 400, "greco_roman": 400, "hindu": 400, "american_advice": 400, "buddhist": 400, "vedic": 400}
+}

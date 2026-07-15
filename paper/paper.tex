@@ -45,8 +45,10 @@ Writing each node's low-mode embedding in polar form (magnitude $\times$
 direction), the direction preserves graph geodesics at Spearman
 $\rho \approx 0.93$ on a reference manifold, while the magnitude preserves
 $\rho \approx 0.03$ and a random-mode basis of equal size preserves
-$\rho \approx 0$. Keeping only the angle is exactly the row-normalization of
-Ng--Jordan--Weiss spectral clustering \cite{ng2002}\rev{, whose existing theory
+$\rho \approx 0$. Keeping only the angle is the row-normalization of
+Ng--Jordan--Weiss spectral clustering \cite{ng2002} \rev{applied to the
+commute-weighted ($1/\sqrt{\lambda_k}$) embedding (the weighting matters:
+\S\ref{sec:ablation})}\rev{, whose existing theory
 concerns cluster separation \cite{schiebinger2015}; we give it a geodesic
 justification. We show, as a corollary of von~Luxburg--Radl--Hein, that the
 radial coordinate of the full embedding} degenerates to a local-degree quantity
@@ -56,14 +58,15 @@ geodesic distance}---flat in both mode-count and graph size where the raw
 embedding decays. The basis is \textbf{substrate-independent}: it preserves
 geodesics on any graph carrying genuine low-dimensional Riemannian geometry---random-geometric
 lattices, manifold-embedding trajectories, and Wolfram-model hypergraph rewriting
-alike---and fails correctly on Lorentzian causal sets and geometry-destroying
+alike---and degrades on Lorentzian causal sets and geometry-destroying
 small-world graphs. \rev{Across $20$ independent emergent manifolds
 ($d \approx 1$--$3.6$), fidelity falls approximately linearly with intrinsic
-dimension. Refined toward the continuum ($N$ up to $5\times10^{4}$), the basis
-\emph{sharpens} on sampled Riemannian substrates (angular-fidelity Spearman
-$+1.00$ with $\log N$ at $d{=}3$) yet \emph{decays} below a pre-registered floor
-on a coordinate-free Wolfram-model manifold---a dissociation that recasts the
-angular coordinate as a \emph{diagnostic} for whether a substrate's fine
+dimension. Refined toward the continuum ($N$ up to $5\times10^{4}$) at a fixed
+mode budget, the basis \emph{sharpens} on sampled Riemannian substrates (angular
+fidelity monotone increasing across the five sizes) yet \emph{decays} below a
+pre-registered floor on a coordinate-free Wolfram-model manifold---a
+budget-relative dissociation (it inverts when the budget is scaled) that recasts
+the angular coordinate as a \emph{diagnostic} for whether a substrate's fine
 structure stays manifold-like under refinement.}
 % CUT: exact scaling coefficients from the abstract (kept in \S5.4) and the
 % KV-cache / observer sentence -- the abstract now ends on the empirical claim.
@@ -194,10 +197,13 @@ borderline behaviour we measure in \S\ref{sec:verify})}, and let $\Phi_i$ be the
 \emph{full} commute-time embedding built from the unnormalized Laplacian, so that
 $\lVert\Phi_i\rVert^2 = L^{+}_{ii}$. As $n\to\infty$ the resistance distance
 degenerates, $R(i,j)=L^{+}_{ii}+L^{+}_{jj}-2L^{+}_{ij}\to 1/k_i + 1/k_j$.
-\rev{The pseudoinverse is gauge-fixed by $\sum_j L^{+}_{ij}=0$ (as $L\mathbf 1=0$);
-averaging the degenerate limit against this constraint pins the off-diagonal to
-$L^{+}_{ij}\to o(1)$ and hence the self-term to} $L^{+}_{ii}\to 1/k_i$, so the
-radius satisfies $\lVert\Phi_i\rVert \to 1/\sqrt{k_i}$. The radius of the full
+\rev{Summing over $j$ and using the gauge $\sum_j L^{+}_{ij}=0$ (from
+$L\mathbf 1=0$) gives $\sum_j R(i,j)=n\,L^{+}_{ii}+\operatorname{tr}L^{+}$; matched
+against $\sum_j(1/k_i+1/k_j)=n/k_i+\sum_j 1/k_j$ this forces $L^{+}_{ii}=1/k_i+C$
+with $C$ independent of $i$, and taking the trace of that relation gives $C=0$
+(the sum is legitimate because the vL--R--H limit is uniform over the $n$ pairs).
+Hence} $L^{+}_{ii}\to 1/k_i$, so the radius satisfies
+$\lVert\Phi_i\rVert \to 1/\sqrt{k_i}$. The radius of the full
 commute embedding is therefore asymptotically geometry-free---a local-density
 coordinate carrying no geodesic information.
 \end{corollary}
@@ -269,11 +275,18 @@ equals the geodesic---that is Conjecture~\ref{conj:angle}.}
 % actually is one), and the truncated case is an explicit, honest remark.
 
 \begin{conjecture}[Angular Preservation]\label{conj:angle}
-Row-normalization $\hat u_i = \Psi_i/\lVert\Psi_i\rVert$ deletes the degenerate
+\rev{For $\varepsilon$-graph or $k$-NN samples of a compact Riemannian manifold
+satisfying the density conditions of \cite{garciatrillos2018,calder2022} (an
+explicit class, not one defined post hoc by our own estimators),}
+row-normalization $\hat u_i = \Psi_i/\lVert\Psi_i\rVert$ deletes the degenerate
 density factor of Corollary~\ref{thm:radial}, and \rev{the pairwise distances
 among the resulting directions remain \emph{rank-faithful} to geodesic
 distance---Spearman correlation bounded away from zero (empirically
-$\approx0.9$)---\emph{uniformly in} the mode-count $m$ and size $n$. A stronger,
+$\approx0.9$)---\emph{uniformly in} the mode-count $m$ and size $n$. (We reserve
+``rank-faithful'' for Spearman $\ge\rho_0>0$ over the stated class; the diagnostic
+reading---using the $\omega$-screen and dimension spread to decide whether a
+\emph{given} graph lies in the class---is a separate corollary-in-use, kept out of
+the conjecture to avoid circularity.) A stronger,
 metric form of the conjecture---that the angular map is bi-Lipschitz to geodesic
 distance with constants uniform in $m$ and $n$---is consistent with our data but
 untested; our evidence is rank-based and cannot by itself bound metric
@@ -332,11 +345,37 @@ divide by $\lVert u\rVert\lVert v\rVert\le(\rho^+)^2$.}
 must vary \emph{slower} than the embedding moves. As $\Lambda\to0$ (radius $\to$
 constant, the limit of Corollary~\ref{thm:radial}) the lower constant tends to
 $1/(L\rho^+)$ and normalization becomes a pure scaling. On the 2-torus this holds
-pointwise: the identity is exact to $10^{-15}$, the radius Lipschitz constant
-$\Lambda=0.092$ sits just under the map's lower stretch $A=0.092$ ($0/9200$ local
-pairs violate it; the median $\Lambda$ is $5\times$ smaller), and the local
-angular bi-Lipschitz constant is $2.2$. Lemma~\ref{lem:norm} links the two halves
+pointwise: the identity is exact to $10^{-15}$, and the radius Lipschitz constant
+$\Lambda=0.0918$ sits only marginally under the map's lower stretch $A=0.0920$.
+The margin is razor-thin, so Lemma~\ref{lem:norm}'s \emph{worst-case} lower
+constant $\sqrt{L^{-2}-\Lambda^2}/\rho^+$ is near-vacuous here---but that crude
+bound is not the operative one. Proposition~\ref{prop:angdist} shows the lower
+stretch is the pointwise \emph{tangential} component of $dF$, which stays bounded
+away from zero ($0/9200$ local pairs are radially degenerate, median $\Lambda$
+five times below $A$), giving a measured local angular bi-Lipschitz constant of
+$2.2$ that is an empirical fact, not a consequence of the crude lemma. Lemma~\ref{lem:norm} links the two halves
 of the principle and reduces the conjecture to standard ingredients.}
+
+\begin{proposition}[Exact angular distortion]\label{prop:angdist}
+\rev{Let $F$ be differentiable with $r=\lVert F\rVert>0$ and $\hat F=F/r$. Taking
+$y\to x$ in Lemma~\ref{lem:norm} gives, for every tangent vector $v$,
+\[
+\lVert d\hat F(v)\rVert^2=\frac{\lVert dF(v)\rVert^2-dr(v)^2}{r^2}
+=\frac{\lVert dF(v)-\hat u\,dr(v)\rVert^2}{r^2},
+\qquad dr(v)=\langle dF(v),\hat u\rangle .
+\]}
+\end{proposition}
+
+\rev{The angular stretch in a direction $v$ is \emph{exactly} the tangential part
+of $dF(v)$---the component orthogonal to the radius---divided by $r$. So $\hat F$
+is a local bi-Lipschitz immersion \emph{iff} $dF$ is nowhere purely radial
+($dF(v)\not\parallel F$ for $v\neq0$), the lower stretch being
+$\inf_{v}\lVert dF(v)-\hat u\,dr(v)\rVert/(r\lVert v\rVert)$. This sharpens
+Lemma~\ref{lem:norm}: the crude $\Lambda<1/L$ merely forces the radial term
+$dr(v)$ below the total $\lVert dF(v)\rVert$, whereas the proposition shows what is
+really required is that the embedding's velocity never aligns with its position.
+Lemma~\ref{lem:norm} and Proposition~\ref{prop:angdist} link the two halves of the
+principle and reduce the conjecture to standard ingredients.}
 
 \begin{theorem}[Conditional local form of Conjecture~\ref{conj:angle}]\label{thm:cond}
 \rev{Let $M$ be a compact $d$-manifold whose graph Laplacian spectrally converges
@@ -353,14 +392,16 @@ $A\,d_M(x,y)\le\lVert\hat u_x-\hat u_y\rVert\le B\,d_M(x,y)$ for all sampled $x,
 with $d_M(x,y)\le r_0$.}
 \end{theorem}
 
-\begin{proof}[Proof (assembly)]
+\begin{proof}[Proof sketch]
 \rev{By (H1) the continuum eigenmap is locally bi-Lipschitz; by (H2) and
 Lemma~\ref{lem:norm} its normalization, the continuum angular map, is locally
-bi-Lipschitz. Spectral convergence \cite{belkin2007,garciatrillos2018} transfers
-the low eigenpairs to the graph Laplacian with error vanishing as $n\to\infty$
-(scale-relative, cf.\ Proposition~\ref{prop:trunc}), and
-Proposition~\ref{prop:trunc} bounds the $m$-truncation. Composing the three
-controlled approximations yields the constants.}
+bi-Lipschitz. The transfer to the graph needs \emph{sup-norm} eigenvector
+convergence (so that normalization survives where $\lVert F\rVert$ is smallest and
+the graph radius inherits $[\rho^-,\rho^+]$)---the rates of \cite{calder2022}
+rather than generic $L^2$ consistency---with ``high probability'' taken over the
+sampling model of those results; Proposition~\ref{prop:trunc} then bounds the
+$m$-truncation. We give this as a sketch: the uniform-in-$m$ control of (H1) and
+the sup-norm rate bookkeeping are the delicate steps, not fully carried out here.}
 \end{proof}
 
 \rev{What remains is delimited. \textbf{(H1)} is subtle: Jones--Maggioni--Schul
@@ -372,9 +413,13 @@ empirical ``flat in $m$,'' \S\ref{sec:verify}) is open. Low-spectrum multiplicit
 compounds this---the square torus's first nontrivial eigenvalue has multiplicity
 four, so a truncation \emph{inside} a multiplet ($m=5$) is basis-dependent;
 distances are well-defined only for whole eigenspaces, so $m$ should be taken at a
-spectral gap, or the map phrased through spectral projectors. \textbf{(H2)} is the
-truncated, normalized analogue of von~Luxburg--Radl--Hein---the radius flat enough
-that $\Lambda_0<1/L_0$---which we verify on the torus and conjecture generally.
+spectral gap, or the map phrased through spectral projectors. \textbf{(H2)} is, by
+Proposition~\ref{prop:angdist}, sharper than radius flatness: what is needed is
+that the eigenmap's velocity $dF(v)$ is nowhere purely radial---a transversality
+the immersion (H1) makes generic, and the truncated analogue of
+von~Luxburg--Radl--Hein. It holds on the torus (tangential lower stretch bounded,
+local constant $2.2$); whether the eigenmap image ever develops a radial fold on
+some manifold is the sharp remaining question.
 Globally a torus admits no bi-Lipschitz Euclidean embedding, so no global metric
 statement can hold; the global claim is necessarily the rank-faithful one this
 paper measures. Conjecture~\ref{conj:angle} is thereby reduced to a local-chart
@@ -492,8 +537,8 @@ small-world (destroyed) & \rev{3.0$^{*}$} & 0.45 & 0.00 & --- \\
 \end{tabular}
 \end{center}
 Substrates with genuine low-$d$ Riemannian geometry all show the effect,
-independent of graph origin; the metric fails correctly where geometry is
-Lorentzian or destroyed. \rev{$^{*}$For the small-world graph the three
+independent of graph origin; the metric degrades where geometry is
+Lorentzian ($\rho=0.57$, a degradation not a failure) or destroyed. \rev{$^{*}$For the small-world graph the three
 dimension estimators disagree sharply (ball $3.7$, spectral $3.6$,
 effective-rank $4.3$; spread $0.77$ versus $0.14$--$0.51$ across the clean substrates);
 by our own manifold-grade criterion this graph is \emph{not} a manifold, and the
@@ -678,12 +723,29 @@ at the largest $N$ its magnitude control begins to break the clean angle/radius
 separation that holds exactly on the RGGs (one $50$k seed crosses
 $\rho_{\text{mag}}=0.33$ and is gated out). A sampled manifold refines to a
 clean continuum; an emergent hypergraph, under this basis, does not---its fine
-structure drifts away from a manifold as it grows. The coordinate-free
-substrate---the one the observer-theory reading most needs---is exactly the one
-where the basis fails in the limit. We read this not as a limitation but as a
-result: the angular basis is a \emph{diagnostic} for whether a substrate's fine
-structure stays manifold-like under refinement, and it returns different
-verdicts for sampled ($2/3$ pass) and emergent ($1/1$ fail) geometry.}%
+structure drifts away from a manifold as it grows. We read this not as a
+limitation but as a result: the angular basis is a \emph{diagnostic} for whether
+a substrate's fine structure stays manifold-like under refinement, and it returns
+different verdicts for sampled ($2/3$ pass) and emergent ($1/1$ fail) geometry.}
+
+\rev{One qualification is essential, and it deepens rather than weakens the
+reading: the dissociation is stated at a \emph{fixed} observer budget ($m=10$
+while $N$ grows $5\times$). Rerunning with $m$ \emph{spectral-gap-matched}---%
+holding the resolved eigenvalue scale $\tau$ fixed, so $m$ grows with $N$
+(to $m\approx47$ at $N{=}10^4$)---inverts it: the RGG now \emph{falls}
+($0.856\to0.775$, $\mathrm{Spearman}=-1.0$), because the added high modes inject
+sub-geodesic detail, while the emergent substrate stops decaying
+($0.747\to0.692$, monotonicity gone, $\mathrm{Spearman}=-0.5$). No single budget
+is optimal for both. So the dissociation is a property of the \emph{fixed-budget}
+observer, not an absolute substrate invariant: a manifold keeps its geodesic
+geometry in a fixed low-mode band (refining sharpens those modes), whereas the
+emergent substrate spreads geometry across scales (a fixed observer resolves an
+ever-smaller fraction as it grows). ``Clean geometry'' is thus a relation between
+observer resolution and substrate scale---the sharpest form of the
+mode-budget consistency the angular basis exhibits (\S\ref{sec:verify}), and the
+motivation for a dimension-adaptive basis (\S\ref{sec:disc}). Modest evidence---%
+one emergent substrate, one seed, $N\le10^4$---so we state the direction, not a
+law.}%
 \footnote{Pre-registered (PREREG\_RUNG4) before the run; survival bar
 $\text{angle-}\rho(N_{\max}) \ge \max(0.75,\,0.9\,\text{angle-}\rho(N_{\min}))$
 on $\ge2/3$ substrates. Amendment~1, registered before any run: the
@@ -693,25 +755,24 @@ modes---a faithful, sparse-affordable stand-in, same $\le0.15$ bar.}
 % ---- end NEW ----
 
 \subsection{\rev{A cross-domain probe: the moral embedding manifold}}\label{sec:moral}
-\rev{If the angular basis is a diagnostic for manifold-like structure
-(\S\ref{sec:continuum}), it should return an interpretable reading on a substrate
-from an entirely different domain. We point the same instrument at a
-\emph{semantic} space: $2{,}400$ moral/ethical text items embedded with BGE-M3
-($1024$-d), stratified across six traditions, connected by a $k{=}10$
-nearest-neighbour graph on the unit-normalized embeddings. The moral embedding
-reads as substantially manifold-like---angle-$\rho = 0.893$ over $19{,}900$
-pairs, against a per-feature-shuffle control at $0.233$ and an isotropic-Gaussian
-control at $0.311$, with both mode controls pinned (higher-mode $\rho=0.01$,
-random-mode $\rho=0.07$). The same basis that reads $0.93$ on a swiss roll and
-$\sim0$ on a tangle places moral-semantic space near the manifold end. But the
-diagnostic also localizes where it departs from a textbook Riemannian substrate:
-the three dimension estimators disagree (spread $2.6$; effective-rank $3.8$
-against spectral $1.2$), the magnitude coordinate carries real signal
-($\rho_{\text{mag}}=0.56$, versus $\le0.05$ on the clean geometric substrates),
-and the small-world screen returns $\omega=+0.15$---a clustered space with mild
-shortcut structure and a nontrivial radial mode, not a pure low-$d$ manifold. The
-angular coordinate transfers across domains as a graded diagnostic, not merely a
-pass/fail label.}
+\rev{As a probe of whether the diagnostic transfers beyond synthetic and emergent
+graphs, we point it at a \emph{semantic} space: $2{,}400$ moral/ethical text items
+(BGE-M3, $1024$-d), stratified across six traditions, in a $k{=}10$
+nearest-neighbour graph. The metric here is the kNN graph's own hop geodesics, so
+this measures spectral reconstructability of that graph, not external semantic
+validity. All-pairs angle-$\rho=0.90$ separates it sharply from destroyed controls
+(per-feature shuffle $0.23$, isotropic Gaussian $0.31$; higher-mode $\rho=0.01$).
+Two confounds keep this honest, and both are real. First, the all-pairs number is
+partly cluster separation---the effect row-normalization is known to
+enhance~\cite{schiebinger2015}: decomposed, \emph{between}-tradition pairs read
+$0.85$ but \emph{within}-tradition pairs, the ones that speak to local manifold
+structure, read only $0.67$ (still above the controls, well below the all-pairs
+figure). Second, the informative magnitude is mostly hubness: $\rho(r_i,\text{kNN
+in-degree})=0.58$, so the radius tracks node degree (Corollary~\ref{thm:radial}),
+not a moral-specific scale. We read the moral embedding as manifold-like
+\emph{within} traditions and the cross-domain transfer as a graded diagnostic, not
+a headline; a generic-text control at matched $n$ and model, $k$-sensitivity, and
+dataset documentation are deferred (\S\ref{sec:disc}).}
 
 \section{Honest Negatives}\label{sec:neg}
 \textbf{Not secretly hyperbolic (rejected).} With a binary-tree positive control
@@ -755,6 +816,14 @@ $d\approx2$; and a dimension-adaptive angular basis that tunes mode-count and
 diffusion time to counter the fidelity decay. Keep the angle, drop the magnitude:
 the basis-level fact is the contribution; the observer interpretation is where we
 leave the door open.
+
+\rev{\paragraph{Reproducibility.} The pre-registration documents (\texttt{PREREG\_%
+RUNG3/4} with dated amendments), all experiment scripts and per-run result files
+(the torus and universality benchmarks, the weighting ablation, the small-world
+screen, the continuum and scaled-budget refinements, the truncation/normalization
+checks, and the cross-domain probe), the manifold-rule sets behind the $20$-point
+scaling law and the $151$ evolution rules, and the random seeds and solver
+settings are released in the accompanying repository.}
 
 \begin{thebibliography}{99}
 \bibitem{belkin2003} M.~Belkin and P.~Niyogi. Laplacian eigenmaps for

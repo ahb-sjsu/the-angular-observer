@@ -86,3 +86,21 @@ diffusion `v_k·e^{−λt}`, and degree-corrected `÷√k_i` / `×√k_i`.
   baseline was unfair; Isomap edges the angle when given the geodesics as input.
 - Random-mode control averaged over 10 draws: 0.08±0.16 (max 0.40).
 CPU-only, reuses torus builder.
+
+## `mobse_decompose.py` → `mobse_decompose_result.json`
+
+§5.8 within/between-tradition decomposition + hubness (referee comment 7, Atlas).
+Confirms the confound: all-pairs angle-ρ = 0.90, but between-tradition = 0.85 and
+**within-tradition = 0.67** — the headline was partly cluster separation (which
+row-normalization enhances). Magnitude tracks kNN in-degree at 0.58 (hubness), so
+the "informative radius" is largely degree, per Corollary 1.
+
+## `rung4_scaledm.py` → `rung4_scaledm_result.json`
+
+Scaled-m continuum refinement (review-2's decisive test): is §5.7's dissociation a
+fixed-observer-budget artifact? With m spectral-gap-matched (τ fixed, m grows with
+N to ~47 at N=10⁴), the dissociation **inverts**: rgg3 fixed +1.0/scaled −1.0;
+wolf2 fixed −1.0/scaled −0.5. So the dissociation is budget-relative — a property
+of the fixed-budget observer, not an absolute substrate fact. Manifolds keep
+geometry in a fixed low-mode band; emergent graphs spread it across scales.
+Reuses rung4_pod builders. Local, N≤10⁴, one seed (direction, not a law).

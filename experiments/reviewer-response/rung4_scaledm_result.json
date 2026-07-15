@@ -1,0 +1,74 @@
+{
+  "rgg3": [
+    {
+      "substrate": "rgg3",
+      "n_target": 2000,
+      "n_lcc": 2000,
+      "tau": 0.07896,
+      "m_fixed": 10,
+      "m_scaled": 10,
+      "angle_fixed": 0.856,
+      "angle_scaled": 0.856
+    },
+    {
+      "substrate": "rgg3",
+      "n_target": 5000,
+      "n_lcc": 5000,
+      "tau": 0.07896,
+      "m_fixed": 10,
+      "m_scaled": 26,
+      "angle_fixed": 0.869,
+      "angle_scaled": 0.836
+    },
+    {
+      "substrate": "rgg3",
+      "n_target": 10000,
+      "n_lcc": 10000,
+      "tau": 0.07896,
+      "m_fixed": 10,
+      "m_scaled": 48,
+      "angle_fixed": 0.889,
+      "angle_scaled": 0.775
+    }
+  ],
+  "wolf2": [
+    {
+      "substrate": "wolf2",
+      "n_target": 2000,
+      "n_lcc": 1997,
+      "tau": 0.01461,
+      "m_fixed": 10,
+      "m_scaled": 10,
+      "angle_fixed": 0.747,
+      "angle_scaled": 0.747
+    },
+    {
+      "substrate": "wolf2",
+      "n_target": 5000,
+      "n_lcc": 4997,
+      "tau": 0.01461,
+      "m_fixed": 10,
+      "m_scaled": 23,
+      "angle_fixed": 0.721,
+      "angle_scaled": 0.769
+    },
+    {
+      "substrate": "wolf2",
+      "n_target": 10000,
+      "n_lcc": 9998,
+      "tau": 0.01461,
+      "m_fixed": 10,
+      "m_scaled": 47,
+      "angle_fixed": 0.679,
+      "angle_scaled": 0.692
+    }
+  ],
+  "rgg3_trend": {
+    "spearman_fixed_vs_logN": 1.0,
+    "spearman_scaled_vs_logN": -1.0
+  },
+  "wolf2_trend": {
+    "spearman_fixed_vs_logN": -1.0,
+    "spearman_scaled_vs_logN": -0.5
+  }
+}
