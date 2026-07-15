@@ -1,0 +1,233 @@
+[
+ {
+  "substrate": "torus T^2 (control)",
+  "n": 2000,
+  "mean_deg": 13.85,
+  "deg_cv": 0.252,
+  "dim": 1.93,
+  "dim_spread": 0.09,
+  "angle_rho": 0.904,
+  "angle_rho_alpha1": 0.91,
+  "magnitude_rho": 0.038,
+  "random_rho": 0.01,
+  "flat_stress_2d": 0.543,
+  "flat_stress_3d": 0.425,
+  "sphere_residual": 0.217,
+  "ecc_spread": 0.11,
+  "spectrum_ratios": [
+   1.0,
+   1.12,
+   1.19,
+   1.37,
+   2.06,
+   2.25,
+   2.55,
+   2.8
+  ],
+  "signature_scores": {
+   "flat 2-torus": 0.203,
+   "sphere S^2": 0.339,
+   "square patch": 0.713,
+   "interval (1D)": 2.351
+  },
+  "signature_best": "flat 2-torus"
+ },
+ {
+  "substrate": "sphere S^2 (control)",
+  "n": 2000,
+  "mean_deg": 13.93,
+  "deg_cv": 0.261,
+  "dim": 1.83,
+  "dim_spread": 0.12,
+  "angle_rho": 0.965,
+  "angle_rho_alpha1": 0.98,
+  "magnitude_rho": 0.033,
+  "random_rho": 0.005,
+  "flat_stress_2d": 0.478,
+  "flat_stress_3d": 0.345,
+  "sphere_residual": 0.095,
+  "ecc_spread": 0.09,
+  "spectrum_ratios": [
+   1.0,
+   1.17,
+   1.25,
+   2.93,
+   3.07,
+   3.25,
+   3.6,
+   4.13
+  ],
+  "signature_scores": {
+   "flat 2-torus": 0.561,
+   "sphere S^2": 0.165,
+   "square patch": 0.378,
+   "interval (1D)": 2.025
+  },
+  "signature_best": "sphere S^2"
+ },
+ {
+  "substrate": "R_2D  (borrowed) [s=1]",
+  "n": 501,
+  "mean_deg": 3.67,
+  "deg_cv": 0.299,
+  "dim": 1.06,
+  "dim_spread": 0.2,
+  "angle_rho": 0.918,
+  "angle_rho_alpha1": 0.922,
+  "magnitude_rho": 0.26,
+  "random_rho": 0.014,
+  "flat_stress_2d": 0.213,
+  "flat_stress_3d": 0.148,
+  "sphere_residual": 0.025,
+  "ecc_spread": 0.647,
+  "spectrum_ratios": [
+   1.0,
+   3.7,
+   8.06,
+   14.5,
+   23.24,
+   35.06,
+   44.94,
+   59.8
+  ],
+  "signature_scores": {
+   "flat 2-torus": 2.466,
+   "sphere S^2": 2.094,
+   "square patch": 1.623,
+   "interval (1D)": 0.076
+  },
+  "signature_best": "interval (1D)"
+ },
+ {
+  "substrate": "R_frac(borrowed) [s=1]",
+  "n": 2000,
+  "mean_deg": 3.98,
+  "deg_cv": 0.056,
+  "dim": 1.39,
+  "dim_spread": 0.08,
+  "angle_rho": 0.893,
+  "angle_rho_alpha1": 0.894,
+  "magnitude_rho": 0.475,
+  "random_rho": 0.009,
+  "flat_stress_2d": 0.326,
+  "flat_stress_3d": 0.233,
+  "sphere_residual": 0.068,
+  "ecc_spread": 0.654,
+  "spectrum_ratios": [
+   1.0,
+   2.83,
+   5.71,
+   7.7,
+   10.37,
+   16.3,
+   18.5,
+   32.16
+  ],
+  "signature_scores": {
+   "flat 2-torus": 1.873,
+   "sphere S^2": 1.514,
+   "square patch": 1.034,
+   "interval (1D)": 0.679
+  },
+  "signature_best": "interval (1D)"
+ },
+ {
+  "substrate": "evolved-2D (#2) [s=1]",
+  "n": 2000,
+  "mean_deg": 4.03,
+  "deg_cv": 1.42,
+  "dim": 2.03,
+  "dim_spread": 0.31,
+  "angle_rho": 0.735,
+  "angle_rho_alpha1": 0.643,
+  "magnitude_rho": 0.069,
+  "random_rho": 0.001,
+  "flat_stress_2d": 0.427,
+  "flat_stress_3d": 0.353,
+  "sphere_residual": 0.185,
+  "ecc_spread": 0.545,
+  "spectrum_ratios": [
+   1.0,
+   3.84,
+   4.55,
+   5.62,
+   6.78,
+   7.07,
+   7.91,
+   8.28
+  ],
+  "signature_scores": {
+   "flat 2-torus": 1.327,
+   "sphere S^2": 0.992,
+   "square patch": 0.633,
+   "interval (1D)": 1.295
+  },
+  "signature_best": "square patch"
+ },
+ {
+  "substrate": "R_3D  (borrowed) [s=1]",
+  "n": 501,
+  "mean_deg": 4.12,
+  "deg_cv": 0.08,
+  "dim": 2.06,
+  "dim_spread": 0.05,
+  "angle_rho": 0.816,
+  "angle_rho_alpha1": 0.815,
+  "magnitude_rho": 0.159,
+  "random_rho": 0.021,
+  "flat_stress_2d": 0.515,
+  "flat_stress_3d": 0.431,
+  "sphere_residual": 0.208,
+  "ecc_spread": 0.48,
+  "spectrum_ratios": [
+   1.0,
+   1.97,
+   2.45,
+   2.97,
+   3.65,
+   4.01,
+   4.59,
+   5.21
+  ],
+  "signature_scores": {
+   "flat 2-torus": 0.783,
+   "sphere S^2": 0.484,
+   "square patch": 0.324,
+   "interval (1D)": 1.783
+  },
+  "signature_best": "square patch"
+ },
+ {
+  "substrate": "R_SR  (borrowed) [s=1]",
+  "n": 2000,
+  "mean_deg": 5.4,
+  "deg_cv": 0.901,
+  "dim": 3.36,
+  "dim_spread": 0.28,
+  "angle_rho": 0.545,
+  "angle_rho_alpha1": 0.514,
+  "magnitude_rho": 0.125,
+  "random_rho": 0.005,
+  "flat_stress_2d": 0.495,
+  "flat_stress_3d": 0.421,
+  "sphere_residual": 0.262,
+  "ecc_spread": 0.39,
+  "spectrum_ratios": [
+   1.0,
+   2.12,
+   2.96,
+   3.01,
+   3.55,
+   3.94,
+   4.01,
+   4.2
+  ],
+  "signature_scores": {
+   "flat 2-torus": 0.773,
+   "sphere S^2": 0.506,
+   "square patch": 0.409,
+   "interval (1D)": 1.831
+  },
+  "signature_best": "square patch"
+ }
+]
