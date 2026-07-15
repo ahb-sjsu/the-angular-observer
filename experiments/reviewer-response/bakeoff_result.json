@@ -1,0 +1,32 @@
+{
+  "torus_d2": {
+    "substrate": "2-torus",
+    "n": 2000,
+    "angle_ours": 0.888,
+    "commute_full": 0.601,
+    "biharmonic": 0.735,
+    "diffusion_distance": {
+      "t=0.5/lam1": 0.737,
+      "t=1.0/lam1": 0.771,
+      "t=2.0/lam1": 0.732,
+      "t=4.0/lam1": 0.63
+    },
+    "isomap_dim_m_given_geodesics": 0.971,
+    "amplified_commute": 0.628
+  },
+  "torus_d3": {
+    "substrate": "3-torus",
+    "n": 3000,
+    "angle_ours": 0.83,
+    "commute_full": 0.36,
+    "biharmonic": 0.515,
+    "diffusion_distance": {
+      "t=0.5/lam1": 0.496,
+      "t=1.0/lam1": 0.625,
+      "t=2.0/lam1": 0.631,
+      "t=4.0/lam1": 0.542
+    },
+    "isomap_dim_m_given_geodesics": 0.952,
+    "amplified_commute": 0.364
+  }
+}

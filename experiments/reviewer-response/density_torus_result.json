@@ -1,0 +1,58 @@
+[
+  {
+    "a": 0.0,
+    "n": 2500,
+    "mean_deg": 14.0,
+    "deg_contrast": 6.5,
+    "rho_deg_density": 0.0,
+    "rho_radius_invsqrt_deg": 0.849,
+    "rho_radius_invsqrt_density": 0.0,
+    "angle_rho_graph": 0.925,
+    "angle_rho_true": 0.928,
+    "angle_rho_true_alpha1": 0.923,
+    "magnitude_rho_true": 0.005,
+    "full_rho_true": 0.683
+  },
+  {
+    "a": 0.3,
+    "n": 2500,
+    "mean_deg": 14.8,
+    "deg_contrast": 15.0,
+    "rho_deg_density": 0.666,
+    "rho_radius_invsqrt_deg": 0.142,
+    "rho_radius_invsqrt_density": 0.527,
+    "angle_rho_graph": 0.83,
+    "angle_rho_true": 0.864,
+    "angle_rho_true_alpha1": 0.949,
+    "magnitude_rho_true": 0.099,
+    "full_rho_true": 0.654
+  },
+  {
+    "a": 0.6,
+    "n": 2500,
+    "mean_deg": 16.9,
+    "deg_contrast": 40.0,
+    "rho_deg_density": 0.753,
+    "rho_radius_invsqrt_deg": 0.157,
+    "rho_radius_invsqrt_density": 0.674,
+    "angle_rho_graph": 0.741,
+    "angle_rho_true": 0.81,
+    "angle_rho_true_alpha1": 0.96,
+    "magnitude_rho_true": 0.288,
+    "full_rho_true": 0.736
+  },
+  {
+    "a": 0.9,
+    "n": 2462,
+    "mean_deg": 20.1,
+    "deg_contrast": 45.0,
+    "rho_deg_density": 0.801,
+    "rho_radius_invsqrt_deg": 0.118,
+    "rho_radius_invsqrt_density": 0.551,
+    "angle_rho_graph": 0.727,
+    "angle_rho_true": 0.789,
+    "angle_rho_true_alpha1": 0.94,
+    "magnitude_rho_true": 0.156,
+    "full_rho_true": 0.746
+  }
+]

@@ -104,3 +104,30 @@ wolf2 fixed −1.0/scaled −0.5. So the dissociation is budget-relative — a p
 of the fixed-budget observer, not an absolute substrate fact. Manifolds keep
 geometry in a fixed low-mode band; emergent graphs spread it across scales.
 Reuses rung4_pod builders. Local, N≤10⁴, one seed (direction, not a law).
+
+## `bakeoff.py` → `bakeoff_result.json`
+
+Baseline bake-off (paper §5.5.2): the angle vs named spectral distances on the
+same graph/anchors, scored by Spearman ρ against unweighted geodesics. On the
+2-torus (n=2000) / 3-torus (n=3000): **angle 0.888 / 0.830** beats full commute
+(0.601 / 0.360), biharmonic (0.735 / 0.515), diffusion at best t (0.771 / 0.631),
+and the **amplified commute distance** (0.628 / 0.364) — von Luxburg-Radl-Hein's
+own degeneracy correction, which barely improves on raw commute because
+*subtracting* 1/kᵢ+1/kⱼ is not *dividing it out*. Isomap wins (0.971 / 0.952)
+only because it is fed the geodesics as input — an oracle ceiling, not a
+competitor. Amplified-commute + resistance use the UNNORMALIZED Laplacian
+pseudoinverse (formulas verbatim from vonLuxburg-Radl-Hein NIPS 2010 §4). Reuses
+`rung0_validate.torus_graph`. CPU-only, dense eigh.
+
+## `density_torus.py` → `density_torus_result.json`
+
+Non-uniform-density torus (paper §5.6, referee's "most valuable new experiment").
+Samples the flat 2-torus with density p(x)∝1+a·cos2πx, fixed-radius RGG, sweeps
+contrast a (degree ratio up to 45× at a=0.9), scoring against the TRUE flat-torus
+geodesics. Confirms **radius = density** (ρ(radius, 1/√p) = 0.53–0.67) and shows
+the raw angle is **not** sampling-invariant (angle-ρ_true 0.93→0.79 as contrast
+grows, since the graph Laplacian → density-weighted operator, not
+Laplace-Beltrami). The **Coifman-Lafon α=1 normalization** W↦D⁻¹WD⁻¹ restores it
+to 0.92–0.96, flat across the whole range — the same normalization that fixes the
+angle isolates the density into the radius. Reuses `_norm_laplacian_eigs`.
+CPU-only, dense eigh.

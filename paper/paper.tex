@@ -662,6 +662,60 @@ three digits ($0.889$ either way), because a per-node radial factor cancels unde
 row-normalization---a direct confirmation that the degree lives in the radius
 (Corollary~\ref{thm:radial}), not the angle.}
 
+\subsection{\rev{A bake-off against named spectral distances}}\label{sec:bakeoff}
+\rev{The ablation isolates the \emph{weight}; a referee rightly asks how the
+angle fares against the standard \emph{distances} built from the same spectrum.
+We score each on the identical graph and anchor set (Spearman $\rho$ vs.\
+unweighted geodesics), on a $2$-torus ($n{=}2000$) and a $3$-torus ($n{=}3000$).}
+
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+distance & $2$-torus & $3$-torus \\
+\midrule
+\textbf{angle (ours)} & \textbf{0.888} & \textbf{0.830} \\
+full commute / resistance & 0.601 & 0.360 \\
+biharmonic \cite{lipman2010biharmonic} & 0.735 & 0.515 \\
+diffusion distance (best $t$) \cite{coifman2006} & 0.771 & 0.631 \\
+amplified commute \cite{vonluxburg2010getting} & 0.628 & 0.364 \\
+\midrule
+\textit{Isomap, given the geodesics} & \textit{0.971} & \textit{0.952} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\rev{The angle beats every purely spectral competitor, and the margin widens in
+$d{=}3$ where commute degeneracy bites harder. The most informative row is the
+amplified commute distance: von Luxburg, Radl and Hein designed it precisely to
+undo commute degeneracy by subtracting the $1/k_i+1/k_j$ term, yet it barely
+improves on raw commute ($0.628$ vs.\ $0.601$) and stays far below the angle.
+\emph{Subtracting} the degenerate radial term is not the same as
+\emph{dividing it out}: row-normalization removes the whole degree-dependent
+radial factor at once, which is what the geometry needs (Lemma~\ref{lem:norm},
+Corollary~\ref{thm:radial}). Isomap wins, but only because it is handed the
+geodesics as input---it is an oracle ceiling, not a competitor; the angle
+recovers $0.83$--$0.89$ of that ceiling from the graph alone.}
+
+\subsection{\rev{Radius is density, angle is geometry: a non-uniform torus}}\label{sec:density}
+\rev{The decomposition ``degree/density in the radius, geometry in the angle''
+predicts a sharp behaviour under \emph{non-uniform} sampling that uniform
+substrates cannot test. We sample the flat $2$-torus with density
+$p(x)\propto 1+a\cos 2\pi x$, build a fixed-radius geometric graph, and sweep the
+contrast $a$ (degree ratio up to $45\times$ at $a{=}0.9$), scoring the angle
+against the \emph{true} flat-torus geodesics---the intrinsic metric, which is
+unchanged by how we sample it. As predicted, the radius tracks the imposed
+density profile ($\rho(\lVert\Psi\rVert,1/\sqrt{p})=0.53$--$0.67$), confirming it
+is a density coordinate. The raw angle, however, is \emph{not} sampling-invariant:
+angle-$\rho$ to the true metric degrades from $0.93$ to $0.79$ as the contrast
+grows, because the graph Laplacian converges to a density-weighted operator, not
+the Laplace--Beltrami operator \cite{coifman2006,hein2007}. The classical fix
+recovers it exactly: the Coifman--Lafon $\alpha{=}1$ normalization
+$W\mapsto D^{-1}WD^{-1}$ (with $D$ the density estimate) removes the density
+weight, and the density-normalized angle is restored to $0.92$--$0.96$, now
+\emph{flat} across the whole contrast range. So the angle carries the geometry,
+but only once the density is properly quotiented out---and the same normalization
+that fixes the angle is the one that isolates the density into the radius.}
+
 % ---- NEW in this revision: two pre-registered experiments (rungs 3a-XL, 4) ----
 \subsection{\rev{Stability across substrate evolution}}\label{sec:stability}
 \rev{Universality across substrate \emph{types} (\S\ref{sec:results}) is a
@@ -897,6 +951,15 @@ Information Processing Systems 26 (NIPS)}, 2013.}
 \rev{\bibitem{chengmishne} X.~Cheng and G.~Mishne. Spectral embedding norm:
 looking deep into the spectrum of the graph Laplacian. \emph{SIAM Journal on
 Imaging Sciences}, 13(2):1015--1048, 2020.}
+\rev{\bibitem{vonluxburg2010getting} U.~von~Luxburg, A.~Radl, and M.~Hein.
+Getting lost in space: large sample analysis of the resistance distance.
+\emph{Advances in Neural Information Processing Systems 23 (NIPS)}, 2010.}
+\rev{\bibitem{lipman2010biharmonic} Y.~Lipman, R.~M.~Rustamov, and
+T.~A.~Funkhouser. Biharmonic distance. \emph{ACM Transactions on Graphics},
+29(3):27, 2010.}
+\rev{\bibitem{hein2007} M.~Hein, J.-Y.~Audibert, and U.~von~Luxburg. Graph
+Laplacians and their convergence on random neighborhood graphs. \emph{Journal
+of Machine Learning Research}, 8:1325--1368, 2007.}
 \end{thebibliography}
 
 \end{document}
