@@ -116,8 +116,10 @@ def signature(w):
 
 def build_rule(name, R):
     for s in (1, 2, 3, 4):
+        # max_gen scales with the budget: these rules add ~1 node/generation,
+        # so a fixed cap silently freezes growth (see growth_sweep.py).
         tris, nid = rewrite(R["lhs"], R["rhs"], R["seed"],
-                            max_edges=3000, max_gen=500, seed=s)
+                            max_edges=3000, max_gen=6000, seed=s)
         A = largest_component(hyper_to_csr(tris, nid))
         if A.shape[0] >= 200:
             return crop(A), s

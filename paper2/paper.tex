@@ -35,11 +35,12 @@ flat torus is classified as a flat torus and a sampled sphere as $S^2$, from
 spectra and angular distances alone. Pointed at five Wolfram-model rewrite
 rules, it returns graded, interpretable verdicts: no rule grows a closed
 manifold (all are bounded patches with an edge, eccentricity spread
-$0.39$--$0.65$ against $\approx0.10$ for the closed controls); one rule is a
-cleanly recognizable flat 2D patch; one is, at the tested growth stage, an
-almost perfect \emph{interval} (spectrum ratios $1,3.7,8.1,14.5$ against the
-$1,4,9,16$ template); one is genuinely fractal ($d\approx1.4$); and one is a
-$\approx3.4$-dimensional space matching no manifold template. Two findings are
+$0.39$--$0.65$ against $\approx0.10$ for the closed controls); one rule is,
+at every growth stage and seed tested, an almost perfect \emph{interval}
+(spectrum ratios $1,3.8,8.7,14.8$ against the $1,4,9,16$ template); two are
+unambiguously two-dimensional bounded patches whose finer symmetry class is
+less stable than their dimension; one is genuinely fractal ($d\approx1.4$);
+and one is a $\approx3.4$-dimensional space matching no manifold template. Two findings are
 new. First, under a growth sweep ($750$--$12{,}000$ rewrite events),
 \emph{dimension emerges before shape}: a rule's measured dimensionality locks
 in at the earliest stages and is stable throughout, while its finer symmetry
@@ -141,8 +142,8 @@ spectra and angular distances alone.
 
 \section{Five rules, five verdicts}\label{sec:rules}
 We point the battery at the five hypergraph-rewrite rules of the companion
-paper's manifold library (arity-3, grown to a 3000-edge budget, seed 1;
-single-seed caveats in \S\ref{sec:limits}).
+paper's manifold library (arity-3, grown to the full 3000-edge budget with
+budget-scaled generation cap, seed 1; seed stability in \S\ref{sec:seeds}).
 
 \begin{center}\small
 \begin{tabular}{lrrrrrrl}
@@ -152,10 +153,10 @@ rule & $n$ & deg CV & $d$ (spread) & angle-$\rho$ & stress$_2$ & ecc.\ spr. & ve
 torus control  & 2000 & 0.25 & 1.93 (0.09) & 0.90 & 0.54 & 0.11 & flat 2-torus \\
 sphere control & 2000 & 0.26 & 1.83 (0.12) & 0.96 & 0.48 & 0.09 & sphere $S^2$ \\
 \midrule
-R\_2D    &  501 & 0.30 & 1.06 (0.20) & 0.92 & 0.21 & 0.65 & interval (a curve) \\
+R\_2D    & 2000 & 0.28 & 1.05 (0.29) & 0.93 & 0.21 & 0.64 & interval (a curve) \\
 R\_frac  & 2000 & 0.06 & 1.39 (0.08) & 0.89 & 0.33 & 0.65 & fractal filament web \\
 evolved-2D & 2000 & \textbf{1.42} & 2.03 (0.31) & 0.73 & 0.43 & 0.55 & ragged 2D patch \\
-R\_3D    &  501 & 0.08 & 2.06 (\textbf{0.05}) & 0.82 & 0.52 & 0.48 & clean flat 2D patch \\
+R\_3D    & 2000 & 0.18 & 2.12 (0.34) & 0.67 & 0.57 & 0.50 & 2D, torus-leaning \\
 R\_SR    & 2000 & 0.90 & 3.36 (0.28) & 0.55 & 0.49 & 0.39 & no template ($\approx$3.4D) \\
 \bottomrule
 \end{tabular}
@@ -165,18 +166,45 @@ Four readings. \textbf{(i) No rule grows a closed manifold.} Every emergent
 substrate has eccentricity spread $0.39$--$0.65$ against $\approx0.10$ for the
 closed controls: these are \emph{bounded patches grown outward from a seed},
 geometry with an edge---as a finite rewriting history should produce.
-\textbf{(ii) The recognizable cases are genuinely recognizable.} R\_3D is a
-flat-ish 2D patch with the tightest dimension consensus in the table (spread
-$0.05$) and a square-patch signature; R\_2D, at this growth budget, is
+\textbf{(ii) The recognizable cases are genuinely recognizable.} R\_2D is
 identified as an \emph{interval} with near-exact spectrum
-($1,3.7,8.1,14.5,23.2$ against $1,4,9,16,25$; signature distance $0.076$).
+($1,3.8,8.7,14.8,24.0$ against $1,4,9,16,25$; signature distance $0.048$);
+R\_3D is unambiguously two-dimensional---all 2D templates score far below
+interval ($0.28$--$0.68$ vs $2.32$), flat-torus-leaning at this budget,
+though \S\ref{sec:growth} shows the winning 2D template wanders with growth,
+so ``2D'' is the claim and the finer symmetry class is not.
 \textbf{(iii) The unexpected spaces are flagged, not force-fitted.} R\_frac is
 genuinely fractal ($d\approx1.4$, filament clusters); R\_SR is a
 $\approx3.4$-dimensional space whose spectrum matches no manifold template.
 \textbf{(iv) Dimension gating shows up cross-substrate.} The two quasi-1D
-rules have the highest magnitude-$\rho$ ($0.26$, $0.47$): the radius stays
+rules have the highest magnitude-$\rho$ ($0.29$, $0.47$): the radius stays
 geodesic-informative exactly where the radial-degeneracy corollary of
 \cite{kta} does not apply. Random-mode controls are $\le0.02$ everywhere.
+
+\subsection{Seed stability}\label{sec:seeds}
+Each verdict above is one growth instance; rewrite rules are nondeterministic
+in general, so verdicts must survive the rewriter seed. Re-running the full
+battery at seeds $1$--$4$ (full 3000-edge budget):
+
+\textbf{R\_2D: stable, 4/4 interval} ($d=1.05\pm0.01$,
+angle-$\rho=0.93\pm0.00$)---the curve is a property of the rule.
+\textbf{R\_frac: dimension rock-stable} ($d=1.39\pm0.00$ across seeds), with
+the template tipping once (3/4 interval, 1/4 square patch): a fractal
+filament web genuinely sits between the two templates.
+\textbf{R\_3D: growth is deterministic}---all four seeds produce
+byte-identical spectra ($d=2.12$, angle-$\rho=0.67$), so this rule evidently
+admits a single applicable rewrite per step; seed replication is vacuous for
+it and the growth axis of \S\ref{sec:growth} is the meaningful robustness
+check. \textbf{evolved-2D: genuinely seed-dependent}: $d=1.87\pm0.14$ but
+angle-$\rho$ ranges $0.38$--$0.89$ and the verdict scatters
+(patch/torus/interval)---this rule does not reliably grow the same geometry,
+and one seed grows a substrate whose angular fidelity collapses. \textbf{R\_SR:
+4/4 non-manifold} ($d=3.39\pm0.11$): the winning template flips per seed with
+uniformly weak scores ($0.25$--$0.55$), which is what ``matches none of
+these'' should look like under replication. The meta-pattern of
+\S\ref{sec:growth} repeats across seeds: dimension is the stable invariant
+($\pm0.14$ at worst); the finer symmetry class is stable only where the
+geometry actually is one of the model spaces.
 
 \begin{figure}[t]
 \centering
@@ -251,19 +279,26 @@ Coifman--Lafon $\alpha{=}1$ normalization removes the weight, demonstrably
 restoring angular fidelity under strong contrast \cite{coifman2006,kta}. The
 recognizer reproduces that on the controls ($S^2$: $0.96\to0.98$; torus:
 $0.90\to0.91$). On the emergent substrates the same correction moves fidelity
-the \emph{other way}: evolved-2D $0.73\to0.64$, R\_3D $0.82\to0.81$, R\_SR
-$0.55\to0.51$---mildly but consistently down, and most where degree CV is
-largest. The reading: on a graph with no latent manifold underneath, the
-density profile is not noise over a ground truth---it \emph{is} part of the
-substrate's structure, and dividing it out removes signal. This gives the
-density coordinate an unexpected second life: for sampled geometry it is a
-nuisance parameter, for emergent geometry it is data, and the sign of the
-$\alpha{=}1$ response is itself a diagnostic for which situation one is in.
+the \emph{other way}, and the seed sweep (\S\ref{sec:seeds}, $20$ instances)
+shows the effect is \emph{graded in density irregularity}: for the
+low-irregularity rules ($\mathrm{CV}\le0.3$: R\_2D, R\_frac, R\_3D) the
+$\alpha{=}1$ shift is $-0.001$ to $+0.011$---indistinguishable from zero---%
+while for the high-irregularity rules it is consistently negative: R\_SR
+($\mathrm{CV}\approx0.9$) loses $0.03$--$0.06$ at every seed, and evolved-2D
+($\mathrm{CV}\approx1.4$) loses up to $0.04$ in three of four seeds. The
+reading: on a graph with no latent manifold underneath, the density profile is
+not noise over a ground truth---it \emph{is} part of the substrate's
+structure, and the more structured the density, the more signal the
+correction removes. This gives the density coordinate an unexpected second
+life: for sampled geometry it is a nuisance parameter, for emergent geometry
+it is data, and the sign of the $\alpha{=}1$ response is itself a diagnostic
+for which situation one is in.
 
 \section{Limitations and falsifiers}\label{sec:limits}
-Single seed per rule at each budget (the companion paper's library shows
-seed-to-seed dimension variation, so per-rule verdicts should be read per
-instance); hop-count geodesics; $n\le2000$ dense-eigensolver scale; four
+Seed replication is done (\S\ref{sec:seeds}: two rules fully stable, one
+deterministic, one tipping between adjacent templates, one genuinely
+seed-dependent), but the growth sweep remains single-seed per stage;
+hop-count geodesics; $n\le2000$ dense-eigensolver scale; four
 templates, so ``matches none'' means none-of-these---hyperbolic, higher-genus,
 and product templates are the obvious extensions; the growth sweep is a
 budget sweep, not a fixed-rule time series at scale. Each is mechanical to
