@@ -10,10 +10,12 @@
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
 % ---- Revision marking -------------------------------------------------------
-% All text added or rewritten in this revision is wrapped in \rev{...} (teal).
-% Deletions are noted in comments beginning "% CUT:".
-% To accept all changes, redefine: \renewcommand{\rev}[1]{#1}
-\newcommand{\rev}[1]{\textcolor{teal}{#1}}
+% Revision marks ACCEPTED as of v0.8 (referee recommendation): \rev{...} is now
+% the identity and the {\color{teal}...} block wrappers are stripped. The full
+% marked history is in git (through commit 0f39ee5). Deletions remain noted in
+% comments beginning "% CUT:". To re-show marks, restore:
+%   \newcommand{\rev}[1]{\textcolor{teal}{#1}}
+\newcommand{\rev}[1]{#1}
 % -----------------------------------------------------------------------------
 
 \newtheorem{theorem}{Theorem}
@@ -97,15 +99,29 @@ recovers of the graph's geodesic structure, and why.}}
 Our answer is a clean decomposition. Write each node's low-mode embedding in polar
 form, magnitude $\times$ direction. The \emph{magnitude} is exactly the degenerate
 radial coordinate that von~Luxburg's theorem kills; the \emph{direction} carries
-the graph's geodesic geometry. Row-normalization keeps the direction and discards
+the graph's geodesic geometry (after the $\alpha{=}1$ density normalization
+where sampling is strongly non-uniform, \S\ref{sec:density}). Row-normalization
+keeps the direction and discards
 the magnitude---\rev{so beyond its cluster-separation role it is also the
 geodesically correct projection}, and its fidelity is flat in both mode-count and
 graph size precisely where the raw embedding decays.
 
-This ``keep the scale-invariant direction'' operation recurs beyond
-clustering\rev{---for example in polar-coordinate KV-cache quantization, which
-splits each key vector into a radial magnitude and an angular direction and
-quantizes them separately in that polar form \cite{polarquant2025}.}
+The underlying operation---\emph{separate scale from direction, then keep the
+part that carries the task geometry}---recurs beyond clustering: embedding
+compression stores the norm and quantizes the unit direction, and
+polar-coordinate KV-cache quantization splits key vectors the same way
+\cite{polarquant2025}. The recurrence is evidence for the \emph{decomposition},
+not for always discarding the radius, and the boundary is sharp in practice:
+for attention \emph{keys}, per-vector angular quantization can score well on
+reconstruction metrics yet destroy generation, because the attention geometry
+$QK^{\top}$ depends on per-channel scale---there, scale is signal, not
+nuisance \cite{turboquant}. Our hypotheses state the boundary exactly:
+discarding the magnitude is the right quotient when the downstream metric
+satisfies the tangential-noncollapse condition (A2) of
+Theorem~\ref{thm:transfer}, i.e.\ when the discarded radial variable is
+nuisance structure for the metric being preserved. For graph geodesics the
+radius is degree/density noise (Corollary~\ref{thm:radial}) and the quotient
+is justified; for KV keys it is not.
 % CUT: the "preference geometry / aversion angle" clause -- uncited and
 % unexplained; restore only with a citation and a sentence of substance.
 It also admits a physical reading: in observer theory a bounded
@@ -188,7 +204,7 @@ $\lVert\hat u_i-\hat u_j\rVert=2\sin(\theta_{ij}/2)$ with $\theta_{ij}$ the
 angle between $\hat u_i$ and $\hat u_j$; it is monotone in $\theta_{ij}$, so all
 rank (Spearman) statements are unchanged by the chordal-vs-arc choice, and the
 figures use the chordal form.}
-\footnote{\color{teal}We call $\Psi$ ``commute-style'' rather than the commute-time
+\footnote{We call $\Psi$ ``commute-style'' rather than the commute-time
 embedding proper: the classical commute embedding uses the pseudoinverse of the
 \emph{unnormalized} Laplacian and all $n-1$ modes, so that
 $\lVert\Psi_i-\Psi_j\rVert^2$ equals the resistance $R(i,j)$ exactly. Our
@@ -210,7 +226,7 @@ treated empirically (\S\ref{sec:verify}); and in (quasi-)1D the radius stays
 geodesic-informative, as predicted (\S\ref{sec:law}). The angular \emph{effect}
 is observed from quasi-1D upward.}
 
-{\color{teal}% entire theorem + remark are new in this revision
+{% entire theorem + remark are new in this revision
 \begin{corollary}[Radial Degeneracy]\label{thm:radial}
 Let $G_n$ be random geometric graphs of intrinsic dimension $d\ge3$ satisfying
 the conditions of \cite{vonluxburg2014} \rev{(the $d=2$ case is marginal: at the
@@ -582,8 +598,10 @@ $[\rho^--E_n,\rho^++E_n]$, and the graph angle lands within $2E_n/\rho^-$ of $N$
 (Lemma~\ref{lem:normstab}). The two-sided bound then follows with $A=a/2$ and
 $B=b+a/2\le2L_0/\rho^-$ for every sampled pair above the scale
 $\theta_n=8E_n/(a\rho^-)$. The cutoff is necessary, not an artifact: below the
-graph's resolution, combinatorially twin nodes receive identical eigenvector
-rows, so $\hat u_i=\hat u_j$ while $d_M>0$ (Appendix~\ref{app:proof}).}
+graph's resolution, combinatorially twin nodes receive identical entries in
+every eigenvector below the localized twin-difference mode---in particular in
+every low mode the angular map uses---so $\hat u_i=\hat u_j$ while $d_M>0$
+(Appendix~\ref{app:proof}).}
 \end{proof}
 
 \rev{\paragraph{From local to global.} Theorem~\ref{thm:cond} is local because
@@ -622,7 +640,7 @@ constant, $R\equiv2$, so $\Lambda_0=0$ and $\rho^\pm=2$; and $N=F/2$ is
 injective. Consequently, with high probability as $n\to\infty$, the graph
 angular map of an $\varepsilon$-graph or $k$-NN sample of the flat torus is
 globally bi-Lipschitz to geodesic distance above the resolution scale,
-\emph{unconditionally}, with $A=1/(4\sqrt2)$ and $B=2\sqrt2$; the sharp
+\emph{unconditionally}, with $A=1/(4\sqrt2)$ and $B=\sqrt2$; the sharp
 continuum angular distortion is exactly $\pi/2$ (the chord-vs-arc ratio
 $2\sin(\delta/2)/\delta\in[2/\pi,1]$ per coordinate---the near-antipodal dip
 of the metric-evidence paragraph). The statement is basis-independent: any
@@ -734,7 +752,48 @@ equivalently, a mode budget matched to the scale of interest, which is the
 observer-budget phenomenon of \S\ref{sec:continuum} handed a mechanism. The
 empirical ``flat in $m$'' of \S\ref{sec:verify} is thereby correctly read as
 \emph{rank} stability under a fixed observer budget, not as an $m$-independent
-fixed-scale metric theorem. For graph transfer at growing $m=m(n)$, the
+fixed-scale metric theorem. One gap remains at this point: the $\sqrt\Lambda$
+angular-speed growth of Proposition~\ref{prop:weyl} is filter-generic (the
+plain filter has the same order), so it explains the budget phenomenon but
+not the ablation's dramatic \emph{rank} separation between plain and commute
+(\S\ref{sec:ablation}). The next proposition closes that gap.
+
+\begin{proposition}[Plain filter: distances concentrate, rank discrimination collapses]\label{prop:plain}
+Let $F^{(1)}_\Lambda(x)=\big(\varphi_k(x)\big)_{0<\mu_k\le\Lambda}$ be the
+unweighted (plain-eigenmap) cutoff with angular map $N^{(1)}_\Lambda$, and fix
+$\delta>0$. Then, uniformly over pairs with $d_M(x,y)\ge\delta$,
+\[
+\big\lVert N^{(1)}_\Lambda(x)-N^{(1)}_\Lambda(y)\big\rVert^{2}
+\;=\;2+O\big(\Lambda^{-1/2}\big):
+\]
+all separated plain angular distances concentrate at the orthogonality value
+$\sqrt2$, and the vanishing correction is
+$-2E_\Lambda(x,y)/E_\Lambda(x,x)$---the off-diagonal spectral function, an
+oscillatory kernel with sign changes on the wavelength scale and no monotone
+relation to $d_M$---so the ordering of plain angular distances carries no
+leading-order geodesic information. For the \emph{commute} filter the same
+expansion gives
+\[
+\big\lVert N_\Lambda(x)-N_\Lambda(y)\big\rVert^{2}
+\;=\;2-\frac{2\,G_\Lambda(x,y)}{G_\Lambda(x,x)}\big(1+o(1)\big),
+\]
+whose correction kernel $G_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}
+\mu_k^{-1}\varphi_k(x)\varphi_k(y)$ is low-frequency dominated (for $d\le3$ it
+converges off the diagonal to the Green's function)---a coherent,
+distance-structured kernel, so the \emph{ordering} of commute angular
+distances survives the concentration. (Proof: Appendix~\ref{app:uniform}.)
+\end{proposition}
+
+The mechanism in one line: the $1/\mu$ commute weighting is a low-pass filter
+on the \emph{correction} kernel that carries the ranks, while equal weighting
+hands the correction to the oscillatory top of the spectral window. Rank
+statistics are invariant to the common concentration and read only that
+correction---which is why the ablation separates the filters at the rank
+level ($0.06$ vs $0.89$ at $m{=}20$, \S\ref{sec:ablation}) even though their
+crude metric orders coincide. Together, Proposition~\ref{prop:weyl} explains
+the budget phenomenon and Proposition~\ref{prop:plain} the weighting
+ablation: the theory now covers both empirical laws of \S\ref{sec:ablation}
+and \S\ref{sec:continuum}. For graph transfer at growing $m=m(n)$, the
 calibration of Lemma~\ref{lem:transfer} extends whenever the spectral-window
 condition $\mathcal E_n(\mu_m)\,\gamma_m^{-1}\to0$ holds ($\gamma_m$ the gap
 isolating the retained block, $\mathcal E_n(\mu_m)$ the graph-consistency
@@ -857,8 +916,9 @@ $n{=}2000$ Poisson sprinkling in a $1{+}1$D Minkowski diamond (light-cone
 coordinates $u,v$ uniform on the unit square); $p\prec q$ iff $u_p<u_q$ and
 $v_p<v_q$, and each point is linked to its $k{=}6$ nearest causal-\emph{past}
 neighbours in proper time $\tau^2=\Delta t^2-\Delta x^2$, symmetrized for the
-undirected geodesic BFS---so edges encode causal \emph{links}, and the intrinsic
-$d{=}2$ is the sprinkling dimension.}
+undirected geodesic BFS---so edges encode short causal \emph{relations}
+(nearest past neighbours in proper time, which need not be Hasse links), and
+the intrinsic $d{=}2$ is the sprinkling dimension.}
 
 \section{Results}\label{sec:results}
 \subsection{The core result}
@@ -1002,7 +1062,8 @@ are not independent draws)}, $d\approx 1$--$3.6$,
 \rev{(Spearman $-0.881$ between $\rho$ and $d$ is a distribution-free monotonicity
 check. Because the $20$ points are clustered by rule, we bootstrap the slope at
 the \emph{rule} level---resampling the five rules with replacement, then the four
-seeds within each drawn rule---giving an honest $95\%$ CI of $[-0.343,-0.094]$,
+seeds within each drawn rule (with only five clusters the bootstrap is itself
+coarse; a caveat, not a fix)---giving an honest $95\%$ CI of $[-0.343,-0.094]$,
 still excluding zero but four times wider than the naive point bootstrap
 $[-0.185,-0.132]$ that wrongly treats the $20$ points as exchangeable. The
 modest $R^2=0.64$ reflects a single outlier---a $d{\approx}1.97$ manifold at
@@ -1070,7 +1131,11 @@ direction. The commute weight $1/\sqrt{\lambda_k}$ is flat instead
 ($0.91\!\to\!0.89$), as is diffusion $e^{-\lambda_k t}$; both suppress high modes,
 which is what the geometry needs. The ``flat in $m$'' property is thus a property
 of the weighting, not of angles in general---and it selects the commute (or
-diffusion) weight, not the plain eigenmap. Degree correction, by contrast, is
+diffusion) weight, not the plain eigenmap. Proposition~\ref{prop:plain} now
+supplies the continuum mechanism: plain angular distances concentrate at
+$\sqrt2$ with only an oscillatory, geometry-blind correction, while the
+commute correction is the (low-pass, Green-type) kernel that carries the
+ranks. Degree correction, by contrast, is
 \emph{invisible} to the angle: dividing or multiplying each row by $\sqrt{k_i}$
 (the diffusion-map convention and its opposite) leaves angle-$\rho$ unchanged to
 three digits ($0.889$ either way), because a per-node radial factor cancels under
@@ -1113,10 +1178,10 @@ recovers $0.83$--$0.89$ of that ceiling from the graph alone. We do not tabulate
 the $p$-resistance family \cite{alamgir2011} as a separate row because its
 informative endpoints are already present: $p{=}2$ is the full-commute row, and
 $p{=}1$ is the shortest-path distance---i.e.\ the geodesic \emph{target} itself,
-not a competitor. Intermediate $p$ has no closed form (each pair needs its own
-convex $q$-Dirichlet solve) and off $p\in\{1,2\}$ need not satisfy the triangle
-inequality, so it buys no fair comparison the two endpoints do not already
-frame.}
+not a competitor. The bake-off's scope is closed-form spectral distances;
+intermediate $p$ has no closed form (each pair needs its own convex
+$q$-Dirichlet solve), so it buys no comparison the two endpoints do not
+already frame.}
 
 \subsection{\rev{Radius is density, angle is geometry: a non-uniform torus}}\label{sec:density}
 \rev{The decomposition ``degree/density in the radius, geometry in the angle''
@@ -1256,15 +1321,37 @@ untouched.
 coordinate of the low-Laplacian embedding preserves geodesics while the radial
 coordinate is von-Luxburg-degenerate noise. This gives Ng--Jordan--Weiss
 row-normalization a \rev{geodesic} justification \rev{complementary to the
-cluster-separation theory of \cite{schiebinger2015}}, unifies it with
-the scale-invariant direction of KV-cache compression \rev{\cite{polarquant2025}},
-and holds \emph{universally} across substrates with genuine low-$d$ Riemannian
-geometry, independent of graph origin. That the same basis works identically on
-hypergraph-rewriting and \rev{manifold-sampled} substrates is
+cluster-separation theory of \cite{schiebinger2015}}, places it in the same
+scale-from-direction decomposition that underlies vector and KV-cache
+compression \rev{\cite{polarquant2025,turboquant}} (with the scope boundary
+of \S1: the quotient, not the discard, is what recurs),
+and holds across every substrate family we tested with genuine low-$d$
+Riemannian geometry, independent of graph origin. That the same basis works
+identically on hypergraph-rewriting and \rev{manifold-sampled} substrates is
 \rev{evidence that scale-invariant angular coarse-graining is a general
 mechanism by which} relational data carries geometric structure.
 % CUT: "a general law of how relational data carries geometric structure" --
 % softened; two substrate families are evidence for a mechanism, not a law.
+% CUT (pairing review): "unifies it with the scale-invariant direction of
+% KV-cache compression" and "holds universally" -- the KV bridge is now a
+% scoped decomposition claim (keys are a counterexample to the discard), and
+% "universally" is reserved entirely.
+
+\paragraph{A boundary from compression.} The present result is not a general
+theorem that angular coordinates always carry the semantics. In KV-cache
+compression, per-vector angular quantization of attention \emph{keys} can
+score well under reconstruction metrics and still destroy generation, because
+the attention geometry $QK^{\top}$ depends on per-channel scale; per-channel
+treatment of the keys recovers quality \cite{turboquant}. This is not a
+counterexample to our principle but its sharpest confirmation:
+row-normalization is justified precisely when the discarded radial variable
+is nuisance structure for the metric being preserved---condition (A2) of
+Theorem~\ref{thm:transfer}, stated for the downstream metric. For graph
+geodesics the radius is degree/density noise and the quotient is correct; for
+embedding retrieval the norm is worth storing alongside the direction; for
+attention keys the per-channel scales \emph{are} the geometry. Keep the
+geometry: sometimes that is the angle, sometimes angle plus norm, sometimes
+per-channel scale.
 
 \textbf{One interpretation is observer-theoretic.} In Wolfram's observer-relative
 framework, the coarse-graining a bounded observer performs to perceive geometry is
@@ -1285,8 +1372,12 @@ growing spectral windows (Appendix~\ref{app:uniform}), and verifying
 them)}; \rev{extending
 Corollary~\ref{thm:radial} to the truncated,
 normalized radius actually used in practice;} synthesizing clean manifolds above
-$d\approx2$; and a dimension-adaptive angular basis that tunes mode-count and
-diffusion time to counter the fidelity decay. Keep the angle, drop the magnitude:
+$d\approx2$; the exploratory probe's deferred controls---a generic-text
+baseline at matched $n$ and model, and $k$-sensitivity
+(Appendix~\ref{sec:moral}); and a dimension-adaptive angular basis that tunes
+mode-count and diffusion time to counter the fidelity decay. Keep the angle,
+drop the magnitude---\emph{when the magnitude is nuisance for the metric being
+preserved}, which for graph geodesics it provably is:
 the basis-level fact is the contribution; the observer interpretation is where we
 leave the door open.
 
@@ -1311,7 +1402,7 @@ scaled-budget refinement's builders and the cross-domain probe's embeddings
 kept out of the main evidence chain (Appendix~\ref{sec:moral}).}
 
 \appendix
-{\color{teal}% entire appendix new in this revision
+{% entire appendix new in this revision
 \section{Proof of Corollary~\ref{thm:radial}}\label{app:radial}
 
 A referee correctly observed that the diagonal statement
@@ -1648,7 +1739,7 @@ $e^{\mathrm i y_p}=e^{\mathrm i y_q}$ iff $p=q$.
 
 Because $r_0=\operatorname{diam}M$, Theorem~\ref{thm:cond} alone is already
 global, with $A=\sqrt{L_0^{-2}}/(2\rho^+)=1/(4\sqrt2)$ and
-$B=2L_0/\rho^-=2\sqrt2$. The sharp continuum distortion of $N$ is the exact
+$B=2L_0/\rho^-=\sqrt2$. The sharp continuum distortion of $N$ is the exact
 ratio range above: $\lVert N(p)-N(q)\rVert/d_M(p,q)\in[\sqrt2/\pi,\,1/\sqrt2]$,
 of width $\pi/2$, the extremes attained along a coordinate direction at
 antipodal ($\lvert\delta\rvert=\pi$) and infinitesimal separations
@@ -1678,10 +1769,17 @@ intrinsic dimension.
 The cutoff $\theta_n$ is forced by the statement's generality, not by the
 method. In a hard-threshold $\varepsilon$-graph, two sample points at distance
 below the bandwidth can be \emph{combinatorial twins}---identical
-neighbourhoods, hence identical rows of $A$ and equal degrees---and twins
-receive identical entries in \emph{every} eigenvector, so $\hat u_i=\hat u_j$
-exactly while $d_M(x_i,x_j)>0$: no lower bound $A\,d_M$ can hold below the
-connectivity scale. What is improvable is the \emph{size} of $\theta_n$: our
+neighbourhoods, hence identical rows of $A$ and equal degrees. For twins
+$i,j$ the difference $e_i-e_j$ is itself an eigenvector of
+$L_{\mathrm{sym}}$---at eigenvalue $1$ for non-adjacent twins and $1+1/k$ for
+adjacent ones---so every eigenvector at any \emph{other} eigenvalue is
+orthogonal to it and has identical entries at $i$ and $j$. In particular
+every low mode does, hence $\hat u_i=\hat u_j$ exactly while
+$d_M(x_i,x_j)>0$: no lower bound $A\,d_M$ can hold below the
+connectivity scale. (``Identical in every eigenvector'' would be literally
+false---the localized twin-difference mode itself separates them---but that
+mode sits at the top of the spectrum, far above anything the angular map
+retains.) What is improvable is the \emph{size} of $\theta_n$: our
 proof takes it at the sup-norm consistency rate $E_n$, much larger than the
 bandwidth; a $C^1$ (gradient) consistency argument---the Lipschitz regularity
 theory for graph-Laplacian eigenfunctions of \cite{calderlewicka2022} is the
@@ -1703,7 +1801,7 @@ precisely the injectivity hypothesis (H3), which Corollary~\ref{cor:global}
 Corollary~\ref{cor:torus} (Step~6) needs no hypothesis at all.
 }% end teal
 
-{\color{teal}% new appendix: uniformity in the truncation
+{% new appendix: uniformity in the truncation
 \section{Uniformity in the truncation}\label{app:uniform}
 
 This appendix proves Theorem~\ref{thm:heat} and Proposition~\ref{prop:weyl},
@@ -1823,6 +1921,59 @@ first multiplet, whose weight is $m$-independent while $R_N$ is bounded)---the
 failure is one-sided and lives below the wavelength $\Lambda^{-1/2}$.
 \hfill$\qed$
 
+\subsection*{Proof of Proposition~\ref{prop:plain}}
+\emph{Plain filter.} With $E_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}
+\varphi_k(x)\varphi_k(y)$ (constant mode removed),
+\[
+\big\lVert F^{(1)}_\Lambda(x)-F^{(1)}_\Lambda(y)\big\rVert^2
+=E_\Lambda(x,x)+E_\Lambda(y,y)-2E_\Lambda(x,y),
+\qquad R^{(1)}_\Lambda(x)^2=E_\Lambda(x,x).
+\]
+The pointwise Weyl law with uniform remainder \cite{hormander1968} gives
+$E_\Lambda(x,x)=C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})$ with spatially constant
+leading coefficient, and for $d_M(x,y)\ge\delta$ the off-diagonal spectral
+function obeys $\lvert E_\Lambda(x,y)\rvert=O(\Lambda^{(d-1)/2})$ uniformly,
+oscillating in the pair separation on the wavelength scale $\Lambda^{-1/2}$
+(the Bessel-type scaling limit of the spectral projector
+\cite{canzanihanin2015}). The radial difference is
+$R^{(1)}_\Lambda(x)-R^{(1)}_\Lambda(y)
+=\big(E_\Lambda(x,x)-E_\Lambda(y,y)\big)/\big(R^{(1)}_\Lambda(x)+R^{(1)}_\Lambda(y)\big)
+=O(\Lambda^{(d-1)/2-d/4})$, so its square is $O(\Lambda^{d/2-1})$. Feeding
+these into the identity of Lemma~\ref{lem:norm},
+\[
+\big\lVert N^{(1)}_\Lambda(x)-N^{(1)}_\Lambda(y)\big\rVert^2
+=\frac{2C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})}
+{C_d\Lambda^{d/2}\big(1+O(\Lambda^{-1/2})\big)}
+=2+O\big(\Lambda^{-1/2}\big)
+\]
+uniformly over separated pairs, with pair-dependence carried by
+$-2E_\Lambda(x,y)/E_\Lambda(x,x)$. Since the numerator kernel oscillates with
+sign changes on the wavelength scale, the ordering it induces has no
+leading-order relation to $d_M$: any rank statistic against geodesic distance
+loses its support as $\Lambda\to\infty$. This is the continuum mechanism of
+the plain-eigenmap collapse in the weighting ablation (\S\ref{sec:ablation}).
+
+\emph{Commute filter.} The same computation with weights $\mu_k^{-1}$ replaces
+$E_\Lambda$ by $G_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}
+\varphi_k(x)\varphi_k(y)$: the diagonal is $C'_d\Lambda^{d/2-1}$ ($d>2$;
+$C_2\log\Lambda$, $d=2$) with spatially constant leading coefficient
+(Step~7 of the Proposition~\ref{prop:weyl} proof), the radial term is again
+lower order, and
+\[
+\big\lVert N_\Lambda(x)-N_\Lambda(y)\big\rVert^2
+=2-\frac{2\,G_\Lambda(x,y)}{G_\Lambda(x,x)}\big(1+o(1)\big).
+\]
+The correction kernel is now low-frequency dominated---its summands decay
+like $\mu^{-1}$, and for $d\le3$ it converges off the diagonal to the
+Green's function of $M$ (for $d\ge4$ it is the truncated Green kernel, still
+dominated by its low-frequency, coherent part)---a distance-structured
+kernel, on a homogeneous manifold a function of $d_M$ alone. Both filters
+therefore concentrate at fixed scale as $\Lambda\to\infty$ (the wavelength
+story of Proposition~\ref{prop:weyl}), but the \emph{ordering} information
+that rank statistics read is carried by a coherent kernel for commute and an
+oscillatory one for plain: the ablation's rank separation, in the continuum.
+\hfill$\qed$
+
 \subsection*{Graph transfer at growing $m$, and the $C^1$ route}
 For fixed $m$, Appendix~\ref{app:proof} is the complete transfer. For a
 growing spectral window $m=m(n)$, the same calibration goes through---with
@@ -1848,7 +1999,7 @@ $\varepsilon_n$---optimal, since below it combinatorial twins exist
 theorem needs, not as a theorem.
 }% end teal
 
-{\color{teal}% moved from \S5 (third review) and reframed as exploratory
+{% moved from \S5 (third review) and reframed as exploratory
 \section{An exploratory cross-domain probe: the moral embedding manifold}\label{sec:moral}
 
 \emph{Status: exploratory.} This probe sits outside the paper's main evidence
@@ -1908,6 +2059,10 @@ Processing Systems 14 (NeurIPS)}}, 2002.
 \bibitem{nickel2017} M.~Nickel and D.~Kiela. Poincar\'e embeddings for learning
 hierarchical representations. \emph{\rev{Advances in Neural Information
 Processing Systems 30 (NeurIPS)}}, 2017.
+\bibitem{turboquant} A.~H.~Bond. TurboQuant-Pro: embedding and KV-cache
+compression with a claims/evidence ladder; the KV-keys finding (per-channel
+scale, not per-vector angle, governs attention-key fidelity).
+\url{https://github.com/ahb-sjsu/turboquant-pro}, 2026. Accessed July 2026.
 \bibitem{polarquant2025} \rev{I.~Han, P.~Kacham, A.~Karbasi, V.~Mirrokni, and
 A.~Zandieh. PolarQuant: Quantizing KV caches with polar transformation.
 \emph{arXiv preprint arXiv:2502.02617}, 2025.

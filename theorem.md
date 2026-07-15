@@ -162,19 +162,25 @@ modes works while full-commute does not.
   factor) acts as a positive scalar multiplier on each embedding vector.
   Row-normalization `θ_i = X_i/‖X_i‖` divides this scalar out pointwise, leaving
   the **density-invariant direction** of the eigenmap. Where the eigenmap is
-  bi-Lipschitz, the direction is conjectured to remain a bi-Lipschitz function of
-  `x` for the leading modes — giving `angular distance ≍ geodesic`, uniformly in
-  `m` and `N`. This is the ρ ≈ 0.92-flat observation.
+  bi-Lipschitz, the direction stays locally bi-Lipschitz at **fixed m** (paper
+  v0.8 Thm 6/8; unconditional on the flat torus, Cor 10).
 
-**Keep-the-Angle claim (the conjecture).** Under (M),(G),(N), for the `m` lowest
-non-trivial modes,
+**Keep-the-Angle claim (the conjecture, v0.8 corrected form).** Under
+(M),(G),(N), for the `m` lowest non-trivial modes,
 
 ```
-angular distance  ‖θ_i − θ_j‖   ≍   geodesic distance on M      (bi-Lipschitz),
+angular distances  ‖θ_i − θ_j‖   are RANK-FAITHFUL to geodesic distance on M
+                                  (Spearman bounded away from zero),
 ```
 
-with the equivalence constants **stable in m and N**, while the radial and full
-distances converge to the degree-only degeneracy (2).
+uniformly in `m` and `N`, while the radial and full distances converge to the
+degree-only degeneracy (2). The older **metric** form of this claim —
+`‖θ_i − θ_j‖ ≍ geodesic` bi-Lipschitz with constants stable in `m` at fixed
+scale — is **FALSE** for the commute weight (paper Prop 13: high modes raise
+the angular speed like √Λ; exact on S¹). What survives metrically: fixed-`m`
+local bi-Lipschitzness (conditional, Thm 8), uniform-in-truncation
+bi-Lipschitzness for the **heat** filter (Thm 12), and an open scale-dependent
+commute form (pairs above the spectral wavelength Λ^(−1/2)).
 
 ---
 
@@ -188,17 +194,20 @@ distances converge to the degree-only degeneracy (2).
 | Radius `r_i → 1/√d_i`, geometry-free | **proven** (Corollary R) |
 | Low modes → Laplace–Beltrami eigenfunctions | **proven** (Belkin–Niyogi; García Trillos–Slepčev) |
 | Truncated eigenmap is a bi-Lipschitz manifold embedding | **proven** (Portegies 2016), for suitable m/bandwidth |
-| **Angular** low-mode distance ≍ geodesic, **uniform in m,N** | **CONJECTURE** — empirically supported (ρ≈0.92 flat); no uniform bi-Lipschitz bound proven here |
+| **Angular** low-mode distance **rank-faithful** to geodesic, uniform in m,N | **CONJECTURE** — empirically supported (ρ≈0.92 flat in m) |
+| Angular distance ≍ geodesic (bi-Lipschitz) uniform in m at **fixed scale** | **FALSE** for the commute weight — paper v0.8 Prop 13 (S¹: ‖dN_N‖ ≍ √N); true **uniformly in truncation for the heat filter** (Thm 12); the scale-dependent commute form (above wavelength Λ^(−1/2)) is open |
 | Row-normalization removes exactly the density/degree factor | **heuristic** (continuum density argument) |
 
-**The gap, stated plainly.** von Luxburg gives the *negative* half rigorously: the
-radius and the full commute distance are asymptotically pure local-degree noise.
-The *positive* half — that the **angle** is bi-Lipschitz to geodesic distance,
-uniformly — rests on (a) eigenmap-embedding theorems for the *un-normalized* low
-modes and (b) a heuristic that row-normalization strips precisely the density
-factor. A uniform bi-Lipschitz bound for the *angular* metric against geodesic
-distance is **not** proven here; it is a conjecture backed by the numerics in
-`theorem_verify.py`.
+**The gap, stated plainly (v0.8).** von Luxburg gives the *negative* half
+rigorously: the radius and the full commute distance are asymptotically pure
+local-degree noise. The *positive* half is now split three ways in the paper:
+at fixed `m`, angular bi-Lipschitzness is a **conditional theorem**
+(hypotheses H1–H3; unconditional on the flat torus); uniformly in the
+truncation it is a **theorem for the heat filter** and **false at fixed scale
+for the commute filter** (√Λ angular speed; the correct commute target is
+scale-dependent, above the wavelength Λ^(−1/2), and open); and the
+**rank-faithful** form uniform in `m,N` is the surviving conjecture, backed by
+the numerics in `theorem_verify.py`.
 
 ---
 

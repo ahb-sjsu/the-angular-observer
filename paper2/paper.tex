@@ -233,42 +233,52 @@ Is ``R\_2D is a curve'' a fact about the rule or about the growth stage? We
 sweep the rewrite budget over $750$--$12{,}000$ edges (generation cap scaled
 with the budget; beyond $3000$ edges the recognizer reads a fixed 2000-node
 geodesic-ball window of the larger substrate, i.e.\ a bounded observer probing
-a growing universe) and re-run the recognizer at each stage
-(Fig.~\ref{fig:growth}). Three growth behaviours appear, none the naive
-``template crossing'' one might expect:
+a growing universe), at \emph{all four rewriter seeds per stage} ($60$
+instances; Fig.~\ref{fig:growth}, where the band is the min--max over seeds).
+Three growth behaviours appear, none the naive ``template crossing'' one might
+expect:
 
 \textbf{R\_2D is a curve, definitively.} The interval signature is pinned at
-distance $0.02$--$0.05$ at \emph{every} stage, with $d=1.04$--$1.06$ and
-angle-$\rho=0.93$--$0.95$ throughout; the interior of the large substrate is
-as one-dimensional as its early stages. The verdict of \S\ref{sec:rules} was
-about the rule, not the stage.
+distance $0.02$--$0.05$ at every stage \emph{and every seed} ($20/20$
+instances), with $d=1.05\pm0.01$ and angle-$\rho=0.93$--$0.95$ throughout;
+the interior of the large substrate is as one-dimensional as its early
+stages. The verdict of \S\ref{sec:rules} is a property of the rule.
 
-\textbf{evolved-2D is a stable patch.} Square-patch wins at all five budgets
-($d=1.94$--$2.05$): a robust, reproducible-under-growth identity.
-
-\textbf{R\_3D: dimension locks first, shape does not.} The measured dimension
-sits at $d\approx1.9$--$2.2$ from the earliest stage, and all three 2D
-templates score in a tight band ($0.24$--$0.68$) far below interval
-($1.85$--$2.32$)---but the \emph{winning} 2D template wanders: square patch
-($750$) $\to$ sphere ($1500$) $\to$ flat torus ($3000$) $\to$ sphere ($6000$)
-$\to$ square patch ($12{,}000$). The refined claim this supports:
+\textbf{R\_3D: dimension locks first, shape does not---and the wandering is
+deterministic.} All four seeds produce byte-identical spectra at \emph{every}
+budget (the zero-width bands in Fig.~\ref{fig:growth}): this rule's growth is
+seed-independent, so its template trajectory---square patch ($750$) $\to$
+sphere ($1500$) $\to$ flat torus ($3000$) $\to$ sphere ($6000$) $\to$ square
+patch ($12{,}000$)---is \emph{reproducible structure of the rule's growth},
+not sampling noise. The measured dimension sits at $d\approx1.9$--$2.2$ from
+the earliest stage while all three 2D templates score far below interval
+($0.24$--$0.68$ vs $1.85$--$2.32$). The refined claim:
 \emph{dimensionality is the robust emergent invariant; symmetry class is
-not}---at these scales R\_3D is unambiguously a 2D geometry that is not yet
-(or not ever) any of the clean model spaces. Its angular fidelity also dips
-and recovers across the sweep ($0.80\to0.59\to0.73$), consistent with the
-fixed-budget observer effect documented in the companion paper's continuum
-section: a fixed $m=20$ window resolves a shrinking fraction of a growing
-substrate.
+not}---R\_3D is unambiguously a 2D geometry that is not (yet, or ever) any of
+the clean model spaces. Its angular fidelity dips and recovers across the
+sweep ($0.80\to0.59\to0.73$, identical at all seeds), consistent with the
+fixed-budget observer effect of the companion paper's continuum section: a
+fixed $m=20$ window resolves a shrinking fraction of a growing substrate.
+
+\textbf{evolved-2D: seed sensitivity switches on at a growth scale.} Its
+verdict is a stable square patch at every seed for $B\le1500$
+(deterministic at $750$; angle-$\rho$ sd $0.01$ at $1500$), and then the
+seeds \emph{diverge}: for $B\ge3000$ the across-seed angle-$\rho$ spread
+jumps to $\pm0.21$ and the verdicts scatter (patch/torus/interval)---the
+widening bands in Fig.~\ref{fig:growth}. The rule has a branching point:
+early growth is canalized, later growth is contingent, and the recognizer
+localizes the transition between $1500$ and $3000$ rewrite events.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{growth_signatures.png}
-\caption{Which manifold template fits, as the substrate grows: multiplet
-signature distance per template (lower = closer) across rewrite budgets,
-measured dimension annotated per stage. R\_2D (left) is an interval at every
-stage; evolved-2D (right) is a stable square patch; R\_3D (middle) locks its
-\emph{dimension} at $\approx2$ immediately while the winning 2D template
-wanders---dimension emerges before shape.}
+\includegraphics[width=\linewidth]{growth_multiseed.png}
+\caption{Which manifold template fits, as the substrate grows---across all
+four rewriter seeds (line = mean, band = min--max over seeds; lower = closer;
+measured dimension annotated per stage). R\_2D (left): an interval at every
+stage and seed. R\_3D (middle): \emph{zero-width bands}---growth is
+deterministic, so the wandering of the winning 2D template is reproducible
+structure. evolved-2D (right): the bands blow open after $B\approx1500$---%
+seed sensitivity switches on at a specific growth scale.}
 \label{fig:growth}
 \end{figure}
 
@@ -295,10 +305,11 @@ it is data, and the sign of the $\alpha{=}1$ response is itself a diagnostic
 for which situation one is in.
 
 \section{Limitations and falsifiers}\label{sec:limits}
-Seed replication is done (\S\ref{sec:seeds}: two rules fully stable, one
-deterministic, one tipping between adjacent templates, one genuinely
-seed-dependent), but the growth sweep remains single-seed per stage;
-hop-count geodesics; $n\le2000$ dense-eigensolver scale; four
+Seed replication is done on both axes (\S\ref{sec:seeds}: two rules fully
+stable, one deterministic, one tipping between adjacent templates, one
+genuinely seed-dependent; \S\ref{sec:growth}: all four seeds at every growth
+stage, $60$ instances); hop-count geodesics; $n\le2000$ dense-eigensolver
+scale; four
 templates, so ``matches none'' means none-of-these---hyperbolic, higher-genus,
 and product templates are the obvious extensions; the growth sweep is a
 budget sweep, not a fixed-rule time series at scale. Each is mechanical to

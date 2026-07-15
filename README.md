@@ -6,23 +6,31 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Linter: ruff](https://img.shields.io/badge/linter-ruff-261230.svg)](https://github.com/astral-sh/ruff)
 
-**Keep the Angle: a universal geometry-preserving basis in spectral embeddings.**
+**Keep the Angle: a geometry-preserving basis in spectral embeddings.**
 
-> *Keep the angle, drop the magnitude.* Given the graph normalized-Laplacian
+> *Keep the angle, drop the magnitude — when the magnitude is nuisance for the
+> metric being preserved.* Given the graph normalized-Laplacian
 > eigen-embedding, the **angular** coordinates of the low-eigenvalue subspace
-> carry the geometry; the **radial** coordinate is asymptotically geometry-free.
-> Row-normalizing to the unit sphere — the Ng–Jordan–Weiss / PolarQuant move — is
-> the coarse-graining a bounded observer performs to perceive a smooth space.
+> carry the graph's geodesic structure; the **radial** coordinate is
+> asymptotically degree/density. Row-normalizing to the unit sphere — the
+> Ng–Jordan–Weiss move — is, on manifold-like graphs, the coarse-graining a
+> bounded observer performs to perceive a smooth space.
 
 The commute-time Laplacian embedding degenerates on large graphs (von Luxburg):
 its distances collapse to local degree. This repository shows the geometry does
-not vanish — it survives entirely in the **angular** coordinate. Keeping only the
-angle (the Ng–Jordan–Weiss row-normalization) preserves graph geodesics
-*universally* across substrates with genuine low-dimensional Riemannian geometry,
-while the radial coordinate is provably degenerate. The same "keep the direction"
-operation recurs in KV-cache compression and — as a motivating interpretation,
-developed and bounded honestly — in the coarse-graining of a bounded observer in
-Wolfram's emergent-geometry program.
+not vanish — it is retained by the **angular** coordinate (under strongly
+non-uniform sampling, after the Coifman–Lafon α=1 density normalization).
+Keeping only the angle (the Ng–Jordan–Weiss row-normalization) preserves graph
+geodesics across every substrate family we tested with genuine low-dimensional
+Riemannian geometry, while the radial coordinate is provably degenerate. The
+underlying *scale-from-direction* decomposition recurs in vector and KV-cache
+compression — with a scope boundary the companion practice work makes sharp:
+for attention **keys**, per-vector angular quantization fails (attention
+depends on per-channel scale in QKᵀ), so the general principle is *keep the
+part that carries the task geometry*, not *always keep the angle*
+([turboquant-pro](https://github.com/ahb-sjsu/turboquant-pro)). The observer
+interpretation of Wolfram's emergent-geometry program is developed as
+motivation and bounded honestly.
 
 ## The core decomposition
 
@@ -39,19 +47,23 @@ flowchart LR
     style X fill:#ffdddd,stroke:#aa0000
 ```
 
-Four independent literatures perform the *same* move — keep the scale-invariant
-direction, discard the magnitude — which is why the result feels inevitable once
-you see it:
+Independent literatures perform the *same decomposition* — separate scale from
+direction — and then keep whichever part carries their task geometry:
 
 ```mermaid
 flowchart TD
-    P["PolarQuant (KV-cache):<br/>keep direction"] --> K
     N["Ng-Jordan-Weiss spectral<br/>clustering: row-normalize"] --> K
-    AV["aversion angle<br/>(preference geometry)"] --> K
+    V["vector / KV compression:<br/>separate norm from direction<br/>(PolarQuant, turboquant-pro)"] --> K
     W["Wolfram observer<br/>coarse-graining"] --> K
-    K{{"keep the angle,<br/>drop the magnitude"}}
+    K{{"separate scale from direction;<br/>keep what carries the task geometry"}}
     style K fill:#ddffff,stroke:#0088aa,stroke-width:2px
 ```
+
+For graph geodesics that is the angle alone (this repo). For embedding
+retrieval it is direction **plus stored norm**; for attention **keys** it is
+per-channel scale, and per-vector angular quantization is a counterexample —
+the boundary is condition (A2) of the paper's transfer theorem, stated for the
+downstream metric.
 
 ## The result in one table
 
@@ -107,15 +119,28 @@ flowchart TD
    correlation deflates to a hub tautology (partial correlation −0.14). This is
    observer theory, **not** the Einstein-tensor claim.
 
-## What is proven vs conjectured
+## What is proven vs conjectured (synced to paper v0.8)
 
-- **Proven / theorem-backed:** the radial coordinate's degeneracy (von Luxburg
-  et al., 2010/2014), and that it equals a local-degree quantity.
-- **Empirically strong conjecture:** the angular coordinate stays bi-Lipschitz to
-  geodesic distance uniformly in mode-count and N. Von Luxburg explains why the
-  *radius dies* (d ≥ 2); it does not by itself explain why the *angle lives* —
-  that rests on eigenmap-embedding results plus a heuristic. Stated explicitly in
-  `theorem.md`.
+- **Proven / theorem-backed:** the radial coordinate's degeneracy for d ≥ 3
+  (von Luxburg et al. 2010/2014; full diagonal transfer in paper Appendix A —
+  d = 2 is the recurrent borderline, treated empirically); a deterministic
+  angular-transfer theorem plus a conditional local bi-Lipschitz theorem for
+  the commute-weighted eigenmap, **unconditional on the flat torus** (paper
+  Thm 6/8, Cor 10); uniform-in-truncation angular bi-Lipschitzness for
+  **heat-filtered** eigenmaps (Thm 12); and the plain-eigenmap rank collapse
+  (Prop 14).
+- **Refuted (self-correction in v0.8):** the old strong form — "the angular
+  coordinate stays bi-Lipschitz to geodesic distance uniformly in mode-count"
+  at fixed scale — is **false** for the commute weighting: high modes raise
+  the local angular speed like √Λ (paper Prop 13; exact on S¹). The correct
+  uniform metric object is scale-dependent (above the spectral wavelength
+  Λ^(−1/2)), which remains open.
+- **Empirically strong conjecture (the surviving form):** the angular
+  coordinate stays **rank-faithful** to geodesic distance uniformly in
+  mode-count and N — flatness in m is rank stability under a fixed observer
+  budget, not an m-independent metric claim. Reduced at fixed m to explicit
+  chart hypotheses (H1)–(H3) plus a distance-ratio condition (paper §3.1).
+  Stated explicitly in `theorem.md`.
 - **Negative results kept, not hidden:** the hyperbolic-reframe hypothesis was
   tested with controls and **rejected** (`hyperbolic.py`); the dynamical-curvature
   test is a clean null (`curvature.py`).

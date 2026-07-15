@@ -1,0 +1,2202 @@
+{
+ "rows": [
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 1,
+   "budget": 750,
+   "n": 749,
+   "dim": 1.06,
+   "dim_spread": 0.22,
+   "angle_rho": 0.934,
+   "ecc_spread": 0.656,
+   "spectrum_ratios": [
+    1.0,
+    4.18,
+    8.93,
+    16.05,
+    24.21,
+    34.05,
+    49.88,
+    61.57
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.522,
+    "sphere S^2": 2.149,
+    "square patch": 1.68,
+    "interval (1D)": 0.032
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 1,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 1.04,
+   "dim_spread": 0.32,
+   "angle_rho": 0.946,
+   "ecc_spread": 0.664,
+   "spectrum_ratios": [
+    1.0,
+    4.0,
+    9.3,
+    16.49,
+    25.53,
+    36.15,
+    48.34,
+    66.89
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.551,
+    "sphere S^2": 2.178,
+    "square patch": 1.706,
+    "interval (1D)": 0.024
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 1,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.06,
+   "dim_spread": 0.32,
+   "angle_rho": 0.933,
+   "ecc_spread": 0.676,
+   "spectrum_ratios": [
+    1.0,
+    3.76,
+    8.74,
+    14.83,
+    24.03,
+    34.48,
+    46.68,
+    61.2
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.491,
+    "sphere S^2": 2.119,
+    "square patch": 1.648,
+    "interval (1D)": 0.048
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 1,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.04,
+   "dim_spread": 0.3,
+   "angle_rho": 0.934,
+   "ecc_spread": 0.664,
+   "spectrum_ratios": [
+    1.0,
+    4.04,
+    8.97,
+    15.7,
+    24.11,
+    36.05,
+    49.03,
+    64.85
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.531,
+    "sphere S^2": 2.159,
+    "square patch": 1.688,
+    "interval (1D)": 0.016
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 1,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.06,
+   "dim_spread": 0.3,
+   "angle_rho": 0.934,
+   "ecc_spread": 0.68,
+   "spectrum_ratios": [
+    1.0,
+    3.92,
+    8.69,
+    16.29,
+    25.49,
+    35.71,
+    48.16,
+    64.16
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.531,
+    "sphere S^2": 2.157,
+    "square patch": 1.687,
+    "interval (1D)": 0.018
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 2,
+   "budget": 750,
+   "n": 749,
+   "dim": 1.06,
+   "dim_spread": 0.22,
+   "angle_rho": 0.935,
+   "ecc_spread": 0.665,
+   "spectrum_ratios": [
+    1.0,
+    4.01,
+    8.96,
+    15.44,
+    25.39,
+    36.53,
+    48.97,
+    62.91
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.531,
+    "sphere S^2": 2.159,
+    "square patch": 1.689,
+    "interval (1D)": 0.016
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 2,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 1.05,
+   "dim_spread": 0.32,
+   "angle_rho": 0.941,
+   "ecc_spread": 0.669,
+   "spectrum_ratios": [
+    1.0,
+    4.07,
+    9.01,
+    16.07,
+    24.91,
+    35.58,
+    50.43,
+    63.14
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.537,
+    "sphere S^2": 2.164,
+    "square patch": 1.695,
+    "interval (1D)": 0.014
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 2,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.04,
+   "dim_spread": 0.31,
+   "angle_rho": 0.938,
+   "ecc_spread": 0.666,
+   "spectrum_ratios": [
+    1.0,
+    3.98,
+    8.96,
+    16.23,
+    25.27,
+    35.4,
+    48.86,
+    63.4
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.533,
+    "sphere S^2": 2.159,
+    "square patch": 1.689,
+    "interval (1D)": 0.01
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 2,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.05,
+   "dim_spread": 0.32,
+   "angle_rho": 0.939,
+   "ecc_spread": 0.674,
+   "spectrum_ratios": [
+    1.0,
+    3.94,
+    9.16,
+    15.95,
+    24.96,
+    37.25,
+    49.14,
+    64.17
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.541,
+    "sphere S^2": 2.168,
+    "square patch": 1.697,
+    "interval (1D)": 0.015
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 2,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.05,
+   "dim_spread": 0.29,
+   "angle_rho": 0.936,
+   "ecc_spread": 0.676,
+   "spectrum_ratios": [
+    1.0,
+    3.99,
+    8.92,
+    15.87,
+    25.34,
+    36.13,
+    48.76,
+    63.57
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.533,
+    "sphere S^2": 2.16,
+    "square patch": 1.69,
+    "interval (1D)": 0.007
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 3,
+   "budget": 750,
+   "n": 749,
+   "dim": 1.06,
+   "dim_spread": 0.23,
+   "angle_rho": 0.933,
+   "ecc_spread": 0.675,
+   "spectrum_ratios": [
+    1.0,
+    3.93,
+    9.02,
+    15.6,
+    23.52,
+    35.34,
+    46.53,
+    63.33
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.511,
+    "sphere S^2": 2.138,
+    "square patch": 1.666,
+    "interval (1D)": 0.031
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 3,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 1.05,
+   "dim_spread": 0.31,
+   "angle_rho": 0.944,
+   "ecc_spread": 0.665,
+   "spectrum_ratios": [
+    1.0,
+    4.14,
+    8.95,
+    16.73,
+    25.85,
+    37.45,
+    48.86,
+    64.3
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.553,
+    "sphere S^2": 2.178,
+    "square patch": 1.71,
+    "interval (1D)": 0.027
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 3,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.06,
+   "dim_spread": 0.31,
+   "angle_rho": 0.931,
+   "ecc_spread": 0.682,
+   "spectrum_ratios": [
+    1.0,
+    3.88,
+    8.85,
+    15.3,
+    23.95,
+    34.22,
+    47.61,
+    62.81
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.505,
+    "sphere S^2": 2.132,
+    "square patch": 1.661,
+    "interval (1D)": 0.033
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 3,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.04,
+   "dim_spread": 0.3,
+   "angle_rho": 0.937,
+   "ecc_spread": 0.675,
+   "spectrum_ratios": [
+    1.0,
+    3.88,
+    8.62,
+    16.03,
+    25.25,
+    35.62,
+    49.17,
+    64.86
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.531,
+    "sphere S^2": 2.157,
+    "square patch": 1.687,
+    "interval (1D)": 0.02
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 3,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.06,
+   "dim_spread": 0.3,
+   "angle_rho": 0.941,
+   "ecc_spread": 0.672,
+   "spectrum_ratios": [
+    1.0,
+    4.04,
+    9.26,
+    16.28,
+    25.23,
+    37.06,
+    49.51,
+    65.58
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.552,
+    "sphere S^2": 2.179,
+    "square patch": 1.709,
+    "interval (1D)": 0.019
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 4,
+   "budget": 750,
+   "n": 749,
+   "dim": 1.07,
+   "dim_spread": 0.22,
+   "angle_rho": 0.936,
+   "ecc_spread": 0.663,
+   "spectrum_ratios": [
+    1.0,
+    4.05,
+    9.03,
+    15.63,
+    25.92,
+    36.82,
+    49.54,
+    61.47
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.536,
+    "sphere S^2": 2.164,
+    "square patch": 1.695,
+    "interval (1D)": 0.023
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 4,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 1.05,
+   "dim_spread": 0.33,
+   "angle_rho": 0.944,
+   "ecc_spread": 0.661,
+   "spectrum_ratios": [
+    1.0,
+    4.04,
+    8.98,
+    16.7,
+    25.62,
+    36.12,
+    50.2,
+    62.53
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.545,
+    "sphere S^2": 2.17,
+    "square patch": 1.701,
+    "interval (1D)": 0.021
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 4,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.04,
+   "dim_spread": 0.31,
+   "angle_rho": 0.934,
+   "ecc_spread": 0.678,
+   "spectrum_ratios": [
+    1.0,
+    4.12,
+    9.11,
+    15.62,
+    25.29,
+    35.86,
+    48.69,
+    63.63
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.534,
+    "sphere S^2": 2.162,
+    "square patch": 1.693,
+    "interval (1D)": 0.015
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 4,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.06,
+   "dim_spread": 0.3,
+   "angle_rho": 0.936,
+   "ecc_spread": 0.677,
+   "spectrum_ratios": [
+    1.0,
+    3.92,
+    9.0,
+    15.64,
+    24.69,
+    35.94,
+    47.4,
+    62.18
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.519,
+    "sphere S^2": 2.146,
+    "square patch": 1.675,
+    "interval (1D)": 0.019
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_2D  (borrowed)",
+   "seed": 4,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.05,
+   "dim_spread": 0.3,
+   "angle_rho": 0.935,
+   "ecc_spread": 0.667,
+   "spectrum_ratios": [
+    1.0,
+    3.96,
+    8.99,
+    15.94,
+    24.73,
+    35.88,
+    47.88,
+    65.09
+   ],
+   "signature_scores": {
+    "flat 2-torus": 2.531,
+    "sphere S^2": 2.158,
+    "square patch": 1.687,
+    "interval (1D)": 0.012
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 1,
+   "budget": 750,
+   "n": 749,
+   "dim": 2.11,
+   "dim_spread": 0.08,
+   "angle_rho": 0.8,
+   "ecc_spread": 0.434,
+   "spectrum_ratios": [
+    1.0,
+    1.81,
+    2.54,
+    2.87,
+    3.26,
+    3.79,
+    4.3,
+    4.53
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.727,
+    "sphere S^2": 0.445,
+    "square patch": 0.35,
+    "interval (1D)": 1.849
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 1,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 2.23,
+   "dim_spread": 0.25,
+   "angle_rho": 0.795,
+   "ecc_spread": 0.381,
+   "spectrum_ratios": [
+    1.0,
+    1.73,
+    2.26,
+    2.35,
+    2.83,
+    3.19,
+    3.29,
+    3.6
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.573,
+    "sphere S^2": 0.367,
+    "square patch": 0.466,
+    "interval (1D)": 2.016
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 1,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 2.12,
+   "dim_spread": 0.35,
+   "angle_rho": 0.665,
+   "ecc_spread": 0.49,
+   "spectrum_ratios": [
+    1.0,
+    1.18,
+    1.48,
+    1.81,
+    2.0,
+    2.18,
+    2.46,
+    2.54
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.283,
+    "sphere S^2": 0.311,
+    "square patch": 0.683,
+    "interval (1D)": 2.321
+   },
+   "signature_best": "flat 2-torus"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 1,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.97,
+   "dim_spread": 0.38,
+   "angle_rho": 0.594,
+   "ecc_spread": 0.455,
+   "spectrum_ratios": [
+    1.0,
+    1.17,
+    1.36,
+    1.96,
+    1.97,
+    2.51,
+    2.55,
+    2.66
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.309,
+    "sphere S^2": 0.263,
+    "square patch": 0.645,
+    "interval (1D)": 2.288
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 1,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.9,
+   "dim_spread": 0.35,
+   "angle_rho": 0.728,
+   "ecc_spread": 0.546,
+   "spectrum_ratios": [
+    1.0,
+    1.93,
+    2.26,
+    2.79,
+    3.15,
+    3.74,
+    3.83,
+    4.06
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.678,
+    "sphere S^2": 0.405,
+    "square patch": 0.396,
+    "interval (1D)": 1.904
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 2,
+   "budget": 750,
+   "n": 749,
+   "dim": 2.14,
+   "dim_spread": 0.09,
+   "angle_rho": 0.8,
+   "ecc_spread": 0.434,
+   "spectrum_ratios": [
+    1.0,
+    1.81,
+    2.54,
+    2.87,
+    3.26,
+    3.79,
+    4.3,
+    4.53
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.727,
+    "sphere S^2": 0.445,
+    "square patch": 0.35,
+    "interval (1D)": 1.849
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 2,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 2.23,
+   "dim_spread": 0.23,
+   "angle_rho": 0.795,
+   "ecc_spread": 0.381,
+   "spectrum_ratios": [
+    1.0,
+    1.73,
+    2.26,
+    2.35,
+    2.83,
+    3.19,
+    3.29,
+    3.6
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.573,
+    "sphere S^2": 0.367,
+    "square patch": 0.466,
+    "interval (1D)": 2.016
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 2,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 2.12,
+   "dim_spread": 0.31,
+   "angle_rho": 0.665,
+   "ecc_spread": 0.49,
+   "spectrum_ratios": [
+    1.0,
+    1.18,
+    1.48,
+    1.81,
+    2.0,
+    2.18,
+    2.46,
+    2.54
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.283,
+    "sphere S^2": 0.311,
+    "square patch": 0.683,
+    "interval (1D)": 2.321
+   },
+   "signature_best": "flat 2-torus"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 2,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.94,
+   "dim_spread": 0.37,
+   "angle_rho": 0.594,
+   "ecc_spread": 0.455,
+   "spectrum_ratios": [
+    1.0,
+    1.17,
+    1.36,
+    1.96,
+    1.97,
+    2.51,
+    2.55,
+    2.66
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.309,
+    "sphere S^2": 0.263,
+    "square patch": 0.645,
+    "interval (1D)": 2.288
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 2,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.88,
+   "dim_spread": 0.34,
+   "angle_rho": 0.728,
+   "ecc_spread": 0.546,
+   "spectrum_ratios": [
+    1.0,
+    1.93,
+    2.26,
+    2.79,
+    3.15,
+    3.74,
+    3.83,
+    4.06
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.678,
+    "sphere S^2": 0.405,
+    "square patch": 0.396,
+    "interval (1D)": 1.904
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 3,
+   "budget": 750,
+   "n": 749,
+   "dim": 2.11,
+   "dim_spread": 0.08,
+   "angle_rho": 0.8,
+   "ecc_spread": 0.434,
+   "spectrum_ratios": [
+    1.0,
+    1.81,
+    2.54,
+    2.87,
+    3.26,
+    3.79,
+    4.3,
+    4.53
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.727,
+    "sphere S^2": 0.445,
+    "square patch": 0.35,
+    "interval (1D)": 1.849
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 3,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 2.23,
+   "dim_spread": 0.25,
+   "angle_rho": 0.795,
+   "ecc_spread": 0.381,
+   "spectrum_ratios": [
+    1.0,
+    1.73,
+    2.26,
+    2.35,
+    2.83,
+    3.19,
+    3.29,
+    3.6
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.573,
+    "sphere S^2": 0.367,
+    "square patch": 0.466,
+    "interval (1D)": 2.016
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 3,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 2.12,
+   "dim_spread": 0.35,
+   "angle_rho": 0.665,
+   "ecc_spread": 0.49,
+   "spectrum_ratios": [
+    1.0,
+    1.18,
+    1.48,
+    1.81,
+    2.0,
+    2.18,
+    2.46,
+    2.54
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.283,
+    "sphere S^2": 0.311,
+    "square patch": 0.683,
+    "interval (1D)": 2.321
+   },
+   "signature_best": "flat 2-torus"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 3,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.97,
+   "dim_spread": 0.38,
+   "angle_rho": 0.594,
+   "ecc_spread": 0.455,
+   "spectrum_ratios": [
+    1.0,
+    1.17,
+    1.36,
+    1.96,
+    1.97,
+    2.51,
+    2.55,
+    2.66
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.309,
+    "sphere S^2": 0.263,
+    "square patch": 0.645,
+    "interval (1D)": 2.288
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 3,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.9,
+   "dim_spread": 0.35,
+   "angle_rho": 0.728,
+   "ecc_spread": 0.546,
+   "spectrum_ratios": [
+    1.0,
+    1.93,
+    2.26,
+    2.79,
+    3.15,
+    3.74,
+    3.83,
+    4.06
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.678,
+    "sphere S^2": 0.405,
+    "square patch": 0.396,
+    "interval (1D)": 1.904
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 4,
+   "budget": 750,
+   "n": 749,
+   "dim": 2.14,
+   "dim_spread": 0.09,
+   "angle_rho": 0.8,
+   "ecc_spread": 0.434,
+   "spectrum_ratios": [
+    1.0,
+    1.81,
+    2.54,
+    2.87,
+    3.26,
+    3.79,
+    4.3,
+    4.53
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.727,
+    "sphere S^2": 0.445,
+    "square patch": 0.35,
+    "interval (1D)": 1.849
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 4,
+   "budget": 1500,
+   "n": 1499,
+   "dim": 2.23,
+   "dim_spread": 0.23,
+   "angle_rho": 0.795,
+   "ecc_spread": 0.381,
+   "spectrum_ratios": [
+    1.0,
+    1.73,
+    2.26,
+    2.35,
+    2.83,
+    3.19,
+    3.29,
+    3.6
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.573,
+    "sphere S^2": 0.367,
+    "square patch": 0.466,
+    "interval (1D)": 2.016
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 4,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 2.12,
+   "dim_spread": 0.31,
+   "angle_rho": 0.665,
+   "ecc_spread": 0.49,
+   "spectrum_ratios": [
+    1.0,
+    1.18,
+    1.48,
+    1.81,
+    2.0,
+    2.18,
+    2.46,
+    2.54
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.283,
+    "sphere S^2": 0.311,
+    "square patch": 0.683,
+    "interval (1D)": 2.321
+   },
+   "signature_best": "flat 2-torus"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 4,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.94,
+   "dim_spread": 0.37,
+   "angle_rho": 0.594,
+   "ecc_spread": 0.455,
+   "spectrum_ratios": [
+    1.0,
+    1.17,
+    1.36,
+    1.96,
+    1.97,
+    2.51,
+    2.55,
+    2.66
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.309,
+    "sphere S^2": 0.263,
+    "square patch": 0.645,
+    "interval (1D)": 2.288
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "R_3D  (borrowed)",
+   "seed": 4,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.88,
+   "dim_spread": 0.34,
+   "angle_rho": 0.728,
+   "ecc_spread": 0.546,
+   "spectrum_ratios": [
+    1.0,
+    1.93,
+    2.26,
+    2.79,
+    3.15,
+    3.74,
+    3.83,
+    4.06
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.678,
+    "sphere S^2": 0.405,
+    "square patch": 0.396,
+    "interval (1D)": 1.904
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 1,
+   "budget": 750,
+   "n": 972,
+   "dim": 2.05,
+   "dim_spread": 0.42,
+   "angle_rho": 0.89,
+   "ecc_spread": 0.413,
+   "spectrum_ratios": [
+    1.0,
+    2.97,
+    5.1,
+    6.88,
+    8.8,
+    9.97,
+    10.94,
+    12.27
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.521,
+    "sphere S^2": 1.161,
+    "square patch": 0.729,
+    "interval (1D)": 1.051
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 1,
+   "budget": 1500,
+   "n": 2000,
+   "dim": 1.97,
+   "dim_spread": 0.16,
+   "angle_rho": 0.81,
+   "ecc_spread": 0.541,
+   "spectrum_ratios": [
+    1.0,
+    2.01,
+    2.47,
+    3.79,
+    4.29,
+    4.69,
+    5.75,
+    7.87
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.96,
+    "sphere S^2": 0.616,
+    "square patch": 0.265,
+    "interval (1D)": 1.6
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 1,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.95,
+   "dim_spread": 0.3,
+   "angle_rho": 0.767,
+   "ecc_spread": 0.596,
+   "spectrum_ratios": [
+    1.0,
+    3.84,
+    4.55,
+    5.62,
+    6.78,
+    7.07,
+    7.91,
+    8.28
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.327,
+    "sphere S^2": 0.992,
+    "square patch": 0.633,
+    "interval (1D)": 1.295
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 1,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.99,
+   "dim_spread": 0.16,
+   "angle_rho": 0.767,
+   "ecc_spread": 0.596,
+   "spectrum_ratios": [
+    1.0,
+    3.84,
+    4.55,
+    5.62,
+    6.78,
+    7.07,
+    7.91,
+    8.28
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.327,
+    "sphere S^2": 0.992,
+    "square patch": 0.633,
+    "interval (1D)": 1.295
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 1,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 2.01,
+   "dim_spread": 0.25,
+   "angle_rho": 0.801,
+   "ecc_spread": 0.566,
+   "spectrum_ratios": [
+    1.0,
+    3.67,
+    4.2,
+    5.0,
+    6.01,
+    6.81,
+    8.12,
+    11.13
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.321,
+    "sphere S^2": 0.993,
+    "square patch": 0.602,
+    "interval (1D)": 1.277
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 2,
+   "budget": 750,
+   "n": 972,
+   "dim": 2.07,
+   "dim_spread": 0.49,
+   "angle_rho": 0.897,
+   "ecc_spread": 0.482,
+   "spectrum_ratios": [
+    1.0,
+    2.97,
+    5.1,
+    6.88,
+    8.8,
+    9.97,
+    10.94,
+    12.27
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.521,
+    "sphere S^2": 1.161,
+    "square patch": 0.729,
+    "interval (1D)": 1.051
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 2,
+   "budget": 1500,
+   "n": 2000,
+   "dim": 1.99,
+   "dim_spread": 0.15,
+   "angle_rho": 0.813,
+   "ecc_spread": 0.536,
+   "spectrum_ratios": [
+    1.0,
+    2.0,
+    3.06,
+    3.35,
+    4.35,
+    4.92,
+    5.23,
+    8.4
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.974,
+    "sphere S^2": 0.661,
+    "square patch": 0.296,
+    "interval (1D)": 1.591
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 2,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.98,
+   "dim_spread": 0.29,
+   "angle_rho": 0.379,
+   "ecc_spread": 0.563,
+   "spectrum_ratios": [
+    1.0,
+    1.12,
+    1.13,
+    1.16,
+    1.79,
+    2.58,
+    2.86,
+    3.03
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.231,
+    "sphere S^2": 0.392,
+    "square patch": 0.726,
+    "interval (1D)": 2.348
+   },
+   "signature_best": "flat 2-torus"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 2,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.91,
+   "dim_spread": 0.26,
+   "angle_rho": 0.379,
+   "ecc_spread": 0.563,
+   "spectrum_ratios": [
+    1.0,
+    1.12,
+    1.13,
+    1.16,
+    1.79,
+    2.58,
+    2.86,
+    3.03
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.231,
+    "sphere S^2": 0.392,
+    "square patch": 0.726,
+    "interval (1D)": 2.348
+   },
+   "signature_best": "flat 2-torus"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 2,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 2.05,
+   "dim_spread": 0.2,
+   "angle_rho": 0.46,
+   "ecc_spread": 0.559,
+   "spectrum_ratios": [
+    1.0,
+    1.11,
+    1.16,
+    1.79,
+    2.39,
+    2.42,
+    2.71,
+    3.09
+   ],
+   "signature_scores": {
+    "flat 2-torus": 0.301,
+    "sphere S^2": 0.226,
+    "square patch": 0.615,
+    "interval (1D)": 2.264
+   },
+   "signature_best": "sphere S^2"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 3,
+   "budget": 750,
+   "n": 972,
+   "dim": 2.08,
+   "dim_spread": 0.47,
+   "angle_rho": 0.9,
+   "ecc_spread": 0.421,
+   "spectrum_ratios": [
+    1.0,
+    2.97,
+    5.1,
+    6.88,
+    8.8,
+    9.97,
+    10.94,
+    12.27
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.521,
+    "sphere S^2": 1.161,
+    "square patch": 0.729,
+    "interval (1D)": 1.051
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 3,
+   "budget": 1500,
+   "n": 2000,
+   "dim": 2.03,
+   "dim_spread": 0.16,
+   "angle_rho": 0.806,
+   "ecc_spread": 0.506,
+   "spectrum_ratios": [
+    1.0,
+    1.51,
+    2.9,
+    3.15,
+    4.76,
+    6.74,
+    9.0,
+    10.16
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.104,
+    "sphere S^2": 0.78,
+    "square patch": 0.333,
+    "interval (1D)": 1.444
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 3,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.63,
+   "dim_spread": 0.55,
+   "angle_rho": 0.894,
+   "ecc_spread": 0.517,
+   "spectrum_ratios": [
+    1.0,
+    15.83,
+    31.21,
+    42.96,
+    54.66,
+    65.25,
+    76.04,
+    77.91
+   ],
+   "signature_scores": {
+    "flat 2-torus": 3.228,
+    "sphere S^2": 2.862,
+    "square patch": 2.42,
+    "interval (1D)": 0.838
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 3,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.57,
+   "dim_spread": 0.5,
+   "angle_rho": 0.894,
+   "ecc_spread": 0.517,
+   "spectrum_ratios": [
+    1.0,
+    15.83,
+    31.21,
+    42.96,
+    54.66,
+    65.25,
+    76.04,
+    77.91
+   ],
+   "signature_scores": {
+    "flat 2-torus": 3.228,
+    "sphere S^2": 2.862,
+    "square patch": 2.42,
+    "interval (1D)": 0.838
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 3,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 1.92,
+   "dim_spread": 0.23,
+   "angle_rho": 0.915,
+   "ecc_spread": 0.468,
+   "spectrum_ratios": [
+    1.0,
+    2.87,
+    5.63,
+    7.35,
+    15.12,
+    15.29,
+    16.1,
+    17.26
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.778,
+    "sphere S^2": 1.417,
+    "square patch": 0.97,
+    "interval (1D)": 0.781
+   },
+   "signature_best": "interval (1D)"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 4,
+   "budget": 750,
+   "n": 972,
+   "dim": 2.01,
+   "dim_spread": 0.63,
+   "angle_rho": 0.903,
+   "ecc_spread": 0.414,
+   "spectrum_ratios": [
+    1.0,
+    2.97,
+    5.1,
+    6.88,
+    8.8,
+    9.97,
+    10.94,
+    12.27
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.521,
+    "sphere S^2": 1.161,
+    "square patch": 0.729,
+    "interval (1D)": 1.051
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 4,
+   "budget": 1500,
+   "n": 2000,
+   "dim": 1.94,
+   "dim_spread": 0.15,
+   "angle_rho": 0.798,
+   "ecc_spread": 0.552,
+   "spectrum_ratios": [
+    1.0,
+    2.82,
+    3.21,
+    3.54,
+    4.86,
+    6.44,
+    8.31,
+    10.44
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.17,
+    "sphere S^2": 0.857,
+    "square patch": 0.467,
+    "interval (1D)": 1.394
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 4,
+   "budget": 3000,
+   "n": 2000,
+   "dim": 1.88,
+   "dim_spread": 0.39,
+   "angle_rho": 0.872,
+   "ecc_spread": 0.561,
+   "spectrum_ratios": [
+    1.0,
+    3.22,
+    5.47,
+    6.65,
+    9.23,
+    10.17,
+    11.66,
+    13.61
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.566,
+    "sphere S^2": 1.213,
+    "square patch": 0.778,
+    "interval (1D)": 1.007
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 4,
+   "budget": 6000,
+   "n": 2000,
+   "dim": 1.91,
+   "dim_spread": 0.4,
+   "angle_rho": 0.872,
+   "ecc_spread": 0.561,
+   "spectrum_ratios": [
+    1.0,
+    3.22,
+    5.47,
+    6.65,
+    9.23,
+    10.17,
+    11.66,
+    13.61
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.566,
+    "sphere S^2": 1.213,
+    "square patch": 0.778,
+    "interval (1D)": 1.007
+   },
+   "signature_best": "square patch"
+  },
+  {
+   "rule": "evolved-2D (#2)",
+   "seed": 4,
+   "budget": 12000,
+   "n": 2000,
+   "dim": 2.11,
+   "dim_spread": 1.02,
+   "angle_rho": 0.719,
+   "ecc_spread": 0.414,
+   "spectrum_ratios": [
+    1.0,
+    3.83,
+    3.99,
+    4.09,
+    4.14,
+    4.2,
+    4.59,
+    5.02
+   ],
+   "signature_scores": {
+    "flat 2-torus": 1.02,
+    "sphere S^2": 0.748,
+    "square patch": 0.563,
+    "interval (1D)": 1.675
+   },
+   "signature_best": "square patch"
+  }
+ ],
+ "summary": {
+  "R_2D  (borrowed)": [
+   {
+    "budget": 750,
+    "n_seeds": 4,
+    "dim_mean": 1.06,
+    "dim_sd": 0.0,
+    "angle_mean": 0.93,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)"
+    ],
+    "stable": true,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      2.511,
+      2.525,
+      2.536
+     ],
+     "sphere S^2": [
+      2.138,
+      2.152,
+      2.164
+     ],
+     "square patch": [
+      1.666,
+      1.683,
+      1.695
+     ],
+     "interval (1D)": [
+      0.016,
+      0.026,
+      0.032
+     ]
+    }
+   },
+   {
+    "budget": 1500,
+    "n_seeds": 4,
+    "dim_mean": 1.05,
+    "dim_sd": 0.0,
+    "angle_mean": 0.94,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)"
+    ],
+    "stable": true,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      2.537,
+      2.546,
+      2.553
+     ],
+     "sphere S^2": [
+      2.164,
+      2.173,
+      2.178
+     ],
+     "square patch": [
+      1.695,
+      1.703,
+      1.71
+     ],
+     "interval (1D)": [
+      0.014,
+      0.022,
+      0.027
+     ]
+    }
+   },
+   {
+    "budget": 3000,
+    "n_seeds": 4,
+    "dim_mean": 1.05,
+    "dim_sd": 0.01,
+    "angle_mean": 0.93,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)"
+    ],
+    "stable": true,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      2.491,
+      2.516,
+      2.534
+     ],
+     "sphere S^2": [
+      2.119,
+      2.143,
+      2.162
+     ],
+     "square patch": [
+      1.648,
+      1.673,
+      1.693
+     ],
+     "interval (1D)": [
+      0.01,
+      0.026,
+      0.048
+     ]
+    }
+   },
+   {
+    "budget": 6000,
+    "n_seeds": 4,
+    "dim_mean": 1.05,
+    "dim_sd": 0.01,
+    "angle_mean": 0.94,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)"
+    ],
+    "stable": true,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      2.519,
+      2.53,
+      2.541
+     ],
+     "sphere S^2": [
+      2.146,
+      2.157,
+      2.168
+     ],
+     "square patch": [
+      1.675,
+      1.687,
+      1.697
+     ],
+     "interval (1D)": [
+      0.015,
+      0.018,
+      0.02
+     ]
+    }
+   },
+   {
+    "budget": 12000,
+    "n_seeds": 4,
+    "dim_mean": 1.06,
+    "dim_sd": 0.01,
+    "angle_mean": 0.94,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)",
+     "interval (1D)"
+    ],
+    "stable": true,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      2.531,
+      2.537,
+      2.552
+     ],
+     "sphere S^2": [
+      2.157,
+      2.163,
+      2.179
+     ],
+     "square patch": [
+      1.687,
+      1.693,
+      1.709
+     ],
+     "interval (1D)": [
+      0.007,
+      0.014,
+      0.019
+     ]
+    }
+   }
+  ],
+  "R_3D  (borrowed)": [
+   {
+    "budget": 750,
+    "n_seeds": 4,
+    "dim_mean": 2.12,
+    "dim_sd": 0.02,
+    "angle_mean": 0.8,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "square patch",
+     "square patch",
+     "square patch",
+     "square patch"
+    ],
+    "stable": true,
+    "deterministic": true,
+    "scores": {
+     "flat 2-torus": [
+      0.727,
+      0.727,
+      0.727
+     ],
+     "sphere S^2": [
+      0.445,
+      0.445,
+      0.445
+     ],
+     "square patch": [
+      0.35,
+      0.35,
+      0.35
+     ],
+     "interval (1D)": [
+      1.849,
+      1.849,
+      1.849
+     ]
+    }
+   },
+   {
+    "budget": 1500,
+    "n_seeds": 4,
+    "dim_mean": 2.23,
+    "dim_sd": 0.0,
+    "angle_mean": 0.8,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "sphere S^2",
+     "sphere S^2",
+     "sphere S^2",
+     "sphere S^2"
+    ],
+    "stable": true,
+    "deterministic": true,
+    "scores": {
+     "flat 2-torus": [
+      0.573,
+      0.573,
+      0.573
+     ],
+     "sphere S^2": [
+      0.367,
+      0.367,
+      0.367
+     ],
+     "square patch": [
+      0.466,
+      0.466,
+      0.466
+     ],
+     "interval (1D)": [
+      2.016,
+      2.016,
+      2.016
+     ]
+    }
+   },
+   {
+    "budget": 3000,
+    "n_seeds": 4,
+    "dim_mean": 2.12,
+    "dim_sd": 0.0,
+    "angle_mean": 0.67,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "flat 2-torus",
+     "flat 2-torus",
+     "flat 2-torus",
+     "flat 2-torus"
+    ],
+    "stable": true,
+    "deterministic": true,
+    "scores": {
+     "flat 2-torus": [
+      0.283,
+      0.283,
+      0.283
+     ],
+     "sphere S^2": [
+      0.311,
+      0.311,
+      0.311
+     ],
+     "square patch": [
+      0.683,
+      0.683,
+      0.683
+     ],
+     "interval (1D)": [
+      2.321,
+      2.321,
+      2.321
+     ]
+    }
+   },
+   {
+    "budget": 6000,
+    "n_seeds": 4,
+    "dim_mean": 1.96,
+    "dim_sd": 0.02,
+    "angle_mean": 0.59,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "sphere S^2",
+     "sphere S^2",
+     "sphere S^2",
+     "sphere S^2"
+    ],
+    "stable": true,
+    "deterministic": true,
+    "scores": {
+     "flat 2-torus": [
+      0.309,
+      0.309,
+      0.309
+     ],
+     "sphere S^2": [
+      0.263,
+      0.263,
+      0.263
+     ],
+     "square patch": [
+      0.645,
+      0.645,
+      0.645
+     ],
+     "interval (1D)": [
+      2.288,
+      2.288,
+      2.288
+     ]
+    }
+   },
+   {
+    "budget": 12000,
+    "n_seeds": 4,
+    "dim_mean": 1.89,
+    "dim_sd": 0.01,
+    "angle_mean": 0.73,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "square patch",
+     "square patch",
+     "square patch",
+     "square patch"
+    ],
+    "stable": true,
+    "deterministic": true,
+    "scores": {
+     "flat 2-torus": [
+      0.678,
+      0.678,
+      0.678
+     ],
+     "sphere S^2": [
+      0.405,
+      0.405,
+      0.405
+     ],
+     "square patch": [
+      0.396,
+      0.396,
+      0.396
+     ],
+     "interval (1D)": [
+      1.904,
+      1.904,
+      1.904
+     ]
+    }
+   }
+  ],
+  "evolved-2D (#2)": [
+   {
+    "budget": 750,
+    "n_seeds": 4,
+    "dim_mean": 2.05,
+    "dim_sd": 0.03,
+    "angle_mean": 0.9,
+    "angle_sd": 0.0,
+    "verdicts": [
+     "square patch",
+     "square patch",
+     "square patch",
+     "square patch"
+    ],
+    "stable": true,
+    "deterministic": true,
+    "scores": {
+     "flat 2-torus": [
+      1.521,
+      1.521,
+      1.521
+     ],
+     "sphere S^2": [
+      1.161,
+      1.161,
+      1.161
+     ],
+     "square patch": [
+      0.729,
+      0.729,
+      0.729
+     ],
+     "interval (1D)": [
+      1.051,
+      1.051,
+      1.051
+     ]
+    }
+   },
+   {
+    "budget": 1500,
+    "n_seeds": 4,
+    "dim_mean": 1.98,
+    "dim_sd": 0.03,
+    "angle_mean": 0.81,
+    "angle_sd": 0.01,
+    "verdicts": [
+     "square patch",
+     "square patch",
+     "square patch",
+     "square patch"
+    ],
+    "stable": true,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      0.96,
+      1.052,
+      1.17
+     ],
+     "sphere S^2": [
+      0.616,
+      0.729,
+      0.857
+     ],
+     "square patch": [
+      0.265,
+      0.34,
+      0.467
+     ],
+     "interval (1D)": [
+      1.394,
+      1.507,
+      1.6
+     ]
+    }
+   },
+   {
+    "budget": 3000,
+    "n_seeds": 4,
+    "dim_mean": 1.86,
+    "dim_sd": 0.14,
+    "angle_mean": 0.73,
+    "angle_sd": 0.21,
+    "verdicts": [
+     "square patch",
+     "flat 2-torus",
+     "interval (1D)",
+     "square patch"
+    ],
+    "stable": false,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      0.231,
+      1.588,
+      3.228
+     ],
+     "sphere S^2": [
+      0.392,
+      1.365,
+      2.862
+     ],
+     "square patch": [
+      0.633,
+      1.139,
+      2.42
+     ],
+     "interval (1D)": [
+      0.838,
+      1.372,
+      2.348
+     ]
+    }
+   },
+   {
+    "budget": 6000,
+    "n_seeds": 4,
+    "dim_mean": 1.84,
+    "dim_sd": 0.16,
+    "angle_mean": 0.73,
+    "angle_sd": 0.21,
+    "verdicts": [
+     "square patch",
+     "flat 2-torus",
+     "interval (1D)",
+     "square patch"
+    ],
+    "stable": false,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      0.231,
+      1.588,
+      3.228
+     ],
+     "sphere S^2": [
+      0.392,
+      1.365,
+      2.862
+     ],
+     "square patch": [
+      0.633,
+      1.139,
+      2.42
+     ],
+     "interval (1D)": [
+      0.838,
+      1.372,
+      2.348
+     ]
+    }
+   },
+   {
+    "budget": 12000,
+    "n_seeds": 4,
+    "dim_mean": 2.02,
+    "dim_sd": 0.07,
+    "angle_mean": 0.72,
+    "angle_sd": 0.17,
+    "verdicts": [
+     "square patch",
+     "sphere S^2",
+     "interval (1D)",
+     "square patch"
+    ],
+    "stable": false,
+    "deterministic": false,
+    "scores": {
+     "flat 2-torus": [
+      0.301,
+      1.105,
+      1.778
+     ],
+     "sphere S^2": [
+      0.226,
+      0.846,
+      1.417
+     ],
+     "square patch": [
+      0.563,
+      0.688,
+      0.97
+     ],
+     "interval (1D)": [
+      0.781,
+      1.499,
+      2.264
+     ]
+    }
+   }
+  ]
+ }
+}
