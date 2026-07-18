@@ -1342,8 +1342,14 @@ theorem that angular coordinates always carry the semantics. In KV-cache
 compression, per-vector angular quantization of attention \emph{keys} can
 score well under reconstruction metrics and still destroy generation, because
 the attention geometry $QK^{\top}$ depends on per-channel scale; per-channel
-treatment of the keys recovers quality \cite{turboquant}. This is not a
-counterexample to our principle but its sharpest confirmation:
+treatment of the keys recovers quality \cite{turboquant}. The consumer-relative
+synthesis \cite{obstheory} names and demonstrates the mechanism: discarding a
+direction the consumer reads is an \emph{omission}, and an omission incurs an
+irreducible downstream \emph{distortion floor} that no bit budget removes ---
+shown on a trained Llama attention layer (softmax divergence $800$--$5700\times$
+that of a rate-matched consumer-aware coder), the operational form of a violated
+(A2). This is not a counterexample to our principle but its sharpest
+confirmation:
 row-normalization is justified precisely when the discarded radial variable
 is nuisance structure for the metric being preserved---condition (A2) of
 Theorem~\ref{thm:transfer}, stated for the downstream metric. For graph
@@ -2063,6 +2069,9 @@ Processing Systems 30 (NeurIPS)}}, 2017.
 compression with a claims/evidence ladder; the KV-keys finding (per-channel
 scale, not per-vector angle, governs attention-key fidelity).
 \url{https://github.com/ahb-sjsu/turboquant-pro}, 2026. Accessed July 2026.
+\bibitem{obstheory} A.~H.~Bond. Observation Theory: geometry, distortion, and
+reliability as properties of observation.
+\url{https://doi.org/10.5281/zenodo.21423316}, 2026.
 \bibitem{polarquant2025} \rev{I.~Han, P.~Kacham, A.~Karbasi, V.~Mirrokni, and
 A.~Zandieh. PolarQuant: Quantizing KV caches with polar transformation.
 \emph{arXiv preprint arXiv:2502.02617}, 2025.
