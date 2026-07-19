@@ -33,7 +33,6 @@ def amplified_commute(A, deg, Vt, lam, anc, iu, ok, g):
     reason full commute collapses) and adds the Euclidean-correction term.
     Distance scored = sqrt(max(C_amp, 0)) on the anchor pairs.
     """
-    n = A.shape[0]
     L = np.diag(deg) - A.toarray()
     ev, U = np.linalg.eigh(L)                 # unnormalized Laplacian
     inv = np.where(ev > 1e-9, 1.0 / ev, 0.0)  # drop trivial null mode

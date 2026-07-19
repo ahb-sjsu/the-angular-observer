@@ -28,8 +28,10 @@ target-version = "py310"
 [tool.ruff.lint]
 select = ["E", "F", "W"]
 # E402: sweep workers set BLAS env vars before importing numpy; E501: black owns
-# line length; E741/E731: single-letter math names & inline lambdas in numeric code.
-ignore = ["E402", "E501", "E741", "E731"]
+# line length; E741/E731: single-letter math names & inline lambdas in numeric code;
+# E401/E702: compact one-line imports & semicolon statements are the repo's numeric-code
+# house style (as pervasive as E741/E731). Pyflakes (F) rules stay on -- real dead code.
+ignore = ["E402", "E501", "E741", "E731", "E401", "E702"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -27,7 +27,6 @@ import json
 import sys
 
 import numpy as np
-from scipy.linalg import eigh
 from scipy.sparse.csgraph import shortest_path
 from scipy.spatial import procrustes
 from scipy.stats import spearmanr
@@ -220,7 +219,7 @@ def omega_sensitivity():
         C = nx.average_clustering(G); L = sampL(G, seed)
         R = nx.convert_node_labels_to_integers(nx.gnm_random_graph(n, mm, seed=seed))
         R = R.subgraph(max(nx.connected_components(R), key=len)).copy()
-        C_rand, L_rand = nx.average_clustering(R), sampL(nx.convert_node_labels_to_integers(R), seed)
+        _C_rand, L_rand = nx.average_clustering(R), sampL(nx.convert_node_labels_to_integers(R), seed)
         k = max(2, int(round(kbar)))
         C_latt = nx.average_clustering(nx.watts_strogatz_graph(n, k if k % 2 == 0 else k + 1, 0.0, seed=seed))
         return (L_rand / L) - (C / C_latt)
