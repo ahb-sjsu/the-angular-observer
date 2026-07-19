@@ -1,0 +1,210 @@
+{
+ "id": "GO-P-2026-041",
+ "frozen_templates": {
+  "cylinder": [
+   1.0,
+   3.21,
+   3.49,
+   3.8,
+   4.34,
+   4.75,
+   6.88,
+   7.44
+  ],
+  "T^3": [
+   1.0,
+   1.08,
+   1.14,
+   1.19,
+   1.37,
+   1.51,
+   1.8,
+   2.01
+  ],
+  "genus-2": [
+   1.0,
+   2.5,
+   4.39,
+   5.38,
+   8.68,
+   9.7,
+   11.33,
+   12.11
+  ]
+ },
+ "heldout_seeds": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "rows": [
+  {
+   "manifold": "cylinder",
+   "seed": 1,
+   "n": 2000,
+   "dim": 1.82,
+   "ecc_spread": 0.527,
+   "deg_cv": 0.26,
+   "angle_rho": 0.899,
+   "best_match": "cylinder",
+   "best_score": 0.106,
+   "correct": true,
+   "own_score": 0.106
+  },
+  {
+   "manifold": "cylinder",
+   "seed": 2,
+   "n": 2000,
+   "dim": 1.81,
+   "ecc_spread": 0.436,
+   "deg_cv": 0.287,
+   "angle_rho": 0.876,
+   "best_match": "cylinder",
+   "best_score": 0.142,
+   "correct": true,
+   "own_score": 0.142
+  },
+  {
+   "manifold": "cylinder",
+   "seed": 3,
+   "n": 2000,
+   "dim": 1.81,
+   "ecc_spread": 0.47,
+   "deg_cv": 0.281,
+   "angle_rho": 0.872,
+   "best_match": "cylinder",
+   "best_score": 0.225,
+   "correct": true,
+   "own_score": 0.225
+  },
+  {
+   "manifold": "cylinder",
+   "seed": 4,
+   "n": 2000,
+   "dim": 1.75,
+   "ecc_spread": 0.517,
+   "deg_cv": 0.281,
+   "angle_rho": 0.886,
+   "best_match": "cylinder",
+   "best_score": 0.066,
+   "correct": true,
+   "own_score": 0.066
+  },
+  {
+   "manifold": "T^3",
+   "seed": 1,
+   "n": 2000,
+   "dim": 2.79,
+   "ecc_spread": 0.107,
+   "deg_cv": 0.264,
+   "angle_rho": 0.814,
+   "best_match": "T^3",
+   "best_score": 0.057,
+   "correct": true,
+   "own_score": 0.057
+  },
+  {
+   "manifold": "T^3",
+   "seed": 2,
+   "n": 2000,
+   "dim": 2.8,
+   "ecc_spread": 0.214,
+   "deg_cv": 0.265,
+   "angle_rho": 0.81,
+   "best_match": "T^3",
+   "best_score": 0.073,
+   "correct": true,
+   "own_score": 0.073
+  },
+  {
+   "manifold": "T^3",
+   "seed": 3,
+   "n": 2000,
+   "dim": 2.78,
+   "ecc_spread": 0.107,
+   "deg_cv": 0.25,
+   "angle_rho": 0.824,
+   "best_match": "T^3",
+   "best_score": 0.051,
+   "correct": true,
+   "own_score": 0.051
+  },
+  {
+   "manifold": "T^3",
+   "seed": 4,
+   "n": 2000,
+   "dim": 2.8,
+   "ecc_spread": 0.107,
+   "deg_cv": 0.284,
+   "angle_rho": 0.816,
+   "best_match": "T^3",
+   "best_score": 0.035,
+   "correct": true,
+   "own_score": 0.035
+  },
+  {
+   "manifold": "genus-2",
+   "seed": 1,
+   "n": 2000,
+   "dim": 1.79,
+   "ecc_spread": 0.521,
+   "deg_cv": 0.383,
+   "angle_rho": 0.946,
+   "best_match": "genus-2",
+   "best_score": 0.172,
+   "correct": true,
+   "own_score": 0.172
+  },
+  {
+   "manifold": "genus-2",
+   "seed": 2,
+   "n": 2000,
+   "dim": 1.72,
+   "ecc_spread": 0.52,
+   "deg_cv": 0.424,
+   "angle_rho": 0.942,
+   "best_match": "genus-2",
+   "best_score": 0.21,
+   "correct": true,
+   "own_score": 0.21
+  },
+  {
+   "manifold": "genus-2",
+   "seed": 3,
+   "n": 2000,
+   "dim": 1.74,
+   "ecc_spread": 0.534,
+   "deg_cv": 0.403,
+   "angle_rho": 0.939,
+   "best_match": "genus-2",
+   "best_score": 0.17,
+   "correct": true,
+   "own_score": 0.17
+  },
+  {
+   "manifold": "genus-2",
+   "seed": 4,
+   "n": 2000,
+   "dim": 1.75,
+   "ecc_spread": 0.503,
+   "deg_cv": 0.416,
+   "angle_rho": 0.96,
+   "best_match": "genus-2",
+   "best_score": 0.147,
+   "correct": true,
+   "own_score": 0.147
+  }
+ ],
+ "recognition": "12/12",
+ "dim_medians": {
+  "cylinder": 1.81,
+  "T^3": 2.8,
+  "genus-2": 1.74
+ },
+ "checks": {
+  "signature recognition >= 10/12": true,
+  "T^3 dimension highest (>cyl,>genus2)": true
+ },
+ "verdict": "CONFIRMED"
+}

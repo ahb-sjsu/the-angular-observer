@@ -81,3 +81,19 @@ log-RMS distance. Held-out seeds **{1, 2, 3, 4}** (disjoint from calibration see
 
 CPU, dense `eigh` (n≤2000), pure NumPy/SciPy. Deterministic per seed. Results to
 `experiments/manifold-recovery/battery_result.json`.
+
+## Outcome — CONFIRMED, 2026-07-19
+
+Held-out seeds {1,2,3,4}, scored vs the frozen templates (sealed `e8d9bd2` before
+any held-out run):
+- **PRIMARY recognition 12/12** — every instance best-matched its own template:
+  cylinder→cylinder ×4, T³→T³ ×4, genus-2→genus-2 ×4 (best-scores 0.03–0.23; no
+  confusions).
+- **SECONDARY dimension before shape** — median recovered dimension T³ **2.80** >
+  cylinder **1.81**, genus-2 **1.74**; T³ also reads closed (ecc ~0.11) while the
+  two 2-D surfaces read bounded/inhomogeneous (ecc ~0.5), as pre-stated.
+
+Both frozen bars PASS → **CONFIRMED**. The recognizer's template library extends to
+cylinder, T³, and genus-2 with held-out stability; the "dimension emerges before
+shape" headline holds on the enlarged library.
+`experiments/manifold-recovery/battery_result.json`.
