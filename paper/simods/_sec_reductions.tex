@@ -1,0 +1,398 @@
+
+\noindent\textbf{Purpose.} This note records four self-contained results that move the
+rank form of Angular Preservation (Paper~I, Conjecture on Angular Preservation) toward a
+theorem. Notation follows Paper~I and its supplement: $M$ is a closed Riemannian
+$d$-manifold with volume normalized to $1$; $F=(\varphi_k/\sqrt{\mu_k})_{k\le m}$ (or its
+spectral-cutoff form $F_\Lambda$) is the commute-weighted eigenmap, $R=\lVert F\rVert$,
+$N=F/R$; (H1)--(H3), the calibration error $E_n$, the radius band $[\rho^-,\rho^+]$, the
+Green-rank coefficient $\rho_G(M)=\rho_S\bigl(d_M(X,Y),-G_M(X,Y)\bigr)$, the diagonal
+scale $A_\Lambda$, and the Green-kernel rank-limit theorem are as in Paper~I.
+Facts imported as standard are listed in \S5 with sources.
+
+The upshot (\S\ref{sec:frontier}): for $d\le3$, the rank form of Angular Preservation
+reduces to
+\[
+\underbrace{\rho_G(M)>0}_{\text{geometric}}\ +\
+\underbrace{\text{(AC)}}_{\text{anti-concentration}}\ +\
+\underbrace{E_n\to0\ \ (\text{fixed }m)\ \big/\ E_n\sqrt{A_m}\to0\ \ (\text{growing }m)}_{\text{calibration}},
+\]
+with Theorem~\ref{thm:open} proving the first item on a $C^2$-open set of metrics,
+Theorem~\ref{thm:ac-transfer} proving the transfer given the second and third, and
+Lemmas~\ref{lem:h3} and~\ref{lem:atomless} deleting hypotheses ((H3); atomlessness) from
+the existing results.
+
+\section{(H3) is not an independent hypothesis}
+
+Recall the setting of Paper~I's conditional theorem: (H1) is $L_0$-bi-Lipschitzness of
+$F$ on geodesic $r_0$-balls; (H2) is $\rho^-\le R\le\rho^+$ with $R$ globally
+$\Lambda_0$-Lipschitz and $\Lambda_0<1/L_0$; (H3) is injectivity of $N$ on $M$. The key
+observation is an exact identity for radial alignment.
+
+\begin{lemma}[Radial-alignment identity]\label{lem:align}
+If $N(x)=N(y)$ then $F(x)=tF(y)$ with $t=R(x)/R(y)>0$, and
+\[
+\lVert F(x)-F(y)\rVert=\lvert t-1\rvert\,R(y)=\lvert R(x)-R(y)\rvert .
+\]
+\end{lemma}
+
+\begin{proof}
+$N(x)=N(y)$ means $F(x)/R(x)=F(y)/R(y)$, i.e.\ $F(x)=tF(y)$ with $t=R(x)/R(y)$. Then
+$\lVert F(x)-F(y)\rVert=\lvert t-1\rvert\lVert F(y)\rVert=\lvert tR(y)-R(y)\rvert
+=\lvert R(x)-R(y)\rvert$.
+\end{proof}
+
+\begin{lemma}[(H3) from (H1)--(H2)]\label{lem:h3}
+Assume (H1) on $r_0$-balls and (H2), and set
+\[
+c_F:=\min\{\lVert F(x)-F(y)\rVert:\ d_M(x,y)\ge r_0\},\qquad
+\delta:=\min\bigl(\rho^+-\rho^-,\ \Lambda_0\diam M\bigr).
+\]
+Then:
+\begin{itemize}
+\item[(a)] $N$ is injective on every $r_0$-ball (no hypothesis beyond (H1)--(H2));
+\item[(b)] if $c_F>\delta$, then (H3) holds on all of $M$, and quantitatively
+\[
+c_0:=\min\{\lVert N(x)-N(y)\rVert:\ d_M(x,y)\ge r_0\}\ \ge\
+\frac{\sqrt{c_F^2-\delta^2}}{\rho^+}\ >\ 0 ;
+\]
+\item[(c)] if (H1) holds globally ($r_0\ge\diam M$), (H3) holds with no further
+condition; if $R$ is constant, (H3) holds if and only if $c_F>0$, i.e.\ iff $F$ does
+not identify any pair at distance $\ge r_0$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+(a) Suppose $N(x)=N(y)$ with $0<d:=d_M(x,y)\le r_0$. By Lemma~\ref{lem:align} and (H2),
+$\lVert F(x)-F(y)\rVert=\lvert R(x)-R(y)\rvert\le\Lambda_0 d$; by (H1),
+$\lVert F(x)-F(y)\rVert\ge d/L_0$. Hence $d/L_0\le\Lambda_0 d$, contradicting
+$\Lambda_0<1/L_0$.
+
+(b) Suppose $N(x)=N(y)$ with $d\ge r_0$. By Lemma~\ref{lem:align},
+$\lVert F(x)-F(y)\rVert=\lvert R(x)-R(y)\rvert\le\delta$ (the two bounds
+$\rho^+-\rho^-$ and $\Lambda_0 d\le\Lambda_0\diam M$ both apply). But
+$\lVert F(x)-F(y)\rVert\ge c_F>\delta$: contradiction, so no far pair aligns; together
+with (a), $N$ is injective. For the quantitative bound, apply Paper~I's normalization
+identity to a far pair:
+\[
+\lVert N(x)-N(y)\rVert^2
+=\frac{\lVert F(x)-F(y)\rVert^2-\bigl(R(x)-R(y)\bigr)^2}{R(x)R(y)}
+\ \ge\ \frac{c_F^2-\delta^2}{(\rho^+)^2},
+\]
+using $\lVert F(x)-F(y)\rVert\ge c_F$, $\lvert R(x)-R(y)\rvert\le\delta$, and
+$R(x)R(y)\le(\rho^+)^2$.
+
+(c) If $r_0\ge\diam M$, every pair falls under case (a). If $R$ is constant then
+$\rho^+=\rho^-$ and $\delta=0$, so (b) applies whenever $c_F>0$; conversely if $c_F=0$
+some far pair has $F(x)=F(y)$, hence $N(x)=N(y)$, and (H3) fails. Compactness makes
+$c_F$ an attained minimum, so $c_F>0$ is equivalent to ``$F$ identifies no pair at
+distance $\ge r_0$''.
+\end{proof}
+
+\begin{remark}
+Consequences for Paper~I. (i) The global corollary (Cor.\ ``Global conditional form'')
+can replace hypothesis (H3) by the checkable pinching condition $c_F>\delta$, and its
+nonconstructive constant $c_0$ becomes the explicit
+$\sqrt{c_F^2-\delta^2}/\rho^+$, making $A_g$ fully quantitative. (ii) Portegies-type
+mode counts give injectivity of $F$, hence $c_F>0$ by compactness; the remaining
+condition is the pinching $c_F>\delta$. (iii) The homogeneous-space remark of Paper~I
+is the case $\rho^+=\rho^-$ of (c). (iv) A distance-resolved refinement holds with the
+same proof: alignment at distance $d$ is impossible whenever
+$\min\{\lVert F(x)-F(y)\rVert:d_M(x,y)=d\}>\min(\rho^+-\rho^-,\Lambda_0 d)$.
+\end{remark}
+
+\section{Atomlessness is automatic}
+
+Paper~I's rank-limit results (the flat-torus proposition and the Green-kernel rank-limit
+theorem) assume that the laws of $d_M(X,Y)$ and $G(X,Y)$ are atomless. Both assumptions
+can be deleted.
+
+We use twice the standard level-set lemma: \emph{if $h\in C^1$ on an open subset of
+$\mathbb R^d$ (or a manifold chart), then $\nabla h=0$ almost everywhere on
+$\{h=c\}$} (see \S5). Iterating: if $f\in C^2$ and $E=\{f=c\}$ has positive measure,
+then a.e.\ on $E$ we have $\nabla f=0$; since $E\subseteq\{\partial_i f=0\}$ up to a
+null set for each $i$, a second application (to $h=\partial_i f$) gives
+$\nabla\partial_i f=0$ a.e.\ on $E$; hence the coordinate Hessian vanishes a.e.\ on
+$E$, and therefore so does the Laplace--Beltrami operator,
+$\Delta_g f=g^{ij}(\partial_i\partial_j f-\Gamma^k_{ij}\partial_k f)=0$ a.e.\ on $E$.
+
+\begin{lemma}[Automatic atomlessness]\label{lem:atomless}
+Let $M$ be a closed smooth Riemannian manifold (any dimension $d\ge1$, volume
+normalized to $1$), $G$ its zero-mean Green kernel, and let $(X,Y)$ have a law with
+bounded density with respect to $\vol\otimes\vol$. Then the laws of $d_M(X,Y)$ and of
+$G(X,Y)$ are atomless.
+\end{lemma}
+
+\begin{proof}
+By the bounded-density assumption it suffices to show that for each fixed $x$ the sets
+$\{y:d_M(x,y)=t\}$ and $\{y:G(x,y)=c\}$ are $\vol$-null; Fubini then gives
+$\mathbb P(d_M(X,Y)=t)=\mathbb P(G(X,Y)=c)=0$.
+
+\emph{Distance.} Fix $x$. The function $d_x:=d_M(x,\cdot)$ is $1$-Lipschitz, and on
+$M\setminus(\{x\}\cup\mathrm{Cut}(x))$ it is smooth with $\lvert\nabla d_x\rvert=1$
+(the eikonal identity); the cut locus $\mathrm{Cut}(x)$ is closed and $\vol$-null
+(imported, \S5). By the level-set lemma applied to the Lipschitz function $d_x$,
+$\nabla d_x=0$ a.e.\ on $\{d_x=t\}$. Off the null set $\{x\}\cup\mathrm{Cut}(x)$ this
+contradicts $\lvert\nabla d_x\rvert=1$, so $\vol\{d_x=t\}=0$.
+
+\emph{Green kernel.} Fix $y$. By elliptic regularity $G(\cdot,y)$ is smooth on
+$M\setminus\{y\}$ and satisfies, with the positive Laplacian and unit volume,
+$\Delta\,G(\cdot,y)=-1$ there. If $\{x:G(x,y)=c\}$ had positive measure, the iterated
+level-set lemma above would give $\Delta G(\cdot,y)=0$ on a positive-measure subset,
+contradicting $\Delta G(\cdot,y)\equiv-1$. So each slice is null.
+\end{proof}
+
+\begin{remark}
+(i) Consequently the flat-torus rank proposition and the Green-kernel rank-limit
+theorem of Paper~I hold under the single hypothesis of a bounded pair density: their
+atomlessness assumptions are theorems, not hypotheses. (ii) The argument does not
+apply to the \emph{truncated} kernels $G_\Lambda$ (there
+$\Delta_x G_\Lambda(\cdot,y)=E_\Lambda(\cdot,y)$ is not a nonzero constant), but the
+limit-law atomlessness is all those proofs use. (iii) The argument is
+dimension-independent; it does not use $d\le3$.
+\end{remark}
+
+\section{Green-rank positivity is an open condition}
+
+\begin{theorem}[Perturbative openness of Green-rank positivity]\label{thm:open}
+Let $M_0$ be a closed smooth manifold of dimension $d\le3$ and let $g_0$ be a smooth
+Riemannian metric on $M_0$, volume normalized to $1$. Then the map
+$g\mapsto\rho_G(g):=\rho_S\bigl(d_g(X,Y),-G_g(X,Y)\bigr)$ (with $(X,Y)$ i.i.d.\ from
+normalized $\vol_g$) is continuous at $g_0$ with respect to $C^2$ convergence of
+metrics, and likewise for the Kendall version $\tau_G$. Consequently:
+\begin{itemize}
+\item[(a)] if $\rho_G(g_0)>0$, then $\rho_G>0$ on a $C^2$-neighborhood of $g_0$;
+\item[(b)] in particular, every two-point homogeneous metric of dimension $\le3$
+($S^2,S^3,\mathbb{RP}^2,\mathbb{RP}^3$; and every metric on $S^1$) has a
+$C^2$-neighborhood on which $\rho_G>0$;
+\item[(c)] combined with the Green-kernel rank-limit theorem of Paper~I (whose
+atomlessness hypotheses are deleted by Lemma~\ref{lem:atomless}), for every $g$ in
+such a neighborhood there exist $\Lambda_0(g)<\infty$ and $\rho_0(g)>0$ such that the
+truncated commute angular ranking satisfies
+$\rho_S\bigl(d_g(X,Y),\lVert N_\Lambda(X)-N_\Lambda(Y)\rVert\bigr)\ge\rho_0(g)$ for
+every multiplet-closed $\Lambda\ge\Lambda_0(g)$: the continuum rank form of Angular
+Preservation, uniform in the mode count, holds on a $C^2$-open set of metrics.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Throughout, $g\to g_0$ in $C^2$; after a global rescaling (continuous in $g$) we may
+keep $\vol_g(M)=1$. Write $\vol_0=\vol_{g_0}$ and
+$\theta_g=d\vol_g/d\vol_0\to1$ in $C^1$.
+
+\emph{Step 1: distances.} If $(1+\eta)^{-1}g_0\le g\le(1+\eta)g_0$ as quadratic forms
+(which holds with $\eta=\eta(g)\to0$), then
+$(1+\eta)^{-1/2}d_{g_0}\le d_g\le(1+\eta)^{1/2}d_{g_0}$, so $d_g\to d_{g_0}$ uniformly
+on $M\times M$.
+
+\emph{Step 2: uniform spectral tails.} The Dirichlet forms
+$\mathcal E_g(u)=\int\lvert\nabla u\rvert_g^2\,d\vol_g$ and the $L^2$ norms are
+uniformly comparable with constants $(1+\eta)^{\pm c(d)}$, so by min--max
+$\mu_k(g)\ge(1+\eta)^{-c(d)}\mu_k(g_0)$ for all $k$. Since $d\le3$ gives
+$\sum_k\mu_k(g_0)^{-2}<\infty$, the tails
+$\sum_{k>K}\mu_k(g)^{-2}\le(1+\eta)^{2c}\sum_{k>K}\mu_k(g_0)^{-2}$ are small uniformly
+over the neighborhood once $K$ is large.
+
+\emph{Step 3: heads via resolvents.} Let $J_g:L^2(\vol_g)\to L^2(\vol_0)$,
+$J_gu=\theta_g^{1/2}u$, a unitary; $A_g:=J_g\Delta_gJ_g^{-1}$ is self-adjoint on the
+fixed space $L^2(\vol_0)$ with the same spectrum, and its quadratic form
+$a_g(v)=\mathcal E_g(\theta_g^{-1/2}v)$ has coefficients converging uniformly to those
+of $a_{g_0}$ (this uses $\theta_g\to1$ in $C^1$, hence $g\to g_0$ in $C^2$ suffices;
+$C^1$ is what the computation needs). Uniformly comparable closed forms converging in
+this sense yield norm resolvent convergence $A_g\to A_{g_0}$ (imported, \S5). Fix $K$
+as in Step~2 with $\mu_K(g_0)<\mu_{K+1}(g_0)$, and a contour
+$\Gamma\subset\mathbb C\setminus\operatorname{spec}(A_{g_0})$ enclosing
+$\{\mu_1(g_0),\dots,\mu_K(g_0)\}$ but not $0$ nor $\mu_{K+1}(g_0)$. For $g$ near
+$g_0$, $\Gamma$ still separates the same eigenvalue count (eigenvalue continuity from
+Step~2's two-sided comparison), and
+\[
+\mathrm{Head}_g:=\frac{1}{2\pi i}\oint_\Gamma z^{-1}(z-A_g)^{-1}\,dz
+=\sum_{k\le K}\mu_k(g)^{-1}\,P_k(g)
+\]
+(the residue of $z^{-1}(z-A_g)^{-1}$ at an eigenvalue $\mu$ is $\mu^{-1}$ times its
+spectral projector; $0$ lies outside $\Gamma$, so the constant mode does not
+contribute). Norm resolvent convergence gives
+$\mathrm{Head}_g\to\mathrm{Head}_{g_0}$ in operator norm; both sides have rank $K$, so
+the difference has rank $\le2K$ and
+$\lVert T\rVert_{\mathrm{HS}}\le\sqrt{\operatorname{rank}T}\,\lVert T\rVert_{\mathrm{op}}$
+upgrades this to Hilbert--Schmidt convergence, i.e.\ $L^2(M\times M)$ convergence of
+the head kernels. Undoing the unitary multiplies kernels by
+$\theta_g^{-1/2}(x)\theta_g^{-1/2}(y)\to1$ uniformly. Combining with Step~2,
+$G_g\to G_{g_0}$ in $L^2(M\times M,\vol_0\otimes\vol_0)$.
+
+\emph{Step 4: joint weak convergence of the pair statistics.} For bounded continuous
+$h$,
+\[
+\mathbb E_g\,h\bigl(d_g(X,Y),G_g(X,Y)\bigr)
+=\int h\bigl(d_g,G_g\bigr)\,\theta_g(x)\theta_g(y)\,d\vol_0\,d\vol_0 .
+\]
+The densities $\to1$ uniformly; $d_g\to d_{g_0}$ uniformly; $G_g\to G_{g_0}$ in
+$L^2(\vol_0^{\otimes2})$, hence in measure; so
+$h(d_g,G_g)\to h(d_{g_0},G_{g_0})$ in measure and, being bounded, in $L^1(\vol_0^{\otimes2})$.
+Thus
+$\bigl(d_g(X,Y),G_g(X,Y)\bigr)\Rightarrow\bigl(d_{g_0}(X,Y),G_{g_0}(X,Y)\bigr)$.
+
+\emph{Step 5: continuity of the rank functionals.} By Lemma~\ref{lem:atomless} the
+marginal laws of $d_g(X,Y)$ and $G_g(X,Y)$ are atomless for \emph{every} smooth $g$,
+so $\rho_G(g)$ is the honest grade correlation
+$\rho_G(g)=12\,\mathbb E\bigl[F_{d_g}(d_g)\,F_{-G_g}(-G_g)\bigr]-3$. Marginal weak
+convergence to atomless limits gives uniform convergence of the CDFs (P\'olya);
+replacing $F_{d_g},F_{-G_g}$ by $F_{d_{g_0}},F_{-G_{g_0}}$ costs $o(1)$, and the
+remaining expectation converges by Step~4 since
+$(u,v)\mapsto F_{d_{g_0}}(u)F_{-G_{g_0}}(-v)$ is bounded and continuous. Hence
+$\rho_G(g)\to\rho_G(g_0)$. The Kendall functional, written on two independent pairs,
+converges by the same weak-convergence-plus-null-discontinuity argument used in
+Paper~I's circle theorem.
+
+\emph{Conclusions.} (a) is immediate. (b): two-point homogeneity gives
+$\rho_G(g_0)=1$ by Paper~I's corollary; on $S^1$ every smooth metric is isometric to a
+round circle (arc-length parametrization), so $\rho_G\equiv1$ there outright. (c)
+combines (a) with the Green-kernel rank-limit theorem, whose only remaining hypothesis
+(bounded pair density) holds for i.i.d.\ volume sampling.
+\end{proof}
+
+\begin{remark}
+The neighborhood in Theorem~\ref{thm:open} is not effective: Step~3 uses qualitative
+norm resolvent convergence. An effective radius would follow from quantitative
+resolvent perturbation bounds in terms of $\lVert g-g_0\rVert_{C^1}$ and the spectral
+gap at $\mu_K(g_0)$; this is routine but unpleasant, and is left as the quantitative
+frontier.
+\end{remark}
+
+\section{An anti-concentration transfer theorem (graph level)}
+
+The conditional theorem of Paper~I transfers the \emph{metric} through (H1)--(H2). For
+the \emph{rank} clause none of that is needed: calibration plus anti-concentration
+suffice, with no resolution cutoff $\theta_n$ and no bi-Lipschitz hypothesis.
+
+Fix a multiplet-closed cutoff $\Lambda$ and write
+$V(x,y)=\lVert N_\Lambda(x)-N_\Lambda(y)\rVert$ for the continuum angular distance and
+$D(x,y)=d_M(x,y)$. For an i.i.d.\ sample $x_1,\dots,x_n$ from a bounded, bounded-below
+density, let $\widehat V_{ij}$ be the graph angular distances and suppose the
+calibration event of Paper~I's transfer lemma holds:
+$\max_i\lVert\hat q_i-N_\Lambda(x_i)\rVert\le2E_n/\rho^-_\Lambda$, hence
+\begin{equation}\label{eq:cal}
+\lvert\widehat V_{ij}-V(x_i,x_j)\rvert\ \le\ \bar\varepsilon_n:=\frac{4E_n}{\rho^-_\Lambda}
+\qquad\text{for \emph{every} pair } i\ne j
+\end{equation}
+(the per-node bound holds at every node; no distance restriction enters).
+
+\smallskip
+\noindent\textbf{(AC) Anti-concentration.} $\displaystyle
+\kappa_\Lambda:=\sup_{x\in M}\ \bigl\lVert\text{density of } V(x,Y)\bigr\rVert_\infty<\infty$,
+where $Y$ is drawn from the sampling density.
+
+\begin{theorem}[Rank transfer without bi-Lipschitz hypotheses]\label{thm:ac-transfer}
+Let $d\le3$ and suppose $\rho_G(M)>0$ (e.g.\ $M$ in the open set of
+Theorem~\ref{thm:open}), so that by the Green-kernel rank-limit theorem there are
+$\Lambda_0$, $\rho_\star>0$, $\tau_\star>0$ with
+$\rho_S(D,V)\ge\rho_\star$ and $\tau_K(D,V)\ge\tau_\star$ for every multiplet-closed
+$\Lambda\ge\Lambda_0$. Fix such a $\Lambda$ and assume (AC) and the calibration
+\eqref{eq:cal} with $E_n\to0$. Then, with probability tending to one, the
+\emph{empirical} rank correlations of the graph angular distances against the manifold
+distances over all sampled pairs satisfy
+\[
+\widehat\tau_K\bigl(\widehat V,D\bigr)\ \ge\ \tau_\star-C\,\kappa_\Lambda\bar\varepsilon_n-o(1),
+\qquad
+\widehat\rho_S\bigl(\widehat V,D\bigr)\ \ge\ \rho_\star-C\,\kappa_\Lambda\bar\varepsilon_n-o(1),
+\]
+with an absolute constant $C$; in particular both are eventually bounded below by
+$\tau_\star/2$ and $\rho_\star/2$ respectively.
+\end{theorem}
+
+\begin{proof}
+Write $N_p=\binom n2$ for the number of pairs, $V_P$ for the continuum value of pair
+$P$ and $\widehat V_P$ for the graph value; ties are handled by the usual $\sgn$
+conventions and occur with probability zero on the continuum side
+(Lemma~\ref{lem:atomless} applies to $V$ through its strictly monotone relation to the
+kernel $C_\Lambda$? --- not needed: we only use that flips are counted, see below).
+
+\emph{Step 1: perturbation flips few comparisons.} For a pair-of-pairs $\{P,Q\}$, the
+comparison $\sgn(\widehat V_P-\widehat V_Q)$ can differ from $\sgn(V_P-V_Q)$ only if
+$\lvert V_P-V_Q\rvert\le2\bar\varepsilon_n$, by \eqref{eq:cal}. Let $f_n$ be the
+fraction of pairs-of-pairs with $\lvert V_P-V_Q\rvert\le2\bar\varepsilon_n$. Then
+\[
+\bigl\lvert\widehat\tau_K(\widehat V,D)-\widehat\tau_K(V,D)\bigr\rvert\le2f_n .
+\]
+For Spearman: the $V$-ranking and the $\widehat V$-ranking of the $N_p$ pairs differ
+by a permutation whose Kendall distance is at most $f_n\binom{N_p}2$; by the
+Diaconis--Graham inequality the footrule (total rank displacement) is at most twice
+the Kendall distance, and since one unit of rank displacement changes
+$\sum_i d_i^2$ in the Spearman formula
+$\widehat\rho_S=1-6\sum d_i^2/(N_p^3-N_p)$ by at most $2N_p$, we get
+\[
+\bigl\lvert\widehat\rho_S(\widehat V,D)-\widehat\rho_S(V,D)\bigr\rvert
+\ \le\ \frac{6\cdot 2N_p\cdot 2 f_n\binom{N_p}2}{N_p^3-N_p}\ \le\ 12f_n+O(1/N_p).
+\]
+
+\emph{Step 2: the flip fraction is small in expectation.} Take a pair-of-pairs
+$\{P,Q\}$. If $P,Q$ are vertex-disjoint, condition on $V_Q$: by (AC), integrating the
+conditional density of $V_P$ given one endpoint (then averaging over it) bounds the
+conditional density of $V_P$ by $\kappa_\Lambda$, so
+$\mathbb P(\lvert V_P-V_Q\rvert\le2\bar\varepsilon_n)\le4\kappa_\Lambda\bar\varepsilon_n$.
+If $P=(x_i,x_j)$ and $Q=(x_i,x_k)$ share the anchor $x_i$, condition on $x_i$ and
+$V_Q$: given $x_i$, the value $V_P=V(x_i,x_j)$ with $x_j$ independent has density
+$\le\kappa_\Lambda$ by (AC) (this is exactly why (AC) is stated uniformly in the
+anchor), so the same bound holds. Hence
+$\mathbb E f_n\le4\kappa_\Lambda\bar\varepsilon_n$, and by Markov
+$f_n\le\kappa_\Lambda\bar\varepsilon_n^{1/2}\cdot$(const), say, with probability
+tending to one; any rate with $f_n=O_P(\kappa_\Lambda\bar\varepsilon_n)$ suffices
+below.
+
+\emph{Step 3: empirical converges to population.} $\widehat\tau_K(V,D)$ is (up to
+$O(1/n)$) a U-statistic of order four in the i.i.d.\ sample, so
+$\widehat\tau_K(V,D)\to\tau_K(D,V)$ in probability (imported, \S5); the analogous
+consistency of the sample Spearman coefficient for continuous population laws is
+classical (\S5), and the continuum laws here are atomless
+(Lemma~\ref{lem:atomless} for $D$; for $V$, the population functionals are those of
+the Green-limit theorem, which are well-defined grade correlations there).
+
+\emph{Assemble.} On the intersection of the calibration event, the Step-2 event, and
+the Step-3 convergence,
+$\widehat\tau_K(\widehat V,D)\ge\tau_K(D,V)-2f_n-o_P(1)
+\ge\tau_\star-C\kappa_\Lambda\bar\varepsilon_n-o_P(1)$, and identically for
+$\widehat\rho_S$ with the constant from Step~1.
+\end{proof}
+
+\begin{remark}[The growing-window condition, rederived]\label{rem:EA}
+At a growing cutoff, the angular distances concentrate: $V=\sqrt2+O(A_\Lambda^{-1})$
+with the pair-dependence of size $\asymp A_\Lambda^{-1}$ (Paper~I). Concentration
+forces $\kappa_\Lambda\gtrsim A_\Lambda$, and the natural scale-aware form of (AC) is
+the matching upper bound $\kappa_\Lambda\le C\,A_\Lambda$. Since
+$\rho^-_\Lambda\asymp\sqrt{A_\Lambda}$, the error term in
+Theorem~\ref{thm:ac-transfer} scales as
+\[
+\kappa_\Lambda\,\bar\varepsilon_n\ \asymp\ A_\Lambda\cdot\frac{E_n}{\sqrt{A_\Lambda}}
+\ =\ E_n\sqrt{A_\Lambda},
+\]
+so the transfer condition is $E_n\sqrt{A_m}\to0$ --- \emph{exactly} the sharpened
+growing-window condition derived in Paper~I by the direct kernel comparison. That two
+independent routes (kernel rescaling; anti-concentration counting) produce the same
+condition is evidence that $E_n\sqrt{A_m}\to0$ is the correct calibration threshold,
+not an artifact of either proof.
+\end{remark}
+
+\begin{remark}[Status of (AC)]
+(AC) at fixed $\Lambda$ asserts a bounded density for the pushforward of the sampling
+measure under $y\mapsto\lVert N_\Lambda(x)-N_\Lambda(y)\rVert$, uniformly in $x$. By
+the coarea formula this reduces to an integrated gradient lower bound
+$\int_{\{V(x,\cdot)=t\}}\lvert\nabla_yV(x,y)\rvert^{-1}$ being bounded, i.e.\ to
+$\nabla_yV$ not degenerating on large portions of level sets --- eigenfunction-level
+technology (nodal/critical set estimates) is the natural tool, and a proof is a
+self-contained open problem. Two mitigations: (i) (AC) is directly measurable on any
+substrate (estimate the density of sampled $V$-values; the pre-registered pipeline can
+emit this per run), turning the hypothesis into a per-instance certificate; (ii)
+Theorem~\ref{thm:ac-transfer} survives with (AC) replaced by any bound
+$\mathbb P(\lvert V_P-V_Q\rvert\le\epsilon)\le\omega(\epsilon)$ with
+$\omega(2\bar\varepsilon_n)\to0$ --- bounded density is the simplest sufficient form,
+not the needed one.
+\end{remark}
+
+\begin{remark}[Graph geodesics on the $D$-side]
+The theorem compares against manifold distances $D=d_M$. Replacing $D$ by graph-hop
+geodesics adds a $D$-side perturbation, handled by the identical Step-1/Step-2
+argument once a uniform graph-geodesic consistency bound is available (standard for
+$\varepsilon$-graphs above the connectivity scale); the required anti-concentration on
+the $D$-side is automatic, since the pair-distance law on a closed manifold has a
+bounded density.
+\end{remark}
+

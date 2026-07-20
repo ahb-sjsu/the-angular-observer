@@ -1,0 +1,215 @@
+
+\noindent\textbf{Purpose.} The distributional master inequality (companion note
+``green-rank-positivity'', Theorem ``Distributional master inequality'') gives
+$\rhoG(M)\ge1-18(\phi_\Psi^2V_\Psi)^{1/3}$, reducing Green-rank positivity to a bound on the
+$L^2$ non-radiality $V_\Psi=\E[(-G-\Psi\circ\dM)^2]$. That note left $V$ as a quantity to be
+``bounded by heat-kernel anisotropy'' without proof. This note supplies the reduction. Its
+three rigorous outputs: (i) the optimal $V$ is exactly the \emph{within-distance-shell
+variance of the Green kernel}, $V_{\min}=\E[\Var(G\mid\dM)]$; (ii) via the heat
+representation it equals the integrated \emph{shell-variance of the heat kernel}, which
+\emph{vanishes identically on two-point homogeneous spaces} and is dominated by a heat-trace
+envelope whose integral converges \emph{exactly for $d\le3$}; and (iii) an explicit
+large-time spectral-gap tail plus a quantitative perturbative bound
+$V_{\min}\le C(g_0)\lVert g-g_0\rVert_{C^2}^2$ near any two-point homogeneous $g_0$. The one
+non-explicit constant---the small-time curvature-anisotropy amplitude---is isolated and
+named. Notation follows the companion notes; $(X,Y)$ are i.i.d.\ from the unit-volume
+measure and all $L^2$ norms are over $M\times M$ with that measure.
+
+\section{The optimal profile is the distance-conditional mean}
+
+\begin{proposition}[Conditional-variance characterization]\label{prop:condvar}
+Over all (Borel) radial profiles $\Psi$, $V_\Psi=\E[(-G(X,Y)-\Psi(\dM(X,Y)))^2]$ is minimized
+by the distance-conditional mean $\Psi^\star(r)=-\E[G(X,Y)\mid\dM(X,Y)=r]$, and
+\[
+V_{\min}:=V_{\Psi^\star}=\E\bigl[\Var(G(X,Y)\mid\dM(X,Y))\bigr].
+\]
+Near the diagonal $\Psi^\star$ is strictly increasing with $\phi_{\Psi^\star}<\infty$; its
+global admissibility is condition~\textup{(A$^\star$)} below.
+\end{proposition}
+
+\begin{proof}
+For fixed $r$ the map $c\mapsto\E[(-G-c)^2\mid\dM=r]$ is minimized at $c=\E[-G\mid\dM=r]$
+with minimal value $\Var(-G\mid\dM=r)=\Var(G\mid\dM=r)$; averaging over the law of $\dM(X,Y)$
+gives the claim (the standard $L^2$-projection onto $\sigma(\dM)$). For the near-diagonal
+regularity: writing $G=\gamma_d\circ\dM+h$ (parametrix lemma, companion note),
+$\E[G\mid\dM=r]=\gamma_d(r)+\E[h\mid\dM=r]$ with $h$ bounded, so
+$\Psi^\star=-\gamma_d-\E[h\mid\dM=\cdot]$ has the strictly \emph{increasing} singular part
+$-\gamma_d$ (as $\gamma_d$ decreases in $r$) dominating a bounded correction; the
+$\phi_{\Psi^\star}<\infty$ computation is then the parametrix change-of-variables verbatim.
+\end{proof}
+
+\begin{remark}[The admissibility condition (A$^\star$)]\label{rem:astar}
+The bound below controls the \emph{unconstrained} minimizer $V_{\min}$, whose profile
+$\Psi^\star$ must itself be a monotone profile with finite $\phi$ before $V_{\min}$ may enter
+the distributional master inequality. We isolate this as
+\smallskip
+\noindent\textbf{(A$^\star$)}\quad \emph{$r\mapsto\E[G\mid\dM=r]$ is strictly decreasing on
+$(0,\diam M)$, with $\phi_{\Psi^\star}<\infty$.}
+\smallskip
+By the Proposition, (A$^\star$) holds near the diagonal unconditionally; and it holds on a
+$C^2$-neighborhood of any two-point homogeneous metric, where $\E[G\mid\dM]=g(\dM)$ is
+strictly decreasing (Paper~I) and strict monotonicity plus $\phi<\infty$ persist under small
+$C^2$ perturbation. It is a checkable, measurable condition (evaluate the shell-mean of $G$).
+Away from these regimes it is a hypothesis; where it fails one falls back on the fixed
+parametrix profile at the cost of losing the vanishing on two-point homogeneous spaces.
+\end{remark}
+
+\section{Heat representation: the shell-variance of the heat kernel}
+
+Let $p_t(x,y)=\sum_{k\ge0}e^{-\mu_k t}\varphi_k(x)\varphi_k(y)$ be the heat kernel
+($\mu_0=0$, $\varphi_0\equiv1$), so $G(x,y)=\int_0^\infty(p_t(x,y)-1)\,dt$. Write the
+shell-centering $P_{\mathrm{rad}}F(x,y)=\E[F\mid\dM]=F$'s conditional mean given distance,
+and $\delta_t=p_t-P_{\mathrm{rad}}p_t$ (the part of the time-$t$ heat kernel that is
+\emph{not} a function of distance). Define the \emph{time-$t$ heat-kernel non-radiality}
+\[
+\mathcal N(t):=\lVert\delta_t\rVert_{L^2}=\bigl(\E[\Var(p_t(X,Y)\mid\dM(X,Y))]\bigr)^{1/2}.
+\]
+
+\begin{lemma}[Reduction to the heat-kernel non-radiality]\label{lem:reduce}
+\[
+V_{\min}^{1/2}\ \le\ \int_0^\infty\mathcal N(t)\,dt,
+\qquad\text{and}\qquad
+\mathcal N(t)\ \le\ \bigl(Z(2t)-1\bigr)^{1/2},
+\]
+where $Z(s)=\Tr e^{-s\Delta}=\sum_{k\ge0}e^{-\mu_k s}$ is the heat trace. Consequently
+$\mathcal N(t)\equiv0$ when $M$ is two-point homogeneous (there $p_t$ is a function of
+distance for every $t$), and the envelope integral $\int_0^\infty(Z(2t)-1)^{1/2}\,dt$
+converges \emph{iff} $d\le3$.
+\end{lemma}
+
+\begin{proof}
+The optimal remainder is $R^\star=-G-\Psi^\star\circ\dM=-(G-\E[G\mid\dM])
+=-\int_0^\infty(p_t-P_{\mathrm{rad}}p_t)\,dt=-\int_0^\infty\delta_t\,dt$, the interchange of
+$\int dt$ and the (bounded, linear) conditional expectation being justified by absolute
+integrability of $p_t-1$ in $L^2$ (below). Minkowski's integral inequality gives
+$V_{\min}^{1/2}=\lVert R^\star\rVert_2\le\int_0^\infty\lVert\delta_t\rVert_2\,dt
+=\int_0^\infty\mathcal N(t)\,dt$.
+
+For the envelope: shell-centering is an $L^2$-orthogonal projection, hence a contraction, so
+by the law of total variance $\mathcal N(t)^2=\E[\Var(p_t\mid\dM)]\le\Var(p_t(X,Y))
+=\E[p_t^2]-1=\lVert p_t\rVert_2^2-1=\sum_{k\ge0}e^{-2\mu_k t}-1=Z(2t)-1$ (using
+$\E[p_t(X,Y)]=\int\!\!\int p_t=1$ and Parseval). Two-point homogeneity makes the invariant
+kernel $p_t$ a function of geodesic distance, so $\delta_t\equiv0$ and $\mathcal N\equiv0$.
+Finally $Z(2t)-1=\sum_{k\ge1}e^{-2\mu_k t}$: as $t\to0$, $Z(2t)\sim(8\pi t)^{-d/2}$ (Weyl
+heat-trace asymptotics, $\vol=1$), so $(Z(2t)-1)^{1/2}\sim c\,t^{-d/4}$, integrable at $0$
+iff $d/4<1$, i.e.\ $d\le3$; as $t\to\infty$, $Z(2t)-1\le C e^{-2\mu_1 t}$, integrable. Hence
+the envelope integral converges iff $d\le3$, and it dominates $\int\mathcal N$, which is
+therefore finite for $d\le3$ (justifying the interchange above).
+\end{proof}
+
+The critical dimension $d=4$ reappears exactly: the shell-variance envelope ceases to be
+integrable, matching the Hilbert--Schmidt threshold and the fractional-filter remedy.
+
+\section{The explicit large-time tail and the small-time anisotropy}
+
+Split $\int_0^\infty\mathcal N=\int_0^{t_0}\mathcal N+\int_{t_0}^\infty\mathcal N$. The tail is
+fully explicit; the head is reduced to a named curvature-anisotropy amplitude.
+
+\begin{lemma}[Explicit spectral-gap tail]\label{lem:tail}
+For any $t_0>0$,
+$\displaystyle\int_{t_0}^\infty\mathcal N(t)\,dt\le\frac{(Z(2t_0)-1)^{1/2}}{\mu_1}$.
+Under $\Ric\ge-(d-1)K$ and $\diam\le D$ the spectral gap obeys $\mu_1\ge\mu_1(K,D)>0$
+(Li--Yau/Zhong--Yang), and $Z(2t_0)-1\le C(d,K,D)$ for $t_0\ge1$; so the tail is bounded by
+an explicit function of $(d,K,D,t_0)$ decaying like $e^{-\mu_1 t_0}/\mu_1$.
+\end{lemma}
+
+\begin{proof}
+For $t\ge t_0$, $Z(2t)-1=\sum_{k\ge1}e^{-2\mu_k t}\le e^{-2\mu_1(t-t_0)}\sum_{k\ge1}e^{-2\mu_k t_0}
+=e^{-2\mu_1(t-t_0)}(Z(2t_0)-1)$, so $\mathcal N(t)\le(Z(2t_0)-1)^{1/2}e^{-\mu_1(t-t_0)}$ by
+Lemma~\ref{lem:reduce}; integrating $\int_{t_0}^\infty e^{-\mu_1(t-t_0)}\,dt=1/\mu_1$ gives the
+bound. The gap and heat-trace bounds are standard under the stated curvature/diameter
+hypotheses.
+\end{proof}
+
+\begin{definition}[Curvature-anisotropy amplitude]\label{def:aniso}
+Let $\mathcal A:=\sup_{0<t\le t_0}t^{d/4}\mathcal N(t)$, the supremal shell-standard-deviation
+of the heat kernel on the head interval, normalized by the diagonal Weyl scale $t^{-d/4}$.
+\end{definition}
+
+\begin{lemma}[Head bound]\label{lem:head}
+For $d\le3$, $\displaystyle\int_0^{t_0}\mathcal N(t)\,dt\le\mathcal A\int_0^{t_0}t^{-d/4}\,dt
+=\frac{4\,\mathcal A}{4-d}\,t_0^{(4-d)/4}$. Here $\mathcal A<\infty$ always (since
+$\mathcal N(t)\le(Z(2t)-1)^{1/2}$, so $t^{d/4}\mathcal N(t)$ is bounded as $t\to0$) and
+$\mathcal A=0$ on two-point homogeneous spaces (there $\mathcal N\equiv0$). Its
+\emph{small-time} part $\lim_{t\to0}t^{d/4}\mathcal N(t)$ is $O$ of the shell-oscillation of
+the Minakshisundaram--Pleijel amplitude $u_0(x,y)=\det(d\exp)^{-1/2}$---the variation of the
+Jacobi/curvature data along equal-length geodesics, $O(\sup\lVert\nabla\Ric\rVert$ and the
+sectional-curvature variation$)$, vanishing when the curvature is isotropic and parallel (the
+locally symmetric case). The \emph{full} sup $\mathcal A$ over $(0,t_0]$ is the manifold's
+genuine heat-kernel non-radiality on that interval---generically $\Theta(1)$ for a
+non-symmetric metric; making it curvature-explicit uniformly in $t\le t_0$ is the frontier
+item, not claimed here.
+\end{lemma}
+
+\begin{proof}
+The integral bound is Definition~\ref{def:aniso} and $\int_0^{t_0}t^{-d/4}dt=\frac{4}{4-d}
+t_0^{(4-d)/4}$ (finite for $d<4$). For the amplitude: near the diagonal the MP expansion
+$p_t(x,y)=(4\pi t)^{-d/2}e^{-\dM(x,y)^2/4t}\bigl(u_0(x,y)+u_1(x,y)t+\cdots\bigr)$ has a
+Gaussian factor that is radial; the non-radial part of $p_t$ at leading order is
+$(4\pi t)^{-d/2}e^{-\dM^2/4t}\bigl(u_0(x,y)-\E[u_0\mid\dM]\bigr)$, whose $L^2$-shell-variance
+scaled by $t^{d/4}$ is $O(\text{shell-oscillation of }u_0)$; $u_0=\det(d\exp_x(y))^{-1/2}$ is
+a function of the geometry along the $x$-to-$y$ geodesic, constant on distance shells exactly
+when the geometry is isotropic and parallel, and its shell-oscillation is $O(d(x,y)^2)$ times
+the curvature variation by the Jacobi-field (Van~Vleck--Morette) expansion
+$u_0=1+\tfrac1{12}\Ric(\dot\gamma,\dot\gamma)r^2+O(r^3)$ (the volume density is
+$\theta=\sqrt{\det g}=1-\tfrac16\Ric(\dot\gamma,\dot\gamma)r^2+O(r^3)$, and
+$u_0=\theta^{-1/2}=(\det g)^{-1/4}$).
+On a two-point homogeneous space $u_0$ is a function of distance, so $\mathcal A=0$; the
+intermediate-time ($t\le t_0$) contribution is likewise $0$ there since $\mathcal N\equiv0$.
+\end{proof}
+
+\begin{theorem}[Geometric $L^2$ non-radiality bound]\label{thm:main}
+Let $M$ be closed of dimension $d\le3$, $\vol(M)=1$, $\Ric\ge-(d-1)K$, $\diam\le D$,
+injectivity radius $\ge i_0$. Then for every $t_0\ge1$,
+\[
+V_{\min}^{1/2}\ \le\ \frac{4\,\mathcal A}{4-d}\,t_0^{(4-d)/4}\ +\ \frac{(Z(2t_0)-1)^{1/2}}{\mu_1},
+\]
+with $\mu_1\ge\mu_1(K,D)>0$ and $Z(2t_0)-1\le C(d,K,D)$ explicit, and $\mathcal A$ the
+curvature-anisotropy amplitude of Definition~\ref{def:aniso}. Consequently:
+\begin{itemize}
+\item[(i)] $V_{\min}=0$ on every two-point homogeneous space ($\mathcal A=0$ and
+$\mathcal N\equiv0$), recovering $\rhoG=1$ there;
+\item[(ii)] under \textup{(A$^\star$)} (Remark~\ref{rem:astar}), combined with the
+distributional master inequality, $\rhoG(M)\ge1-18\bigl(\phi_{\Psi^\star}^2V_{\min}\bigr)^{1/3}$,
+so $\rhoG(M)>0$ whenever the right side of the displayed bound is small enough that
+$\phi_{\Psi^\star}^2V_{\min}<18^{-3}$---a class explicit in $(K,D,i_0,\mu_1)$ modulo the single
+anisotropy amplitude $\mathcal A$.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Sum Lemmas~\ref{lem:head} and~\ref{lem:tail} into Lemma~\ref{lem:reduce}. (i) is
+$\mathcal A=0$ and $\mathcal N\equiv0$; (ii) is the companion distributional inequality
+applied to $\Psi^\star$, which is a monotone profile with $\phi_{\Psi^\star}<\infty$ exactly
+under \textup{(A$^\star$)}.
+\end{proof}
+
+\begin{corollary}[Perturbative $\eta^{2/3}$ rate]\label{cor:pert}
+Let $g_0$ be a two-point homogeneous metric ($\vol=1$) and $g$ a metric with
+$\lVert g-g_0\rVert_{C^2}\le\eta$ small. Then $V_{\min}(g)\le C(g_0)\,\eta^2$, with $C(g_0)$
+the standard parabolic-perturbation constant of $g_0$, and hence
+$\rhoG(g)\ge1-18\,\bigl(\phi_0^2C(g_0)\bigr)^{1/3}\eta^{2/3}\to1$ as $\eta\to0$, quantifying
+the perturbative openness theorem in the $L^2$ index.
+\end{corollary}
+
+\begin{proof}
+By Remark~\ref{rem:astar}, (A$^\star$) holds for $g$ near $g_0$, so $V_{\min}(g)$ is
+admissible. Since $g_0$ is two-point homogeneous, $\delta_t^{g_0}\equiv0$, so
+$\mathcal N^g(t)=\lVert\delta_t^g\rVert_2=\lVert(I-P^g_{\mathrm{rad}})p_t^g
+-(I-P^{g_0}_{\mathrm{rad}})p_t^{g_0}\rVert_2$; adding and subtracting,
+\[
+\mathcal N^g(t)\ \le\ \underbrace{\lVert p_t^g-p_t^{g_0}\rVert_2}_{\text{(I)}}
+\ +\ \underbrace{\lVert(P^g_{\mathrm{rad}}-P^{g_0}_{\mathrm{rad}})p_t^{g_0}\rVert_2}_{\text{(II)}}.
+\]
+For (II): $\lVert d^g-d^{g_0}\rVert_\infty=O(\eta)$ (the metric is $C^0$-$O(\eta)$-close), so
+the shell-centering conditional expectations differ by $O(\eta)$ applied to the radial-regular
+$p_t^{g_0}$, giving (II)$\le C\eta\,(Z^{g_0}(2t)-1)^{1/2}$. For (I): the parabolic (Duhamel)
+perturbation estimate---$p_t^g-p_t^{g_0}=-\int_0^t p^g_{t-s}(\Delta_g-\Delta_{g_0})p^{g_0}_s\,ds$
+with $\Delta_g-\Delta_{g_0}$ of order two and coefficients $O(\lVert g-g_0\rVert_{C^1})$---gives
+(I)$\le C\eta\,(Z^{g_0}(c t)-1)^{1/2}$ (imported fact~6). Both envelopes are $\asymp t^{-d/4}$
+as $t\to0$ (integrable for $d\le3$) and decay like $e^{-c\mu_1(g_0)t}$ as $t\to\infty$; hence
+$V_{\min}(g)^{1/2}=\int_0^\infty\mathcal N^g(t)\,dt\le C(g_0)^{1/2}\eta$. This uses only the
+leading Duhamel bound---not smoothness of the higher heat coefficients $u_j$, which
+$\lVert g-g_0\rVert_{C^2}$ does not control.
+\end{proof}
+

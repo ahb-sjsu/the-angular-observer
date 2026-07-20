@@ -1,0 +1,313 @@
+
+\noindent\textbf{Purpose.} Paper~I reduces the rank form of Angular Preservation, for
+$d\le3$, to \emph{Green-rank positivity} (Conjecture, ``Green-rank positivity''):
+$\rhoG(M):=\rho_S\bigl(\dM(X,Y),-G_M(X,Y)\bigr)>0$, where $G_M$ is the zero-mean Green
+kernel of the Laplace--Beltrami operator and $(X,Y)$ are i.i.d.\ from the normalized
+volume. Two facts are known: $\rhoG=1$ on compact two-point homogeneous spaces
+(Paper~I, ``Uniform rank preservation''), because there $G$ is a strictly decreasing
+function of distance; and $\rhoG>0$ on a $C^2$-open neighborhood of any metric with
+$\rhoG>0$ (companion note, ``Perturbative openness''). Both are qualitative and neither
+localizes the obstruction. This note gives (i) a \emph{master inequality} bounding the
+rank deficit $1-\rhoG$ by a single geometric quantity---the non-radiality of $G$,
+measured in sup norm against the best monotone radial profile---and (ii) an
+\emph{explicit near-radial class} on which $\rhoG>0$ with a quantitative bound. The
+two-point homogeneous result is the exact-radial ($\Rem\equiv0$) point of the master
+inequality, and the openness theorem is its small-$\Rem$ corollary made quantitative.
+Notation and imported facts follow Paper~I and the companion reductions note (in
+particular Proposition ``Distortion controls rank'' and Lemma ``Automatic
+atomlessness''); §\ref{sec:frontier} states the standing assumptions and what remains
+open.
+
+\section{The master rank-remainder inequality}
+
+Fix $M$ closed of dimension $d$, $\vol(M)=1$, with zero-mean Green kernel $G$, and let
+$(X,Y)$ be i.i.d.\ from the volume. Write $W=\dM(X,Y)$ for the random pairwise distance,
+$D=\diam M$, and let $W'$ be an independent copy of $W$. All rank correlations are the
+population grade correlations. By Lemma ``Automatic atomlessness'' (companion note) the
+laws of $\dM(X,Y)$ and of $G(X,Y)$ are atomless (the pair law has bounded density
+w.r.t.\ $\vol\otimes\vol$), so no ties occur and Daniels' inequality
+$\lvert3\tau-2\rho_S\rvert\le1$ applies to every pair of the statistics below.
+
+\begin{definition}
+A \emph{monotone radial profile} is a strictly increasing continuous function
+$\Psi:(0,D]\to\mathbb R$. Its \emph{remainder} is $\Rem(x,y):=-G(x,y)-\Psi(\dM(x,y))$,
+and its \emph{non-radiality} is $\lVert\Rem\rVert_\infty=\sup_{x\ne y}\lvert\Rem(x,y)\rvert$.
+Its \emph{anti-concentration constant} is the essential sup of the density of the random
+variable $\Psi(W)$, denoted $\phi_\Psi:=\lVert f_{\Psi(W)}\rVert_\infty\in(0,\infty]$.
+\end{definition}
+
+\begin{theorem}[Master inequality]\label{thm:master}
+For every monotone radial profile $\Psi$ with $\lVert\Rem\rVert_\infty<\infty$ and
+$\phi_\Psi<\infty$,
+\[
+\rhoG(M)\ \ge\ 1-3\,\mu_\Psi\!\bigl(2\lVert\Rem\rVert_\infty\bigr)\ \ge\
+1-12\,\phi_\Psi\,\lVert\Rem\rVert_\infty,
+\qquad
+\mu_\Psi(\varepsilon):=\mathbb P\bigl(\lvert\Psi(W)-\Psi(W')\rvert\le\varepsilon\bigr).
+\]
+In particular $\rhoG(M)>0$ whenever $\lVert\Rem\rVert_\infty<1/(12\,\phi_\Psi)$; and if
+$\Rem\equiv0$ (the kernel $G$ is exactly a strictly decreasing function of distance),
+then $\rhoG(M)=1$.
+\end{theorem}
+
+\begin{proof}
+Let $P=(X,Y)$ and $Q=(X',Y')$ be two independent draws of the pair, with distances
+$d_P,d_Q$ and Green values $G_P,G_Q$. Kendall's population coefficient for the pair of
+statistics $(\dM,-G)$ is
+$\tau_G=\mathbb E\bigl[\sgn(d_P-d_Q)\,\sgn(G_Q-G_P)\bigr]=1-2p$, where
+$p=\mathbb P(\text{discordant})$ and a pair-of-pairs is discordant when
+$\sgn(d_P-d_Q)\ne\sgn\bigl((-G_P)-(-G_Q)\bigr)$; atomlessness rules out ties. By Daniels'
+inequality $\rho_S\ge(3\tau_G-1)/2=1-3p$, i.e.\ $\rhoG\ge1-3p$.
+
+Bound $p$. Suppose $d_P<d_Q$ (the reverse case is symmetric). Discordance means
+$-G_P>-G_Q$, i.e.\ $\Psi(d_P)+\Rem_P>\Psi(d_Q)+\Rem_Q$, whence
+$\Psi(d_Q)-\Psi(d_P)<\Rem_P-\Rem_Q\le2\lVert\Rem\rVert_\infty$. Since $\Psi$ is strictly
+increasing and $d_P<d_Q$, the left side is positive, so
+$\lvert\Psi(d_P)-\Psi(d_Q)\rvert\le2\lVert\Rem\rVert_\infty$. As $\Psi(d_P)=\Psi(W)$ and
+$\Psi(d_Q)=\Psi(W')$ are independent copies,
+$p\le\mathbb P\bigl(\lvert\Psi(W)-\Psi(W')\rvert\le2\lVert\Rem\rVert_\infty\bigr)
+=\mu_\Psi(2\lVert\Rem\rVert_\infty)$. This gives the first inequality.
+
+For the second, let $A=\Psi(W)$ with density $f_A\le\phi_\Psi$. Then for any
+$\varepsilon\ge0$,
+$\mu_\Psi(\varepsilon)=\mathbb E_{A'}\,\mathbb P\bigl(A\in[A'-\varepsilon,A'+\varepsilon]\bigr)
+\le\mathbb E_{A'}\bigl[2\varepsilon\,\phi_\Psi\bigr]=2\phi_\Psi\varepsilon$, so
+$\mu_\Psi(2\lVert\Rem\rVert_\infty)\le4\phi_\Psi\lVert\Rem\rVert_\infty$ and
+$\rhoG\ge1-12\phi_\Psi\lVert\Rem\rVert_\infty$. Finally if $\Rem\equiv0$ then $p=0$
+(the reverse ranking is exact), so $\tau_G=1$ and $\rhoG=1$.
+\end{proof}
+
+\begin{remark}
+The two known results are the two extremes. \emph{Two-point homogeneous}: $G(x,y)=g(\dM(x,y))$
+with $g$ strictly decreasing (Paper~I), so $\Psi=-g$ has $\Rem\equiv0$ and
+Theorem~\ref{thm:master} gives $\rhoG=1$---recovering the corollary with no separate
+argument. \emph{Openness}: $\lVert\Rem\rVert_\infty$ and $\phi_\Psi$ vary continuously
+under $C^2$ perturbation of the metric (the Green kernel and the pair-distance law do),
+so a metric with $\rhoG=1$ (hence $\Rem\equiv0$ for its optimal $\Psi$) has a
+$C^2$-neighborhood on which $\lVert\Rem\rVert_\infty$ stays below $1/(12\phi_\Psi)$;
+Theorem~\ref{thm:master} then gives $\rhoG>0$ \emph{with an explicit floor}, quantifying
+the qualitative openness theorem. What is genuinely new is that the inequality holds on
+\emph{all} metrics, not only near the radial ones: it converts Green-rank positivity into
+a single sup-norm estimate on the non-radial part of $G$.
+\end{remark}
+
+\section{The near-diagonal singularity is radial to leading order}
+
+To turn Theorem~\ref{thm:master} into a checkable geometric statement one needs a
+monotone radial profile $\Psi$ whose remainder $\Rem$ is finite despite the diagonal
+blow-up of $G$. The parametrix supplies one: near the diagonal $G$ equals the Euclidean
+fundamental profile plus a \emph{bounded} regular part, and the singular coefficient is
+universal (independent of the point), so the diagonal contributes nothing to
+$\lVert\Rem\rVert_\infty$.
+
+Let $\gamma_d$ be the Euclidean fundamental profile,
+\[
+\gamma_3(r)=\frac{1}{4\pi r},\qquad \gamma_2(r)=-\frac{1}{2\pi}\log r,
+\]
+(and $\gamma_d(r)=\bigl((d-2)\omega_{d-1}\bigr)^{-1}r^{2-d}$ for $d\ge3$ in general).
+
+\begin{lemma}[Bounded regular part]\label{lem:parametrix}
+Let $M$ be a closed smooth Riemannian $d$-manifold, $d\in\{2,3\}$, $\vol(M)=1$, with
+injectivity radius $i_0>0$. Fix $r_0<i_0$. There is a constant $H_0=H_0(M,r_0)<\infty$
+such that the zero-mean Green kernel satisfies
+\[
+\bigl\lvert\,G(x,y)-\gamma_d\bigl(\dM(x,y)\bigr)\,\bigr\rvert\ \le\ H_0
+\qquad\text{whenever }\dM(x,y)\le r_0 .
+\]
+Consequently, defining $\Psi(r)=-\gamma_d(r)$ for $r\le r_0$ and extending $\Psi$ to
+$[r_0,D]$ as any strictly increasing $C^1$ function with $\Psi'\ge c_1>0$ there and
+$\Psi(r_0^+)=\Psi(r_0^-)$, one has, with $H_{\mathrm{far}}:=\sup_{\dM(x,y)\ge r_0}\lvert G(x,y)\rvert
++\sup_{r\in[r_0,D]}\lvert\Psi(r)\rvert$,
+\[
+\lVert\Rem\rVert_\infty\ \le\ \max\bigl(H_0,\ H_{\mathrm{far}}\bigr)\ <\ \infty,
+\]
+and $\phi_\Psi<\infty$.
+\end{lemma}
+
+\begin{proof}
+\emph{Regular part.} In geodesic normal coordinates centered at $y$ the metric is
+Euclidean to second order ($g^{ij}-\delta^{ij}=O(r^2)$, drift coefficients $O(r)$). Let
+$\chi$ be a cutoff, $\chi\equiv1$ on $\{\dM(\cdot,y)\le r_0\}$, supported in the
+$i_0$-ball. The parametrix $E_y(x)=\chi(x)\,\gamma_d(\dM(x,y))$ satisfies
+$\Delta_x E_y=\delta_y+b_y$, where $b_y=\bigl(\Delta_g-\Delta_{\mathrm{Eucl}}\bigr)\gamma_d\cdot\chi
++[\Delta,\chi]\gamma_d$ collects the Euclidean-to-Riemannian discrepancy of the leading
+term (the $r^{2-d}$/$\log r$ singularity is annihilated by the Euclidean Laplacian) and
+the commutator with the cutoff (smooth, supported off the diagonal). Since
+$(\Delta_g-\Delta_{\mathrm{Eucl}})\gamma_d=O(r^{2-d})$, one has $b_y\in L^p(M)$ for every
+$p<\tfrac{d}{d-2}$ (all $p<\infty$ when $d=2$), uniformly in $y$; this is where $d\le3$
+enters. Then $h_y:=G(\cdot,y)-E_y$ solves $\Delta h_y=-1-b_y$ in the zero-mean class
+(from $\Delta_x G(\cdot,y)=\delta_y-1$). Choose $p\in\bigl(\tfrac d2,\tfrac{d}{d-2}\bigr)$
+---a nonempty range \emph{exactly} for $d\in\{2,3\}$. Elliptic $W^{2,p}$ regularity and
+the Sobolev embedding $W^{2,p}\hookrightarrow C^0$ on the closed manifold give
+$\lVert h_y-\bar h_y\rVert_{C^0}\le C\lVert-1-b_y\rVert_{L^p}$, where
+$\bar h_y=\int_M h_y=-\int_M\chi\,\gamma_d(\dM(\cdot,y))$ is bounded uniformly in $y$;
+hence $\lVert h_y\rVert_{C^0}\le H_0$ uniformly. On $\{\dM(x,y)\le r_0\}$, $\chi\equiv1$
+gives $E_y(x)=\gamma_d(\dM(x,y))$, so $\lvert G(x,y)-\gamma_d(\dM(x,y))\rvert
+=\lvert h_y(x)\rvert\le H_0$.
+
+\emph{Remainder bound.} For $\dM(x,y)\le r_0$, $\Rem=-G+\gamma_d\circ\dM=-h_y$, bounded by
+$H_0$. For $\dM(x,y)\ge r_0$, both $G$ (smooth off-diagonal, hence bounded on the compact
+set $\{\dM\ge r_0\}$) and $\Psi\circ\dM$ are bounded by $H_{\mathrm{far}}$; hence
+$\lvert\Rem\rvert\le H_{\mathrm{far}}$ there.
+
+\emph{Finiteness of $\phi_\Psi$.} $\Psi$ is a strictly increasing $C^1$ diffeomorphism of
+$(0,D]$ onto its image, so $\Psi(W)$ has density $f_W(\Psi^{-1}(s))/\Psi'(\Psi^{-1}(s))$,
+where $f_W$ is the density of $W=\dM(X,Y)$ (bounded, and $f_W(r)\asymp r^{d-1}$ as
+$r\to0$). Near $s\to\Psi(0^+)$ ($r\to0$), $\Psi'=-\gamma_d'\asymp r^{1-d}$ ($d\ge3$) or
+$r^{-1}$ ($d=2$), so the density $\asymp r^{d-1}/r^{1-d}=r^{2(d-1)}\to0$ ($d\ge3$), resp.\
+$r^{d-1}/r^{-1}=r^{d}\to0$ ($d=2$); on $[r_0,D]$, $\Psi'\ge c_1>0$ and $f_W$ is bounded, so
+the density is bounded. Hence $\phi_\Psi<\infty$.
+\end{proof}
+
+\begin{remark}
+The universal leading coefficient is what makes the diagonal harmless: two pairs at nearly
+equal small distances have Green values agreeing to leading order regardless of
+\emph{where} they sit, so the singular part contributes concordantly. All the
+non-radiality that can hurt the ranking lives in the bounded regular part $h_y$ (the Robin
+function off its radial mean) and in the mesoscopic/large-scale values
+$H_{\mathrm{far}}$---exactly the scales at which low eigenfunctions oscillate.
+\end{remark}
+
+\section{The explicit near-radial theorem}
+
+\begin{theorem}[Green-rank positivity on a near-radial class]\label{thm:nearradial}
+Let $M$ be a closed smooth Riemannian $d$-manifold, $d\in\{2,3\}$, $\vol(M)=1$, injectivity
+radius $\ge i_0$. Let $\Psi_0$ be the parametrix profile of Lemma~\ref{lem:parametrix},
+with finite non-radiality $\lVert\Rem_0\rVert_\infty$ and finite anti-concentration
+constant $\phi_0$. Then
+\[
+\rhoG(M)\ \ge\ 1-12\,\phi_0\,\lVert\Rem_0\rVert_\infty .
+\]
+In particular $\rhoG(M)>0$---so, by the Green-kernel rank-limit theorem (Paper~I),
+$\liminf_{\Lambda}\rho_S\bigl(\dM(X,Y),\lVert N_\Lambda(X)-N_\Lambda(Y)\rVert\bigr)=\rhoG(M)
+\ge1-12\phi_0\lVert\Rem_0\rVert_\infty$, the truncated commute angular ranking being
+uniform-in-mode-count rank-faithful with this floor---whenever
+\[
+\phi_0\,\lVert\Rem_0\rVert_\infty\ <\ \frac{1}{12}.
+\]
+Writing $\Delta_{\mathrm{rad}}(M):=\inf_{\Psi}\lVert{-}G-\Psi\circ\dM\rVert_\infty$ for the
+best monotone-radial sup-approximation of $-G$ (the non-radiality of the Green kernel),
+one has $\lVert\Rem_0\rVert_\infty\ge\Delta_{\mathrm{rad}}(M)$, so a small non-radiality
+with controlled $\phi_0$ suffices.
+\end{theorem}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:master} applied to the \emph{single} profile $\Psi_0$,
+whose non-radiality $\lVert\Rem_0\rVert_\infty$ and anti-concentration constant $\phi_0$
+are both finite by Lemma~\ref{lem:parametrix}; no optimization over profiles is performed
+(in particular the bound does \emph{not} split the product-infimum
+$\inf_\Psi\phi_\Psi\lVert\Rem_\Psi\rVert_\infty$ into separate infima---an isotonic
+optimal profile can be flat, giving an atom in $\Psi(W)$ and $\phi_\Psi=\infty$). The
+rank-faithful consequence is the Green-kernel rank-limit theorem, which gives
+$\rho_S\to\rhoG$; the floor is thus approached as a $\liminf$ up to $o(1)$, not attained
+at finite $\Lambda$.
+\end{proof}
+
+\begin{remark}[What the class contains]
+On the two-point homogeneous spaces $-G$ is exactly monotone-radial ($\Rem_0\equiv0$,
+hence $\Delta_{\mathrm{rad}}=0$ and $\rhoG=1$); $\phi_0\lVert\Rem_0\rVert_\infty$ is
+$C^2$-continuous, so the theorem covers a $C^2$-neighborhood of each with a numerical
+floor---the effective form of the openness theorem. More broadly, any manifold with
+$\phi_0\lVert\Rem_0\rVert_\infty<1/12$ is included: mild ellipsoids, low-eccentricity
+tori, small metric perturbations of symmetric spaces. Both $\lVert\Rem_0\rVert_\infty$ and
+$\phi_0$ are computable per metric (evaluate $-G-\Psi_0\circ\dM$ and the density of
+$\Psi_0(W)$ over a volume sample), so the hypothesis is a certificate, not an article of
+faith. (The infimal non-radiality $\Delta_{\mathrm{rad}}\le\lVert\Rem_0\rVert_\infty$ is a
+genuine geometric quantity, but it is \emph{not} by itself sufficient: the sup-approximation
+optimal profile may be flat and carry $\phi=\infty$, so positivity is asserted through the
+fixed profile $\Psi_0$, whose $\phi_0$ is finite.)
+\end{remark}
+
+\begin{remark}[Sharper constants via anti-concentration of $\Psi_0(W)$]
+The factor $12\phi_0$ is the crude one from bounding $\mu_{\Psi_0}$ by a uniform density.
+When the distance law is spread---$\Psi_0(W)$ far from concentrated---%
+$\mu_{\Psi_0}(2\lVert\Rem_0\rVert_\infty)$ is much smaller than
+$4\phi_0\lVert\Rem_0\rVert_\infty$, and the first inequality of Theorem~\ref{thm:master}
+($\rhoG\ge1-3\mu_{\Psi_0}$) is the honest bound to evaluate numerically. Manifolds with a
+well-spread pairwise-distance spectrum tolerate proportionally larger non-radiality.
+\end{remark}
+
+\section{A distributional refinement: the $L^2$ non-radiality bound}
+
+The master inequality controls $\rhoG$ through $\lVert\Rem\rVert_\infty$, the \emph{sup}
+non-radiality. This is loose when $-G$ deviates from radial on only a small fraction of
+pairs: a short thin handle joining two distant regions makes $\lVert\Rem\rVert_\infty$ large
+(the cross-handle pairs reverse) yet moves $\rhoG$ negligibly, because those pairs are rare.
+The refinement below replaces the sup by the \emph{$L^2$} non-radiality, which is
+distribution-aware and, as it happens, scale-invariant---matching the fact that $\rhoG$ is a
+rank correlation.
+
+\begin{definition}
+For a monotone radial profile $\Psi$ with remainder $\Rem=-G-\Psi\circ\dM$, the \emph{$L^2$
+non-radiality} is $V_\Psi:=\mathbb E[\Rem(X,Y)^2]$ and the \emph{non-radiality index} is
+$\iota_\Psi:=\phi_\Psi^2\,V_\Psi$, with $\phi_\Psi$ the density bound of $\Psi(W)$,
+$W=\dM(X,Y)$. The index is dimensionless: $\phi_\Psi$ has units $[\Psi]^{-1}$ and $V_\Psi$
+units $[\Psi]^2$, so $\iota_\Psi$ is invariant under scaling the metric.
+\end{definition}
+
+\begin{theorem}[Distributional master inequality]\label{thm:dist}
+For every monotone radial profile $\Psi$ with $\phi_\Psi<\infty$ and $V_\Psi<\infty$,
+\[
+\rhoG(M)\ \ge\ 1-18\,\bigl(\phi_\Psi^2\,V_\Psi\bigr)^{1/3}\ =\ 1-18\,\iota_\Psi^{1/3}.
+\]
+Hence $\rhoG(M)>0$ whenever $\iota_\Psi<18^{-3}$; and $V_\Psi=0$ (radial $-G$) gives
+$\rhoG=1$.
+\end{theorem}
+
+\begin{proof}
+As in Theorem~\ref{thm:master}, $\rhoG\ge1-3p$ with $p$ the discordance probability, and a
+discordant pair-of-pairs with $d_P<d_Q$ forces
+$\Psi(d_Q)-\Psi(d_P)<\Rem_P-\Rem_Q\le\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert$; by symmetry
+$p\le\mathbb P\bigl(\lvert\Psi(d_P)-\Psi(d_Q)\rvert<\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\bigr)$.
+Fix $\tau>0$. Since
+$\{\lvert\Psi(d_P)-\Psi(d_Q)\rvert<\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\}
+\subseteq\{\lvert\Psi(d_P)-\Psi(d_Q)\rvert<\tau\}\cup\{\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\ge\tau\}$,
+\[
+p\ \le\ \mu_\Psi(\tau)+\mathbb P\bigl(\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\ge\tau\bigr)
+\ \le\ 2\phi_\Psi\tau+2\,\mathbb P\bigl(\lvert\Rem\rvert\ge\tfrac\tau2\bigr),
+\]
+using $\mu_\Psi(\tau)\le2\phi_\Psi\tau$ (Theorem~\ref{thm:master}) and a union bound with
+$\Rem_P,\Rem_Q$ i.i.d. Chebyshev gives
+$\mathbb P(\lvert\Rem\rvert\ge\tau/2)\le4V_\Psi/\tau^2$, so
+$p\le2\phi_\Psi\tau+8V_\Psi/\tau^2$ and $\rhoG\ge1-6\phi_\Psi\tau-24V_\Psi/\tau^2$.
+Minimizing over $\tau$ at $\tau_\star=2(V_\Psi/\phi_\Psi)^{1/3}$ gives
+$6\phi_\Psi\tau_\star+24V_\Psi/\tau_\star^2=18(\phi_\Psi^2V_\Psi)^{1/3}$.
+\end{proof}
+
+\begin{remark}[Why it beats the sup bound]
+Always $V_\Psi\le\lVert\Rem\rVert_\infty^2$; the two bounds are complementary---take whichever
+is larger. Because of the cube-root exponent, the sup-norm master bound $1-12\phi_\Psi
+\lVert\Rem\rVert_\infty$ is the better one in the \emph{uniformly small} regime
+($\phi_\Psi\lVert\Rem\rVert_\infty\ll1$), while Theorem~\ref{thm:dist} is \emph{strictly}
+better exactly when the non-radiality is \emph{concentrated}, $V_\Psi\ll\lVert\Rem\rVert_\infty^2$.
+If $-G$ is non-radial by an amount $\asymp1$ on a fraction $\varepsilon$ of pairs and
+$\approx0$ elsewhere, then $\lVert\Rem\rVert_\infty\asymp1$ (the sup bound is vacuous) while
+$V_\Psi\asymp\varepsilon$, so $\iota_\Psi^{1/3}\asymp\varepsilon^{1/3}\to0$: the $L^2$ bound
+stays sharp. This is exactly the thin-handle regime of the numerical hunt
+(\texttt{experiments/green-rank}): the handle spikes $\lVert\Rem\rVert_\infty$ but leaves
+$V_\Psi$ tiny, and $\rhoG$ stays near $1$---whereas a macroscopic bottleneck (a dumbbell
+neck) raises $V_\Psi$ over an $\Omega(1)$ fraction of pairs and genuinely lowers $\rhoG$.
+The $L^2$ index is the quantity the experiments track.
+\end{remark}
+
+\begin{remark}[The constant, and the honest numerical bound]
+The factor $18$ comes from Chebyshev and is not sharp; controlling
+$\mathbb P(\lvert\Rem\rvert\ge t)$ by a higher moment or by the actual tail of $\Rem$
+improves it, and the pre-optimization form $\rhoG\ge1-6\phi_\Psi\tau-24V_\Psi/\tau^2$ (or
+the master $\rhoG\ge1-3\mu_\Psi(2\lVert\Rem\rVert_\infty)$) is the one to evaluate on a
+sample. The value of Theorem~\ref{thm:dist} is the \emph{quantity}: a scale-invariant,
+distribution-aware non-radiality index that a sup-norm cannot express.
+\end{remark}
+
+\begin{remark}[Toward a geometric class]
+Both factors are expected to admit geometric bounds: $\phi_\Psi\le\Phi(K,D,i_0)$ from the bounded density
+of the pairwise-distance law under $\Ric\ge-(d-1)K$, $\diam\le D$, $\mathrm{inj}\ge i_0$
+(volume comparison), and $V_\Psi\le V(K,D,i_0,\mu_1)$ from the $L^2$ non-radiality of the
+Green kernel (its deviation from the best radial profile, controlled by heat-kernel
+anisotropy under the same bounds). Hence $\rhoG\ge c(K,D,i_0)>0$ on the class
+$\{\iota_\Psi<18^{-3}\}$---a strictly larger class than the sup-norm near-radial one of
+Theorem~\ref{thm:nearradial}, and the one the plateau in the numerical hunt (no family below
+$\rhoG\approx0.79$) suggests is broad. Making $V(K,D,i_0,\mu_1)$ explicit is the quantitative
+frontier item (a).
+\end{remark}
+

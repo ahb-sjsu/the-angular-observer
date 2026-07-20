@@ -1,0 +1,208 @@
+
+\noindent\textbf{Purpose.} The rank form of Angular Preservation is settled below the
+critical dimension $d=4$: the commute angular ranking converges uniformly in the mode
+count to the Green-kernel ranking (Paper~I, Green-kernel rank-limit theorem), reducing the
+question to Green-rank positivity. At $d=4$ the commute Green kernel
+$G=\sum_k\mu_k^{-1}\varphi_k\otimes\varphi_k$ ceases to be Hilbert--Schmidt
+($\sum_k\mu_k^{-2}=\infty$ by Weyl's law $\mu_k\asymp k^{2/d}$), so the limit step fails.
+Paper~I flags the remedy---a stronger filter $\mu_k^{-s/2}$, $s>d/4$---and the first
+question, monotonicity of the fractional Green kernel on two-point homogeneous spaces. This
+note carries the entire chain up one level to the fractional filter and, using
+heat-kernel subordination, proves the two-point homogeneous case \emph{in every dimension},
+so that the reduction ``Angular Preservation $\Leftarrow$ fractional-Green-rank positivity''
+holds for all $d$, with the geometric coefficient equal to $1$ on the rank-one symmetric
+spaces regardless of dimension. Notation follows Paper~I, the Green-kernel rank-limit note,
+and the companion note ``green-rank-positivity''.
+
+\section{The fractional filter and Hilbert--Schmidt stability}
+
+Fix $s>0$ and, at a multiplet-closed cutoff $\Lambda$, define the $s$-filtered embedding and
+its kernel
+\[
+F_{s,\Lambda}=\bigl(\mu_k^{-s/2}\varphi_k\bigr)_{0<\mu_k\le\Lambda},\quad
+K_{s,\Lambda}(x,y)=\!\!\sum_{0<\mu_k\le\Lambda}\!\!\frac{\varphi_k(x)\varphi_k(y)}{\mu_k^{s}},\quad
+S_{s,\Lambda}(x)=K_{s,\Lambda}(x,x),\quad
+N_{s,\Lambda}=\frac{F_{s,\Lambda}}{\sqrt{S_{s,\Lambda}}} .
+\]
+The commute filter is $s=1$. Write $K_s=\sum_{k\ge1}\mu_k^{-s}\varphi_k\otimes\varphi_k$ for
+the full $s$-kernel (the kernel of $\Delta^{-s}$ on the zero-mean subspace) and
+$\rho_{G,s}(M):=\rho_S\bigl(\dM(X,Y),-K_s(X,Y)\bigr)$ for the \emph{fractional Green-rank
+coefficient}.
+
+\begin{lemma}[Hilbert--Schmidt stability]\label{lem:hs}
+$\lVert K_{s,\Lambda'}-K_{s,\Lambda}\rVert_{L^2(M\times M)}^2=\sum_{\Lambda<\mu_k\le\Lambda'}\mu_k^{-2s}$,
+and by Weyl's law $\mu_k\asymp k^{2/d}$ this converges iff $s>d/4$. Hence for $s>d/4$,
+$K_{s,\Lambda}\to K_s$ in $L^2(M\times M)$, and $K_s\in L^2$.
+\end{lemma}
+
+\begin{proof}
+The $\varphi_k\otimes\varphi_k$ are orthonormal in $L^2(M\times M)$, giving the stated norm;
+$\sum_k\mu_k^{-2s}\asymp\sum_k k^{-4s/d}$ converges iff $4s/d>1$.
+\end{proof}
+
+For $d\ge4$ any $s>d/4>1$ works; the minimal admissible filter grows with dimension.
+
+\section{The fractional rank limit}
+
+\begin{theorem}[Fractional Green-kernel rank limit]\label{thm:fraclimit}
+Let $M$ be closed of dimension $d$, $\vol(M)=1$, and $s>d/4$. Let $(X,Y)$ have bounded
+density with respect to $\vol\otimes\vol$, with the laws of $\dM(X,Y)$ and $K_s(X,Y)$
+atomless. Then
+\[
+\rho_S\bigl(\dM(X,Y),\lVert N_{s,\Lambda}(X)-N_{s,\Lambda}(Y)\rVert\bigr)\ \longrightarrow\
+\rho_S\bigl(\dM(X,Y),-K_s(X,Y)\bigr)=\rho_{G,s}(M),
+\]
+and likewise for Kendall's $\tau$. Consequently, if $\rho_{G,s}(M)>0$ there are
+$\Lambda_0<\infty,\rho_0>0$ with the $s$-filtered angular ranking $\ge\rho_0$ for every
+multiplet-closed $\Lambda\ge\Lambda_0$.
+\end{theorem}
+
+\begin{proof}
+Identical in structure to the $s=1$ theorem (Paper~I, Green-kernel rank-limit), with
+$\mu_k^{-1}$ replaced by $\mu_k^{-s}$ throughout. \emph{(1)} Hilbert--Schmidt limit is
+Lemma~\ref{lem:hs}. \emph{(2)} The diagonal $S_{s,\Lambda}(x)=\sum_{\mu_k\le\Lambda}\mu_k^{-s}\varphi_k(x)^2$
+is asymptotically constant uniformly in $x$: the uniform pointwise Weyl law
+$\sum_{\mu_k\le L}\varphi_k(x)^2=c_dL^{d/2}+O(L^{(d-1)/2})$ (H\"ormander, uniform in $x$) and
+partial summation give, \emph{for $d/4<s\le d/2$}, $S_{s,\Lambda}(x)=A_{s,\Lambda}+o(A_{s,\Lambda})$
+uniformly in $x$, where $A_{s,\Lambda}$ is the leading term of $\int^\Lambda L^{-s}\,dc_dL^{d/2}$:
+$\asymp\Lambda^{d/2-s}$ (diverges) for $s<d/2$, $\asymp\log\Lambda$ for $s=d/2$ (the uniform
+Hörmander remainder $O(L^{(d-1)/2})$ contributes a relative $O(\Lambda^{-1/2})$, lower order).
+For $s>d/2$ the diagonal instead \emph{converges} to a finite, generally non-constant $S_s(x)$
+and does not rescale to a constant---this case is the Remark. \emph{(3)} Rescale $H_{s,\Lambda}=A_{s,\Lambda}C_{s,\Lambda}\to K_s$
+in $L^2$, ranks unchanged by the positive constant. \emph{(4)} Bounded pair density carries
+$L^2$-convergence to convergence in probability; atomlessness of the limit gives distribution-function
+convergence and hence convergence of the population Spearman/Kendall coefficients.
+\end{proof}
+
+\begin{remark}[The convergent-diagonal regime $s>d/2$]
+When $s>d/2$ the diagonal $S_{s,\Lambda}(x)\to S_s(x)=\sum_k\mu_k^{-s}\varphi_k(x)^2$, a
+\emph{finite, generally non-constant} function of $x$ (the fractional analogue of a local
+density). Step (2) then does not rescale to a constant; instead $C_{s,\Lambda}\to
+K_s(x,y)/\sqrt{S_s(x)S_s(y)}$ pointwise and in $L^2$, and the rank limit is
+$\rho_S(\dM,-K_s/\sqrt{S_sS_s})$. The normalization by $S_s$ is exactly the row-normalization
+of the $s$-embedding; on a homogeneous space $S_s$ is constant and this reduces to
+$\rho_{G,s}$. For the inhomogeneous case the operative coefficient is the
+\emph{$S_s$-normalized} fractional Green-rank correlation, and Theorem~\ref{thm:fraclimit}
+holds with $K_s$ replaced by $K_s/\sqrt{S_s(x)S_s(y)}$; all subsequent statements carry the
+same replacement. We keep $K_s$ in the display for the homogeneous and $d/4<s\le d/2$ cases,
+where $S_{s,\Lambda}$ genuinely rescales to a constant.
+\end{remark}
+
+\section{The fractional master inequality and the Riesz parametrix}
+
+The master inequality is filter-agnostic: it used only that $-K$ is compared to a monotone
+radial profile. Restating (companion note, ``green-rank-positivity'', Theorem ``Master
+inequality''): for any strictly increasing $\Psi$ with remainder
+$\Rem_s=-K_s-\Psi\circ\dM$,
+\[
+\rho_{G,s}(M)\ \ge\ 1-3\,\mu_\Psi\!\bigl(2\lVert\Rem_s\rVert_\infty\bigr)\ \ge\
+1-12\,\phi_\Psi\lVert\Rem_s\rVert_\infty,
+\]
+with $\rho_{G,s}=1$ when $\Rem_s\equiv0$. The near-diagonal remainder is again bounded, now
+by the Riesz parametrix.
+
+\begin{lemma}[Riesz parametrix]\label{lem:riesz}
+Let $M$ be closed smooth, $\vol(M)=1$, and $s>(d-1)/2$ (a nonempty range for every $d$, and
+automatically $>d/4$ since $d>2$). Near the diagonal
+$K_s(x,y)=\gamma_{d,s}\,\dM(x,y)^{2s-d}+h_s(x,y)$ with $\gamma_{d,s}>0$ the universal Riesz
+constant and $h_s$ bounded up to the diagonal; the leading profile
+$r\mapsto\gamma_{d,s}r^{2s-d}$ (exponent $2s-d\in(-1,0)$, strictly decreasing) is radial with a
+point-independent coefficient, and it is the \emph{only} singular part---the subleading
+Hadamard corrections carry exponent $2s-d+2j\ge2s-d+2>1$ for $j\ge1$, hence are bounded even
+though their coefficients are point-dependent. When $2s\ge d$, $K_s$ is bounded (continuous,
+$2s>d$) or $-c\log\dM+$bounded ($2s=d$). In all cases $\Psi_s=-\gamma_{d,s}r^{2s-d}$ (resp.\
+the bounded/log profile), extended strictly increasing on $[r_0,\diam M]$, has finite
+$\lVert\Rem_{s}\rVert_\infty$ and finite $\phi_{\Psi_s}$.
+\end{lemma}
+
+\begin{proof}
+$K_s=\Delta^{-s}$ on the zero-mean subspace is the Riesz potential of order $2s$; it is a
+classical pseudodifferential operator of order $-2s$ with principal symbol
+$\lvert\xi\rvert_g^{-2s}$, and its kernel has the Hadamard expansion
+$K_s(x,y)=\sum_{j\ge0}c_j(x,y)\dM(x,y)^{2s-d+2j}+(\text{smooth})$ with $c_0=\gamma_{d,s}$ the
+universal Euclidean Riesz constant (the metric is Euclidean to second order in normal
+coordinates) and $c_j$ smooth for $j\ge1$. The restriction $s>(d-1)/2$ makes $2s-d>-1$, so
+every $j\ge1$ term has exponent $2s-d+2j>1$ and is bounded up to the diagonal (with bounded,
+point-dependent coefficient); thus only $c_0\dM^{2s-d}$ is singular, and
+$h_s:=K_s-\gamma_{d,s}\dM^{2s-d}$ is bounded. Hence $\Rem_s=-K_s-\Psi_s\circ\dM=-h_s$ near the
+diagonal, bounded; off the diagonal both $K_s$ and $\Psi_s\circ\dM$ are bounded. Finiteness of
+$\phi_{\Psi_s}$ is the change-of-variables computation of the companion note with exponent
+$2s-d$ in place of $2-d$: $\Psi_s'\asymp r^{2s-d-1}$ and $f_W\asymp r^{d-1}$ give density
+$\asymp r^{2(d-s)}$, which $\to0$ at $r\to0$ for $s<d$, and is bounded on $[r_0,\diam M]$.
+\end{proof}
+
+\begin{theorem}[Fractional near-radial positivity]\label{thm:fracnear}
+Let $s>(d-1)/2$. With $\Psi_s$ the Riesz profile of Lemma~\ref{lem:riesz} (a \emph{single}
+fixed profile, both $\phi_{\Psi_s}$ and $\lVert\Rem_s\rVert_\infty$ finite),
+$\rho_{G,s}(M)\ge1-12\,\phi_{\Psi_s}\lVert\Rem_s\rVert_\infty$, so $\rho_{G,s}(M)>0$ whenever
+$\phi_{\Psi_s}\lVert\Rem_s\rVert_\infty<1/12$; and by Theorem~\ref{thm:fraclimit} the
+$s$-filtered angular ranking is then uniform-in-mode-count rank-faithful. The perturbative
+openness argument (companion reductions note) transfers with $\mu_k^{-1}\to\mu_k^{-s}$---its
+spectral-tail step now requires $\sum_k\mu_k^{-2s}<\infty$ (i.e.\ $s>d/4$), the resolvent
+contour weight becomes $z^{-s}$ (holomorphic off the negative axis, with $0$ excluded), and
+atomlessness of the $K_s$-pair law is assumed as in Theorem~\ref{thm:fraclimit}---so
+$\rho_{G,s}>0$ on a $C^2$-open set of metrics containing the exact cases of \S4.
+\end{theorem}
+
+\section{Two-point homogeneous spaces, all dimensions, via subordination}
+
+The one place the fractional story is \emph{cleaner} than the commute case is the exact
+computation: there is no local Laplace ODE for $\Delta^{-s}$, but subordination to the heat
+semigroup supplies strict monotonicity in every dimension at once.
+
+\begin{theorem}[Fractional Green-rank $=1$ on rank-one symmetric spaces]\label{thm:twopoint}
+Let $M$ be a compact two-point homogeneous space (a sphere $S^d$, or a projective space
+$\mathbb{RP}^d,\mathbb{CP}^d,\mathbb{HP}^d,\mathbb{OP}^2$) of any dimension, $\vol(M)=1$, and
+let $s>0$. Then $K_s(x,y)=k_s(\dM(x,y))$ with $k_s$ strictly decreasing on
+$(0,\diam M)$; hence $\rho_{G,s}(M)=1$, and the $S_s$-normalized coefficient of the Remark
+is likewise $1$. In particular, for every $d$ and every admissible $s>d/4$, Angular
+Preservation (fractional-filter rank form) holds on these spaces, uniformly in the mode
+count.
+\end{theorem}
+
+\begin{proof}
+By subordination, for $s>0$ and $\lambda>0$, $\lambda^{-s}=\frac1{\Gamma(s)}\int_0^\infty
+t^{s-1}e^{-\lambda t}\,dt$; applied to $\Delta$ on the zero-mean subspace,
+\[
+K_s(x,y)=\frac1{\Gamma(s)}\int_0^\infty t^{s-1}\bigl(p_t(x,y)-1\bigr)\,dt,
+\]
+where $p_t$ is the heat kernel and the $-1$ removes the constant mode ($\vol M=1$). Two-point
+homogeneity makes $p_t$ a function of geodesic distance, $p_t(x,y)=P_t(\dM(x,y))$, and on a
+compact two-point homogeneous space $P_t$ is \emph{strictly decreasing} in the distance for
+every $t>0$. This is the one genuinely analytic input; we justify it by the parabolic maximum
+principle rather than by citation. Writing the radial heat equation
+$\partial_tP=\partial_r^2P+m(r)\,\partial_rP$ with $m=A'/A$ the log-derivative of the
+geodesic-sphere area density---on a rank-one symmetric space
+$m(r)=\sum(\mathrm{mult})\cdot\tfrac{\alpha}{2}\cot\tfrac{\alpha r}{2}$, strictly
+decreasing---the radial derivative $v:=\partial_rP_t$ solves
+$\partial_tv=\partial_r^2v+m\,\partial_rv+m'(r)\,v$ with $v=0$ at the pole and the antipodal
+focal set and $m'(r)<0$. Since $v<0$ for small $t$ (the kernel is a decreasing peak) and the
+lower-order coefficient $m'$ is negative, the strong parabolic maximum principle keeps $v<0$
+on the open interval $(0,\diam M)$ for all $t>0$ (individual zonal harmonics oscillate, but
+the heat-weighted sum does not). Differentiating $K_s$ under the integral,
+which is justified because $\partial_r P_t(r)$ is integrable against $t^{s-1}$ (small-$t$
+Gaussian decay $\partial_rP_t=O(t^{-d/2-1}re^{-r^2/4t})$ times $t^{s-1}$ is integrable at
+$0$ for $r>0$; large-$t$ exponential relaxation $\lvert\partial_rP_t\rvert\le Ce^{-\mu_1 t}$
+times $t^{s-1}$ is integrable at $\infty$),
+\[
+k_s'(r)=\frac1{\Gamma(s)}\int_0^\infty t^{s-1}\,\partial_r P_t(r)\,dt\ <\ 0
+\qquad(0<r<\diam M),
+\]
+since $t^{s-1}>0$ and $\partial_rP_t(r)<0$ for every $t>0$. Thus $-K_s$ is a strictly
+increasing function of $\dM$, the pair $(\dM,-K_s)$ is comonotone, and $\rho_{G,s}=1$.
+Normalizing by the constant diagonal $S_s$ (homogeneous space) does not change ranks.
+\end{proof}
+
+\begin{remark}[What this settles]
+Theorem~\ref{thm:twopoint} removes the dimension ceiling from the exact case: the fractional
+Green-rank coefficient is $1$ on all rank-one symmetric spaces in \emph{every} dimension, for
+every $s>0$---strictly stronger than the $s=1$, $d\le3$ corollary of Paper~I, and proved by a
+different (subordination) route that never needs Hilbert--Schmidt stability. Combined with
+Theorem~\ref{thm:fraclimit} ($s>d/4$) and Theorem~\ref{thm:fracnear} (openness), the reduction
+of Angular Preservation to Green-rank positivity now holds in all dimensions with the
+fractional filter, and its exact anchor---value $1$ on the symmetric spaces---is dimension-free.
+The residual open problem is the same shape as before, one level up: fractional-Green-rank
+positivity $\rho_{G,s}(M)>0$ for general $M$, with the near-radial class of
+Theorem~\ref{thm:fracnear} as the proven interior.
+\end{remark}
+
