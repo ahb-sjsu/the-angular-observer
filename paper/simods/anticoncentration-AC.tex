@@ -1,0 +1,233 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\dM}{d_M}
+\newcommand{\NL}{N_\Lambda}
+
+\title{Discharging the anti-concentration hypothesis (AC):\\
+the modulus form, and why bounded density is the wrong one}
+\author{Working note for the ``Keep the Angle'' program}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Purpose.} The rank-transfer theorem (companion reductions note,
+``Rank transfer without bi-Lipschitz hypotheses'') assumes an anti-concentration
+hypothesis to control the fraction of near-tied comparisons. It was stated as
+\emph{bounded density}:
+\[
+\text{(AC)}\qquad \kappa_\Lambda:=\sup_{x\in M}\bigl\lVert\text{density of }V(x,Y)\bigr\rVert_\infty<\infty,
+\qquad V(x,y):=\lVert\NL(x)-\NL(y)\rVert,
+\]
+$Y$ drawn from the sampling density. This note does two things. First, it shows that
+(AC) as bounded density is \emph{generically false} in dimension $2$: a nondegenerate
+saddle of $V(x,\cdot)$ forces a logarithmic divergence of the density. Second, it proves
+the \emph{modulus} form that the transfer theorem actually consumes---and it is the
+correct hypothesis, exactly as the reductions note anticipated (``bounded density is the
+simplest sufficient form, not the needed one''). For real-analytic metrics the modulus
+form holds unconditionally, by a uniform \L ojasiewicz sublevel estimate, so (AC) is
+discharged on the standard examples (tori, spheres, projective and homogeneous spaces,
+and their real-analytic deformations). Notation follows the reductions note; the cutoff
+$\Lambda$ is fixed and multiplet-closed, and $\NL$ is the normalized truncated
+commute-weighted eigenmap.
+
+\section{Bounded density is the wrong hypothesis}
+
+Fix $x$ and consider $V(x,\cdot):M\to[0,2]$, $V(x,y)^2=2-2C_\Lambda(x,y)$ with
+$C_\Lambda(x,y)=\langle\NL(x),\NL(y)\rangle$. At a fixed cutoff $\NL$ is a smooth map,
+so $V(x,\cdot)$ is smooth, and its pushforward density is governed by the coarea formula
+\begin{equation}\label{eq:coarea}
+f_{V(x,\cdot)}(t)=\int_{\{V(x,\cdot)=t\}}\frac{\rho(y)}{\lvert\nabla_y V(x,y)\rvert}\,d\mathcal H^{d-1}(y),
+\end{equation}
+$\rho$ the sampling density. The integrand blows up where $\nabla_y V=0$, i.e.\ at
+critical points of $V(x,\cdot)$, and whether \eqref{eq:coarea} stays bounded is decided
+by the \emph{type} of those critical points.
+
+\begin{proposition}[Saddles break bounded density in $d=2$]\label{prop:saddle}
+Let $d=2$ and suppose $V(x,\cdot)$ has a nondegenerate (Morse) saddle at some
+$y_0\ne x$, with $V(x,y_0)=t_0$ and $\rho(y_0)>0$. Then $f_{V(x,\cdot)}(t)\to\infty$ as
+$t\to t_0$; indeed $f_{V(x,\cdot)}(t)\ge c\log\frac1{\lvert t-t_0\rvert}$ near $t_0$. In
+particular $\kappa_\Lambda=\infty$, so (AC) as bounded density fails.
+\end{proposition}
+
+\begin{proof}
+In Morse coordinates $V(x,\cdot)=t_0+\tfrac12(\xi_1^2-\xi_2^2)+o(\lvert\xi\rvert^2)$ near
+$y_0$, so level sets near $t_0$ are hyperbolas $\xi_1^2-\xi_2^2=2(t-t_0)$ and
+$\lvert\nabla V\rvert\asymp\lvert\xi\rvert$. Integrating $\lvert\xi\rvert^{-1}$ along a
+level hyperbola over a fixed coordinate neighborhood gives a contribution
+$\asymp\int^{}\!\frac{d\ell}{\lvert\xi\rvert}\asymp\log\frac1{\lvert t-t_0\rvert}$ (the
+standard logarithmic saddle divergence of the density of states). With $\rho(y_0)>0$ the
+weight is bounded below, so $f_{V(x,\cdot)}(t)\gtrsim\log\frac1{\lvert t-t_0\rvert}$.
+\end{proof}
+
+Saddles are forced on positive genus: on a closed surface with Euler characteristic
+$\chi\le0$ (genus $\ge1$), $\#\mathrm{min}-\#\mathrm{saddle}+\#\mathrm{max}=\chi$ with
+$\#\mathrm{min},\#\mathrm{max}\ge1$ gives $\#\mathrm{saddle}\ge2-\chi\ge2$, so a Morse
+$V(x,\cdot)$ always has saddles and bounded density fails---in particular on the flat tori
+of the paper's torus experiments. (On $S^2$, $\chi=2$ permits a saddle-free height-type
+$V$; and on the round sphere $V(x,\cdot)=h(\dM(x,\cdot))$ is non-Morse, with degenerate
+critical \emph{circles} where bounded density can still fail through a distinct mechanism,
+but is not forced by Morse theory. So the failure is not universal---it is guaranteed
+exactly where Morse theory forces saddles, $\chi\le0$.) Where it occurs the divergence is
+only logarithmic, so the \emph{measure} of near-tied pairs is still
+$O(\varepsilon\log\frac1\varepsilon)$; the transfer theorem, which needs only that measure,
+is unharmed. This is precisely why the modulus form below is the right object.
+
+\section{The modulus form, and what the transfer theorem needs}
+
+\begin{definition}[(AC$'$), modulus form]
+$\NL$ satisfies \emph{(AC$'$)} with modulus $\omega$ if $\omega:[0,\infty)\to[0,\infty)$
+is nondecreasing with $\omega(0^+)=0$ and
+\[
+\sup_{x\in M}\ \sup_{t\in\mathbb R}\ \mathbb P_Y\bigl(\lvert V(x,Y)-t\rvert\le\varepsilon\bigr)\ \le\ \omega(\varepsilon)
+\qquad\text{for all }\varepsilon>0 .
+\]
+\end{definition}
+
+\begin{lemma}[(AC$'$) is what the transfer proof uses]\label{lem:acprime}
+In the proof of the rank-transfer theorem, every appearance of (AC) may be replaced by
+(AC$'$): the flip-fraction bound becomes $\mathbb E f_n\le\omega(2\bar\varepsilon_n)$
+(disjoint and anchor-sharing pairs-of-pairs alike), and the conclusion holds with the
+error term $C\kappa_\Lambda\bar\varepsilon_n$ replaced by $\omega(2\bar\varepsilon_n)$.
+Consequently the rank correlations satisfy
+$\widehat\tau_K,\widehat\rho_S\ge\tau_\star,\rho_\star-C\,\omega(2\bar\varepsilon_n)-o_P(1)$,
+and the transfer holds whenever $\omega(2\bar\varepsilon_n)\to0$.
+\end{lemma}
+
+\begin{proof}
+The only role of (AC) in the transfer proof is Step~2, which bounds, for a pair-of-pairs
+$\{P,Q\}$, the probability $\mathbb P(\lvert V_P-V_Q\rvert\le2\bar\varepsilon_n)$. For
+vertex-disjoint $\{P,Q\}$, condition on $V_Q=t$ and apply the inner bound to
+$V_P=V(X,Y)$: averaging \eqref{eq:coarea}'s tail,
+$\mathbb P(\lvert V_P-t\rvert\le2\bar\varepsilon_n)\le\sup_{x,t}\mathbb P_Y(\lvert V(x,Y)-t\rvert\le2\bar\varepsilon_n)\le\omega(2\bar\varepsilon_n)$
+by (AC$'$) after further conditioning on the free endpoint of $P$. For anchor-sharing
+$P=(x_i,x_j),Q=(x_i,x_k)$, condition on $x_i$ and $V_Q$: given $x_i$, $V_P=V(x_i,x_j)$
+with $x_j$ independent, and (AC$'$) at the anchor $x_i$ gives the same bound---this is
+exactly the uniform-in-$x$ (equivalently uniform-in-anchor) form. Hence
+$\mathbb E f_n\le\omega(2\bar\varepsilon_n)$, and Markov + the Diaconis--Graham/Spearman
+conversion of Step~1 carry the rest verbatim.
+\end{proof}
+
+\section{(AC$'$) holds for real-analytic metrics}
+
+\begin{theorem}[Uniform \L ojasiewicz modulus]\label{thm:loja}
+Let $M$ be a closed real-analytic Riemannian manifold and $\Lambda$ a fixed
+multiplet-closed cutoff for which $\NL$ separates points (so $V(x,\cdot)$ is non-constant
+for every $x$; this holds past the immersion threshold). Assume the sampling density
+$\rho$ is bounded. Then there are constants $C_\Lambda<\infty$ and
+$\theta_\Lambda\in(0,1]$, depending only on $(M,\Lambda)$, with
+\[
+\sup_{x\in M}\ \sup_{t\in\mathbb R}\ \vol\bigl\{y:\lvert V(x,y)-t\rvert\le\varepsilon\bigr\}\ \le\ C_\Lambda\,\varepsilon^{\theta_\Lambda}
+\qquad(\varepsilon>0),
+\]
+so (AC$'$) holds with $\omega(\varepsilon)=\lVert\rho\rVert_\infty C_\Lambda\varepsilon^{\theta_\Lambda}$.
+In particular $\omega(2\bar\varepsilon_n)=O(\bar\varepsilon_n^{\theta_\Lambda})\to0$, and
+by Lemma~\ref{lem:acprime} the rank-transfer theorem holds with (AC) discharged.
+\end{theorem}
+
+\begin{proof}
+On a real-analytic manifold with a real-analytic metric the Laplace eigenfunctions are
+real-analytic (elliptic regularity for operators with real-analytic coefficients), so the
+finite combinations $G_\Lambda(x,\cdot)=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}\varphi_k(x)\varphi_k(\cdot)$
+and $S_\Lambda=G_\Lambda(\cdot,\cdot)$ are real-analytic, and hence so is
+\[
+u_x(y):=V(x,y)^2=2-\frac{2G_\Lambda(x,y)}{\sqrt{S_\Lambda(x)S_\Lambda(y)}} ,
+\]
+jointly real-analytic in $(x,y)\in M\times M$ (the denominator is bounded below: $S_\Lambda>0$
+since $\Lambda$ exceeds the first nonzero eigenvalue). For each fixed $x$, $u_x$ is a
+non-constant real-analytic function on the compact $M$ (non-constant because $\NL$
+separates points), so by the \L ojasiewicz sublevel-set volume estimate there are
+$C(x),\theta(x)$ with $\vol\{\lvert u_x-s\rvert\le\delta\}\le C(x)\delta^{\theta(x)}$
+uniformly in $s$.
+
+For the uniformity over $x$ we do not appeal to semicontinuity of the exponent (which is
+not, in general, enough to keep both $\theta(x)$ bounded below and $C(x)$ bounded above);
+instead we use o-minimality. Consider the joint concentration function
+\[
+\mathcal G(x,\delta):=\sup_s\vol\bigl\{y:\lvert u_x(y)-s\rvert\le\delta\bigr\}.
+\]
+Since $(x,y)\mapsto u_x(y)$ is real-analytic on the compact $M\times M$, the fiber volume
+of the subanalytic family $\{(x,y,s):\lvert u_x(y)-s\rvert\le\delta\}$ is a log-analytic
+function of its parameters (Comte--Lion--Rolin), hence $\mathcal G$ is definable in the
+o-minimal structure $\mathbb R_{\mathrm{an},\exp}$; and $\mathcal G(x,0)=0$ for every $x$,
+because each non-constant real-analytic $u_x$ has null level sets. The o-minimal
+\L ojasiewicz inequality, applied on the compact base $M\times[0,\delta_0]$ to the
+definable $\mathcal G\ge0$ vanishing on the definable set $\{\delta=0\}$, yields a single
+$\theta_\Lambda\in(0,1]$ and $C_\Lambda<\infty$ with
+$\mathcal G(x,\delta)\le C_\Lambda\,\delta^{\theta_\Lambda}$ uniformly in $x$; that is,
+$\sup_x\sup_s\vol\{\lvert u_x-s\rvert\le\delta\}\le C_\Lambda\delta^{\theta_\Lambda}$.
+
+Transfer to $V=\sqrt{u}$. On $\{V\ge t_1>0\}$ the map $u\mapsto\sqrt u$ is bi-Lipschitz,
+so $\{\lvert V-t\rvert\le\varepsilon\}\subseteq\{\lvert u-t^2\rvert\le C'\varepsilon\}$ for
+$t\ge t_1$ and $\vol\le C_\Lambda(C'\varepsilon)^{\theta_\Lambda}$. Near $V=0$
+($t<t_1$): $V=0$ only where $\NL(y)=\NL(x)$; since $\NL$ separates points this is the
+single point $y=x$ (or a subanalytic set of dimension $<d$, hence measure zero), and the
+sublevel $\{V\le t_1\}$ has $\vol\{\lvert V-t\rvert\le\varepsilon\}\le\vol\{u\le(t_1+\varepsilon)^2\}
+\le C_\Lambda(t_1+\varepsilon)^{2\theta_\Lambda}$; choosing $t_1\asymp\varepsilon^{1/2}$
+absorbs this into the same power law up to a constant. Multiplying by
+$\lVert\rho\rVert_\infty$ converts volume to probability, giving (AC$'$) with
+$\omega(\varepsilon)=\lVert\rho\rVert_\infty C_\Lambda\varepsilon^{\theta_\Lambda}$
+(after adjusting $C_\Lambda$). The transfer-theorem consequence is Lemma~\ref{lem:acprime}.
+\end{proof}
+
+\begin{remark}[The exponent, and the two mitigations retained]
+$\theta_\Lambda$ is the reciprocal of the worst \L ojasiewicz multiplicity of the family
+$\{u_x\}$; for Morse $u_x$ one has $\theta_\Lambda=1$ in $d\ge3$ and $\theta_\Lambda=1$
+away from saddles with a logarithmic correction at saddle values in $d=2$ (matching
+Proposition~\ref{prop:saddle}: the modulus is $\varepsilon\log(1/\varepsilon)$ there, still
+$\to0$). Both mitigations noted in the reductions note survive and are strengthened: (i)
+$\omega$ is directly measurable per substrate (estimate the empirical modulus of sampled
+$V$-values), turning (AC$'$) into a per-instance certificate with a proven a-priori form on
+analytic geometries; (ii) only $\omega(2\bar\varepsilon_n)\to0$ is needed, and
+$\omega(\varepsilon)=C\varepsilon^{\theta}$ delivers a definite convergence \emph{rate}
+$O(\bar\varepsilon_n^{\theta_\Lambda})$, sharper than the qualitative statement.
+\end{remark}
+
+\begin{remark}[Growing cutoff]
+Theorem~\ref{thm:loja} is at fixed $\Lambda$; the constant $C_\Lambda$ degrades as
+$\Lambda\to\infty$ because the angular distances concentrate at $\sqrt2$. Quantitatively
+the density scale is $\kappa_\Lambda\asymp A_\Lambda$ (reductions note, Remark on the
+growing window), i.e.\ $\omega_\Lambda(\varepsilon)\asymp A_\Lambda\varepsilon$ in the
+regime where the Morse structure is nondegenerate, so
+$\omega_\Lambda(2\bar\varepsilon_n)\asymp A_\Lambda\bar\varepsilon_n\asymp E_n\sqrt{A_m}$
+(using $\bar\varepsilon_n=4E_n/\rho^-_\Lambda$ and $\rho^-_\Lambda\asymp\sqrt{A_\Lambda}$).
+This reproduces the sharpened growing-window threshold $E_n\sqrt{A_m}\to0$ a third time---%
+now from the analytic-modulus side---consistent with the kernel-rescaling and
+anti-concentration-counting derivations already on record.
+\end{remark}
+
+\section{Imported facts}
+(1) Elliptic regularity with real-analytic coefficients: eigenfunctions of the
+Laplace--Beltrami operator on a real-analytic Riemannian manifold are real-analytic
+(Morrey--Nirenberg). (2) \L ojasiewicz sublevel-set volume estimate: for a non-constant
+real-analytic $f$ on a compact set, $\vol\{\lvert f-s\rvert\le\delta\}\le C\delta^\theta$
+with $\theta\in(0,1]$, uniformly in $s$ over a compact range. (2$'$) Uniformity over a
+compact real-analytic family via o-minimality: fiber volumes of subanalytic families are
+log-analytic, hence definable in $\mathbb R_{\mathrm{an},\exp}$ (Comte--Lion--Rolin, \emph{Comptes
+Rendus} 2000; van den Dries--Miller, o-minimality), and the o-minimal \L ojasiewicz
+inequality gives a single exponent and constant uniformly over the compact base
+(van den Dries, \emph{Tame Topology and O-minimal Structures}). (3) The
+coarea formula (Federer). (4) The rank-transfer theorem and its Diaconis--Graham/Hoeffding
+machinery (reductions note), into which (AC$'$) plugs by Lemma~\ref{lem:acprime}.
+
+\medskip
+\noindent\textbf{Open.} A \emph{smooth} (non-analytic) metric can in principle have a
+positive-measure level set of $V(x,\cdot)$ (a plateau), which would create an atom and
+break even (AC$'$); ruling this out for smooth metrics---or exhibiting it---is the residual
+question. It does not arise on any manifold in the paper's examples, all real-analytic. A
+second refinement: an effective $\theta_\Lambda$ in terms of the eigenvalue gaps and
+$\lVert\varphi_k\rVert_{C^2}$, which would make the convergence rate explicit rather than
+merely positive.
+
+\end{document}
