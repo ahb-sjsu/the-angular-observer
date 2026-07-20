@@ -6,13 +6,11 @@ question to Green-rank positivity. At $d=4$ the commute Green kernel
 $G=\sum_k\mu_k^{-1}\varphi_k\otimes\varphi_k$ ceases to be Hilbert--Schmidt
 ($\sum_k\mu_k^{-2}=\infty$ by Weyl's law $\mu_k\asymp k^{2/d}$), so the limit step fails.
 Paper~I flags the remedy---a stronger filter $\mu_k^{-s/2}$, $s>d/4$---and the first
-question, monotonicity of the fractional Green kernel on two-point homogeneous spaces. This
-note carries the entire chain up one level to the fractional filter and, using
+question, monotonicity of the fractional Green kernel on two-point homogeneous spaces. This Part carries the entire chain up one level to the fractional filter and, using
 heat-kernel subordination, proves the two-point homogeneous case \emph{in every dimension},
 so that the reduction ``Angular Preservation $\Leftarrow$ fractional-Green-rank positivity''
 holds for all $d$, with the geometric coefficient equal to $1$ on the rank-one symmetric
-spaces regardless of dimension. Notation follows Paper~I, the Green-kernel rank-limit note,
-and the companion note ``green-rank-positivity''.
+spaces regardless of dimension. Notation follows Paper~I and \S\ref{sec:positivity}.
 
 \section{The fractional filter and Hilbert--Schmidt stability}
 
@@ -91,8 +89,7 @@ where $S_{s,\Lambda}$ genuinely rescales to a constant.
 \section{The fractional master inequality and the Riesz parametrix}
 
 The master inequality is filter-agnostic: it used only that $-K$ is compared to a monotone
-radial profile. Restating (companion note, ``green-rank-positivity'', Theorem ``Master
-inequality''): for any strictly increasing $\Psi$ with remainder
+radial profile. Restating (\S\ref{sec:positivity}, Theorem~\ref{thm:master}): for any strictly increasing $\Psi$ with remainder
 $\Rem_s=-K_s-\Psi\circ\dM$,
 \[
 \rho_{G,s}(M)\ \ge\ 1-3\,\mu_\Psi\!\bigl(2\lVert\Rem_s\rVert_\infty\bigr)\ \ge\
@@ -126,7 +123,7 @@ every $j\ge1$ term has exponent $2s-d+2j>1$ and is bounded up to the diagonal (w
 point-dependent coefficient); thus only $c_0\dM^{2s-d}$ is singular, and
 $h_s:=K_s-\gamma_{d,s}\dM^{2s-d}$ is bounded. Hence $\Rem_s=-K_s-\Psi_s\circ\dM=-h_s$ near the
 diagonal, bounded; off the diagonal both $K_s$ and $\Psi_s\circ\dM$ are bounded. Finiteness of
-$\phi_{\Psi_s}$ is the change-of-variables computation of the companion note with exponent
+$\phi_{\Psi_s}$ is the change-of-variables computation of \S\ref{sec:positivity} with exponent
 $2s-d$ in place of $2-d$: $\Psi_s'\asymp r^{2s-d-1}$ and $f_W\asymp r^{d-1}$ give density
 $\asymp r^{2(d-s)}$, which $\to0$ at $r\to0$ for $s<d$, and is bounded on $[r_0,\diam M]$.
 \end{proof}
@@ -137,7 +134,7 @@ fixed profile, both $\phi_{\Psi_s}$ and $\lVert\Rem_s\rVert_\infty$ finite),
 $\rho_{G,s}(M)\ge1-12\,\phi_{\Psi_s}\lVert\Rem_s\rVert_\infty$, so $\rho_{G,s}(M)>0$ whenever
 $\phi_{\Psi_s}\lVert\Rem_s\rVert_\infty<1/12$; and by Theorem~\ref{thm:fraclimit} the
 $s$-filtered angular ranking is then uniform-in-mode-count rank-faithful. The perturbative
-openness argument (companion reductions note) transfers with $\mu_k^{-1}\to\mu_k^{-s}$---its
+openness argument (\S\ref{sec:reductions}) transfers with $\mu_k^{-1}\to\mu_k^{-s}$---its
 spectral-tail step now requires $\sum_k\mu_k^{-2s}<\infty$ (i.e.\ $s>d/4$), the resolvent
 contour weight becomes $z^{-s}$ (holomorphic off the negative axis, with $0$ excluded), and
 atomlessness of the $K_s$-pair law is assumed as in Theorem~\ref{thm:fraclimit}---so

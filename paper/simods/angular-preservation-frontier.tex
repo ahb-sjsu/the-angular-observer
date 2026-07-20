@@ -51,8 +51,8 @@ positivity to a single scale-invariant index of the Green kernel, via a master i
 $\rho_G\ge1-12\,\phi\lVert R\rVert_\infty$ and its distributional refinement
 $\rho_G\ge1-18(\phi^2V)^{1/3}$; (iv) bound that index geometrically, identifying it with the
 \emph{within-shell variance of the heat kernel}---which vanishes on two-point homogeneous
-spaces, is finite exactly for $d\le3$, and yields a quantitative $\eta^{2/3}$ perturbative
-openness rate---leaving one named curvature-anisotropy amplitude as the sole non-explicit
+spaces and yields a quantitative $\eta^{2/3}$ perturbative openness rate---leaving one named
+curvature-anisotropy amplitude as the sole non-explicit
 constant; and (v) carry the whole chain past the critical dimension via a fractional filter,
 proving the exact symmetric-space anchor ($\rho_G=1$) in \emph{every} dimension by heat-kernel
 subordination. A numerical counterexample hunt across four geometry families (the public
@@ -60,17 +60,22 @@ repository) finds none. Green-rank positivity is thereby proved on an increasing
 explicit classes and reduced, in general, to one geometric quantity.
 
 \smallskip
-\noindent\emph{Verification note.} The results were developed and checked under a
-registration-and-independent-verification discipline: every theorem carries a written proof
-and a fresh-context adversarial re-derivation, and that process caught and corrected several
-errors during preparation. This is not a substitute for human refereeing or machine-checked
-proof, and the heat-kernel bound of \S\ref{sec:l2}, in particular, would benefit from an
-expert reading; statements are made at the confidence their verification supports.
+\noindent\emph{Disclosure and verification.} Stated plainly: this work was developed with
+substantial assistance from an AI system (a large language model), and its internal checking
+was performed by fresh-context adversarial re-derivations run on the same class of system. That
+process caught and corrected numerous errors in preparation, and an expert human review has
+since been solicited and its corrections incorporated (including a retraction of a false
+$d=4$ ``coincidence'' and repairs still in progress on the perturbative and subordination
+arguments of \S\ref{sec:l2} and \S\ref{sec:fractional}). AI-assisted verification is
+\emph{not} a substitute for human refereeing or machine-checked proof; the differential-geometry
+of \S\S\ref{sec:l2}--\ref{sec:fractional} in particular is offered for expert scrutiny.
+Statements are made at the confidence their verification supports, and the author owns every
+claim.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
 
-Paper~I (``Keep the Angle'') shows that the geometry a large graph Laplacian appears to lose
+Paper~I (``Keep the Angle''~\cite{keeptheangle}) shows that the geometry a large graph Laplacian appears to lose
 to the commute-time collapse survives in the \emph{angular} coordinate of the spectral
 embedding, and conjectures \emph{Angular Preservation}: row-normalization keeps pairwise
 angular distances rank-faithful to geodesic distance, uniformly in the mode count. For
@@ -115,8 +120,10 @@ Two-point homogeneous spaces are the exact ($R\equiv0$) anchor.
 \item \textbf{Part~\ref{sec:l2} (the geometric bound).} We identify the $L^2$ non-radiality
 with the \emph{within-distance-shell variance of the Green kernel}, and via the heat
 representation with the integrated shell-variance of the heat kernel: it vanishes on
-two-point homogeneous spaces, is finite \emph{exactly} for $d\le3$ (the same critical
-dimension four, now as an integrability threshold), has an explicit spectral-gap tail, and is
+two-point homogeneous spaces, is finite for $d<8$ (the shell-centered part scaling as
+$t^{1-d/4}$; the operative $d\le3$ comes from the Hilbert--Schmidt/rank-limit step, \emph{not}
+the shell-variance---a point corrected from an earlier over-claim), has an explicit
+spectral-gap tail, and is
 $O(\lVert g-g_0\rVert_{C^2}^2)$ near any symmetric metric---so $\rho_G\ge1-C\eta^{2/3}\to1$, a
 \emph{quantitative} form of Paper~I's qualitative openness. One named curvature-anisotropy
 amplitude remains the sole non-explicit constant.
@@ -153,13 +160,18 @@ in the assembled parts below refers to the other parts of this paper.
 
 \noindent\textbf{Standing facts.} The proofs draw on the following standard tools, cited at
 point of use: the level-set/coarea lemmas and \L ojasiewicz sublevel estimates
-(Evans--Gariepy; van den Dries, o-minimality; Comte--Lion--Rolin); cut-locus and heat-kernel
-regularity (Sakai; Minakshisundaram--Pleijel; the Green-function parametrix, Aubin); norm
-resolvent convergence of uniformly comparable forms (Kato); the uniform pointwise Weyl law
-(H\"ormander); the spectral-gap lower bound under a Ricci lower bound and diameter
-(Li--Yau; Zhong--Yang); Daniels' inequality and U-statistic consistency for grade
-correlations (Daniels~1950; Hoeffding~1948); and the Duhamel heat-kernel perturbation
-estimate. None is load-bearing beyond its stated role.
+(\cite{evansgariepy,vddries,vddriesmiller,bierstonemilman,comtelionrolin}); cut-locus and
+heat-kernel regularity (\cite{sakai,minpleijel}; the Green-function parametrix,
+\cite{aubin,gilkey,seeley}); elliptic regularity and analyticity of solutions
+(\cite{gilbargtrudinger,morreynirenberg}); norm resolvent convergence of uniformly comparable
+forms (\cite{kato}); the uniform pointwise Weyl law (\cite{hormander}); the spectral-gap lower
+bound under a Ricci lower bound and diameter (\cite{liyau,zhongyang}); Daniels' inequality,
+the Diaconis--Graham footrule bound, and U-statistic consistency for grade correlations
+(\cite{daniels,diaconisgraham,hoeffding}); and the Duhamel heat-kernel perturbation estimate.
+The spectral-embedding background---the commute-time collapse, row-normalization, diffusion
+maps, and truncated-eigenmap embeddings---is \cite{vonluxburg,njw,coifmanlafon,berard,bates,portegies},
+with the graph-Laplacian convergence rates of \cite{calder,gtslepcev}. None is load-bearing
+beyond its stated role.
 
 \medskip
 \noindent\textbf{What is now reduced to what.} For $d\le3$, Angular Preservation (rank form)
@@ -196,5 +208,38 @@ regimes---whether the plateau observed numerically reflects a universal lower bo
 $\rho_G\ge c>0$ for surfaces, a statement strictly stronger than positivity. (d) The general
 $d\ge4$ positivity for the fractional filter---the same question one level up, with the exact
 anchor already in hand.
+
+% NOTE: publication details below (years, volumes, venues) are given to the author's best
+% recollection and require a verification pass before submission.
+\begin{thebibliography}{99}
+\bibitem{keeptheangle} A.~H.~Bond, \emph{Keep the Angle: A Geometry-Preserving Basis in Spectral Embeddings}, companion manuscript (Paper~I).
+\bibitem{vonluxburg} U.~von~Luxburg, A.~Radl, M.~Hein, \emph{Hitting and commute times in large random neighborhood graphs}, J.~Mach.\ Learn.\ Res.\ (2014).
+\bibitem{njw} A.~Y.~Ng, M.~I.~Jordan, Y.~Weiss, \emph{On spectral clustering: analysis and an algorithm}, NIPS (2002).
+\bibitem{coifmanlafon} R.~R.~Coifman, S.~Lafon, \emph{Diffusion maps}, Appl.\ Comput.\ Harmon.\ Anal.\ (2006).
+\bibitem{calder} J.~Calder, N.~Garc\'ia~Trillos, \emph{Improved spectral convergence rates for graph Laplacians on $\varepsilon$-graphs and $k$-NN graphs}, Appl.\ Comput.\ Harmon.\ Anal.\ (2022).
+\bibitem{gtslepcev} N.~Garc\'ia~Trillos, M.~Gerlach, M.~Hein, D.~Slep\v{c}ev, \emph{Error estimates for spectral convergence of the graph Laplacian on random geometric graphs}, Found.\ Comput.\ Math.\ (2020).
+\bibitem{berard} P.~B\'erard, G.~Besson, S.~Gallot, \emph{Embedding Riemannian manifolds by their heat kernel}, Geom.\ Funct.\ Anal.\ (1994).
+\bibitem{bates} J.~Bates, \emph{The embedding dimension of Laplacian eigenfunction maps}, Appl.\ Comput.\ Harmon.\ Anal.\ (2014).
+\bibitem{portegies} J.~W.~Portegies, \emph{Embeddings of Riemannian manifolds with heat kernels and eigenfunctions}, Comm.\ Pure Appl.\ Math.\ (2016).
+\bibitem{evansgariepy} L.~C.~Evans, R.~F.~Gariepy, \emph{Measure Theory and Fine Properties of Functions}, CRC Press.
+\bibitem{sakai} T.~Sakai, \emph{Riemannian Geometry}, Transl.\ Math.\ Monogr., Amer.\ Math.\ Soc.
+\bibitem{kato} T.~Kato, \emph{Perturbation Theory for Linear Operators}, Springer.
+\bibitem{hormander} L.~H\"ormander, \emph{The spectral function of an elliptic operator}, Acta Math.\ (1968).
+\bibitem{liyau} P.~Li, S.-T.~Yau, \emph{On the parabolic kernel of the Schr\"odinger operator}, Acta Math.\ (1986).
+\bibitem{zhongyang} J.-Q.~Zhong, H.-C.~Yang, \emph{On the estimate of the first eigenvalue of a compact Riemannian manifold}, Sci.\ Sinica Ser.\ A (1984).
+\bibitem{aubin} T.~Aubin, \emph{Some Nonlinear Problems in Riemannian Geometry}, Springer.
+\bibitem{gilbargtrudinger} D.~Gilbarg, N.~S.~Trudinger, \emph{Elliptic Partial Differential Equations of Second Order}, Springer.
+\bibitem{minpleijel} S.~Minakshisundaram, {\AA}.~Pleijel, \emph{Some properties of the eigenfunctions of the Laplace operator on Riemannian manifolds}, Canad.\ J.\ Math.\ (1949).
+\bibitem{seeley} R.~T.~Seeley, \emph{Complex powers of an elliptic operator}, Proc.\ Sympos.\ Pure Math.\ (1967).
+\bibitem{gilkey} P.~B.~Gilkey, \emph{Invariance Theory, the Heat Equation, and the Atiyah--Singer Index Theorem}, CRC Press.
+\bibitem{morreynirenberg} C.~B.~Morrey, L.~Nirenberg, \emph{On the analyticity of the solutions of linear elliptic systems of PDEs}, Comm.\ Pure Appl.\ Math.\ (1957).
+\bibitem{comtelionrolin} G.~Comte, J.-M.~Lion, J.-P.~Rolin, \emph{Nature log-analytique du volume des sous-analytiques}, C.~R.\ Acad.\ Sci.\ Paris (2000).
+\bibitem{vddries} L.~van~den~Dries, \emph{Tame Topology and O-minimal Structures}, Cambridge Univ.\ Press (1998).
+\bibitem{vddriesmiller} L.~van~den~Dries, C.~Miller, \emph{Geometric categories and o-minimal structures}, Duke Math.\ J.\ (1996).
+\bibitem{bierstonemilman} E.~Bierstone, P.~D.~Milman, \emph{Semianalytic and subanalytic sets}, Publ.\ Math.\ IH\'ES (1988).
+\bibitem{daniels} H.~E.~Daniels, \emph{Rank correlation and population models}, J.~Roy.\ Statist.\ Soc.\ Ser.\ B (1950).
+\bibitem{hoeffding} W.~Hoeffding, \emph{A class of statistics with asymptotically normal distribution}, Ann.\ Math.\ Statist.\ (1948).
+\bibitem{diaconisgraham} P.~Diaconis, R.~L.~Graham, \emph{Spearman's footrule as a measure of disarray}, J.~Roy.\ Statist.\ Soc.\ Ser.\ B (1977).
+\end{thebibliography}
 
 \end{document}
