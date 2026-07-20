@@ -2,13 +2,14 @@
 
 \usepackage{amssymb}
 \usepackage{booktabs}
-\usepackage{xcolor}
-
-\newcommand{\rev}[1]{#1}
+\setlength{\emergencystretch}{3em}
 
 \newsiamthm{conjecture}{Conjecture}
 \newsiamremark{remark}{Remark}
 \graphicspath{{figures/}}
+
+% Cross-reference the supplement so cross-refs to its SM-numbered proofs resolve.
+\externaldocument[][nocite]{supplement}
 
 \title{Keep the Angle: A Geometry-Preserving Basis in Spectral Embeddings}
 \author{Andrew H. Bond\thanks{Department of Computer Engineering, San Jos\'e
@@ -38,11 +39,13 @@ deterministic angular-transfer theorem, a conditional graph-to-manifold result
 Calder, Garc\'ia Trillos, and Lewicka), and an \emph{unconditional} bi-Lipschitz
 statement on the flat torus. The radial claim is stated at three levels: proved
 for the full embedding at intrinsic dimension $d\ge3$, empirical for the
-truncated radius the algorithm computes, and borderline at $d=2$. Empirically the
-angular representation is substrate-robust---across random-geometric lattices,
-manifold samples, and hypergraph-rewriting graphs---and fails where geometry
-does; its fidelity shows an exploratory decreasing trend with dimension.
-Uniformity of the metric constants in the mode-count is the central open problem.
+truncated radius the algorithm computes, and borderline at $d=2$. Uniformity of
+the metric constants in the mode count fails for the commute filter, but the
+\emph{rank} form is uniform below dimension four: for $d\le3$ the angular ranking
+converges to a fixed Green-kernel ranking, exact on the circle and on two-point
+homogeneous spaces. The extended empirical program---substrate robustness across
+graph families, a manifold diagnostic, and the fidelity--dimension trend---is the
+companion Paper~I.b.
 \end{abstract}
 
 \begin{keywords}
@@ -53,7 +56,6 @@ spectral clustering, geodesic distance, intrinsic dimension, Laplacian eigenmaps
 \begin{AMS}
 05C50, 58J50, 62H30, 05C81, 68T09
 \end{AMS}
-
 
 \section{Introduction}
 Spectral embeddings---Laplacian eigenmaps \cite{belkin2003}, diffusion and
@@ -73,8 +75,6 @@ $3$D shape registration across differing samplings \cite{sharma2012}; there it i
 a sampling-robustness heuristic, and the geodesic content of the resulting
 angular distances is not analyzed. \textbf{This paper asks what row-normalization
 recovers of the graph's geodesic structure, and why.}
-% given Schiebinger--Wainwright--Yu (2015); the framing is now "cluster theory
-% exists, geodesic theory is ours."
 
 Our answer is a clean decomposition. Write each node's low-mode embedding in polar
 form, magnitude $\times$ direction. The \emph{magnitude} is the truncated,
@@ -83,7 +83,7 @@ for the \emph{full, unnormalized} commute embedding at $d\ge3$
 (Corollary~\ref{thm:radial}); empirically it tracks local degree
 (\S\ref{sec:verify}). The \emph{direction} carries
 the graph's geodesic geometry (after the $\alpha{=}1$ density normalization
-where sampling is strongly non-uniform, \S\ref{sec:density}). Row-normalization
+where sampling is strongly non-uniform, Paper~I.b). Row-normalization
 keeps the direction and discards
 the magnitude---so beyond its cluster-separation role it is also the
 geodesically correct projection, and its fidelity is flat in both mode-count and
@@ -91,59 +91,59 @@ graph size precisely where the raw embedding decays.
 
 The underlying operation---\emph{separate scale from direction, then keep the
 part that carries the task geometry}---recurs beyond clustering: polar-coordinate
-KV-cache quantization splits key vectors the same way \cite{polarquant2025}, and
-the recurrence is evidence for the \emph{decomposition}, not for always discarding
-the radius. Our hypotheses state the boundary exactly: discarding the magnitude is
-the right quotient precisely when the discarded radial variable is nuisance for the
-metric being preserved---the tangential-noncollapse condition (A2) of
-Theorem~\ref{thm:transfer}. For graph geodesics the radius is degree/density noise
-(Corollary~\ref{thm:radial}) and the quotient is justified.
-The empirical
-core is that the basis is \emph{substrate-robust}: it preserved geodesics
-on every graph family we tested that carries genuine low-dimensional Riemannian
-geometry, independent of how it was generated.
+KV-cache quantization splits key vectors the same way \cite{polarquant2025},
+evidence for the \emph{decomposition}, not for always discarding the radius. Our
+hypotheses fix the boundary: discarding the magnitude is the right quotient
+precisely when the radial variable is nuisance for the metric preserved---the
+tangential-noncollapse condition (A2) of Theorem~\ref{thm:transfer}---which for
+graph geodesics holds, the radius being degree/density noise
+(Corollary~\ref{thm:radial}). On the reference torus the direction recovers
+geodesics where the magnitude and a random-mode representation do not
+(\S\ref{sec:results}); the companion Paper~I.b~\cite{paperIb} establishes the
+basis's substrate-robustness and its failure modes across graph families.
 
-\textbf{Contributions:} (1) the \textbf{Keep-the-Angle Principle}
-(\S\ref{sec:thm})---a Radial-Degeneracy \emph{corollary} (for the full
-embedding, from \cite{vonluxburg2014}) with a spectral-gap bound on the
-truncation error (Proposition~\ref{prop:trunc}) and an empirically-supported
-Angular-Preservation \emph{conjecture} now with first metric-distortion
-evidence, a fully proved conditional local form (Theorem~\ref{thm:cond},
-Appendix~\ref{app:proof}) resting on a general deterministic angular-transfer
-theorem for arbitrary filtered spectral embeddings
-(Theorem~\ref{thm:transfer}, Corollary~\ref{cor:filtered}), unconditional on
-the flat torus (Corollary~\ref{cor:torus}), and an explicit distortion-to-rank
-bridge (Proposition~\ref{prop:rank}); (2) a measurement with controls
-(\S\ref{sec:results}), a weighting ablation (\S\ref{sec:ablation}), and a
-bake-off against named spectral distances in which the angle beats every purely
-spectral competitor (\S\ref{sec:bakeoff}); (3)
-substrate robustness across five substrate families with a two-factor small-world
-screen (\S\ref{sec:univ}); (4) an exploratory fidelity-vs-dimension trend
-(\S\ref{sec:law}); and (5) two honest negatives (\S\ref{sec:neg}). We
-do \emph{not} claim to derive physics; the core result is a basis-level fact about
-spectral embeddings.
+\textbf{Contributions.} The first is the \textbf{Keep-the-Angle Principle}
+(\S\ref{sec:thm}), which comprises: a Radial-Degeneracy corollary for the full
+embedding (Corollary~\ref{thm:radial}, from \cite{vonluxburg2014}), with truncation
+controlled by $1/\lambda_{m+1}$ (Proposition~\ref{prop:trunc}); an exact
+angular-distortion identity raised to a deterministic angular-transfer theorem for
+arbitrary filtered embeddings (Theorem~\ref{thm:transfer},
+Corollary~\ref{cor:filtered}), from which Angular Preservation follows conditionally
+on the graph (Theorem~\ref{thm:cond}, section~\ref{app:proof}) and unconditionally
+on the flat torus and round sphere (Corollaries~\ref{cor:torus},~\ref{cor:sphere});
+a distortion-to-rank bridge (Proposition~\ref{prop:rank}); and the filter dichotomy,
+with a uniform lower angular bound and a Green-kernel rank limit for $d\le3$
+(Theorem~\ref{thm:green-rank-limit}). The second is a confirming measurement on the
+torus---controls (\S\ref{sec:results}), theorem verification (\S\ref{sec:verify}),
+and a weighting ablation (\S\ref{sec:ablation}); the extended empirical program is
+the companion Paper~I.b~\cite{paperIb}. We do not claim to derive physics: the core
+result is a basis-level fact about spectral embeddings.
 
-\begin{table}[h]\small\centering
+\begin{table}[h]\footnotesize\centering
 \caption{Status of the paper's claims at a glance.}
 \label{tab:claims}
 \begin{tabular}{@{}lll@{}}
 \toprule
 Claim & Status & Where \\
 \midrule
-Radial degeneracy, full commute embedding & proved (vL--R--H cond.\ + bounded degree) & Cor.~\ref{thm:radial} \\
-Truncated normalized radius tracks degree & empirical & \S\ref{sec:verify} \\
+Radial degeneracy (full commute) & proved (vL--R--H + bdd.\ deg.) & Cor.~\ref{thm:radial} \\
+Truncated normalized radius $\sim$ degree & empirical & \S\ref{sec:verify} \\
 Truncation controlled by $1/\lambda_{m+1}$ & proved & Prop.~\ref{prop:trunc} \\
 Exact angular-distortion identity & proved & Prop.~\ref{prop:angdist} \\
 Deterministic transfer (A1)--(A3) & proved & Thm.~\ref{thm:transfer} \\
-Graph transfer at fixed $m$ & proved, conditional on (H1)--(H2) & Thm.~\ref{thm:cond} \\
-Global form & conditional on (H3) & Cor.~\ref{cor:global} \\
-Flat torus, $m=4$ & proved, unconditional & Cor.~\ref{cor:torus} \\
+Graph transfer at fixed $m$ & proved, cond.\ (H1)--(H2) & Thm.~\ref{thm:cond} \\
+Global form & cond.\ (H3) & Cor.~\ref{cor:global} \\
+Flat torus, $m=4$ & proved, uncond. & Cor.~\ref{cor:torus} \\
+Round sphere, $m=d+1$ & proved, uncond. & Cor.~\ref{cor:sphere} \\
 Distortion $\Rightarrow$ rank & proved & Prop.~\ref{prop:rank} \\
 Heat filter, uniform in $m$ & proved (continuum) & Thm.~\ref{thm:heat} \\
-Commute filter, fixed-scale uniform in $m$ & refuted (exact on $\mathbb S^1$) & Prop.~\ref{prop:weyl} \\
+Commute \emph{upper}, fixed-scale unif. & refuted (exact $\mathbb S^1$) & Prop.~\ref{prop:weyl} \\
+Commute \emph{lower} bound, unif.\ in $m$ (tori) & proved & Prop.~\ref{prop:torus-lower-uniform} \\
+Rank limit $=$ Green-kernel ranking ($d\le3$) & proved & Thm.~\ref{thm:green-rank-limit} \\
+Filter phase diagram, critical $d=4$ & proved & Prop.~\ref{prop:phase} \\
 Plain-filter rank collapse on $\mathbb S^1$ & proved & Thm.~\ref{thm:s1collapse} \\
-Angular preservation (rank form) & conjecture, empirically supported & Conj.~\ref{conj:angle} \\
-Uniform truncated-Jacobian bound & open problem & Conj.~\ref{conj:sigmamin} \\
+Angular preservation (rank form) & conjecture; empirical & Conj.~\ref{conj:angle} \\
+Unnormalized differential noncollapse & proved (monotone) & Prop.~\ref{prop:sigmamin} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -180,14 +180,17 @@ graph generators (any physical interpretation is deferred to \S\ref{sec:disc}).
 \textbf{Hyperbolic
 embedding.} Trees embed in $\mathbb{H}^2$ at low distortion
 \cite{gromov1987,sarkar2011,nickel2017}; we test and reject a hyperbolic reframe
-in \S\ref{sec:neg}.
+in Paper~I.b.
 
 \section{The Keep-the-Angle Principle}\label{sec:thm}
 Let $G$ be connected on $n$ nodes with symmetric-normalized Laplacian
 $L = I - D^{-1/2} A D^{-1/2}$, eigenpairs $(\lambda_k, v_k)$,
 $0=\lambda_0<\lambda_1\le\cdots$. The low-mode spectral embedding using the
 lowest $m$ nontrivial modes places node $i$ at
-$\Psi_i = \big(v_1(i)/\sqrt{\lambda_1},\dots,v_m(i)/\sqrt{\lambda_m}\big)$.
+$\Psi_i = \big(v_1(i)/\sqrt{\lambda_1},\dots,v_m(i)/\sqrt{\lambda_m}\big)$, the
+eigenvectors unit-normalized ($\sum_i v_k(i)^2=1$, i.e.\ $VV^\top=I$; the empirical
+convention $\tfrac1n\sum_i v_k(i)^2=1$ rescales the numerical truncation bounds by
+$n$ but leaves all angular statements, which are scale-invariant, unchanged).
 Write $\Psi_i = r_i\,\hat u_i$ with radius $r_i=\lVert\Psi_i\rVert$ and angle
 $\hat u_i = \Psi_i/\lVert\Psi_i\rVert$. Throughout, ``angular distance''
 means the Euclidean \emph{chordal} distance between unit vectors,
@@ -214,10 +217,9 @@ use this measured intrinsic dimension, with one convention enforced throughout:
 the radial-degeneracy \emph{theorem} is gated at $d\ge3$; $d=2$ is the recurrent
 borderline, where the degeneracy appears with logarithmic corrections and is
 treated empirically (\S\ref{sec:verify}); and in (quasi-)1D the radius stays
-geodesic-informative, as predicted (\S\ref{sec:law}). The angular \emph{effect}
+geodesic-informative, as predicted (Paper~I.b). The angular \emph{effect}
 is observed from quasi-1D upward.
 
-{% entire theorem + remark are new in this revision
 \begin{corollary}[Radial Degeneracy]\label{thm:radial}
 Let $G_n$ be random geometric graphs of intrinsic dimension $d\ge3$ satisfying
 the conditions of \cite{vonluxburg2014} (the $d=2$ case is marginal: at the
@@ -240,10 +242,6 @@ coordinate carrying no geodesic information.
 only combinations $L^+_{ii}+L^+_{jj}-2L^+_{ij}$, and a gauge ($\sum_j L^+_{ij}=0$)
 plus a trace identity, with the degree-ratio bound controlling error propagation,
 close the gap (Appendix~\ref{app:radial}).
-% read as too fast (pairwise limits alone determine only differences). The
-% argument is sound but needs the multiplicative-uniform form of vL-R-H, a
-% bounded degree ratio, and explicit error bookkeeping -- now Appendix
-% \ref{app:radial}.
 
 \begin{remark}[Truncated, normalized radius]
 Our experiments use the truncated radius $r_i=\lVert\Psi_i\rVert$ ($m$ lowest
@@ -258,7 +256,7 @@ normalized radius is near-constant (coefficient of variation $0.09$) and
 radius-only geodesic preservation is $\rho\le0.08$ (\S\ref{sec:verify}).
 \end{remark}
 
-\begin{proposition}[Truncation is spectral-gap bounded]\label{prop:trunc}
+\begin{proposition}[Inverse-next-eigenvalue truncation bound]\label{prop:trunc}
 Let $\Psi^{\infty}_i=\big(v_k(i)/\sqrt{\lambda_k}\big)_{k=1}^{n-1}$ be the full
 symmetric-normalized commute-style embedding and $\Psi^{m}_i$ its truncation to
 the lowest $m$ nontrivial modes. Then for all nodes $i\neq j$,
@@ -294,7 +292,7 @@ itself shrinks, so $1/\lambda_{m+1}$ grows. What it controls is the truncation
 error \emph{relative to the embedding scale}, which is fixed by the same low
 eigenvalues; since the angular and rank statistics we report are invariant to
 global scale, that relative control is what transfers, and is why the continuum
-refinement of \S\ref{sec:continuum} does not degrade. Second, the deleted content is
+refinement of Paper~I.b does not degrade. Second, the deleted content is
 high-frequency (large-$\lambda$); the geometry lives in the retained low modes
 (an equal-size random-mode basis preserves $\rho\approx0$, \S\ref{sec:results}).
 But this bound is a \emph{sanity check, not the angular theorem}: it controls
@@ -312,10 +310,6 @@ truncated radius stays rank-correlated with $1/\sqrt{k_i}$. What remains open is
 not the radius but the angle: Proposition~\ref{prop:trunc} bounds how far
 truncation moves the metric, not that the surviving \emph{angular} coordinate
 equals the geodesic---that is Conjecture~\ref{conj:angle}.
-}%
-% normalized radius as a "direct corollary" of von Luxburg--Radl--Hein. The
-% corollary is now stated only for the full unnormalized embedding (where it
-% actually is one), and the truncated case is an explicit, honest remark.
 
 \begin{conjecture}[Angular Preservation]\label{conj:angle}
 For $\varepsilon$-graph or $k$-NN samples of a compact Riemannian manifold in the
@@ -327,18 +321,20 @@ the admissible mode schedule: $m$ multiplet-closed at a spectral gap with
 $m\ge m_0(M)$ (the immersion threshold of \cite{bates2014,portegies2016}); sampled
 pairs above the resolution scale $\theta_n$; and, for growing $m=m(n)$, the
 spectral-window condition $\mathcal E_n(\mu_m)\gamma_m^{-1}\to0$ of
-Appendix~\ref{app:proof}. Under strongly non-uniform sampling the claim is asserted
-for the Coifman--Lafon $\alpha{=}1$ angle (\S\ref{sec:density}); empirically
+section~\ref{app:proof}. Under strongly non-uniform sampling the claim is asserted
+for the Coifman--Lafon $\alpha{=}1$ angle (Paper~I.b); empirically
 $\rho_0\approx0.9$.
 \end{conjecture}
 
-We reserve ``rank-faithful'' for Spearman $\ge\rho_0>0$ over the stated class; the
-diagnostic reading---using the $\omega$-screen and dimension spread to decide
-whether a \emph{given} graph lies in the class---is a separate corollary-in-use,
-kept out of the conjecture to avoid circularity. ``Uniformly'' means a lower bound
-over the admissible family, not over all integers $m$: too few modes need not
-embed $M$, a truncation inside a multiplet is basis-dependent, and $m$ may not
-outrun the sample.
+We reserve ``rank-faithful'' for the limit $\liminf_{n}\rho_S\ge\rho_0>0$ along
+admissible schedules $(n,m(n))$, with $\rho_0=\rho_0(M)$ per manifold (the
+Green-rank coefficient of Theorem~\ref{thm:green-rank-limit} for $d\le3$); the
+diagnostic reading---using the small-world/dimension-spread screen of Paper~I.b to
+decide whether a \emph{given} graph lies in the class---is a separate
+corollary-in-use, kept out of the conjecture to avoid circularity. ``Uniformly''
+means a lower bound over the admissible family, not over all integers $m$: too few
+modes need not embed $M$, a truncation inside a multiplet is basis-dependent, and
+$m$ may not outrun the sample.
 
 A stronger \emph{metric} form---bi-Lipschitz to geodesic distance with constants
 uniform in $m$ and $n$ at fixed scale---is now known \textbf{false} for the commute
@@ -348,84 +344,70 @@ either scale-dependent (uniform above the wavelength $\Lambda^{-1/2}$, open) or
 filtered (for the heat weighting it is a continuum theorem,
 Theorem~\ref{thm:heat}). The rank clause is untouched: the empirical flatness in
 $m$ is rank stability at a fixed mode budget, and our evidence is rank-based.
-% matches the evidence type (rank correlation), with bi-Lipschitz demoted to a
-% stated stronger form.
-% metric form -- the S^1 example (Prop. \ref{prop:weyl}) REFUTES the
-% fixed-scale uniform-in-m version for the commute filter; the conjecture now
-% states the corrected scale-dependent / heat-filtered alternatives.
 
-\paragraph{Metric evidence on the torus.} The metric form is no longer
-entirely untested. On the 2-torus we compare embedded distance to graph geodesic
-directly. After a single global scale, the angular map has a robust empirical
-bi-Lipschitz constant $\kappa\approx2.6$ (ratio of the $97.5$th to $2.5$th
-percentile of $d_{\mathrm{emb}}/d_{\mathrm{geo}}$ over $19{,}900$ pairs), tighter
-than the full commute embedding ($3.1$), an equal-size random-mode basis ($8.3$),
-or the magnitude coordinate ($125$); and its leading four coordinates
-Procrustes-match the canonical flat-torus embedding in $\mathbb{R}^{4}$ at
-disparity $0.07$, versus $0.995$ for random modes. This is genuine metric
-distortion, not rank correlation---one substrate, but a well-understood one. (The
-full-range constant is inflated by a few near-antipodal pairs, where the
-chord/arc ratio dips; the map stays injective---nothing is folded together---so
-we report the percentile-robust $\kappa$.) The right uniform metric target is
-scale-dependent for the commute filter (Proposition~\ref{prop:weyl}): fixed-scale
-constants uniform in $m$ are impossible, while uniformity above the spectral
-wavelength is open---this measurement is one datapoint at the tested budget.
+\paragraph{Metric evidence on the torus.} On the 2-torus we compare embedded
+distance to graph geodesic directly. After a single global scale the angular
+map has a robust empirical bi-Lipschitz constant $\kappa=2.66\pm0.03$ (ratio of
+the $97.5$th to $2.5$th percentiles of $d_{\mathrm{emb}}/d_{\mathrm{geo}}$ over
+$19{,}900$ pairs, five independent draws), against $3.15\pm0.04$ for the full
+commute embedding, $7.1\pm0.3$ for an equal-size random-mode basis, and
+$128\pm4$ for the magnitude; its leading four coordinates Procrustes-match the
+canonical flat-torus embedding in $\mathbb{R}^{4}$ at disparity $0.064\pm0.016$
+(random modes: $0.985\pm0.004$); the map stays injective---nothing is folded
+together. This is metric distortion, not rank correlation---one substrate, but a
+well-understood one: the correct uniform metric target is scale-dependent for the
+commute filter (Proposition~\ref{prop:weyl}).
 
-\paragraph{The uniform-in-$m$ frontier, precisely located.} The metric form
-of Conjecture~\ref{conj:angle} rests on a single named hypothesis, which we
-isolate rather than assume away.
+\paragraph{The uniform-in-$m$ frontier.} The metric form of
+Conjecture~\ref{conj:angle} rests on one named hypothesis, which we isolate
+rather than assume away.
 
 \smallskip\noindent\textbf{(H1)-uniform.} \emph{At mode-counts $m$ taken at a
 spectral gap, the truncated eigenmap $F=(\varphi_k/\sqrt{\mu_k})_{k\le m}$ is
 $L_0$-bi-Lipschitz onto its image on geodesic $r_0$-balls, with $L_0$ and $r_0$
 independent of $m$.}
 
-\noindent What is \emph{known} is weaker: B\'erard--Besson--Gallot
-\cite{berard1994} and the quantitative truncated-eigenmap embeddings of
-\cite{bates2014,portegies2016} give, for each fixed $m$ past an immersion
-threshold, \emph{some} constant $L_0(m)$; its uniformity in $m$ is not
-established, and there is structural reason to doubt the strong form---as $m$
-grows the added eigenfunctions oscillate on wavelength $\mu_m^{-1/2}$, and holding
-$L_0$ fixed asks that no such mode ever create a near-fold, the kind of
-degeneration symmetry or a thin neck can force. Two endpoints bound the question:
-\begin{itemize}
-\item \emph{Satisfiable.} On the flat torus (H1)-uniform holds \textbf{globally
-and unconditionally}, through the Clifford embedding into $\mathbb R^4$:
-Corollary~\ref{cor:torus} is the existence proof that the hypothesis is not
-vacuous.
-\item \emph{Filter-specific.} For the heat/diffusion weighting the continuum
-uniform-in-truncation bi-Lipschitz statement is a \emph{theorem}
-(Theorem~\ref{thm:heat})---exactly the continuum content (H1)-uniform asserts.
-For the commute weighting the fixed-scale form is \emph{false}
-(Proposition~\ref{prop:weyl}: angular speed grows like $\sqrt\Lambda$, exactly on
-$S^1$), so (H1)-uniform, if it holds for commute, is necessarily
-scale-dependent. Uniformity is therefore a property of the \emph{filter}, not a
-generic fact.
-\end{itemize}
-The empirical flatness in $m$ (\S\ref{sec:verify}) supports the \emph{rank} form;
-the metric form reduces to one clean question in spectral geometry, which we state
-as the sharp target.
+\noindent What is known is weaker: \cite{berard1994} and the quantitative
+truncated-eigenmap embeddings of \cite{bates2014,portegies2016} give, for each
+fixed $m$ past an immersion threshold, \emph{some} constant $L_0(m)$, and as $m$
+grows the added eigenfunctions oscillate on wavelength $\mu_m^{-1/2}$, so holding
+$L_0$ fixed asks that no mode ever create a near-fold---the degeneration a
+symmetry or thin neck can force. Two endpoints bound the question: on the flat
+torus the \emph{two-sided} bound holds at the first multiplet
+(Corollary~\ref{cor:torus}, the Clifford embedding) and the \emph{lower} half
+holds uniformly in $m$ (Proposition~\ref{prop:torus-lower-uniform}), and the
+property is \emph{filter-specific}---a theorem for the heat weighting
+(Theorem~\ref{thm:heat}), with the upper half false at fixed scale for the commute
+weighting (Proposition~\ref{prop:weyl}). The empirical flatness in $m$
+(\S\ref{sec:verify}) supports the rank form; the metric form reduces to one clean
+question in spectral geometry:
 
-\begin{conjecture}[Uniform truncated-Jacobian lower bound]\label{conj:sigmamin}
-There is a manifold class and a gap-respecting mode schedule $m=m(n)\to\infty$
-(each $m$ multiplet-closed at a spectral gap) along which the smallest singular
-value of the truncated-eigenmap differential is bounded below uniformly,
-\[
-\inf_{m}\ \inf_{x\in M}\ \sigma_{\min}\!\big(dF_m(x)\big)\ \ge\ c>0,
-\]
-with $c$ depending on $M$ but not on $m$. Equivalently, \textup{(H1)-uniform}
-holds along the schedule; by Theorem~\ref{thm:cond} and Lemma~\ref{lem:transfer}
-this closes the metric form of Conjecture~\ref{conj:angle}.
-\end{conjecture}
+\begin{proposition}[The unnormalized differential does not collapse]\label{prop:sigmamin}
+For nested multiplet-closed cutoffs $m<m'$ and every tangent $v$,
+$\lVert dF_{m'}(v)\rVert^2=\lVert dF_m(v)\rVert^2+\sum_{m<k\le m'}\lvert d\varphi_k(v)\rvert^2/\mu_k
+\ge\lVert dF_m(v)\rVert^2$, so $\sigma_{\min}(dF_m(x))$ is nondecreasing in $m$;
+once $F_{m_0}$ is an immersion (finite $m_0$ \cite{berard1994}), compactness gives
+$\inf_{m\ge m_0}\inf_{x}\sigma_{\min}(dF_m(x))\ge c>0$.
+\end{proposition}
+
+\noindent The \emph{unnormalized} lower bound is therefore automatic; the
+obstruction to two-sided uniformity lives entirely in the normalization---the
+angular lower bound $\lVert N_m(x)-N_m(y)\rVert\ge c\,d_M(x,y)$ must survive a
+denominator $\lVert F_m\rVert\to\infty$, which it does on flat tori
+(Proposition~\ref{prop:torus-lower-uniform}) and is conjectured in general
+(Conjecture~\ref{conj:angle}), while the \emph{upper} constant diverges for commute
+(Proposition~\ref{prop:weyl}). What remains for the \emph{metric} form of
+Conjecture~\ref{conj:angle} is the normalized lower bound beyond the torus, closed at
+fixed $m$ by Theorem~\ref{thm:cond} and Lemma~\ref{lem:transfer}. The \emph{rank}
+form, however, is settled below the critical dimension: for $d\le3$ the commute
+angular ranking converges uniformly in $m$ to the Green-kernel ranking
+(Theorem~\ref{thm:green-rank-limit}), reducing Angular Preservation to positivity of a
+geometric Green-rank coefficient---equal to $1$ on the circle and on two-point
+homogeneous spaces of dimension $\le3$ (Corollary~\ref{cor:two-point-rank}).
 
 \noindent A proof---or a counterexample forced by symmetry---is a self-contained
-problem we do not attempt here. None of the paper's proved results depends on its
-resolution: the exact identity (Proposition~\ref{prop:angdist}), the transfer
-theorem (Theorem~\ref{thm:transfer}), the conditional graph theorem
-(Theorem~\ref{thm:cond}, unconditional in $m$ at each fixed $m$), the
-unconditional torus corollary (Corollary~\ref{cor:torus}), and the filter
-dichotomy (Theorem~\ref{thm:heat}, Propositions~\ref{prop:weyl} and
-\ref{prop:plain} with Theorem~\ref{thm:s1collapse}) all stand independently.
+problem we do not attempt; none of the paper's proved results
+(Table~\ref{tab:claims}) depends on its resolution.
 
 \subsection{Toward a proof of Conjecture~\ref{conj:angle}}\label{sec:towardproof}
 Proposition~\ref{prop:trunc} controls truncation; the remaining question is
@@ -463,22 +445,23 @@ divide by $\lVert u\rVert\lVert v\rVert\le(\rho^+)^2$.
 \end{proof}
 
 The condition $\Lambda<1/L$ is a quantitative radial degeneracy: the radius
-must vary \emph{slower} than the embedding moves. As $\Lambda\to0$ (radius $\to$
-constant, the limit of Corollary~\ref{thm:radial}) the lower constant tends to
-$1/(L\rho^+)$ and normalization becomes a pure scaling. On the 2-torus this holds
-pointwise: the identity is exact to $10^{-15}$, and the radius Lipschitz constant
-$\Lambda=0.0918$ sits only marginally under the map's lower stretch $A=0.0920$.
-The margin is razor-thin, so Lemma~\ref{lem:norm}'s \emph{worst-case} lower
-constant $\sqrt{L^{-2}-\Lambda^2}/\rho^+$ is near-vacuous here---but that crude
-bound is not the operative one. Proposition~\ref{prop:angdist} shows the lower
-stretch is the pointwise \emph{tangential} component of $dF$, which stays bounded
-away from zero ($0/9200$ local pairs are radially degenerate, median $\Lambda$
-five times below $A$), giving a measured local angular bi-Lipschitz constant of
-$2.2$ that is an empirical fact, not a consequence of the crude lemma.
-Theorem~\ref{thm:transfer} below turns this observation into the hypothesis
-itself: the transfer runs on two-point tangential noncollapse (A2), and the
-crude $\Lambda<1/L$ enters only as one sufficient way to verify it---so the
-razor-thin radius margin on the torus costs the theory nothing.
+must vary slower than the embedding moves, and as $\Lambda\to0$ (the limit of
+Corollary~\ref{thm:radial}) normalization becomes a pure scaling with lower
+constant $1/(L\rho^+)$. On the 2-torus the identity is exact to $10^{-15}$,
+but the margin is razor-thin ($\Lambda=0.0918$ against lower stretch
+$A=0.0920$), so the lemma's worst-case constant is near-vacuous there---while
+the pointwise tangential component never degenerates ($0/9200$ local pairs
+radially degenerate; measured local angular constant $2.2$). This survives on a
+\emph{non-homogeneous} manifold, where the radius genuinely varies and a radial
+fold could in principle occur: on the swiss-roll (a 2D manifold carried into
+$\mathbb R^{12}$, \S\ref{sec:methods}) only $1/29{,}481$ local pairs across five
+draws are radially degenerate, the local angular bi-Lipschitz constant is finite
+($3.67\pm0.40$), and the radius Lipschitz constant sits well below the lower
+stretch ($\Lambda_{\mathrm{med}}/A=0.30\pm0.02$)---so (A2) holds off the
+homogeneous case too. Proposition~\ref{prop:angdist} explains why, and
+Theorem~\ref{thm:transfer} makes the resulting two-point tangential
+noncollapse (A2) the hypothesis itself, with $\Lambda<1/L$ only one
+sufficient route to it---so the thin radius margin costs the theory nothing.
 
 \begin{proposition}[Exact angular distortion]\label{prop:angdist}
 Let $F$ be differentiable with $r=\lVert F\rVert>0$ and $\hat F=F/r$. Taking
@@ -569,7 +552,7 @@ let $h$ be a positive Lipschitz spectral filter on the retained window
 eigenmap $F_h(x)=\big(h(\mu_k)\varphi_k(x)\big)_{k=1}^m$ and graph rows
 $Z^{(h)}_{n,i}=\big(h(\tilde\lambda_k)\,v_k(i)\big)_{k=1}^m$ with
 $\tilde\lambda_k=\lambda_k/c_n$. Under the sup-norm spectral consistency of
-Appendix~\ref{app:proof} (Lemma~\ref{lem:transfer} with
+section~\ref{app:proof} (Lemma~\ref{lem:transfer} with
 $\operatorname{diag}(\mu_k^{-1/2})$ replaced by
 $\operatorname{diag}(h(\mu_k))$; same proof), hypothesis (A3) holds with high
 probability with
@@ -610,13 +593,8 @@ angular map obeys
 $A\,d_M(x,y)\le\lVert\hat u_x-\hat u_y\rVert\le B\,d_M(x,y)$ for all sampled $x,y$
 with $\theta_n\le d_M(x,y)\le r_0$.
 \end{theorem}
-% gave only a proof sketch. The all-pairs claim is FALSE below the graph's
-% resolution: combinatorial twins (identical neighbourhoods) receive identical
-% eigenvector rows, so \hat u_i = \hat u_j while d_M > 0 and no lower bound can
-% hold. The statement now carries the necessary cutoff \theta_n -> 0 and the
-% sketch is replaced by a complete proof (Appendix A).
 
-\begin{proof}[Proof (outline; complete proof in Appendix~\ref{app:proof})]
+\begin{proof}[Proof (outline; complete proof in section~\ref{app:proof})]
 This is the special case of Theorem~\ref{thm:transfer} and
 Corollary~\ref{cor:filtered} with $h(\lambda)=\lambda^{-1/2}$ and $\eta=1/2$:
 (H1)--(H2) imply the tangential noncollapse (A2) with
@@ -635,7 +613,7 @@ than generic $L^2$ consistency---so that normalization survives where
 $\lVert F\rVert$ is smallest. It is applied to the \emph{random-walk}
 eigenvectors, to which the graph angular map reduces \emph{exactly} by per-node
 degree cancellation ($\Psi_i=\sqrt{k_i}\,\Psi^{\mathrm{rw}}_i$; Step~0\,(iv) of
-Appendix~\ref{app:proof}), so the transfer needs no degree-concentration
+section~\ref{app:proof}), so the transfer needs no degree-concentration
 hypothesis and holds under non-uniform sampling. After the graph-to-continuum
 eigenvalue scaling
 and a block-orthogonal alignment across the multiplets below the gap (both
@@ -649,7 +627,7 @@ $\theta_n=8E_n/(a\rho^-)$. The cutoff is necessary, not an artifact: below the
 graph's resolution, combinatorially twin nodes receive identical entries in
 every eigenvector below the localized twin-difference mode---in particular in
 every low mode the angular map uses---so $\hat u_i=\hat u_j$ while $d_M>0$
-(Appendix~\ref{app:proof}).
+(section~\ref{app:proof}).
 \end{proof}
 
 \paragraph{From local to global.} Theorem~\ref{thm:cond} is local because
@@ -668,7 +646,7 @@ B_g=\max\Big(B,\ \frac{2}{r_0}\Big),
 with high probability as $n\to\infty$ the graph angular map obeys
 $A_g\,d_M(x,y)\le\lVert\hat u_x-\hat u_y\rVert\le B_g\,d_M(x,y)$ for
 \emph{all} sampled $x,y$ with $d_M(x,y)\ge\theta_n$
-(proof: Appendix~\ref{app:proof}, Step~5).
+(proof: section~\ref{app:proof}, Step~5).
 \end{corollary}
 
 (H3) is genuinely extra: Portegies-style mode counts \cite{portegies2016}
@@ -690,16 +668,32 @@ angular map of an $\varepsilon$-graph or $k$-NN sample of the flat torus is
 globally bi-Lipschitz to geodesic distance above the resolution scale,
 \emph{unconditionally}, with $A=1/(4\sqrt2)$ and $B=\sqrt2$; the sharp
 continuum angular distortion is exactly $\pi/2$ (the chord-vs-arc ratio
-$2\sin(\delta/2)/\delta\in[2/\pi,1]$ per coordinate---the near-antipodal dip
-of the metric-evidence paragraph). The statement is basis-independent: any
+$2\sin(\delta/2)/\delta\in[2/\pi,1]$ per coordinate---the source of the
+near-antipodal dip in the measured $\kappa$). The statement is basis-independent: any
 $L^2$-orthonormal basis of the four-dimensional eigenspace is an $O(4)$
 rotation of the Clifford one, invisible to angular distances (proof:
-Appendix~\ref{app:proof}, Step~6).
+section~\ref{app:proof}, Step~6).
 \end{corollary}
 
-The measured graph-level $\kappa\approx2.6$ (at $m{=}10$, inside the
-second multiplet) sits above the $\pi/2\approx1.57$ continuum floor by
-finite-$n$ and truncation slack; $m{=}4$ is the theoretically clean budget.
+The measured graph-level $\kappa\approx2.6$ (at $m{=}10$, which \emph{splits} a
+multiplet; the gap-closed cutoffs on $\mathbb T^2$ are $4,8,12,20,\dots$) sits
+above the $\pi/2\approx1.57$ continuum floor by finite-$n$ and truncation slack;
+$m{=}4$ is the theoretically clean budget. The transfer theorem certifies only
+$B/A=8$, so the measured $\kappa\approx2.6$ sits between the sharp continuum $\pi/2$
+and the certified $8$---a gauge of how loose the transfer constants are.
+
+\begin{corollary}[Unconditional instance: the round sphere]\label{cor:sphere}
+On $S^d\subset\mathbb{R}^{d+1}$ with $m=d+1$ (the $\ell{=}1$ eigenspace, eigenvalue
+$d$), $F\propto x$: the radius is constant and $N=F/\lVert F\rVert=x$ is the
+identity embedding, so $N$ is globally bi-Lipschitz with the sharp constants
+$[2/\pi,1]$ ($\lVert N(x)-N(y)\rVert=2\sin(\theta/2)$, $\theta=d_{S^d}(x,y)$),
+unconditionally---a second constant-curvature instance ($\mathbb{T}^d$ likewise
+extends to $m=2d$).
+\end{corollary}
+
+\noindent More generally, on any compact homogeneous space transitivity makes the
+radius constant at every multiplet-closed cutoff, so (H2) holds automatically and
+the metric conjecture reduces there to (H1) and (H3) alone.
 
 \paragraph{From metric to rank.} The conjecture's currency is rank
 (Spearman); the theorems' is distortion. The bridge is elementary and
@@ -732,15 +726,15 @@ $\mu(\kappa)<1/3$ (sub-$\theta_n$ pairs are a vanishing fraction and enter the
 bound as $o(1)$). The reduction is honest about its weakness: it is worst-case
 over \emph{all} $\kappa$-distorted maps. For the small-ball distance law
 $f(r)\propto r^{d-1}$ on $[0,r_0]$ an exact computation
-(Appendix~\ref{app:proof}, Step~7) gives $\mu(\kappa)=1-\kappa^{-d}$, so the
+(section~\ref{app:proof}, Step~7) gives $\mu(\kappa)=1-\kappa^{-d}$, so the
 certificate $\tau\ge2\kappa^{-d}-1$ is non-vacuous only for $\kappa<2^{1/d}$:
 a fixed distortion budget certifies \emph{exponentially} less rank structure
 as the intrinsic dimension grows, and on substrates whose pairwise distances
 concentrate---the high-$d$ regime---no finite distortion certifies any rank
 fidelity at all. This is a genuine ceiling for distortion-based guarantees,
 and a second, rank-specific mechanism for the fidelity-vs-dimension decay of
-\S\ref{sec:law}. That the measured decay is \emph{linear} ($-0.157\,d$,
-\S\ref{sec:law}), far milder than the worst case, says the eigenmap angle is
+Paper~I.b. That the measured decay is \emph{linear} ($-0.157\,d$,
+Paper~I.b), far milder than the worst case, says the eigenmap angle is
 far from the worst $\kappa$-distorted map: the empirical $\approx0.9$ levels
 remain stronger than what distortion alone implies, which is why that clause
 of the conjecture stays empirical.
@@ -762,7 +756,7 @@ a_t\,d_M(x,y)\ \le\ \lVert N_{t,m}(x)-N_{t,m}(y)\rVert\ \le\ b_t\,d_M(x,y)
 \qquad\text{whenever }d_M(x,y)\le r_t,
 \]
 for \emph{every} $m\ge m_0(t)$: the constants do not deteriorate as
-$m\to\infty$. (Proof: Appendix~\ref{app:uniform}, by heat-kernel diagonal
+$m\to\infty$. (Proof: section~\ref{app:uniform}, by heat-kernel diagonal
 asymptotics and $C^2$ tail control; the exponential filter is what makes the
 tail summable against the polynomial growth of eigenfunction norms.)
 \end{theorem}
@@ -784,7 +778,7 @@ fixed-scale upper Lipschitz constant exists for the commute angular map: its
 natural resolution scale is the spectral wavelength $\Lambda^{-1/2}$. On $S^1$
 this is exact: with all modes to frequency $N$, $R_N$ is constant,
 $\lVert dF_N\rVert^2=N$, and $\lVert dN_N\rVert\asymp\sqrt N$. (Proof:
-Appendix~\ref{app:uniform}, via the differentiated pointwise Weyl law of
+section~\ref{app:uniform}, via the differentiated pointwise Weyl law of
 Lemma~\ref{lem:dweyl}; the $S^1$ case needs no Weyl input and is exact.)
 \end{proposition}
 
@@ -797,7 +791,7 @@ constants are intrinsically scale-dependent: high modes raise the local
 angular speed like $\sqrt\Lambda$, so the correct uniform metric object is
 bi-Lipschitzness \emph{above the wavelength scale} $\Lambda^{-1/2}$---
 equivalently, a mode budget matched to the scale of interest, which is the
-mode-budget phenomenon of \S\ref{sec:continuum} handed a mechanism. The
+mode-budget phenomenon of Paper~I.b handed a mechanism. The
 empirical ``flat in $m$'' of \S\ref{sec:verify} is thereby correctly read as
 \emph{rank} stability under a fixed mode budget, not as an $m$-independent
 fixed-scale metric theorem. One gap remains at this point: the $\sqrt\Lambda$
@@ -822,7 +816,7 @@ all separated plain angular distances concentrate at the orthogonality value
 $\sqrt2$, and the vanishing correction is carried by the off-diagonal spectral
 function $E_\Lambda(x,y)$---an oscillatory kernel with sign changes on the
 wavelength scale $\Lambda^{-1/2}$ and no monotone relation to $d_M$. (Proof:
-Appendix~\ref{app:uniform}.)
+section~\ref{app:uniform}.)
 \end{proposition}
 
 \noindent Concentration alone does \emph{not} imply that the ordering degrades:
@@ -853,100 +847,58 @@ Spearman and Kendall correlations against geodesic distance both vanish:
 \]
 Thus on $\mathbb S^1$ the plain angular ordering retains asymptotically no
 geodesic information, even though every separated distance concentrates at
-$\sqrt2$ (Proposition~\ref{prop:plain}). (Proof: Appendix~\ref{app:uniform}.)
+$\sqrt2$ (Proposition~\ref{prop:plain}). (Proof: section~\ref{app:uniform}.)
 \end{theorem}
 
 The mechanism in one line: the $1/\mu$ commute weighting is a low-pass filter
 on the \emph{correction} kernel that carries the ranks, while equal weighting
-hands the correction to the oscillatory top of the spectral window. Rank
-statistics are invariant to the common concentration and read only that
-correction---which is why the ablation separates the filters at the rank
-level ($0.06$ vs $0.89$ at $m{=}20$, \S\ref{sec:ablation}) even though their
-crude metric orders coincide; Theorem~\ref{thm:s1collapse} makes the plain-side
-collapse exact on the circle, where the plain ranking has vanishing Spearman
-\emph{and} Kendall correlation with geodesic distance while the commute
-(Green-type) correction stays monotone. Together, Proposition~\ref{prop:weyl}
-explains the budget phenomenon and Proposition~\ref{prop:plain} with
-Theorem~\ref{thm:s1collapse} the weighting ablation: the theory now covers both
-empirical laws of \S\ref{sec:ablation}
-and \S\ref{sec:continuum}. For graph transfer at growing $m=m(n)$, the
-calibration of Lemma~\ref{lem:transfer} extends whenever the spectral-window
-condition $\mathcal E_n(\mu_m)\,\gamma_m^{-1}\to0$ holds ($\gamma_m$ the gap
-isolating the retained block, $\mathcal E_n(\mu_m)$ the graph-consistency
-error at frequency $\mu_m$, which grows polynomially in $\mu_m$), and a
-$C^{0,1}$ graph-eigenvector theory \cite{calderlewicka2022} is the route to
-shrink the resolution cutoff from the spectral-rate scale toward the
-connectivity scale---optimal up to the twin-node obstruction
-(Appendix~\ref{app:uniform}).
+hands the correction to the oscillatory top of the spectral window---which is
+why the ablation separates the filters at the rank level ($0.06$ vs $0.89$ at
+$m{=}20$, \S\ref{sec:ablation}) even though their crude metric orders coincide.
+For graph transfer at growing $m=m(n)$, the calibration of
+Lemma~\ref{lem:transfer} extends whenever
+$\mathcal E_n(\mu_m)\,\gamma_m^{-1}\to0$ ($\gamma_m$ the gap isolating the
+retained block; $\mathcal E_n$ the graph-consistency error, polynomially growing
+in $\mu_m$), and a $C^{0,1}$ eigenvector theory \cite{calderlewicka2022} is the
+route to shrink the resolution cutoff toward the connectivity scale (supplement,
+section~\ref{app:uniform}).
 
 What remains is delimited. \textbf{(H1)} is subtle: Jones--Maggioni--Schul
-\cite{jones2010} guarantee bi-Lipschitz charts only from a \emph{well-chosen}
-$d$-subset of eigenfunctions per ball, because the lowest modes can degenerate at
-critical points; the truncated-eigenmap results \cite{berard1994,bates2014,%
-portegies2016} give quantitative control, and the constants' uniformity in $m$
-is now split by filter: \emph{proven} for the heat weighting
-(Theorem~\ref{thm:heat}), \emph{false at fixed scale} for the commute weighting
-(Proposition~\ref{prop:weyl}), open for commute in the scale-dependent form
-above the spectral wavelength---so the empirical ``flat in $m$''
-(\S\ref{sec:verify}) is rank stability at a fixed budget, exactly as the
-conjecture now states. Low-spectrum multiplicity
-compounds this---the square torus's first nontrivial eigenvalue has multiplicity
-four, so a truncation \emph{inside} a multiplet ($m=5$) is basis-dependent;
-distances are well-defined only for whole eigenspaces, so $m$ should be taken at a
-spectral gap (the choice $m{=}4$ of Corollary~\ref{cor:torus}), or the map
-phrased through spectral projectors. \textbf{(H2)} is, by
-Proposition~\ref{prop:angdist}, sharper than radius flatness: what is needed is
-that the eigenmap's velocity $dF(v)$ is nowhere purely radial---a transversality
-the immersion (H1) makes generic, and the truncated analogue of
-von~Luxburg--Radl--Hein; Theorem~\ref{thm:transfer}'s (A2) is its two-point
-form, and is the hypothesis one should verify in practice. It holds on the
-torus (tangential lower stretch bounded,
-local constant $2.2$); whether the eigenmap image ever develops a radial fold on
-some manifold is the sharp remaining question.
-Truncated eigenmaps of a general manifold are guaranteed only to be
-\emph{locally} injective---(H1) supplies bi-Lipschitz charts on geodesic balls,
-whereas global injectivity of $F$ requires Portegies-style mode counts
-\cite{portegies2016} and injectivity of the \emph{angular} map is stronger
-still---so the global metric statement is carried by the explicit hypothesis
-(H3) of Corollary~\ref{cor:global}. This is a limitation of general local
-hypotheses, not of the torus: there (H1) holds \emph{globally} through the
-Clifford embedding into $\mathbb{R}^{4}$ and Corollary~\ref{cor:torus} is
-unconditional---exactly as our own Procrustes match (disparity $0.07$) and
-finite empirical $\kappa\approx2.6$ anticipated.
-Conjecture~\ref{conj:angle} is thereby reduced, in metric form, to a
-local-chart hypothesis (H1), a radius-flatness hypothesis (H2), and a
-no-radial-alignment hypothesis (H3), none of which mentions the angle
-directly---and, in rank form, further to a distance-ratio condition on the
-substrate (Proposition~\ref{prop:rank}).
+\cite{jones2010} guarantee bi-Lipschitz charts only from a well-chosen
+$d$-subset of eigenfunctions per ball, and low-spectrum multiplicity makes a
+truncation inside a multiplet basis-dependent---so $m$ is taken at a spectral
+gap (the $m{=}4$ of Corollary~\ref{cor:torus}) or the map phrased through
+spectral projectors. \textbf{(H2)} is, by Proposition~\ref{prop:angdist},
+sharper than radius flatness: the eigenmap's velocity must be nowhere purely
+radial, with (A2) its two-point form and the hypothesis to verify in
+practice; it holds on the tested manifolds, homogeneous and not (\S\ref{sec:thm}),
+and whether the eigenmap image ever develops a radial fold on some manifold is the
+sharp remaining question. \textbf{(H3)} is genuinely extra:
+injectivity of $F$ \cite{portegies2016} does not exclude a radial alignment
+$F(x)=tF(y)$, so the global statement is carried by (H3)
+(Corollary~\ref{cor:global})---while on the torus (H1) holds globally and
+Corollary~\ref{cor:torus} needs none of the chart hypotheses (H1)--(H3) (the
+sampling model and spectral consistency of Theorem~\ref{thm:cond} are still assumed).
 
-\noindent\emph{Status.} Empirically strong (\S\ref{sec:results}) but \textbf{not
-proven}. Its conditional local form is now a theorem with a complete proof
-(Theorem~\ref{thm:cond}, Appendix~\ref{app:proof}), globalized under (H3)
-(Corollary~\ref{cor:global}) and unconditional on the flat torus
-(Corollary~\ref{cor:torus}); with Proposition~\ref{prop:rank} the rank clause
-itself reduces, at fixed $m$, to (H1)--(H3) plus a distance-ratio condition;
-and the uniformity-in-$m$ question is settled in the continuum by filter---%
-proven for heat (Theorem~\ref{thm:heat}), false at fixed scale for commute
-(Proposition~\ref{prop:weyl}), with the scale-dependent commute form open. What
-rests on hypothesis is thus delimited to (H1)--(H3) at the tested filter, the
-scale-dependent commute uniformity, and
-the gap between worst-case and measured rank levels; the honest gap
-is that Corollary~\ref{thm:radial} explains why the full, unnormalized radius
-\emph{dies} for $d\ge3$ ($d=2$ borderline, \S\ref{sec:verify}), not by itself why
-the angle \emph{lives}---indeed the angular fidelity
-persists ($\rho\approx0.88$--$0.90$) even on quasi-1D graphs where
-Corollary~\ref{thm:radial} does not apply, so the angular half is carried by the
-eigenmap-embedding mechanism, not degeneracy alone. That mechanism is
-analyzable rather than mysterious: if the low $L_{\mathrm{sym}}$ eigenvectors
-converge to Laplace--Beltrami eigenfunctions \cite{belkin2007,garciatrillos2018}
-and eigenfunction coordinates furnish locally bi-Lipschitz charts of the
-underlying manifold \cite{jones2010}, the angular map's geodesic fidelity should
-follow from the chart geometry---the natural route to a proof of
-Conjecture~\ref{conj:angle}, and this paper's central open problem, stated sharply
-as the truncated-Jacobian lower bound of Conjecture~\ref{conj:sigmamin}. Together
-these are the \textbf{Keep-the-Angle Principle}: keep $\hat u_i$, discard $r_i$
----and, under strongly non-uniform sampling, keep the $\alpha{=}1$
-density-normalized angle (\S\ref{sec:density}).
+\noindent\emph{Status.} Table~\ref{tab:claims} records what is proved,
+conditional, empirical, and open; at fixed $m$ the rank clause reduces to
+(H1)--(H3) plus a distance-ratio condition on the substrate
+(Corollary~\ref{cor:global}, Proposition~\ref{prop:rank}), and uniformity in
+$m$ is settled in the continuum by filter. The honest gap:
+Corollary~\ref{thm:radial} explains why the full unnormalized radius
+\emph{dies} ($d\ge3$), not why the angle \emph{lives}---angular fidelity
+persists ($\rho\approx0.88$--$0.90$) even on quasi-1D graphs where the
+corollary does not apply, so the angular half is carried by the
+eigenmap-embedding mechanism. That mechanism is analyzable: if the low
+eigenvectors converge to Laplace--Beltrami eigenfunctions
+\cite{belkin2007,garciatrillos2018} and eigenfunction coordinates furnish
+locally bi-Lipschitz charts \cite{jones2010}, geodesic fidelity should follow
+from the chart geometry---the natural route to Conjecture~\ref{conj:angle}, whose
+residual difficulty is isolated to the normalization by
+Proposition~\ref{prop:sigmamin}. Together these are the
+\textbf{Keep-the-Angle Principle}: keep $\hat u_i$, discard $r_i$---and, under
+strongly non-uniform sampling, keep the $\alpha{=}1$ density-normalized angle
+(Paper~I.b).
 
 \paragraph{Dimension gating.} Corollary~\ref{thm:radial} is a $d\ge3$
 theorem; $d=2$ is the recurrent borderline, where the degeneracy appears with
@@ -955,44 +907,30 @@ In (quasi-)1D, resistance equals path length, so the radius \emph{stays}
 geodesic-informative and Corollary~\ref{thm:radial} correctly does not apply---a
 prediction, not a failure, confirmed in \S\ref{sec:verify}.
 
-\paragraph{Status of the radial claim.} (i)~\emph{Proved} ($d\ge3$, full
-embedding): Corollary~\ref{thm:radial}. (ii)~\emph{Empirical} (truncated, all
-substrates): $\rho(r_i,1/\sqrt{k_i})\in[0.79,0.87]$, versus $0.98$ for the full
-unnormalized radius (\S\ref{sec:verify})---the gap between (i) and (ii) is exactly
-the truncation, and no theorem here bridges it. (iii)~\emph{Borderline} ($d=2$):
-logarithmic resistance growth, treated empirically throughout; $d=1$: no
-degeneracy, as the dimension gating predicts.
-
 \section{Methods}\label{sec:methods}
 \begin{table}[h]\footnotesize\centering
-\caption{Protocol by section. $n$: nodes; $m$: retained modes; $A$: anchors;
+\caption{Protocol by section. $n$: nodes; $m$: retained modes; $n_a$: anchors;
 $D$: independent graph draws reported (mean$\pm$sd when $D>1$; single-draw rows
-marked $\dagger$ per the headline-uncertainty policy below). \emph{Draw counts
-marked} \textit{FILL} \emph{are to be read from the run ledger before submission.}}
+marked $\dagger$ per the headline-uncertainty policy below).}
 \label{tab:protocol}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
-Section & substrate(s) & graph & $n$ & $m$ & $A$ & $D$ \\
+Section & substrate(s) & graph & $n$ & $m$ & $n_a$ & $D$ \\
 \midrule
-\S\ref{sec:results} core & 2-torus & kNN & 2000 & 5--80 & 150 & \textit{FILL} \\
-\S\ref{sec:univ} & six substrates & as listed & 2000 & 20 & 150 & \textit{FILL} \\
-\S\ref{sec:law} & $5$ rules $\times$ $4$ seeds & rewriting & \textit{FILL} & 20 & 150 & 4 seeds/rule \\
+\S\ref{sec:results} core & 2-torus & kNN & 2000 & 5--80 & 150 & $1^{\dagger}$ ($5$ at $m{=}10$) \\
 \S\ref{sec:verify} & 2-torus & kNN & 2000--4000 & 5--80 & 200 & $5$ ($m{=}10$) \\
-\S\ref{sec:ablation} & 2-, 3-torus & kNN & 2000/3000 & 10--40 & 150 & \textit{FILL} \\
-\S\ref{sec:bakeoff} & 2-, 3-torus & kNN & 2000/3000 & 20 & 250 & \textit{FILL} \\
-\S\ref{sec:density} & non-uniform torus & kNN & 2000 & 20 & 150 & \textit{FILL} \\
-\S\ref{sec:continuum} & RGG vs.\ emergent & $\varepsilon$/rewriting & $10^3$--$5\times10^4$ & 20 / scaled & 150 & \textit{FILL} \\
+\S\ref{sec:ablation} & 2-, 3-torus & kNN & 2000/3000 & 10--40 & 150 & $1^{\dagger}$ ($10$ ctrl) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \noindent Where a manifold ground truth exists we report both the measured
 consensus dimension $d_G$ and the true $d_M$ (2-torus $d_M{=}2$; 3-torus $3$;
-swiss-roll $2$; king-lattice $2$). On the controls the estimators read low
-($d_G<d_M$ by roughly $5$--$8\%$ at $n{=}2000$, a known finite-sample curvature
-bias; $d_G\approx\textit{FILL}$ on the 2-torus), so all dimension-indexed claims
-use $d_G$ consistently: estimator bias shifts the axis, not the ordering of the
-\S\ref{sec:law} trend.
+swiss-roll $2$; king-lattice $2$). On the controls the estimators read a few
+percent low (a known finite-sample curvature bias): the consensus
+$d_G\approx1.94$ on the 2-torus, with the individual estimators $5$--$8\%$ below
+$d_M$ at $n{=}2000$. All dimension-indexed claims use $d_G$ consistently:
+estimator bias shifts the axis, not the ordering of the Paper~I.b trend.
 
 \textbf{Estimators.} Ball-growth $N(r)\sim r^d$; spectral dimension from the
 heat-kernel return probability $P(t)=\langle e^{-Lt}\rangle\sim t^{-d_s/2}$;
@@ -1002,8 +940,8 @@ dimension $d$. \textbf{Angular metric.} Spearman $\rho$ between embedded pairwis
 distances and true graph geodesics for: \emph{angle} (chordal distances
 between unit-normalized low-mode
 embeddings, \S\ref{sec:thm}), \emph{random} ($m$ random modes; control), \emph{magnitude} (radius
-only), \emph{Isomap} (classical MDS of the graph geodesics; the
-table of \S\ref{sec:univ} reports it at $\dim{=}2$, column Isomap$_{d=2}$). \textbf{Uncertainty.}
+only), and \emph{Isomap} (classical MDS of the graph geodesics, an oracle given the
+geodesics). \textbf{Uncertainty.}
 Each $\rho$ is a rank correlation over $\binom{n_{\mathrm{anchor}}}{2}$ node pairs
 ($n_{\mathrm{anchor}}=150$ for the substrate benchmarks, $200$ for the torus
 metric tests (\S\ref{sec:towardproof})---$19{,}900$ pairs). Bootstrap
@@ -1013,12 +951,10 @@ we treat pair-resampling CIs as optimistic floors; the dominant source of
 variation is the graph draw itself, so
 for headline $\rho$ we also report spread over independent draws (2-torus,
 $m{=}10$: $0.914\pm0.009$ over five draws). The reference torus therefore appears
-at slightly different angle-$\rho$ across tables ($0.89$--$0.93$): mode-count,
-anchor count, and the graph draw itself vary by section and dominate at this
-precision. Each table uses its section's protocol---$m{=}20$,
-$n_{\mathrm{anchor}}{=}150$ unless stated (core table \S\ref{sec:results}
-sweeps $m{=}5$--$40$; the bake-off \S\ref{sec:bakeoff} uses
-$n_{\mathrm{anchor}}{=}250$). \textbf{Substrates.} Arity-2/3
+at slightly different angle-$\rho$ across tables ($0.89$--$0.93$) as mode-count,
+anchor count, and graph draw vary by section; each table uses its section's
+protocol ($m{=}20$, $n_{\mathrm{anchor}}{=}150$ unless stated).
+\textbf{Substrates.} Arity-2/3
 hypergraph rewriting (clique-expanded), plus tori, king-lattices, Poisson causal
 sets, and swiss-roll embedding samples. The swiss-roll case is a
 synthetic 2D manifold---intrinsic coordinates $(u,v)$, $u$ the roll angle and
@@ -1045,219 +981,43 @@ polar decomposition of the low-mode embedding (Fig.~\ref{fig:core}) gives:
 \toprule
 $m$ & full (mag.$\times$dir.) & \textbf{angle only} & magnitude only \\
 \midrule
-5  & 0.761 & \textbf{0.926} & 0.025 \\
-10 & 0.650 & \textbf{0.913} & 0.035 \\
-20 & 0.550 & \textbf{0.891} & 0.028 \\
-40 & 0.517 & \textbf{0.928} & 0.034 \\
+4  & 0.820 & \textbf{0.928} & 0.024 \\
+8  & 0.703 & \textbf{0.933} & 0.027 \\
+12 & 0.595 & \textbf{0.900} & 0.030 \\
+20 & 0.525 & \textbf{0.891} & 0.019 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The angle carries the geometry ($\approx 0.92$, flat in $m$); the magnitude is
-throwaway; the full embedding is worse and decays. A random-mode basis
+The cutoffs are multiplet-closed (the gap-closed budgets $4,8,12,20$ on
+$\mathbb T^2$), and each entry is a mean over five independent graph draws (angle
+standard deviation $\le0.009$; e.g.\ $m{=}20$ gives $0.891\pm0.009$). The angle
+carries the geometry ($\approx0.9$, flat across the admissible schedule); the
+magnitude carries little geodesic information in these benchmarks; the full
+embedding is worse and decays. A random-mode basis
 reconstructs geodesics at $\rho\approx 0$ (Fig.~\ref{fig:control}); averaged
 over ten random draws $\rho=0.08\pm0.16$, individual draws occasionally catching
 a low mode and spiking to $\sim0.4$.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.72\linewidth]{fig1_core.pdf}
+\begin{minipage}[t]{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{fig1_core.pdf}
 \caption{Spearman correlation with graph geodesics on a 2-torus
-($n=2000$) as a function of mode-count $m$. Angle carries the geometry;
-magnitude is throwaway; the full commute embedding decays with $m$.}
+($n=2000$) versus mode-count $m$. Angle carries the geometry; magnitude carries
+little geodesic signal; the full commute embedding decays with $m$.}
 \label{fig:core}
-\end{figure}
-
-\begin{figure}[t]
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\linewidth}
 \centering
-\includegraphics[width=0.72\linewidth]{fig3_control.pdf}
+\includegraphics[width=\linewidth]{fig2_control.pdf}
 \caption{Geometry lives in the low-eigenvalue subspace: lowest-$m$ modes preserve
-geodesics; a random-mode basis of equal size does not. The random curve is
-the mean over $25$ draws and the shaded band its full min--max envelope---even
-the best-case random draw stays far below the low-mode curve.}
+geodesics; a random-mode basis of equal size does not. The random curve is the
+mean over $25$ draws, the band its full min--max envelope---even the best-case
+random draw stays far below the low-mode curve.}
 \label{fig:control}
-\end{figure}
-
-\subsection{Emergent 2D geometry}
-Random arity-2 rules yield clean but only $\approx 1.5$D manifolds (82
-manifold-grade rules in a 20k sweep; none at $d\ge 2.5$). Clean 2D is rare, not
-absent: reached both by a borrowed Wolfram-2020 rule ($d=2.07\pm0.01$, spread
-$0.05$, angle-$\rho=0.82$) and by from-scratch evolutionary search ($\approx 3$
-generations). The angular basis holds on genuine 2D emergent space.
-
-\subsection{Robustness across substrates}\label{sec:univ}
-\begin{center}
-\begin{tabular}{lcccc}
-\toprule
-substrate & meas.\ $d$ & angle-$\rho$ & random & Isomap$_{d=2}$ \\
-\midrule
-2-torus (reference) & 2 & 0.89 & 0.01 & 0.67 \\
-king-lattice & 2 & 0.82 & 0.01 & 0.95 \\
-swiss-roll (embedding) & 2 & 0.93 & 0.01 & 0.99 \\
-emergent $R_{3D}$ (Wolfram) & 2.07 & 0.82 & 0.01 & 0.81 \\
-causal set (Lorentzian) & 3.9 & 0.57 & 0.01 & 0.55 \\
-small-world (destroyed) & $3.6$--$4.3^{*}$ & 0.45 & 0.00 & --- \\
-\bottomrule
-\end{tabular}
-\end{center}
-Substrates with genuine low-$d$ Riemannian geometry all show the effect,
-independent of graph origin; the metric degrades where geometry is
-Lorentzian ($\rho=0.57$, a degradation not a failure) or destroyed. $^{*}$The small-world substrate is a heavily rewired $2$D king-lattice; the
-rewiring inflates and scatters the three dimension estimators (ball $3.7$,
-spectral $3.6$, effective-rank $4.3$; spread $0.77$ versus $0.14$--$0.51$ across
-the clean substrates), so no single manifold dimension is well-defined---we
-tabulate their range. By our own manifold-grade criterion this graph is
-\emph{not} a manifold, and the low angle-$\rho$ is the predicted failure, not an
-exception. The two-factor screen below makes this quantitative.
-
-Two caveats keep the robustness claim honest. First, on the two flat
-substrates (king-lattice, swiss-roll) classical MDS \emph{beats} the angular
-basis (0.95 and 0.99 vs.\ 0.82 and 0.93): MDS wins whenever the manifold embeds
-near-isometrically in low-dimensional Euclidean space, while the angle wins
-where topology obstructs such an embedding (the torus: 0.89 vs.\ 0.67) and,
-unlike MDS, is uniform in $m$ and $n$ (\S\ref{sec:verify}). That $0.67$ is
-Isomap forced into $\dim{=}2$; matched to $\dim{=}m$ it reaches $\approx0.97$ and
-edges the angle even on the torus---but Isomap is \emph{given} the geodesic matrix
-as input, whereas the angular basis recovers it from the spectrum alone, so the
-two solve different problems. Robustness here means the angular basis never
-\emph{loses} the geometry on a genuine low-$d$ Riemannian substrate---not that it
-dominates every baseline on every substrate; we accordingly avoid
-``universal'' outside the discussion. Second, the swiss-roll is a
-manifold-embedding case (a smooth 2D manifold carried into $\mathbb{R}^{12}$): the
-angular basis is the same whether the manifold comes from hypergraph rewriting or
-from points sampled on a continuous manifold. No sequential or temporal
-structure enters the graph construction, so we make no sequential-data claim.
-
-\paragraph{A two-factor small-world screen.} To make ``destroyed'' precise
-rather than a label, we screen every substrate on two graph statistics against
-degree-matched baselines---average clustering $C$ (versus an Erd\H{o}s--R\'enyi
-$C_{\mathrm{rand}}$ and a ring-lattice $C_{\mathrm{latt}}$) and characteristic
-path length $L$ (versus $L_{\mathrm{rand}}$)---combined into the Telesford index
-$\omega = L_{\mathrm{rand}}/L - C/C_{\mathrm{latt}}$ ($\omega<0$ lattice-like,
-$\omega\!\approx\!0$ small-world, $\omega\!\to\!1$ random). Clean low-$d$
-manifolds sit firmly on the lattice side; the tangles do not:
-
-\begin{center}\small
-\begin{tabular}{lcccc}
-\toprule
-substrate & angle-$\rho$ & $\omega$ & dim-spread & verdict \\
-\midrule
-2-torus             & 0.91 & $-0.55$ & 0.14 & clean \\
-king-lattice        & 0.83 & $-0.50$ & 0.51 & clean \\
-swiss-roll          & 0.93 & $-0.66$ & 0.45 & clean \\
-king-lat.\ rewired  & 0.42 & $+0.23$ & 0.77 & small-world \\
-causal set          & 0.57 & $+0.75$ & 7.87 & non-manifold \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-The screen robustly separates the genuine manifolds ($\omega\le-0.50$) from
-strongly destroyed geometry ($\omega\ge+0.23$), and the inter-estimator dimension
-spread corroborates ($\le0.51$ clean versus $\ge0.77$ contaminated): the low
-angle-$\rho$ on the rewired and Lorentzian substrates is small-world/non-manifold
-contamination, not a failure of the basis on genuine geometry. A king-lattice
-rewiring sweep both sharpens and honestly bounds this. As the rewire probability
-rises, angle-$\rho$ collapses almost at once ($0.81\!\to\!0.47$ by $1\%$ rewiring)
-while $\omega$ does not cross zero until $\approx5\%$; so $\omega<0$ is a
-\emph{conservative} flag for destruction, and in the transition band ($1$--$3\%$)
-angular fidelity is in fact the \emph{more} sensitive detector of geometric
-corruption than either clustering or dimension spread. We therefore read the
-screen as confirming gross contamination, with angle-$\rho$ itself the finer
-instrument---the mechanism behind the dimension-trend outlier below.
-
-\subsection{An exploratory dimension--fidelity trend}\label{sec:law}
-With only five independent rule families, no ``law'' can responsibly be
-claimed; what the library shows is an \emph{exploratory trend}, reported at its
-genuine unit. Table~\ref{tab:rulelevel} gives the five rule-level summaries (mean
-over the four seeds within each rule; seeds within a rule are not independent
-draws): angular fidelity falls with measured intrinsic dimension across the five
-families. A linear fit to the twenty (rule$\times$seed) points---slope $-0.157$,
-rule-clustered $95\%$ CI $[-0.343,-0.094]$ versus the naive point bootstrap
-$[-0.185,-0.132]$ that wrongly treats the points as exchangeable;
-errors-in-variables correction to $\approx-0.17$---is shown as a descriptive
-trend line only; with five clusters the bootstrap is itself at the edge of
-validity (\S\ref{sec:methods}), and we draw no inferential conclusion beyond sign
-and rough magnitude. Proposition~\ref{prop:rank}'s exponential worst-case ceiling
-is \emph{consistent with} a dimension-driven decay and shows the measured
-(roughly linear) trend sits far above the distortion-certified floor; it does not
-derive the trend.
-
-\begin{table}[h]\small\centering
-\caption{The five rule families at their genuine unit. Mean over four
-rewrite-seed graph draws of each rule; ranges are seed min--max. The four draws
-share a rule (correlated), so the rule---not the seed---is the independent unit
-of the \S\ref{sec:law} analysis.}
-\label{tab:rulelevel}
-\begin{tabular}{@{}lccl@{}}
-\toprule
-Rule family & $\bar d$ (range) & angle-$\rho$ (range) & notes \\
-\midrule
-$R_{2\mathrm{D}}$      & $1.06$ ($1.03$--$1.07$) & $0.935$ ($0.930$--$0.941$) & quasi-1D reference \\
-$R_{\mathrm{frac}}$    & $1.38$ ($1.36$--$1.39$) & $0.875$ ($0.859$--$0.890$) & \\
-evolved-2D             & $1.88$ ($1.68$--$2.00$) & $0.722$ ($0.387$--$0.885$) & evolutionary search (incl.\ contaminated seed) \\
-$R_{3\mathrm{D}}$      & $2.07$ ($2.05$--$2.09$) & $0.822$ ($0.816$--$0.836$) & 3D-claim rule; tightest seed spread (near-confluent) \\
-$R_{\mathrm{SReach}}$  & $3.42$ ($3.32$--$3.62$) & $0.564$ ($0.461$--$0.637$) & highest $d$; lowest $\rho$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Across 20 manifolds ($5$ rules $\times\,4$ seeds; the four seeds within a
-rule are not independent draws), $d\approx 1$--$3.6$,
-\[
-\text{angle-}\rho \;\approx\; 1.09 - 0.157\,d, \qquad
-\text{slope } -0.157\ (\text{rule-clustered SE }0.061),\quad R^2 = 0.64,
-\quad d\in[1.0,3.6].
-\]
-(Spearman $-0.881$ between $\rho$ and $d$ is a distribution-free monotonicity
-check. Because the $20$ points are clustered by rule, we bootstrap the slope at
-the \emph{rule} level---resampling the five rules with replacement, then the four
-seeds within each drawn rule (with only five clusters the bootstrap is itself
-coarse; a caveat, not a fix)---giving an honest $95\%$ CI of $[-0.343,-0.094]$,
-still excluding zero but four times wider than the naive point bootstrap
-$[-0.185,-0.132]$ that wrongly treats the $20$ points as exchangeable. The
-modest $R^2=0.64$ reflects a single outlier---a $d{\approx}1.97$ manifold at
-$\rho{=}0.39$---which the small-world screen of \S\ref{sec:univ} flags as
-shortcut-contaminated rather than clean geometry. And because the abscissa $d$ is
-itself measured (estimator spread $0.14$--$0.51$), ordinary least squares
-\emph{attenuates} the slope; an errors-in-variables correction steepens it
-modestly (to $\approx-0.17$ under a spread-implied error variance), so $-0.157$
-is a conservative magnitude, not an inflated one.)
-The fit is \emph{empirical and local}: $\rho$ is a rank correlation bounded by 1,
-so the linear form holds only within the measured range---the intercept $1.09$ is
-an extrapolation, not a literal $d\to0$ fidelity, and the slope may vary with
-substrate roughness. A bounded model fits essentially as well and respects
-$0<\rho<1$: the logistic $\rho\approx\big[1+e^{\,0.82\,(d-3.66)}\big]^{-1}$ gives
-$\rho(0)=0.95$ and $\rho\to0$ at $R^2=0.62$, against the linear $0.64$.
-Exponential forms do not help---an unoffset $A e^{-kd}$ still has $A=1.18>1$ and
-an offset version drives the asymptote negative. Within range the two are visually
-indistinguishable; we keep the linear coefficient as the local slope and note the
-logistic as the boundary-respecting global form. Within range, fidelity is highest at low dimension and
-softens toward $\approx0.56$ at $d\approx3.4$ (Fig.~\ref{fig:law}); the
-dimension-gated degeneracy of \S\ref{sec:thm} is the mechanism---and
-Proposition~\ref{prop:rank} supplies a second, rank-specific one: the
-distance-ratio concentration of a $d$-dimensional substrate grows with $d$
-($\mu(\kappa)=1-\kappa^{-d}$ for the small-ball law), so any fixed metric
-distortion certifies exponentially less rank structure as $d$ rises. The
-worst case decays exponentially; the measured decay is linear---the eigenmap
-angle sits far above its distortion-only floor. Neither mechanism, however,
-\emph{derives} the fitted coefficient $-0.157$: the dimension gating explains why
-fidelity falls with $d$, and Proposition~\ref{prop:rank} bounds how fast it
-\emph{could}, but the observed linear magnitude is an empirical summary of these
-five families, not a predicted constant.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.72\linewidth]{fig2_scaling.pdf}
-\caption{Angular fidelity falls linearly with emergent dimension across
-the $20$ library manifolds (five Wolfram-model rules $\times$ four seeds,
-$d\approx1$--$3.6$); the shaded band is the $95\%$ \emph{rule-clustered} slope CI
-($[-0.34,-0.09]$), drawn as its envelope about the data centroid---four times
-wider than a naive point bootstrap, since the independent unit is the rule, not
-the point. Per-point pair-resampling CIs are smaller than the plot markers
-($\le\pm0.005$). The red diamond ($d{\approx}1.97$, $\rho{=}0.39$) is the single
-shortcut-contaminated manifold flagged by the small-world screen
-(\S\ref{sec:univ}), which drives the modest $R^2$.}
-\label{fig:law}
+\end{minipage}
 \end{figure}
 
 \subsection{\texorpdfstring{Verifying Corollary~\ref{thm:radial} and
@@ -1278,10 +1038,11 @@ $0.773\to0.437$.
 \subsection{Which weighting carries the angle?}\label{sec:ablation}
 The direction depends on the per-mode weight, so we ablate it on the torus
 ($d{=}2$) and a $3$-torus ($d{=}3$). Plain eigenmaps ($w_k{=}1$) give an angle
-that \emph{collapses} with mode count---angle-$\rho$ falls from $0.55$ at $m{=}10$
-to $0.06$ at $m{=}20$ ($d{=}2$)---because equal weighting lets high modes swamp the
-direction. The commute weight $1/\sqrt{\lambda_k}$ is flat instead
-($0.91\!\to\!0.89$), as is diffusion $e^{-\lambda_k t}$; both suppress high modes,
+that \emph{collapses} with mode count---angle-$\rho$ falls from $0.554\pm0.013$ at
+$m{=}10$ to $0.081\pm0.012$ at $m{=}20$ (five independent draws, $d{=}2$)---because
+equal weighting lets high modes swamp the direction. The commute weight
+$1/\sqrt{\lambda_k}$ is flat instead ($0.918\pm0.006\to0.896\pm0.006$), as is
+diffusion $e^{-\lambda_k t}$; both suppress high modes,
 which is what the geometry needs. The ``flat in $m$'' property is thus a property
 of the weighting, not of angles in general---and it selects the commute (or
 diffusion) weight, not the plain eigenmap. Proposition~\ref{prop:plain} now
@@ -1295,171 +1056,6 @@ three digits ($0.889$ either way), because a per-node radial factor cancels unde
 row-normalization---a direct confirmation that the degree lives in the radius
 (Corollary~\ref{thm:radial}), not the angle.
 
-\subsection{A bake-off against named spectral distances}\label{sec:bakeoff}
-The ablation isolates the \emph{weight}; a referee rightly asks how the
-angle fares against the standard \emph{distances} built from the same spectrum.
-We score each on the identical graph and anchor set (Spearman $\rho$ vs.\
-unweighted geodesics), on a $2$-torus ($n{=}2000$) and a $3$-torus ($n{=}3000$).
-
-\begin{center}\small
-\begin{tabular}{lcc}
-\toprule
-distance & $2$-torus & $3$-torus \\
-\midrule
-\textbf{angle (ours)} & \textbf{0.888} & \textbf{0.830} \\
-full commute / resistance & 0.601 & 0.360 \\
-biharmonic \cite{lipman2010biharmonic} & 0.735 & 0.515 \\
-diffusion distance (best $t$) \cite{coifman2006} & 0.771 & 0.631 \\
-amplified commute \cite{vonluxburg2010getting} & 0.628 & 0.364 \\
-\midrule
-\textit{Isomap, given the geodesics} & \textit{0.971} & \textit{0.952} \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-The angle beats every purely spectral competitor, and the margin widens in
-$d{=}3$ where commute degeneracy bites harder. The most informative row is the
-amplified commute distance: von Luxburg, Radl and Hein designed it precisely to
-undo commute degeneracy by subtracting the $1/k_i+1/k_j$ term, yet it barely
-improves on raw commute ($0.628$ vs.\ $0.601$) and stays far below the angle.
-\emph{Subtracting} the degenerate radial term is not the same as
-\emph{dividing it out}: row-normalization removes the whole degree-dependent
-radial factor at once, which is what the geometry needs (Lemma~\ref{lem:norm},
-Corollary~\ref{thm:radial}). Isomap wins, but only because it is handed the
-geodesics as input---it is an oracle ceiling, not a competitor; the angle
-recovers $0.83$--$0.89$ of that ceiling from the graph alone. We do not tabulate
-the $p$-resistance family \cite{alamgir2011} as a separate row because its
-informative endpoints are already present: $p{=}2$ is the full-commute row, and
-$p{=}1$ is the shortest-path distance---i.e.\ the geodesic \emph{target} itself,
-not a competitor. The bake-off's scope is closed-form spectral distances;
-intermediate $p$ has no closed form (each pair needs its own convex
-$q$-Dirichlet solve), so it buys no comparison the two endpoints do not
-already frame.
-
-\subsection{Radius is density, angle is geometry: a non-uniform torus}\label{sec:density}
-The decomposition ``degree/density in the radius, geometry in the angle''
-predicts a sharp behaviour under \emph{non-uniform} sampling that uniform
-substrates cannot test. We sample the flat $2$-torus with density
-$p(x)\propto 1+a\cos 2\pi x$, build a fixed-radius geometric graph, and sweep the
-contrast $a$ (degree ratio up to $45\times$ at $a{=}0.9$), scoring the angle
-against the \emph{true} flat-torus geodesics---the intrinsic metric, which is
-unchanged by how we sample it. As predicted, the radius tracks the imposed
-density profile ($\rho(\lVert\Psi\rVert,1/\sqrt{p})=0.53$--$0.67$), confirming it
-is a density coordinate. The raw angle, however, is \emph{not} sampling-invariant:
-angle-$\rho$ to the true metric degrades from $0.93$ to $0.79$ as the contrast
-grows, because the graph Laplacian converges to a density-weighted operator, not
-the Laplace--Beltrami operator \cite{coifman2006,hein2007}. The classical fix
-recovers it exactly: the Coifman--Lafon $\alpha{=}1$ normalization
-$W\mapsto D^{-1}WD^{-1}$ (with $D$ the density estimate) removes the density
-weight, and the density-normalized angle is restored to $0.92$--$0.96$, now
-\emph{flat} across the whole contrast range. So the angle carries the geometry,
-but only once the density is properly quotiented out---and the same normalization
-that fixes the angle is the one that isolates the density into the radius.
-
-\subsection{Stability across substrate evolution}\label{sec:stability}
-Robustness across substrate \emph{types} (\S\ref{sec:results}) is a
-statement about fixed graphs. The angular basis also persists as a substrate
-\emph{evolves}. For each of $151$ qualifying Wolfram-model rules ($95$ arity-2,
-$56$ arity-3) we embed successive rewrite snapshots on a fixed anchor set and
-compare, between consecutive snapshots, the Spearman persistence of the
-\emph{angular} pairwise structure (\texttt{consec}) against the persistence of
-the underlying \emph{geodesic} structure itself (\texttt{churn})---the
-substrate's own rate of change is the baseline the basis must keep pace with.
-On all $143$ rules resolvable at protocol scale ($8$, all arity-3, never yield
-$\ge 3$ distinct snapshots and are excluded from the denominator but reported;
-all $95$ arity-2 rules resolve), the
-angular structure tracks the evolving geometry at least as stably as the graph's
-own geodesics, $\overline{\texttt{consec}} \ge 0.9\,\overline{\texttt{churn}}$:
-a $143/143 = 100\%$ pass against a pre-registered $80\%$ bar, with zero
-substrate-unstable rules. Over the longest time-lever (first vs.\ last snapshot)
-angular persistence declines only gently with emergent dimension,
-\[
-\text{slope } -0.029\text{/dim},\quad \text{Spearman } -0.48,\quad d\in[0.98,2.23],
-\]
-and this replicates independently in both arities (arity-2 $-0.028$/dim,
-$\rho=-0.45$, $n=95$; arity-3 $-0.029$/dim, $\rho=-0.54$, $n=48$)---the same
-mechanism, unchanged by moving from binary to ternary rewriting.\footnote{%
-Pre-registered as Amendment~2: an earlier capture hook could append the same
-state once per crossed edge-count threshold, inflating consecutive stability
-toward a spurious $1.0$. The corrected rule takes at most one snapshot per
-generation with dynamic $2\times$ spacing; the numbers here are from that
-harness.}
-
-\subsection{Continuum survival, and a dissociation}\label{sec:continuum}
-Every result so far is at finite $N$ ($\approx2$--$4$k nodes, capped by
-dense \texttt{eigh}); the ``uniform in $N$'' clause of Corollary~\ref{thm:radial}
-and Conjecture~\ref{conj:angle} is untested at scale (\S\ref{sec:verify}). We
-test it directly by refining each substrate toward the continuum with a sparse
-eigensolver, $N \in \{2,5,10,20,50\}\times 10^3$, four seeds, $m=10$ modes,
-$n=300$ anchors---well past the $\sim5$k dense ceiling. The two substrate
-families dissociate. On genuine Riemannian substrates the basis
-\emph{sharpens}: on random geometric graphs the angular fidelity is
-flat-to-rising in $N$, most cleanly in the higher-dimensional case,
-\[
-\begin{aligned}
-\text{RGG }d{=}3:\quad
-&\text{angle-}\rho:\ 0.856 \to 0.912 \ \ (N:\,2\mathrm{k}\!\to\!50\mathrm{k}),\\
-&\mathrm{Spearman}(\text{angle-}\rho,\log N) = +1.00,
-\end{aligned}
-\]
-with $d{=}2$ likewise monotone ($+0.90$, $0.916\!\to\!0.929$): refining the
-mesh makes the low modes resolve the geometry \emph{better}, not worse, and both
-controls stay pinned ($\text{higher-mode }\rho\le0.05$, magnitude $\rho\le0.03$,
-eigensolver residual $\sim10^{-14}$) at every $N$. The finite-$N$ evidence of
-\S\S\ref{sec:results}--\ref{sec:verify} was not a small-graph artifact.
-
-The dissociation is with \emph{emergent} substrates. The
-R\textsubscript{3D} Wolfram-model manifold---geometry with no latent
-coordinates---\emph{decays} monotonically with refinement,
-$\text{angle-}\rho: 0.749 \to 0.654$
-($\mathrm{Spearman}=-1.00$), falling below a pre-registered floor of $0.75$; and
-at the largest $N$ its magnitude control begins to break the clean angle/radius
-separation that holds exactly on the RGGs (one $50$k seed crosses
-$\rho_{\text{mag}}=0.33$ and is gated out; the sub-floor decay verdict holds with
-or without it). A sampled manifold refines to a
-clean continuum; an emergent hypergraph, under this basis, does not---its fine
-structure drifts away from a manifold as it grows. We read this not as a
-limitation but as a result: the angular basis is a \emph{diagnostic} for whether
-a substrate's fine structure stays manifold-like under refinement, and it returns
-different verdicts for sampled ($2/3$ pass) and emergent ($1/1$ fail) geometry.
-
-One qualification is essential, and it deepens rather than weakens the
-reading: the dissociation is stated at a \emph{fixed} mode budget ($m=10$
-while $N$ grows $5\times$). Rerunning with $m$ \emph{spectral-gap-matched}---%
-holding the resolved eigenvalue scale $\tau$ fixed, so $m$ grows with $N$
-(to $m\approx47$ at $N{=}10^4$)---inverts it: the RGG now \emph{falls}
-($0.856\to0.775$, $\mathrm{Spearman}=-1.0$), because the added high modes inject
-sub-geodesic detail, while the emergent substrate stops decaying
-($0.747\to0.692$, monotonicity gone, $\mathrm{Spearman}=-0.5$). No single budget
-is optimal for both. So the dissociation is a property of the \emph{fixed-budget}
-regime, not an absolute substrate invariant: a manifold keeps its geodesic
-geometry in a fixed low-mode band (refining sharpens those modes), whereas the
-emergent substrate spreads geometry across scales (a fixed budget resolves an
-ever-smaller fraction as it grows). ``Clean geometry'' is thus a relation between
-mode-budget resolution and substrate scale---the sharpest form of the
-mode-budget consistency the angular basis exhibits (\S\ref{sec:verify}), and the
-motivation for a dimension-adaptive basis (\S\ref{sec:disc}). Modest evidence---%
-one emergent substrate, one seed, $N\le10^4$---so we state the direction, not a
-law.%
-\footnote{Pre-registered (PREREG\_RUNG4) before the run; survival bar
-$\text{angle-}\rho(N_{\max}) \ge \max(0.75,\,0.9\,\text{angle-}\rho(N_{\min}))$
-on $\ge2/3$ substrates. Amendment~1, registered before any run: the
-whole-spectrum random-mode control needs a dense decomposition unavailable at
-$N\ge50$k, so it is the top $m$ of the lowest-$64$ sparse-computed
-modes---a faithful, sparse-affordable stand-in, same $\le0.15$ bar.}
-\section{Honest Negatives}\label{sec:neg}
-\textbf{Not secretly hyperbolic (rejected).} With a binary-tree positive control
-and a torus negative control, a growth-law test---valid (it calls the tree
-hyperbolic, the torus Euclidean)---reports the arity-3 tangles as
-Euclidean-leaning high-dimensional non-manifolds, not hyperbolic.
-\textbf{Curvature is not dynamical (null).} Ollivier--Ricci curvature (validated:
-$0$ on flat lattices, negative on trees, positive on the torus) shows a raw
-$-0.98$ against update density that deflates to a tautology (update-count equals
-degree, $\rho=+1.00$; hubs are negatively curved); controlling for degree, the
-independent signal is partial-$\rho=-0.14$. This \emph{bounds the physical
-interpretation}---no emergent Einstein tensor---and leaves the spectral result
-untouched.
-
 \section{Discussion and Conclusion}\label{sec:disc}
 \textbf{The primary result is basis-level and substrate-agnostic.} The angular
 coordinate of the low-Laplacian embedding preserves geodesics while the radial
@@ -1467,96 +1063,57 @@ coordinate is degree/density nuisance---von~Luxburg-degenerate for the full,
 unnormalized commute radius at $d\ge3$ (Corollary~\ref{thm:radial}), and
 empirically degree-tracking for the truncated, normalized radius actually in use
 (\S\ref{sec:verify}). This gives Ng--Jordan--Weiss
-row-normalization a geodesic justification complementary to the
-cluster-separation theory of \cite{schiebinger2015}, places it in the same
-scale-from-direction decomposition that underlies vector and KV-cache
-compression \cite{polarquant2025} (with the scope boundary
-of \S1: the quotient, not the discard, is what recurs),
-and holds across every substrate family we tested with genuine low-$d$
-Riemannian geometry, independent of graph origin. That the same basis works
-identically on hypergraph-rewriting and manifold-sampled substrates is
-evidence that scale-invariant angular coarse-graining is a general
-mechanism by which relational data carries geometric structure.
-% softened; two substrate families are evidence for a mechanism, not a law.
-% KV-cache compression" and "holds universally" -- the KV bridge is now a
-% scoped decomposition claim (keys are a counterexample to the discard), and
-% "universally" is reserved entirely.
+row-normalization a geodesic justification complementary to the cluster-separation
+theory of \cite{schiebinger2015}, and places it in the same scale-from-direction
+decomposition that recurs in vector and KV-cache compression \cite{polarquant2025}
+---the quotient, not the discard, being what recurs. The empirical reach of the
+basis across substrate families, its role as a manifold diagnostic, the compression
+scope boundary (angular quantization fails for attention keys, where scale is
+signal, not nuisance---condition (A2) of Theorem~\ref{thm:transfer}), and a scoped
+physical interpretation are developed in the companion Paper~I.b~\cite{paperIb}.
 
-\paragraph{A boundary from compression.} The result is not a general theorem that
-angular coordinates always carry the semantics: for attention \emph{keys}, whose
-geometry $QK^{\top}$ depends on per-channel scale, per-vector angular quantization
-can score well on reconstruction yet destroy generation---scale is signal there,
-not nuisance. This is not a counterexample but the sharp scope condition:
-row-normalization is justified precisely when the discarded radial variable is
-nuisance for the metric being preserved---condition (A2) of
-Theorem~\ref{thm:transfer}. Keep the geometry that carries the task---sometimes the
-angle, sometimes angle plus norm, sometimes the per-channel scale.
+\paragraph{Open problems.} Proving Conjecture~\ref{conj:angle} (rank form, and the
+bi-Lipschitz strengthening) is now reduced, at fixed $m$, to the chart hypotheses
+(H1)--(H3) plus a distance-ratio condition for rank (Corollary~\ref{cor:global},
+Proposition~\ref{prop:rank}); the open core is the \emph{scale-dependent} commute
+uniformity---fixed-scale uniformity in $m$ is proven for the heat filter and
+refuted for the commute filter (Theorem~\ref{thm:heat},
+Proposition~\ref{prop:weyl})---and graph transfer at growing spectral windows
+(section~\ref{app:uniform}). Beyond the flat torus, where
+Corollary~\ref{cor:torus} settles them, (H1)--(H3) must be checked directly---the
+obstruction being the normalized upper bound, not the differential lower bound,
+which never collapses (Proposition~\ref{prop:sigmamin}). Also open: extending Corollary~\ref{thm:radial} to
+the truncated, normalized radius used in practice; synthesizing clean manifolds
+above $d\approx2$; a dimension-adaptive basis that tunes mode-count and diffusion
+time against the fidelity decay; and whether the diagnostic transfers to learned
+representations (a preliminary probe is in the repository).
 
-\textbf{A physical interpretation, offered modestly.} In the observer-relative
-reading of emergent-geometry programs, the coarse-graining a bounded observer
-performs to perceive geometry is a candidate for exactly this angular
-projection---but its strongest testable claim (dynamical, energy-responsive
-curvature) is a null here (\S\ref{sec:neg}), so we offer it only as motivation; the
-spectral contribution stands independent of it. Open problems: proving
-Conjecture~\ref{conj:angle} (in its rank form, and ideally the bi-Lipschitz
-strengthening---both now reduced at fixed $m$ to the chart hypotheses
-(H1)--(H3) plus, for rank, a distance-ratio condition
-(Corollary~\ref{cor:global}, Proposition~\ref{prop:rank}); the open core is
-now the \emph{scale-dependent} commute uniformity---fixed-scale uniformity in
-$m$ is proven for the heat filter and refuted for the commute filter
-(Theorem~\ref{thm:heat}, Proposition~\ref{prop:weyl})---graph transfer at
-growing spectral windows (Appendix~\ref{app:uniform}), and verifying
-(H1)--(H3) beyond the flat torus, where Corollary~\ref{cor:torus} settles them---%
-the sharpest form being the uniform truncated-Jacobian bound of
-Conjecture~\ref{conj:sigmamin}); extending
-Corollary~\ref{thm:radial} to the truncated,
-normalized radius actually used in practice; synthesizing clean manifolds above
-$d\approx2$; and a dimension-adaptive angular basis that tunes
-mode-count and diffusion time to counter the fidelity decay; and whether the
-diagnostic transfers to learned semantic representations, for which a preliminary
-probe is provided in the repository. Keep the angle,
-drop the magnitude---\emph{when the magnitude is nuisance for the metric being
-preserved}, which for graph geodesics holds provably for the full unnormalized
-radius at $d\ge3$ (Corollary~\ref{thm:radial}) and empirically for the truncated,
-normalized radius actually in use (\S\ref{sec:verify}):
-the basis-level fact is the contribution; the physical interpretation is where we
-leave the door open.
-
-\paragraph{Reproducibility.} The pre-registration documents (\texttt{PREREG\_%
-RUNG3/4} with dated amendments), all experiment scripts and per-run result files
-(the torus and substrate benchmarks, the weighting ablation, the small-world
-screen, the continuum and scaled-budget refinements, and the truncation/normalization
-checks), the manifold-rule sets behind the $20$-point
-dimension--fidelity trend (five rules---\texttt{R\_2D}, \texttt{R\_frac}, \texttt{evolved-2D},
-\texttt{R\_3D}, \texttt{R\_SR}---each at four seeds) and the $151$ evolution
-rules, and the random seeds and solver settings are released in the accompanying
-repository, \url{https://github.com/ahb-sjsu/the-angular-observer}. We state the
-reproducibility tiers plainly. \emph{Fully reproducible locally} (NumPy/SciPy/%
-NetworkX, CPU): the torus core result and controls, the substrate benchmarks and
-two-factor screen, the weighting ablation, the spectral-distance bake-off, the
-non-uniform-density torus, the truncation/normalization checks, and the
-clustered-bootstrap scaling-law analysis---each script emits the exact committed
-result JSON. \emph{Requires a cluster}: the $N\le5\times10^4$ continuum
-refinements (\S\ref{sec:continuum}). \emph{Not yet externally reproducible}: the
-scaled-budget refinement's builders (pending a vendored export).
+\paragraph{Reproducibility.} The confirming experiments of this paper---the torus
+core result and controls, the theorem verification, the weighting ablation, and the
+truncation/normalization checks---are fully reproducible locally
+(NumPy/SciPy/NetworkX, CPU), each script emitting the exact committed result JSON in
+the accompanying repository, \url{https://github.com/ahb-sjsu/the-angular-observer}
+(pre-registered as \texttt{PREREG\_RUNG3/4} with dated amendments). The extended
+empirical program and its reproducibility tiers are documented in the companion
+Paper~I.b~\cite{paperIb}.
 
 \appendix
-{% entire appendix new in this revision
 \section{Proof of Corollary~\ref{thm:radial}}\label{app:radial}
 
-A referee correctly observed that the diagonal statement
-$L^+_{ii}\to1/k_i$ does not follow from the pairwise resistance limits alone:
-$R(i,j)=L^+_{ii}+L^+_{jj}-2L^+_{ij}$ determines only those combinations, and a
-summation argument must control the error terms it accumulates. We give the
-argument in full. Two inputs are used, both explicit in the corollary's
-statement: \textbf{(i)} the \emph{uniform multiplicative} form of the
+The diagonal statement $L^+_{ii}\to1/k_i$ does not follow from the pairwise
+resistance limits alone:
+$R(i,j)=L^+_{ii}+L^+_{jj}-2L^+_{ij}$ fixes only those combinations, so a
+summation argument must control the error it accumulates. Two inputs are used,
+both explicit in the corollary's statement: \textbf{(i)} the \emph{uniform
+multiplicative} form of the
 von~Luxburg--Radl--Hein degeneracy---for $d\ge3$ graphs in their model there is
 a sequence $\eta_n\to0$ with
 \[
 R(i,j)=\Big(\frac1{k_i}+\frac1{k_j}\Big)\,(1+\eta_{ij}),\qquad
 \sup_{i\ne j}\lvert\eta_{ij}\rvert\le\eta_n
 \]
-(this multiplicative-uniform form is not stated verbatim by \cite{vonluxburg2014}:
+(this multiplicative-uniform form is not stated verbatim by \cite{vonluxburg2014}
+(their Corollaries~8--9 and Propositions~29--30):
 they prove an \emph{additive} deviation bound on the rescaled commute distance,
 uniform over $i\ne j$, together with two-sided degree bounds; dividing the
 additive bound by $1/k_i+1/k_j$ and using the degree bounds yields the displayed
@@ -1582,12 +1139,12 @@ since $\sum_{j\ne i}L^+_{ij}=-L^+_{ii}$. By (i) the same sum equals
 \lvert e_i\rvert\le\eta_n\Big(\frac{n}{k_i}+S\Big).
 \]
 Equating and dividing by $n$,
-\[
+\begin{equation}
 L^{+}_{ii}=\frac1{k_i}+C_n-\frac{2}{n k_i}+\frac{e_i}{n},
 \qquad
 C_n:=\frac{S-\operatorname{tr}L^+}{n}\ \text{ (independent of $i$)} .
 \tag{A.1}
-\]
+\end{equation}
 
 \emph{Step 2 (trace identity kills $C_n$).} Summing (A.1) over $i$:
 $\operatorname{tr}L^+=S+nC_n-\tfrac2nS+\tfrac1n\sum_i e_i$. Substituting
@@ -1613,737 +1170,26 @@ so $k_iL^+_{ii}\to1$ uniformly over nodes, i.e.\
 $L^+_{ii}=(1/k_i)(1+o(1))$ and $\lVert\Phi_i\rVert=\sqrt{L^+_{ii}}
 =(1/\sqrt{k_i})(1+o(1))$. \hfill$\qed$
 
-Without (ii) the conclusion weakens gracefully rather than failing: the same
-computation gives $L^+_{ii}=1/k_i+O\big((\eta_n+1/n)\,S/n\big)$, an
-\emph{additive} error at the scale of the harmonic mean degree, so the
-degeneracy statement survives at the level of pairwise resistance
-($R\approx1/k_i+1/k_j$, which is (i) itself) even when per-node relative
-control is lost. The $j{=}i$ diagonal term, where $R(i,i)=0$ while
-$1/k_i+1/k_j=2/k_i$, is excluded from the sums above, which is why the
-$(n-2)/k_i$ bookkeeping appears.
+Without (ii) the conclusion weakens gracefully: the same computation gives
+$L^+_{ii}=1/k_i+O\big((\eta_n+1/n)\,S/n\big)$, an \emph{additive} error at the
+harmonic-mean-degree scale, so the degeneracy survives at the pairwise level
+($R\approx1/k_i+1/k_j$, which is (i)) even when per-node relative control is lost.
+The $j{=}i$ term ($R(i,i)=0$ while $1/k_i+1/k_j=2/k_i$) is excluded from the sums,
+which is why the $(n-2)/k_i$ bookkeeping appears.
 
-\section{Proof of Theorem~\ref{thm:cond}}\label{app:proof}
 
-\subsection*{Setting and notation}
-$M$ is a compact $d$-dimensional Riemannian manifold without boundary, volume
-normalized to $1$; $(\mu_k,\varphi_k)_{k\ge0}$ are the eigenpairs of its
-(positive) Laplace--Beltrami operator, $0=\mu_0<\mu_1\le\mu_2\le\cdots$, with
-$\{\varphi_k\}$ orthonormal in $L^2(M)$. Under non-uniform sampling with an
-admissible density the identical argument runs against the density-weighted
-operator that the graph Laplacian actually converges to
-\cite{garciatrillos2018,calder2022} (the $\alpha{=}1$ normalization of
-\S\ref{sec:density} restores the geometric operator), with (H1)--(H2) read for
-its eigenpairs. The continuum objects are
-\[
-F(x)=\Big(\tfrac{\varphi_k(x)}{\sqrt{\mu_k}}\Big)_{k=1}^{m},\qquad
-R(x)=\lVert F(x)\rVert,\qquad N(x)=F(x)/R(x),
-\]
-and $m$ sits at a spectral gap: $\mu_m<\mu_{m+1}$. Write
-$\Phi_m:=\max_{k\le m}\lVert\varphi_k\rVert_\infty<\infty$ (eigenfunctions on a
-smooth compact manifold are smooth). The sample is $x_1,\dots,x_n$ i.i.d.\ from
-the stated density class, $G_n$ the $\varepsilon$-graph (or $k$-NN graph) on it,
-and $(\lambda_k,v_k)$ the eigenpairs of $L_{\mathrm{sym}}$ with the empirical
-normalization $\tfrac1n\sum_i v_k(i)^2=1$; the algorithm forms
-$\Psi_i=(v_k(i)/\sqrt{\lambda_k})_{k=1}^m$ and
-$\hat u_i=\Psi_i/\lVert\Psi_i\rVert$. Alongside these, the \emph{random-walk}
-eigenvectors $v^{\mathrm{rw}}_k:=D^{-1/2}v_k$ are the eigenpairs of
-$L_{\mathrm{rw}}=D^{-1}(D-A)=D^{-1/2}L_{\mathrm{sym}}D^{1/2}$ at the \emph{same}
-eigenvalue $\lambda_k$; we take them with the coordinated normalization
-$\tfrac1n\sum_i k_i\,v^{\mathrm{rw}}_k(i)^2=1$ (the empirical degree-weighted inner
-product---which is \emph{identically} the algorithm's own $L_{\mathrm{sym}}$
-constraint $\tfrac1n\sum_i v_k(i)^2=1$ viewed through $D^{1/2}$), under which each
-$v^{\mathrm{rw}}_k$ pairs mode-for-mode with the continuum eigenfunction
-$\varphi_k$ orthonormal in the effective sampling measure (exactly $L^2(\rho)$ for
-uniform sampling or after the $\alpha{=}1$ reweighting of \S\ref{sec:density} that
-restores the geometric operator; the $\rho$-versus-$\rho^2$ distinction under raw
-non-uniform sampling is immaterial, $v^{\mathrm{rw}}_k$ being only an intermediary
-to the identical angular map)---the convention in which the $\infty$-norm
-eigenvector rates below hold. Write
-$\Psi^{\mathrm{rw}}_i=(v^{\mathrm{rw}}_k(i)/\sqrt{\lambda_k})_{k=1}^m$.
-
-\subsection*{Step 0: three invariances}
-The claim concerns only the pairwise distances $\lVert\hat u_i-\hat u_j\rVert$.
-These are invariant under (i) a global rescaling of all eigenvectors (the choice
-of normalization), (ii) a global rescaling of all eigenvalues (which rescales
-every weight $1/\sqrt{\lambda_k}$ by the same factor), and (iii) a fixed
-orthogonal transformation $Q\in O(m)$ applied to every $\Psi_i$ (then
-$\lVert Q\hat u_i-Q\hat u_j\rVert=\lVert\hat u_i-\hat u_j\rVert$). We use (i) to
-work in the empirical normalization, (ii) to apply the deterministic
-graph-to-continuum eigenvalue scaling $c_n$ of \cite{calder2022}, and (iii) to
-absorb the basis alignment of Lemma~\ref{lem:transfer}.
-
-\smallskip\noindent\emph{(iv) Exact per-node degree cancellation.} Since
-$v_k=D^{1/2}v^{\mathrm{rw}}_k$ applies the \emph{same} node factor $\sqrt{k_i}$ in
-every mode $k$, the two commute-weighted embeddings differ only by a positive
-per-node scalar,
-\[
-\Psi_i=\big(v_k(i)/\sqrt{\lambda_k}\big)_{k=1}^m
-=\sqrt{k_i}\,\big(v^{\mathrm{rw}}_k(i)/\sqrt{\lambda_k}\big)_{k=1}^m
-=\sqrt{k_i}\;\Psi^{\mathrm{rw}}_i ,
-\]
-so row normalization returns the \emph{identical} angular map
-$\hat u_i=\Psi^{\mathrm{rw}}_i/\lVert\Psi^{\mathrm{rw}}_i\rVert$---exactly, with no
-degree-ratio hypothesis. We may therefore calibrate the random-walk embedding
-$\Psi^{\mathrm{rw}}_i$, whose $\infty$-norm convergence to the continuum is
-exactly the cited theorem, and read off the angle the algorithm computes from
-$L_{\mathrm{sym}}$. This is what lets the theorem hold under non-uniform sampling:
-the node-dependent degree factor a symmetric calibration would have to control is
-cancelled by the normalization, not bounded.
-
-\subsection*{Step 1: the continuum angular map is locally bi-Lipschitz}
-\begin{lemma}\label{lem:contang}
-Under \textup{(H1)--(H2)}, for all $x,y\in M$ with $d_M(x,y)\le r_0$,
-\[
-a\,d_M(x,y)\ \le\ \lVert N(x)-N(y)\rVert\ \le\ b\,d_M(x,y),\qquad
-a:=\frac{\sqrt{L_0^{-2}-\Lambda_0^2}}{\rho^+},\quad b:=\frac{L_0}{\rho^-}.
-\]
-\end{lemma}
-\begin{proof}
-Apply the identity of Lemma~\ref{lem:norm} to $u=F(x)$, $v=F(y)$. By (H1),
-$L_0^{-2}d_M^2\le\lVert F(x)-F(y)\rVert^2\le L_0^2\,d_M^2$; by (H2),
-$(R(x)-R(y))^2\le\Lambda_0^2\,d_M^2$ and $(\rho^-)^2\le R(x)R(y)\le(\rho^+)^2$.
-The ratio in the identity is therefore at least
-$(L_0^{-2}-\Lambda_0^2)\,d_M^2/(\rho^+)^2$---positive precisely because
-$\Lambda_0<1/L_0$---and at most $L_0^2\,d_M^2/(\rho^-)^2$.
-\end{proof}
-
-Note $a\le b$: a two-sided constant satisfies $L_0^{-1}\le L_0$, so $L_0\ge1$,
-hence $\sqrt{L_0^{-2}-\Lambda_0^2}\le L_0^{-1}\le L_0$, and $\rho^-\le\rho^+$.
-
-\subsection*{Step 2: normalization is stable}
-\begin{lemma}\label{lem:normstab}
-For nonzero $u,w\in\mathbb{R}^m$,
-\[
-\Big\lVert \frac{u}{\lVert u\rVert}-\frac{w}{\lVert w\rVert}\Big\rVert
-\ \le\ \frac{2\,\lVert u-w\rVert}{\max(\lVert u\rVert,\lVert w\rVert)}.
-\]
-\end{lemma}
-\begin{proof}
-$\frac{u}{\lVert u\rVert}-\frac{w}{\lVert w\rVert}
-=\frac{u-w}{\lVert u\rVert}
-+w\Big(\frac{1}{\lVert u\rVert}-\frac{1}{\lVert w\rVert}\Big)$, and the second
-term has norm $\big|\lVert w\rVert-\lVert u\rVert\big|/\lVert u\rVert
-\le\lVert u-w\rVert/\lVert u\rVert$. So the left side is at most
-$2\lVert u-w\rVert/\lVert u\rVert$; by symmetry in $u\leftrightarrow w$, also at
-most $2\lVert u-w\rVert/\lVert w\rVert$.
-\end{proof}
-
-\subsection*{Step 3: sup-norm spectral transfer}
-This is the step for which $L^2$ consistency \cite{garciatrillos2018} does not
-suffice and the $\infty$-norm rates of \cite{calder2022} are the right tool.
-Group $\mu_1\le\cdots\le\mu_m$ into blocks of equal eigenvalues (multiplets);
-because $m$ sits at a spectral gap, the last block ends exactly at $m$.
-
-\smallskip\noindent Throughout this step the calibration is carried out on the
-\emph{random-walk} eigenvectors: to keep notation light we drop the superscript
-and write $v_k,\Psi_i,\widetilde\Psi_i$ for $v^{\mathrm{rw}}_k$ and the
-corresponding random-walk commute embeddings. By invariance~(iv) the resulting
-angle is exactly the algorithm's $\hat u_i$, and the $\infty$-norm rates of
-\cite{calder2022}---stated for the unnormalized/random-walk eigenvectors---apply
-to $v_k$ directly, with no degree-ratio hypothesis.
-
-\begin{lemma}[Calibration; external sup-norm transfer]\label{lem:transfer}
-Under the sampling model of \cite{calder2022,calderlewicka2022} there are sequences
-$\epsilon_n,\delta_n\to0$---the eigenvector $L^\infty$ rate of
-\cite{calderlewicka2022} (which establishes high-probability $L^\infty$ and
-$C^{0,1}$ convergence of graph Laplacian eigenvectors to the Laplace--Beltrami
-eigenfunctions, with constants depending on the eigenvalue $\mu_m$ and hence on
-$m$; $\epsilon_n$ carries a factor $\sqrt m$), and the eigenvalue and
-gap-stability rate $\delta_n$ of \cite{calder2022}---and events $\mathcal A_n$
-with $\mathbb P(\mathcal A_n)\to1$ on which, after the eigenvalue scaling
-$\tilde\lambda_k:=\lambda_k/c_n$ of invariance (ii), there is an orthogonal
-$Q_n\in O(m)$, block-diagonal across the multiplets, with
-\[
-\max_{k\le m}\big|\tilde\lambda_k-\mu_k\big|\le\delta_n,
-\qquad
-\max_{i\le n}\big\lVert Q_n v(i)-\varphi(x_i)\big\rVert\le\epsilon_n,
-\]
-where $v(i)=(v_1(i),\dots,v_m(i))$ and
-$\varphi(x)=(\varphi_1(x),\dots,\varphi_m(x))$. Consequently, with
-$\widetilde\Psi_i:=\big(v_k(i)/\sqrt{\tilde\lambda_k}\big)_{k=1}^m$ (the same
-angle as $\Psi_i$, by invariances (i),(ii),(iv)) and provided $\delta_n\le\mu_1/2$,
-\[
-\max_{i\le n}\ \big\lVert Q_n\widetilde\Psi_i-F(x_i)\big\rVert\ \le\ E_n
-:=\frac{\epsilon_n}{\sqrt{\mu_1}}
-+\frac{2\delta_n}{\mu_1^{3/2}}\,\sqrt m\,\big(\Phi_m+\epsilon_n\big)
-\ \longrightarrow\ 0 .
-\]
-In particular the graph radius inherits the continuum band:
-$\rho^--E_n\le\lVert\widetilde\Psi_i\rVert\le\rho^++E_n$ for every node $i$.
-\end{lemma}
-
-\begin{proof}
-\emph{(a) Spectral consistency.} For the unnormalized and random-walk graph
-Laplacians, \cite{calder2022} give, with probability tending to one, eigenvalue
-convergence $|\tilde\lambda_k-\mu_k|\le\delta_n$ and the gap stability that makes
-``fixed $m$ at a spectral gap'' well-posed, while \cite{calderlewicka2022}
-supplies the eigenvector consistency in $\infty$-norm with explicit rates (and an
-approximate $C^{0,1}$/gradient rate $\epsilon_n'\to0$ for the eigenvectors
-themselves, used for the cutoff in the remark below), stated per eigenvalue
-cluster. We make the block-orthogonal alignment explicit, since
-\cite{calderlewicka2022} attaches to each discrete eigenvector $v_k$ a
-\emph{single} normalized limit eigenfunction $\tilde\varphi_k$ (their sup-norm
-rate, $\lVert v_k-\tilde\varphi_k\rVert_\infty\lesssim\mu_k\varepsilon_n$), not an
-orthonormal eigenspace basis. Within a multiplet the partners
-$\{\tilde\varphi_k\}$ need not be exactly orthonormal, but their empirical Gram
-matrix is $G=I+O(\varepsilon_n)$ (each off-diagonal is a discrete inner product of
-two sup-norm-$\varepsilon_n$ perturbations of orthonormal continuum
-eigenfunctions); the symmetric orthogonalization $G^{-1/2}=I+O(\varepsilon_n)$
-therefore turns $\{\tilde\varphi_k\}$ into an exactly $L^2(\rho)$-orthonormal basis
-$\{\varphi_k\}$ of the limiting eigenspace at cost $O(\varepsilon_n)$ in sup-norm,
-and its per-multiplet action is the block-diagonal $Q_n\in O(m)$; each aligned
-discrete eigenvector is then $(\epsilon_n/\sqrt m)$-close in sup-norm to its
-partner. (Multiplicity is exactly why the alignment is block-orthogonal rather
-than a per-mode sign choice; a simple eigenvalue is the $1\times1$ block, where it
-\emph{is} a sign choice.) Collecting the $m$ per-mode bounds into the vector $v(i)$
-gives $\lVert Q_nv(i)-\varphi(x_i)\rVert\le\epsilon_n$.
-
-\emph{(b) No normalization conversion is needed.} The calibration in (a) is for
-the random-walk eigenvectors, and by the exact per-node cancellation of
-Step~0\,(iv) the graph angular map is
-$\hat u_i=\Psi^{\mathrm{rw}}_i/\lVert\Psi^{\mathrm{rw}}_i\rVert$ regardless of
-whether $L_{\mathrm{sym}}$ or $L_{\mathrm{rw}}$ is diagonalized: the algorithm's
-embedding satisfies $\Psi_i=\sqrt{k_i}\,\Psi^{\mathrm{rw}}_i$ and the positive
-scalar $\sqrt{k_i}$ cancels under row normalization. In particular no uniform
-degree concentration is invoked and no bound on the degree ratio $k_i/\bar k_n$
-is required, so the transfer is valid under non-uniform sampling; the sampling
-density enters only by fixing the limiting (weighted) operator whose
-eigenfunctions $\varphi_k$ appear in $F$, as in the Setting. (The similarity
-$L_{\mathrm{rw}}=D^{-1/2}L_{\mathrm{sym}}D^{1/2}$ that underlies
-$v^{\mathrm{sym}}_k=D^{1/2}v^{\mathrm{rw}}_k$ is exact, so the shared eigenvalue
-$\lambda_k$ used throughout is unaffected.)
-
-\emph{(c) Bookkeeping.} Let $W_\mu=\operatorname{diag}(\mu_k^{-1/2})$ and
-$\widetilde W=\operatorname{diag}(\tilde\lambda_k^{-1/2})$, so
-$F(x)=W_\mu\varphi(x)$ and $\widetilde\Psi_i=\widetilde W v(i)$. Since $W_\mu$
-is a scalar multiple of the identity on each multiplet and $Q_n$ is
-block-diagonal across the multiplets, $Q_nW_\mu=W_\mu Q_n$. Hence
-\[
-Q_n\widetilde\Psi_i-F(x_i)
-=Q_n\big(\widetilde W-W_\mu\big)v(i)
-+W_\mu\big(Q_nv(i)-\varphi(x_i)\big).
-\]
-For the first term, $\delta_n\le\mu_1/2$ gives $\tilde\lambda_k\ge\mu_1/2$, so
-\[
-\big\lVert\widetilde W-W_\mu\big\rVert_{\mathrm{op}}
-=\max_{k\le m}\frac{|\mu_k-\tilde\lambda_k|}
-{\sqrt{\tilde\lambda_k\,\mu_k}\,\big(\sqrt{\tilde\lambda_k}+\sqrt{\mu_k}\big)}
-\ \le\ \frac{2\delta_n}{\mu_1^{3/2}},
-\]
-while $\lVert v(i)\rVert\le\lVert Q_nv(i)-\varphi(x_i)\rVert
-+\lVert\varphi(x_i)\rVert\le\epsilon_n+\sqrt m\,\Phi_m
-\le\sqrt m\,(\Phi_m+\epsilon_n)$. For the second term,
-$\lVert W_\mu\rVert_{\mathrm{op}}=\mu_1^{-1/2}$. Adding the two bounds gives
-$E_n$. The radius statement is the reverse triangle inequality
-$\big|\lVert\widetilde\Psi_i\rVert-R(x_i)\big|
-=\big|\lVert Q_n\widetilde\Psi_i\rVert-\lVert F(x_i)\rVert\big|\le E_n$
-together with $\rho^-\le R\le\rho^+$ from (H2).
-\end{proof}
-
-\emph{General filters (proof of the calibration claim in
-Corollary~\ref{cor:filtered}).} The proof above uses only two properties of
-the weight matrix $W_\mu=\operatorname{diag}(\mu_k^{-1/2})$: it is constant on
-multiplets (hence commutes with the block-orthogonal $Q_n$), and it is
-Lipschitz in the eigenvalue on the retained window. Both hold for any positive
-Lipschitz filter $h$: replacing $W_\mu$ by
-$H:=\operatorname{diag}(h(\mu_k))$ and $\widetilde W$ by
-$\operatorname{diag}(h(\tilde\lambda_k))$, step (c) goes through verbatim with
-$\lVert\operatorname{diag}(h(\tilde\lambda_k))-H\rVert_{\mathrm{op}}
-\le L_h\delta_n$ and $\lVert H\rVert_{\mathrm{op}}\le H_m$, giving
-$E_{n,h}=H_m\epsilon_n+L_h\delta_n\sqrt m\,(\Phi_m+\epsilon_n)$ as claimed;
-the commute filter $h(\lambda)=\lambda^{-1/2}$ (with $L_h\le2\mu_1^{-3/2}$ on
-$[\mu_1/2,\infty)$ and $H_m=\mu_1^{-1/2}$) recovers the $E_n$ displayed above.
-
-\smallskip\noindent\emph{Conditional structure, and the bridge to uniformity in
-$m$.} Step~3 is \emph{external}: it composes the named rate theorems
-\cite{calder2022,calderlewicka2022} into the calibration, and the transfer of the
-continuum bi-Lipschitz constants to the graph is then the elementary
-node-uniform perturbation of Step~4 (radius floor $\lVert\widetilde\Psi_i\rVert\ge
-\rho^--E_n$; angular error $\le2E_n/\rho^-$ by Lemma~\ref{lem:normstab}; cutoff
-$\theta_n\asymp E_n/a$). Consequently Theorem~\ref{thm:cond} is
-\textbf{unconditional in $m$ for each fixed $m$}, resting only on this standard
-sup-norm spectral-transfer lemma---no self-contained spectral analysis is
-re-derived here. The one $m$-dependent seam is deliberate and worth stating
-plainly: the CGLewicka constants, hence $\epsilon_n$ and $\epsilon_n'$, depend on
-the retained eigenfunctions' Lipschitz norms and on the spectral gap at $\mu_m$,
-so the \emph{rate} at which $\theta_n\to0$ degrades as $m$ grows. Making the
-transfer \emph{uniform} in $m$---and with it (H1)---is exactly the frontier of
-Conjecture~\ref{conj:angle}; we delimit it sharply in the discussion after
-Proposition~\ref{prop:plain}, and it is filter-specific, since the $C^{0,1}$ rate
-$\epsilon_n'$ is what shrinks $\theta_n$ toward the connectivity scale (below
-which the twin obstruction lives).
-
-\subsection*{Step 4: assembly}
-\begin{proof}[Proof of Theorem~\ref{thm:cond}]
-Work on the event $\mathcal A_n$ of Lemma~\ref{lem:transfer}, with $n$ large
-enough that $E_n<\rho^-/2$ (so $\widetilde\Psi_i\ne0$ and every $\hat u_i$ is
-defined). By invariance (iii) we may compare angles through the calibrated
-embedding: writing $\hat q_i:=Q_n\widetilde\Psi_i/\lVert Q_n\widetilde\Psi_i
-\rVert=Q_n\hat u_i$, Lemma~\ref{lem:normstab} with $u=Q_n\widetilde\Psi_i$,
-$w=F(x_i)$, and $\lVert F(x_i)\rVert\ge\rho^-$ gives
-\[
-\lVert\hat q_i-N(x_i)\rVert\ \le\ \frac{2E_n}{\rho^-}
-\qquad\text{for every node }i .
-\]
-Set $\theta_n:=8E_n/(a\rho^-)\to0$, and fix a sampled pair with
-$\theta_n\le d:=d_M(x_i,x_j)\le r_0$. The pairwise angular error is at most
-$4E_n/\rho^-=(a/2)\,\theta_n\le(a/2)\,d$, so by Lemma~\ref{lem:contang}, the
-triangle inequality, and
-$\lVert\hat u_i-\hat u_j\rVert=\lVert\hat q_i-\hat q_j\rVert$,
-\[
-\lVert\hat u_i-\hat u_j\rVert\ \ge\ a\,d-\tfrac a2\,d\ =\ \tfrac a2\,d\ =\ A\,d,
-\qquad
-\lVert\hat u_i-\hat u_j\rVert\ \le\ b\,d+\tfrac a2\,d\ \le\ 2b\,d\ =\ B\,d,
-\]
-the last inequality using $a\le b$ (Step 1). Both bounds hold simultaneously
-for \emph{all} such pairs because the calibration of Lemma~\ref{lem:transfer}
-is uniform over nodes, and $\mathbb P(\mathcal A_n)\to1$.
-\end{proof}
-
-\subsection*{Step 5: from local to global (proof of Corollary~\ref{cor:global})}
-\begin{proof}[Proof of Corollary~\ref{cor:global}]
-The map $(x,y)\mapsto\lVert N(x)-N(y)\rVert$ is continuous ($F$ is continuous
-and $R\ge\rho^->0$) and, by (H3), strictly positive on the compact set
-$\{(x,y)\in M\times M: d_M(x,y)\ge r_0\}$; its minimum $c_0$ is therefore
-attained and positive. Work on the event of Lemma~\ref{lem:transfer} with $n$
-large enough that $E_n<\rho^-/2$ and $4E_n/\rho^-\le c_0/2$. For sampled pairs
-with $\theta_n\le d_M\le r_0$, Theorem~\ref{thm:cond} gives the bounds with
-$(A,B)$, hence with $(A_g,B_g)$. For sampled pairs with $d:=d_M>r_0$: the
-calibration bound $\lVert\hat q_i-N(x_i)\rVert\le2E_n/\rho^-$ of Step~4 gives
-\[
-\lVert\hat u_i-\hat u_j\rVert
-\ \ge\ \lVert N(x_i)-N(x_j)\rVert-\frac{4E_n}{\rho^-}
-\ \ge\ c_0-\frac{c_0}{2}\ =\ \frac{c_0}{2}
-\ \ge\ \frac{c_0}{2\operatorname{diam}M}\,d\ \ge\ A_g\,d,
-\]
-while unit vectors satisfy
-$\lVert\hat u_i-\hat u_j\rVert\le2\le(2/r_0)\,d\le B_g\,d$.
-\end{proof}
-
-\subsection*{Step 6: the flat torus (proof of Corollary~\ref{cor:torus})}
-\begin{proof}[Proof of Corollary~\ref{cor:torus}]
-On $M=\mathbb{R}^2/(2\pi\mathbb{Z})^2$ with volume normalized to $1$, the
-Laplace--Beltrami eigenvalues are $\lvert k\rvert^2$, $k\in\mathbb{Z}^2$: the
-first nontrivial eigenvalue $\mu=1$ has multiplicity four, spanned by the
-$L^2$-orthonormal functions $\sqrt2\cos x,\ \sqrt2\sin x,\ \sqrt2\cos y,\
-\sqrt2\sin y$, and the next eigenvalue is $2$---so $m=4$ exhausts the first
-multiplet and sits at a spectral gap. The truncated eigenmap (weights
-$1/\sqrt{\mu_k}=1$) is the Clifford embedding
-$F(x,y)=\sqrt2\,(\cos x,\sin x,\cos y,\sin y)$.
-
-\emph{(H2).} $\lVert F\rVert^2=2(\cos^2x+\sin^2x)+2(\cos^2y+\sin^2y)=4$:
-the radius is constant, $R\equiv2$, so $\Lambda_0=0<1/L_0$ and
-$\rho^-=\rho^+=2$.
-
-\emph{(H1), globally.} Using
-$(\cos a-\cos b)^2+(\sin a-\sin b)^2=4\sin^2\!\big(\tfrac{a-b}2\big)$,
-\[
-\lVert F(p)-F(q)\rVert^2
-=8\Big[\sin^2\tfrac{\Delta x}{2}+\sin^2\tfrac{\Delta y}{2}\Big],
-\qquad \Delta x,\Delta y\in[-\pi,\pi],
-\]
-while $d_M(p,q)^2=\Delta x^2+\Delta y^2$. The elementary bounds
-$\tfrac{2}{\pi}\lvert\delta\rvert\le2\lvert\sin(\delta/2)\rvert\le
-\lvert\delta\rvert$ on $[-\pi,\pi]$ give
-\[
-\frac{2\sqrt2}{\pi}\,d_M(p,q)\ \le\ \lVert F(p)-F(q)\rVert\ \le\ \sqrt2\,d_M(p,q)
-\qquad\text{for \emph{all} } p,q,
-\]
-so (H1) holds with $L_0=\sqrt2$ (indeed $L_0^{-1}=1/\sqrt2\le2\sqrt2/\pi$) and
-$r_0=\operatorname{diam}M=\pi\sqrt2$.
-
-\emph{(H3).} $N=F/2$; since the radius is constant, $N(p)=N(q)$ iff $F(p)=F(q)$
-iff $e^{\mathrm i x_p}=e^{\mathrm i x_q}$ and
-$e^{\mathrm i y_p}=e^{\mathrm i y_q}$ iff $p=q$.
-
-Because $r_0=\operatorname{diam}M$, Theorem~\ref{thm:cond} alone is already
-global, with $A=\sqrt{L_0^{-2}}/(2\rho^+)=1/(4\sqrt2)$ and
-$B=2L_0/\rho^-=\sqrt2$. The sharp continuum distortion of $N$ is the exact
-ratio range above: $\lVert N(p)-N(q)\rVert/d_M(p,q)\in[\sqrt2/\pi,\,1/\sqrt2]$,
-of width $\pi/2$, the extremes attained along a coordinate direction at
-antipodal ($\lvert\delta\rvert=\pi$) and infinitesimal separations
-respectively. Basis-independence: any $L^2$-orthonormal basis of the $\mu=1$
-eigenspace equals $Q$ applied to the Clifford one for some $Q\in O(4)$, and
-angular pairwise distances are $Q$-invariant (Step~0, invariance (iii)).
-\end{proof}
-
-\subsection*{Step 7: the small-ball ratio law (used by Proposition~\ref{prop:rank})}
-Let $D_1,D_2$ be i.i.d.\ with the small-ball distance law
-$F(r)=(r/r_0)^d$ on $[0,r_0]$ (density $\propto r^{d-1}$, the flat
-approximation to pair distances within a geodesic ball). For $\kappa\ge1$,
-\[
-\mathbb P\big(D_2\ge\kappa D_1\big)
-=\int_0^{r_0}\!F\!\big(\tfrac{y}{\kappa}\big)\,dF(y)
-=\frac{1}{\kappa^d}\int_0^{r_0}\Big(\frac{y}{r_0}\Big)^{d}\,
-\frac{d\,y^{d-1}}{r_0^{d}}\,dy
-=\frac{1}{2\kappa^d},
-\]
-so by symmetry $\mathbb P(\max/\min\ge\kappa)=\kappa^{-d}$ and
-$\mu(\kappa)=1-\kappa^{-d}$ exactly. The rank certificate of
-Proposition~\ref{prop:rank} is thus $\tau\ge2\kappa^{-d}-1$,
-$\rho_S\ge3\kappa^{-d}-2$: exponential decay of the worst case in the
-intrinsic dimension.
-
-\subsection*{Why the resolution cutoff is necessary}
-The cutoff $\theta_n$ is forced by the statement's generality, not by the
-method. In a hard-threshold $\varepsilon$-graph, two sample points at distance
-below the bandwidth can be \emph{combinatorial twins}---identical
-neighbourhoods, hence identical rows of $A$ and equal degrees. For twins
-$i,j$ the difference $e_i-e_j$ is itself an eigenvector of
-$L_{\mathrm{sym}}$---at eigenvalue $1$ for non-adjacent twins and $1+1/k$ for
-adjacent ones---so every eigenvector at any \emph{other} eigenvalue is
-orthogonal to it and has identical entries at $i$ and $j$. In particular
-every low mode does, hence $\hat u_i=\hat u_j$ exactly while
-$d_M(x_i,x_j)>0$: no lower bound $A\,d_M$ can hold below the
-connectivity scale. (``Identical in every eigenvector'' would be literally
-false---the localized twin-difference mode itself separates them---but that
-mode sits at the top of the spectrum, far above anything the angular map
-retains.) What is improvable is the \emph{size} of $\theta_n$: our
-proof takes it at the sup-norm consistency rate $E_n$, much larger than the
-bandwidth; a $C^1$ (gradient) consistency argument---the Lipschitz regularity
-theory for graph-Laplacian eigenfunctions of \cite{calderlewicka2022} is the
-natural ingredient---would control eigenvector \emph{differences} at small
-separations directly and could shrink $\theta_n$ toward the connectivity scale,
-below which the twin obstruction is final.
-
-Two further remarks. (1) Every constant in $E_n$ depends on the fixed
-mode-count $m$ (through $\sqrt m$, $\Phi_m$, $\mu_1$, and the gap
-$\mu_{m+1}-\mu_m$); nothing here is claimed uniform in $m$. The uniformity in
-$m$ observed empirically (\S\ref{sec:verify}) corresponds to the
-uniformity of (H1) \cite{bates2014,portegies2016} and is exactly what separates
-Theorem~\ref{thm:cond} from the full Conjecture~\ref{conj:angle};
-Appendix~\ref{app:uniform} settles its continuum side by filter (uniform for
-heat, scale-dependent for commute). (2) The
-theorem is local ($d_M\le r_0$) because (H1) is; the global statement needs
-precisely the injectivity hypothesis (H3), which Corollary~\ref{cor:global}
-(Step~5) carries out---and on the flat torus (H1) is itself global, so
-Corollary~\ref{cor:torus} (Step~6) needs no hypothesis at all.
-}% end teal
-
-{% new appendix: uniformity in the truncation
-\section{Uniformity in the truncation}\label{app:uniform}
-
-This appendix proves Theorem~\ref{thm:heat} and Proposition~\ref{prop:weyl},
-and records the growing-window graph-transfer conditions. Throughout, volume
-is normalized to $1$, $p_t$ is the heat kernel of $M$, and cutoffs are
-multiplet-closed.
-
-\subsection*{Proof of Theorem~\ref{thm:heat}}
-Let $F_t(x)=\big(e^{-t\mu_k/2}\varphi_k(x)\big)_{k\ge1}\in\ell^2$ be the
-\emph{full} heat embedding with the constant mode removed; its kernel is
-\[
-K_t(x,y):=\langle F_t(x),F_t(y)\rangle=p_t(x,y)-1 .
-\]
-
-\emph{Step 1: $N_t$ is a uniformly noncollapsing immersion for small $t$.}
-For a unit tangent vector $v\in T_xM$,
-\[
-\lVert dF_t(v)\rVert^2=\partial^v_x\partial^v_y K_t(x,y)\big|_{y=x},
-\qquad
-dR_t(v)=\frac{\partial_v K_t(x,x)}{2R_t(x)},
-\qquad R_t^2(x)=p_t(x,x)-1 .
-\]
-By the Minakshisundaram--Pleijel expansion (cf.\ \cite{berard1994}),
-$p_t(x,x)=(4\pi t)^{-d/2}\big(1+t\,\mathrm{scal}(x)/6+O(t^2)\big)$ and
-$\partial^v_x\partial^v_y p_t\big|_{y=x}=\tfrac1{2t}(4\pi t)^{-d/2}(1+O(t))$,
-both uniformly on compact $M$. The only $x$-dependence of the diagonal at this
-order is through the curvature term, so
-$\partial_v p_t(x,x)=(4\pi t)^{-d/2}\,O(t)$, whence
-$dR_t(v)^2=(4\pi t)^{-d/2}\,O(t^{2})\cdot O(1)$, which is $o$ of the
-derivative energy $\asymp t^{-1}(4\pi t)^{-d/2}$. Therefore there is
-$t_0(M)>0$ such that for $t\le t_0$ the tangential square
-$T_t(x,v)^2:=\lVert dF_t(v)\rVert^2-dR_t(v)^2$ obeys
-\[
-T_t(x,v)^2\ \ge\ c\,t^{-d/2-1},\qquad
-R_t(x)^2\asymp t^{-d/2},\qquad\text{hence}\qquad
-\lVert dN_t(v)\rVert^2=\frac{T_t(x,v)^2}{R_t(x)^2}\ \ge\ \frac{c'}{t},
-\]
-uniformly over the unit tangent bundle (the last identity is
-Proposition~\ref{prop:angdist}).
-
-\emph{Step 2: the truncation tail vanishes in $C^2$.} Eigenfunction
-H\"older/derivative norms grow only polynomially,
-$\lVert\varphi_k\rVert_{C^r}\le C\mu_k^{(d-1)/4+r/2}$ \cite{hormander1968},
-while the heat weights decay exponentially; hence
-$\lVert F_t-F_{t,m}\rVert_{C^2}\to0$ as $m\to\infty$ (tail sums
-$\sum_{k>m}e^{-t\mu_k}\mu_k^{c(d,r)}\to0$ by Weyl's law). Consequently
-$T_{t,m}\to T_t$, $R_{t,m}\to R_t$, and the $C^2$-norms of $N_{t,m}$ converge,
-all uniformly; choose $m_0(t)$ so that for $m\ge m_0(t)$,
-$T_{t,m}^2\ge\tfrac12c\,t^{-d/2-1}$, $R_{t,m}\asymp t^{-d/4}$, and
-$\sup_{m\ge m_0}\lVert N_{t,m}\rVert_{C^2}=:C_2(t)<\infty$.
-
-\emph{Step 3: from uniform immersion to uniform bi-Lipschitz.} Let
-$a_t':=\inf_{m\ge m_0}\inf_{x,\lvert v\rvert=1}\lVert dN_{t,m}(v)\rVert>0$
-from Steps 1--2. For $x,y$ with $d:=d_M(x,y)\le r_t:=a_t'/(2C_2(t))$, Taylor
-along a minimizing geodesic $\gamma$ gives
-\[
-\lVert N_{t,m}(x)-N_{t,m}(y)\rVert
-\ \ge\ \lVert dN_{t,m}(\gamma'(0))\rVert\,d-\tfrac12C_2(t)\,d^2
-\ \ge\ \Big(a_t'-\tfrac12C_2(t)\,r_t\Big)d\ \ge\ \tfrac{3a_t'}{4}\,d,
-\]
-and the mean-value bound gives
-$\lVert N_{t,m}(x)-N_{t,m}(y)\rVert\le b_t\,d$ with
-$b_t:=\sup_{m\ge m_0}\mathrm{Lip}(N_{t,m})<\infty$. All constants depend on
-$t$ and $M$ only---not on $m$. \hfill$\qed$
-
-\begin{lemma}[Differentiated pointwise Weyl law]\label{lem:dweyl}
-Let $(M,g)$ be a smooth closed Riemannian $d$-manifold with orthonormal
-Laplace eigenfunctions $\varphi_k$, eigenvalues $\mu_k$. There are constants
-$c_d,c_d'>0$ depending only on $(M,g)$ such that, uniformly in $x\in M$,
-\[
-\sum_{0<\mu_k\le\Lambda}\varphi_k(x)^2
-   \;=\; c_d\,\Lambda^{d/2}\,\bigl(1+O(\Lambda^{-1/2})\bigr),
-\qquad
-\sum_{0<\mu_k\le\Lambda}\lVert\nabla\varphi_k(x)\rVert^2
-   \;=\; c_d'\,\Lambda^{(d+2)/2}\,\bigl(1+O(\Lambda^{-1/2})\bigr),
-\]
-with spatially constant leading coefficients.
-\end{lemma}
-\begin{proof}
-Both are on-diagonal statements about the spectral projector
-$\Pi_\lambda(x,y)=\sum_{\sqrt{\mu_k}\le\lambda}\varphi_k(x)\varphi_k(y)$ at
-frequency $\lambda=\sqrt\Lambda$: the first is H\"ormander's pointwise Weyl law
-with sharp remainder \cite{hormander1968},
-$\Pi_\lambda(x,x)=\tilde c_d\lambda^{d}+O(\lambda^{d-1})$; the second is the
-mixed-derivative case $\partial_{x}\!\cdot\!\partial_{y}\Pi_\lambda(x,y)
-\big|_{y=x}=\tilde c_d'\lambda^{d+2}+O(\lambda^{d+1})$, the uniform derivative
-estimates for the spectral function on a closed manifold of \cite{binxu2004} (one
-power of $\lambda$ below the main term, uniformly on $M$; no non-self-focal
-restriction, which the finer scaling limit of \cite{canzanihanin2015} would
-carry). Substituting $\lambda=\sqrt\Lambda$
-gives the stated relative remainders.
-\end{proof}
-
-\subsection*{Proof of Proposition~\ref{prop:weyl}}
-Let $E_\Lambda(x,y)=\sum_{\mu_k\le\Lambda}\varphi_k(x)\varphi_k(y)$ be the
-spectral function. The pointwise Weyl law with uniform remainder
-\cite{hormander1968} gives $E_\Lambda(x,x)=C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})$
-with spatially constant leading coefficient, and its differentiated form
-(the uniform derivative-Weyl estimates of \cite{binxu2004}; equivalently
-Lemma~\ref{lem:dweyl}) gives, uniformly in $x$ and unit $v$,
-\[
-\partial^v_x\partial^v_y E_\Lambda(x,y)\big|_{y=x}
-=C'_d\,\Lambda^{d/2+1}\big(1+o(1)\big).
-\]
-Abel summation in the cutoff converts these into the commute-weighted sums:
-\[
-\lVert dF_\Lambda(v)\rVert^2
-=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}\big(\partial_v\varphi_k(x)\big)^2
-=c_d\,\Lambda^{d/2}\big(1+o(1)\big),
-\]
-\[
-G_\Lambda(x,x):=R_\Lambda^2(x)
-=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}\varphi_k(x)^2
-=\begin{cases}
-C_d\,\Lambda^{d/2-1}\big(1+o(1)\big), & d>2,\\[2pt]
-C_2\log\Lambda\,\big(1+o(1)\big), & d=2,
-\end{cases}
-\]
-again uniformly in $x$ (Lemma~\ref{lem:dweyl} in the commute-weighted
-normalization; Abel summation in the cutoff converts the on-diagonal projector
-asymptotics into the $\mu^{-1}$-weighted sums), with spatially constant leading
-coefficients. Because the leading coefficient of $G_\Lambda(x,x)$ is spatially
-constant, its spatial derivative has no leading term, and the differentiated
-remainder estimates of \cite{binxu2004} bound what remains,
-$\partial_vG_\Lambda(x,x)=o(\Lambda^{(d-1)/2})$ uniformly---weaker than the naive
-$o(\Lambda^{d/2-1})$ and all that is needed---so the radial term
-$dR_\Lambda(v)^2=\big(\partial_vG_\Lambda(x,x)\big)^2/\big(4G_\Lambda(x,x)\big)
-=o(\Lambda^{d/2})$ is lower order than the derivative energy. Hence
-$T_\Lambda(x,v)^2\ge c\,\Lambda^{d/2}$ for $\Lambda\ge\Lambda_0$, uniformly,
-which is the display; dividing by $R_\Lambda^2$ gives
-$\lVert dN_\Lambda\rVert\gtrsim\Lambda^{1/2}$ ($d>2$) and
-$\sqrt{\Lambda/\log\Lambda}$ ($d=2$).
-
-\emph{The $S^1$ computation, and the failure of fixed-scale uniformity.} On
-$S^1$ ($\mu=k^2$, whole eigenspaces, weights $\mu^{-1/2}=1/k$),
-\[
-F_N(x)=\Big(\tfrac{\cos kx}{k},\tfrac{\sin kx}{k}\Big)_{k=1}^{N}:\qquad
-R_N^2=\sum_{k\le N}\frac1{k^2}\ \text{(constant, bounded)},\qquad
-\lVert dF_N\rVert^2=\sum_{k\le N}1=N,
-\]
-so $\lVert dN_N\rVert=\lVert dF_N\rVert/R_N\asymp\sqrt N$ (consistent with the
-general formula: $\Lambda=N^2$, $d=1$, $T_\Lambda/R\asymp\Lambda^{1/4}$). A
-pair at distance $\sim1/N$ is stretched by $\sim\sqrt N$, so any upper
-Lipschitz constant valid on a \emph{fixed} ball $\{d\le r_0\}$ must grow like
-$\sqrt m$: no $m$-independent fixed-scale bi-Lipschitz theorem can hold for
-the commute filter, on any manifold (the same growth holds in all $d$). The
-lower bound at fixed scale, by contrast, survives on $S^1$ (project onto the
-first multiplet, whose weight is $m$-independent while $R_N$ is bounded)---the
-failure is one-sided and lives below the wavelength $\Lambda^{-1/2}$.
-\hfill$\qed$
-
-\begin{remark}[Cutoff-insensitivity]
-The conclusion of Proposition~\ref{prop:weyl} does not depend on the sharp
-spectral cutoff: replacing $\sum_{\mu_k\le\Lambda}$ by a smoothed
-Littlewood--Paley weight $\chi(\mu_k/\Lambda)$ yields the same growth orders with
-full asymptotic expansions (smoothed spectral sums admit wave-kernel expansions
-without Tauberian remainders), and on $\mathbb S^1$ the sharp-cutoff computation
-is exact with no Weyl input at all. The proposition's content---no $m$-independent
-fixed-scale upper Lipschitz constant for the commute filter---is
-cutoff-independent.
-\end{remark}
-
-\subsection*{Proof of Proposition~\ref{prop:plain} (concentration)}
-\emph{Plain filter.} With $E_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}
-\varphi_k(x)\varphi_k(y)$ (constant mode removed),
-\[
-\big\lVert F^{(1)}_\Lambda(x)-F^{(1)}_\Lambda(y)\big\rVert^2
-=E_\Lambda(x,x)+E_\Lambda(y,y)-2E_\Lambda(x,y),
-\qquad R^{(1)}_\Lambda(x)^2=E_\Lambda(x,x).
-\]
-The pointwise Weyl law with uniform remainder \cite{hormander1968} gives
-$E_\Lambda(x,x)=C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})$ with spatially constant
-leading coefficient, and for $d_M(x,y)\ge\delta$ the off-diagonal spectral
-function obeys $\lvert E_\Lambda(x,y)\rvert=O(\Lambda^{(d-1)/2})$ uniformly,
-oscillating in the pair separation on the wavelength scale $\Lambda^{-1/2}$
-(the Bessel-type scaling limit of the spectral projector
-\cite{canzanihanin2015}). The radial difference is
-$R^{(1)}_\Lambda(x)-R^{(1)}_\Lambda(y)
-=\big(E_\Lambda(x,x)-E_\Lambda(y,y)\big)/\big(R^{(1)}_\Lambda(x)+R^{(1)}_\Lambda(y)\big)
-=O(\Lambda^{(d-1)/2-d/4})$, so its square is $O(\Lambda^{d/2-1})$. Feeding
-these into the identity of Lemma~\ref{lem:norm},
-\[
-\big\lVert N^{(1)}_\Lambda(x)-N^{(1)}_\Lambda(y)\big\rVert^2
-=\frac{2C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})}
-{C_d\Lambda^{d/2}\big(1+O(\Lambda^{-1/2})\big)}
-=2+O\big(\Lambda^{-1/2}\big)
-\]
-uniformly over separated pairs, with pair-dependence carried by
-$-2E_\Lambda(x,y)/E_\Lambda(x,x)$. The numerator kernel oscillates with sign
-changes on the wavelength scale, so it induces no monotone ordering in $d_M$.
-Concentration by itself, however, does not force the rank correlation to zero
-(a shrinking correction can preserve order); the exact collapse of both the
-Spearman and Kendall correlations against geodesic distance is established on the
-circle---where $E_\Lambda$ is the Dirichlet kernel---in
-Theorem~\ref{thm:s1collapse} below. This is the continuum mechanism behind the
-plain-eigenmap rank separation in the weighting ablation (\S\ref{sec:ablation}).
-
-\emph{Commute filter.} The same computation with weights $\mu_k^{-1}$ replaces
-$E_\Lambda$ by $G_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}
-\varphi_k(x)\varphi_k(y)$: the diagonal is $C'_d\Lambda^{d/2-1}$ ($d>2$;
-$C_2\log\Lambda$, $d=2$) with spatially constant leading coefficient
-(Step~7 of the Proposition~\ref{prop:weyl} proof), the radial term is again
-lower order, and
-\[
-\big\lVert N_\Lambda(x)-N_\Lambda(y)\big\rVert^2
-=2-\frac{2\,G_\Lambda(x,y)}{G_\Lambda(x,x)}\big(1+o(1)\big).
-\]
-The correction kernel is now low-frequency dominated---its summands decay
-like $\mu^{-1}$, and for $d\le3$ it converges off the diagonal to the
-Green's function of $M$ (for $d\ge4$ it is the truncated Green kernel, still
-dominated by its low-frequency, coherent part)---a distance-structured
-kernel, on a homogeneous manifold a function of $d_M$ alone. Both filters
-therefore concentrate at fixed scale as $\Lambda\to\infty$ (the wavelength
-story of Proposition~\ref{prop:weyl}), but the \emph{ordering} information
-that rank statistics read is carried by a coherent kernel for commute and an
-oscillatory one for plain: the ablation's rank separation, in the continuum.
-\hfill$\qed$
-
-\subsection*{Proof of Theorem~\ref{thm:s1collapse} (exact plain-filter rank collapse on $\mathbb S^1$)}
-Write $\theta=x-y$; by evenness the chord depends only on the geodesic distance
-$\lvert\theta\rvert\in[0,\pi]$. Since $\lVert F_N\rVert^2\equiv N$,
-\[
-\big\langle \widehat F_N(x),\widehat F_N(y)\big\rangle
-=\frac1N\sum_{k=1}^N\cos(k\theta),
-\qquad
-Q_N(\theta)=2-\tfrac2N Z_N(\theta),\quad
-Z_N(\theta):=\sum_{k=1}^N\cos(k\theta).
-\]
-The Dirichlet-kernel identity $1+2\sum_{k=1}^N\cos(k\theta)
-=\sin\!\big((N+\tfrac12)\theta\big)/\sin(\theta/2)$ gives, with
-$a(\theta)=1/(2\sin(\theta/2))$ and $\omega_N=N+\tfrac12$,
-\[
-W_N(\theta):=Z_N(\theta)+\tfrac12=a(\theta)\,\sin(\omega_N\theta).
-\]
-As $Q_N$ is a strictly decreasing affine function of $Z_N$, and $Z_N,W_N$ differ
-by a constant, the three share the same rank correlations with $\Theta$ up to a
-global sign; it suffices to prove $\rho_S(\Theta,W_N(\Theta))\to0$ and
-$\tau_K(\Theta,W_N(\Theta))\to0$.
-
-\emph{Step 1 (two-scale equidistribution).} Fix $\varepsilon>0$; on
-$[\varepsilon,\pi]$ the envelope $a$ is continuous and bounded. For any
-$\varphi(\theta,t)$ bounded, continuous, and $2\pi$-periodic in $t$,
-\[
-\frac1\pi\int_\varepsilon^\pi \varphi(\theta,\omega_N\theta)\,d\theta
-\;\longrightarrow\;
-\frac1\pi\int_\varepsilon^\pi \frac1{2\pi}\int_0^{2\pi}\varphi(\theta,t)\,dt\,d\theta ,
-\]
-by expanding $\varphi$ in Fourier modes in $t$: the zeroth mode is the phase
-average, and each nonzero mode is an oscillatory integral $\int_\varepsilon^\pi
-c_m(\theta)e^{im\omega_N\theta}\,d\theta\to0$ by Riemann--Lebesgue as
-$\omega_N\to\infty$. Hence $\big(\Theta,W_N(\Theta)\big)\Rightarrow
-\big(\Theta,\,a(\Theta)\sin T\big)$ with $T\sim\mathrm{Unif}[0,2\pi]$ independent
-of $\Theta$ (the removed collar $[0,\varepsilon)$ has probability
-$\varepsilon/\pi\to0$, and $a(\Theta)<\infty$ a.s.). The limit $W:=a(\Theta)\sin T$
-is atomless and symmetric, so its CDF $H$ is continuous with $H(-z)=1-H(z)$.
-
-\emph{Step 2 (Spearman).} For continuous variables the population Spearman
-coefficient is $\rho_S(U,V)=12\,\mathbb E[F_U(U)F_V(V)]-3$. With
-$F_\Theta(\Theta)=\Theta/\pi$ and $H_N$ the CDF of $W_N(\Theta)$,
-\[
-\rho_S(\Theta,W_N(\Theta))=12\,\mathbb E\!\Big[\tfrac{\Theta}{\pi}\,H_N\big(W_N(\Theta)\big)\Big]-3 .
-\]
-Weak convergence to the atomless $H$ gives $\sup_z\lvert H_N(z)-H(z)\rvert\to0$
-(P\'olya), so $H_N$ may be replaced by $H$. Step~1 then yields
-\[
-\mathbb E\!\Big[\tfrac{\Theta}{\pi}H\big(W_N(\Theta)\big)\Big]
-\longrightarrow
-\frac1\pi\int_0^\pi\frac{\theta}{\pi}\Big(\frac1{2\pi}\int_0^{2\pi}H\big(a(\theta)\sin t\big)\,dt\Big)d\theta .
-\]
-Pairing $t$ with $t+\pi$ gives $H(a\sin t)+H(-a\sin t)=1$, so the inner average is
-$\tfrac12$ and the outer integral is $\tfrac14$. Hence
-$\rho_S(\Theta,W_N(\Theta))\to12\cdot\tfrac14-3=0$, and by the affine reversal
-$\rho_S(\Theta,Q_N(\Theta))\to0$.
-
-\emph{Step 3 (Kendall).} Take independent copies $(\Theta_1,\Theta_2)$ and write
-$\tau_K=\mathbb E\big[\operatorname{sgn}(\Theta_1-\Theta_2)\,
-\operatorname{sgn}(W_N(\Theta_1)-W_N(\Theta_2))\big]$. Applying the Fourier/%
-Riemann--Lebesgue argument of Step~1 jointly, the four-tuple
-$\big(\Theta_1,\Theta_2,\omega_N\Theta_1,\omega_N\Theta_2\big)$ converges weakly to
-$(\Theta_1,\Theta_2,T_1,T_2)$ with $T_1,T_2\sim\mathrm{Unif}[0,2\pi]$ independent of
-one another and of $(\Theta_1,\Theta_2)$ (each nonzero joint Fourier mode is killed
-by integrating first in whichever variable carries nonzero frequency). The
-integrand $\operatorname{sgn}(\theta_1-\theta_2)\operatorname{sgn}(a(\theta_1)\sin
-t_1-a(\theta_2)\sin t_2)$ is bounded and its discontinuity set
-$\{\theta_1=\theta_2\}\cup\{a(\theta_1)\sin t_1=a(\theta_2)\sin t_2\}$ is null under
-the limit law, so the portmanteau theorem gives
-$\tau_K\to\mathbb E\big[\operatorname{sgn}(\Theta_1-\Theta_2)\,
-\operatorname{sgn}(a(\Theta_1)\sin T_1-a(\Theta_2)\sin T_2)\big]$. Conditioned on
-$(\Theta_1,\Theta_2)$ the inner sign is that of a difference of two independent
-atomless symmetric variables, so its expectation is $0$; hence
-$\tau_K(\Theta,W_N(\Theta))\to0$ and $\tau_K(\Theta,Q_N(\Theta))\to0$.
-\hfill$\qed$
-
-\subsection*{Graph transfer at growing $m$, and the $C^1$ route}
-For fixed $m$, Appendix~\ref{app:proof} is the complete transfer. For a
-growing spectral window $m=m(n)$, the same calibration goes through---with
-every constant carrying an $m$-subscript---whenever
-\[
-\mathcal E_n(\mu_m)\,\gamma_m^{-1}\ \longrightarrow\ 0,
-\]
-where $\gamma_m$ is the spectral gap isolating the retained block and
-$\mathcal E_n(\mu_m)$ is the graph-Laplacian consistency error on continuum
-eigenfunctions up to frequency $\mu_m$; since high-frequency eigenfunctions
-have polynomially large derivatives, $\mathcal E_n(\mu_m)$ grows polynomially
-in $\mu_m$, so $m(n)$ may grow, but not too fast. The resulting cutoff is
-$\theta_{n,m}\gtrsim E_{n,m}/(a_m\rho^-_m)$, every factor now
-$m$-dependent. Separately, the additive pairwise error of the sup-norm
-argument is what forces $\theta_n$ to sit at the spectral-rate scale; a
-$C^{0,1}$ eigenvector theory---the Lipschitz estimates of
-\cite{calderlewicka2022} are the available ingredient---would replace it by a
-multiplicative derivative-level error ($\lVert d\hat Z(v)\rVert\ge
-(1-\eta)\lVert dN(v)\rVert$ once the $C^1$ calibration error is below
-$\eta\,a_m\rho^-_m$), pushing the cutoff down to the connectivity scale
-$\varepsilon_n$---optimal, since below it combinatorial twins exist
-(Appendix~\ref{app:proof}). We state these as the conditions a growing-window
-theorem needs, not as a theorem.
-}% end teal
-
+\section*{Supplementary materials}
+An online supplement collects the longer proofs and the extended continuum theory:
+the conditional transfer theorem (\S\ref{app:proof}); the truncation-uniformity
+results, the uniform lower angular bound and exact upper divergence on flat tori,
+the spectral-filter phase diagram, and the Green-kernel rank-limit theorem
+(\S\ref{app:uniform}). Every statement in the main article is self-contained; each
+supplementary proof is cross-referenced from the result it establishes.
 
 \begin{thebibliography}{99}
-\bibitem{alamgir2011} M.~Alamgir and U.~von~Luxburg. Phase transition in the
-family of $p$-resistances. \emph{Advances in Neural Information Processing
-Systems 24 (NIPS)}, 2011.
+\bibitem{paperIb} A.~H.~Bond. \emph{Keep the Angle, in Practice: A
+Substrate-Agnostic Manifold Diagnostic and Its Failure Modes} (Paper~I.b).
+Manuscript, 2026.
 \bibitem{bates2014} J.~Bates. The embedding dimension of Laplacian
 eigenfunction maps. \emph{Applied and Computational Harmonic Analysis},
 37(3):516--530, 2014.
@@ -2361,9 +1207,6 @@ convergence rates for graph Laplacians on $\varepsilon$-graphs and $k$-NN graphs
 \bibitem{calderlewicka2022} J.~Calder, N.~Garc\'ia Trillos, and
 M.~Lewicka. Lipschitz regularity of graph Laplacians on random data clouds.
 \emph{SIAM Journal on Mathematical Analysis}, 54(1):1169--1222, 2022.
-\bibitem{canzanihanin2015} Y.~Canzani and B.~Hanin. Scaling limit for the
-kernel of the spectral projector and remainder estimates in the pointwise Weyl
-law. \emph{Analysis \& PDE}, 8(7):1707--1731, 2015.
 \bibitem{chengmishne} X.~Cheng and G.~Mishne. Spectral embedding norm:
 looking deep into the spectrum of the graph Laplacian. \emph{SIAM Journal on
 Imaging Sciences}, 13(2):1015--1048, 2020.
@@ -2383,25 +1226,17 @@ Theory}, MSRI Publications 8, pp.~75--263, Springer, 1987.
 A.~Zandieh. PolarQuant: Quantizing KV caches with polar transformation.
 \emph{arXiv preprint arXiv:2502.02617}, 2025.
 \url{https://arxiv.org/abs/2502.02617}. Accessed July 2026.
-\bibitem{hein2007} M.~Hein, J.-Y.~Audibert, and U.~von~Luxburg. Graph
-Laplacians and their convergence on random neighborhood graphs. \emph{Journal
-of Machine Learning Research}, 8:1325--1368, 2007.
-\bibitem{hormander1968} L.~H\"ormander. The spectral function of an
-elliptic operator. \emph{Acta Mathematica}, 121:193--218, 1968.
 \bibitem{jin2015score} J.~Jin. Fast community detection by SCORE.
 \emph{The Annals of Statistics}, 43(1):57--89, 2015.
 \bibitem{jones2010} P.~W.~Jones, M.~Maggioni, and R.~Schul. Universal local
 parametrizations via heat kernels and eigenfunctions of the Laplacian.
 \emph{Annales Academi\ae\ Scientiarum Fennic\ae\ Mathematica}, 35:131--174, 2010.
-\bibitem{lipman2010biharmonic} Y.~Lipman, R.~M.~Rustamov, and
-T.~A.~Funkhouser. Biharmonic distance. \emph{ACM Transactions on Graphics},
-29(3):27, 2010.
 \bibitem{ng2002} A.~Ng, M.~Jordan, and Y.~Weiss. On spectral clustering:
 analysis and an algorithm. \emph{Advances in Neural Information
-Processing Systems 14 (NeurIPS)}, 2002.
+Processing Systems 14 (NIPS)}, 2002.
 \bibitem{nickel2017} M.~Nickel and D.~Kiela. Poincar\'e embeddings for learning
 hierarchical representations. \emph{Advances in Neural Information
-Processing Systems 30 (NeurIPS)}, 2017.
+Processing Systems 30 (NIPS)}, 2017.
 \bibitem{portegies2016} J.~W.~Portegies. Embeddings of Riemannian manifolds
 with heat kernels and eigenfunctions. \emph{Communications on Pure and Applied
 Mathematics}, 69(3):478--518, 2016.
@@ -2425,18 +1260,12 @@ Graphs: Theory and Practice}, pp.~441--474. CRC Press, 2012.
 \bibitem{vonluxburg2008} U.~von~Luxburg, M.~Belkin, and O.~Bousquet.
 Consistency of spectral clustering. \emph{Annals of Statistics},
 36(2):555--586, 2008.
-\bibitem{vonluxburg2010getting} U.~von~Luxburg, A.~Radl, and M.~Hein.
-Getting lost in space: large sample analysis of the resistance distance.
-\emph{Advances in Neural Information Processing Systems 23 (NIPS)}, 2010.
 \bibitem{vonluxburg2014} U.~von~Luxburg, A.~Radl, and M.~Hein. Hitting and
 commute times in large random neighborhood graphs. \emph{JMLR},
 15:1751--1798, 2014.
 \bibitem{wolfram2020} S.~Wolfram. Finally we may have a path to the fundamental
 theory of physics\ldots and it's beautiful. Writings blog, April 2020.
 \url{https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/}. Accessed July 2026.
-\bibitem{binxu2004} B.~Xu. Derivatives of the spectral function and Sobolev norms
-of eigenfunctions on a closed Riemannian manifold. \emph{Annals of Global
-Analysis and Geometry}, 26(3):231--252, 2004.
 \end{thebibliography}
 
 \end{document}

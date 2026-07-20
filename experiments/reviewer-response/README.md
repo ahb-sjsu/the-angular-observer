@@ -1,9 +1,22 @@
 # Reviewer-response experiments
 
-Reproducibility artifacts for the numbers folded into `paper/paper.tex`
-(corresponds to paper **v0.8**). Each script emits a JSON blob between
+Reproducibility artifacts for the numbers in the two papers. The theory work is
+now in **Paper I** (`paper/paper.tex`, split for SIMODS in `paper/simods/`); the
+extended empirical program (substrate robustness, the dimension trend, temporal
+stability, the two-factor screen, continuum dissociation, honest negatives) lives
+in **Paper I.b** (`paper1b/`). Each script emits a JSON blob between
 `###RESULTS_JSON_START###` / `###RESULTS_JSON_END###`; the committed
-`*_result.json` files are the exact outputs the paper cites.
+`*_result.json` files are the exact outputs the papers cite.
+
+**Multi-draw replications** (five independent graph draws, means ± sd) back the
+headline numbers a referee flagged as single-draw:
+
+| driver | result JSON | what it replicates |
+|---|---|---|
+| `ablation_draws.py` | `ablation_draws_result.json` | weighting ablation (plain collapse vs commute flat), 2- and 3-torus |
+| `kappa_draws.py` | `kappa_draws_result.json` | metric-distortion κ (angle/full/random/magnitude) + Procrustes disparity |
+| `core_gapclosed.py` | `core_gapclosed_result.json` | core table at **gap-closed** cutoffs m = 4, 8, 12, 20 |
+| `a2_swissroll.py` | `a2_swissroll_result.json` | the (A2) tangential-noncollapse margin on the **non-homogeneous** swiss-roll |
 
 **Section and theorem references are keyed to LaTeX labels**, not raw numbers,
 because the paper's numbering has drifted across revisions (and the theorem-like

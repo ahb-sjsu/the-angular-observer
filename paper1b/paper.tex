@@ -1,0 +1,260 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{url}
+\setlength{\emergencystretch}{3em}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+\title{Keep the Angle, in Practice:\\
+A Substrate-Agnostic Manifold Diagnostic and Its Failure Modes}
+\author{Andrew H. Bond\\
+\small Department of Computer Engineering, San Jos\'e State University\\
+\small San Jos\'e, CA 95192 USA \quad \texttt{andrew.bond@sjsu.edu} \quad ORCID 0009-0003-2599-6158}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The companion theory paper (\emph{Keep the Angle}, Paper~I) proves that the angular
+coordinate of a low-Laplacian spectral embedding preserves geodesic geometry while the
+radial coordinate is degree/density nuisance. This paper is the empirical study of that
+basis as a \emph{practical, substrate-agnostic diagnostic}. On graph families spanning
+random-geometric tori and king-lattices, manifold-embedding samples (swiss-roll),
+Lorentzian causal sets, and hypergraph-rewriting (Wolfram-model) substrates, the angular
+map recovers graph geodesics wherever the substrate carries genuine low-dimensional
+Riemannian geometry, independent of how the graph was generated: on a $2$-torus the
+angular Spearman correlation is $\approx0.92$ and flat in the mode count, while the full
+commute embedding decays; in a bake-off it beats every closed-form spectral competitor
+($0.894\pm0.008$ vs.\ $0.60$--$0.77$ on the $2$-torus over five independent draws). We
+show the same map is a \emph{diagnostic}: a two-factor small-world/dimension screen
+separates genuine manifolds from destroyed or non-manifold geometry, angular fidelity
+declines monotonically with measured intrinsic dimension across five Wolfram-model rule
+families (an exploratory trend, $\text{angle-}\rho\approx1.09-0.157\,d$), and under
+continuum refinement the basis \emph{sharpens} on sampled manifolds while \emph{decaying}
+on emergent hypergraph geometry---returning opposite verdicts for sampled and emergent
+substrates. Two pre-registered physical predictions are honest negatives. Everything here
+is pre-registered and reproducible; the theory it rests on is Paper~I.
+\end{abstract}
+
+\section{Introduction}
+\emph{Keep the Angle} (Paper~I) establishes, as theorems, that row-normalizing a
+low-mode spectral embedding---projecting each node to the unit sphere and keeping only
+its direction---recovers the graph's geodesic geometry, because the discarded radial
+coordinate is degree/density nuisance (von~Luxburg-degenerate for the full unnormalized
+commute radius at $d\ge3$) while the angular coordinate carries the metric. That paper is
+about \emph{why} the angle works: an exact normalization identity, a deterministic
+angular-transfer theorem, a conditional graph-to-continuum result, the unconditional flat
+torus and sphere instances, a uniform lower angular bound on flat tori, and the filter
+dichotomy (heat uniform, commute one-sided, plain rank-collapsing).
+
+This paper is about \emph{whether, where, and how well} the angle works in practice, and
+what it does when the geometry is not there. Our thesis is that the angular basis is a
+\emph{substrate-agnostic manifold diagnostic}: on any graph that carries genuine
+low-dimensional Riemannian geometry it recovers that geometry, independent of graph
+origin; on graphs that do not, its failure is \emph{predictable and informative} rather
+than a silent artifact. We support this with a controlled measurement program.
+
+\paragraph{Contributions.}
+(1) A geometry-recovery benchmark across five substrate families with matched controls
+(\S\ref{sec:recovery}), and a bake-off in which the angle beats every purely spectral
+distance built from the same spectrum (\S\ref{sec:bakeoff}).
+(2) A study of \emph{emergent} geometry from hypergraph rewriting---Wolfram-model
+substrates that are geometry with no latent coordinates---including an exploratory
+fidelity-versus-dimension trend and temporal stability across substrate evolution
+(\S\ref{sec:emergent}).
+(3) The angular basis as an explicit \emph{diagnostic}: a two-factor screen that
+separates manifolds from non-manifolds, and a continuum-refinement test that dissociates
+sampled from emergent geometry (\S\ref{sec:diagnostic}).
+(4) Two honest negatives (\S\ref{sec:neg}) and a scoped physical interpretation
+(\S\ref{sec:physical}).
+We do not re-prove Paper~I; theorem references below point there.
+
+\section{The angular basis and measurement protocol}\label{sec:protocol}
+Given a graph with normalized Laplacian $L=I-D^{-1/2}AD^{-1/2}$, eigenpairs
+$(\lambda_k,v_k)$, the low-mode embedding places node $i$ at
+$\Psi_i=(v_1(i)/\sqrt{\lambda_1},\dots,v_m(i)/\sqrt{\lambda_m})$, with radius
+$r_i=\lVert\Psi_i\rVert$ and angle $\hat u_i=\Psi_i/r_i$. We score the angular geometry
+by the Spearman rank correlation (``angle-$\rho$'') between the chordal angular distances
+$\lVert\hat u_i-\hat u_j\rVert$ and true graph geodesics over a fixed anchor set, against
+three controls: \emph{random} ($m$ random modes), \emph{magnitude} (radius only), and
+\emph{Isomap} (classical MDS of the geodesics, an oracle given the geodesic matrix).
+Intrinsic dimension $d$ is measured by three estimators (ball-growth, spectral dimension,
+effective rank); low inter-estimator spread certifies a manifold. Protocol details, draw
+counts, and reproducibility tiers mirror Paper~I; all runs are pre-registered
+(\texttt{PREREG\_RUNG3/4}) and released in the repository,
+\url{https://github.com/ahb-sjsu/the-angular-observer}.
+
+\section{Geometry recovery across substrates}\label{sec:recovery}
+On a $2$-torus ($n=2000$) the polar decomposition separates cleanly: the angle carries
+the geometry (flat across the gap-closed cutoffs $4,8,12,20$; e.g.\ the $m{=}20$ value
+is $0.891\pm0.009$ over five independent draws), the magnitude is uninformative, and
+the full commute embedding is
+worse and decays with $m$. A random-mode basis reconstructs geodesics at $\rho\approx0$.
+
+Across substrate families (Table~\ref{tab:substrates}), every graph with genuine low-$d$
+Riemannian geometry shows the effect, independent of origin; the metric fails exactly
+where the substrate fails the manifold criterion---the Lorentzian causal set (whose
+dimension estimators scatter over $2.9$--$10.7$) and the rewired lattice---the predicted
+failures, not exceptions. Two caveats keep the claim honest. On the two flat substrates
+classical MDS beats the angle (it wins where the manifold embeds near-isometrically in
+low-dimensional Euclidean space); the angle wins where topology obstructs such an
+embedding (the torus) and, unlike MDS, is uniform in $m$ and $n$. And the swiss-roll is a
+manifold-embedding case: the basis is identical whether the manifold comes from
+hypergraph rewriting or from points sampled on a continuous manifold.
+
+\begin{table}[h]\centering
+\caption{Geometry recovery across substrate families ($m{=}20$, $150$ anchors).}
+\label{tab:substrates}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+substrate & meas.\ $d$ & angle-$\rho$ & random & Isomap$_{d=2}$ \\
+\midrule
+2-torus (reference)         & 2               & 0.89 & 0.01 & 0.67 \\
+king-lattice                & 2               & 0.82 & 0.01 & 0.95 \\
+swiss-roll (embedding)      & 2               & 0.93 & 0.01 & 0.99 \\
+emergent $R_{3D}$ (Wolfram) & 2.07            & 0.82 & 0.01 & 0.81 \\
+causal set (Lorentzian)     & $2.9$--$10.7$   & 0.57 & 0.01 & 0.55 \\
+small-world (destroyed)     & $3.6$--$4.3$    & 0.45 & 0.00 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{A bake-off against named spectral distances}\label{sec:bakeoff}
+Scoring every closed-form spectral distance on the identical graph and anchor set
+(Table~\ref{tab:bakeoff}), the angle beats each purely spectral competitor, and the
+margin widens in $d{=}3$ where commute degeneracy bites harder. The most informative row
+is the amplified commute distance of von~Luxburg, Radl and Hein, designed precisely to
+undo commute degeneracy by \emph{subtracting} the $1/k_i+1/k_j$ term: it barely improves
+on raw commute and stays far below the angle, because subtracting the degenerate radial
+term is not the same as \emph{dividing it out}, which is what row-normalization does
+(Paper~I). Isomap wins only because it is handed the geodesics---an oracle ceiling, not a
+competitor; the angle recovers $0.83$--$0.89$ of it from the spectrum alone. Angle scores
+replicate across five independent graph draws: $0.894\pm0.008$ ($2$-torus, min--max
+$0.886$--$0.907$) and $0.831\pm0.007$ ($3$-torus, $0.818$--$0.836$).
+
+\begin{table}[h]\centering
+\caption{Bake-off: Spearman $\rho$ vs.\ graph geodesics; angle scores are five-draw means.}
+\label{tab:bakeoff}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+distance & $2$-torus & $3$-torus \\
+\midrule
+\textbf{angle (ours)}                       & \textbf{0.894} & \textbf{0.831} \\
+full commute / resistance                   & 0.601 & 0.360 \\
+biharmonic                                  & 0.735 & 0.515 \\
+diffusion distance (best $t$)               & 0.771 & 0.631 \\
+amplified commute                           & 0.628 & 0.364 \\
+\midrule
+\textit{Isomap, given the geodesics}        & \textit{0.971} & \textit{0.952} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Which weighting carries the angle, and density normalization}\label{sec:ablation}
+The direction depends on the per-mode weight. Plain eigenmaps ($w_k{=}1$) give an angle
+that \emph{collapses} with mode count (angle-$\rho$ falls from $0.554\pm0.013$ at
+$m{=}10$ to $0.081\pm0.012$ at $m{=}20$ on the torus, five draws), because equal
+weighting lets high modes swamp the direction; the commute weight
+$1/\sqrt{\lambda_k}$ is flat instead ($0.918\pm0.006\to0.896\pm0.006$), as is
+diffusion. Degree correction is \emph{invisible} to the angle: dividing or multiplying
+each row by $\sqrt{k_i}$ leaves angle-$\rho$ unchanged to three digits, confirming the
+degree lives in the radius, not the angle (Paper~I). Under strongly non-uniform sampling
+the raw angle is \emph{not} sampling-invariant (angle-$\rho$ degrades from $0.93$ to
+$0.79$ as a density contrast grows to $45\times$), because the graph Laplacian converges
+to a density-weighted operator; the full Coifman--Lafon $\alpha{=}1$ normalization
+restores it exactly (to $0.92$--$0.96$, flat across the contrast range), isolating density
+into the radius and geometry into the angle.
+
+\section{Emergent geometry from hypergraph rewriting}\label{sec:emergent}
+Wolfram-model substrates are geometry with \emph{no latent coordinates}: a manifold, if it
+appears, emerges from hypergraph rewriting rather than from sampling a continuous space.
+Random arity-2 rules yield clean but only $\approx1.5$D manifolds; clean $2$D is rare but
+not absent, reached both by a borrowed rule ($d=2.07\pm0.01$) and by from-scratch
+evolutionary search. The angular basis holds on genuine $2$D emergent space
+(Table~\ref{tab:substrates}).
+
+\paragraph{An exploratory dimension--fidelity trend.} With only five independent rule
+families, no ``law'' can responsibly be claimed. Across $20$ manifolds ($5$ rules $\times$
+$4$ correlated seeds, $d\approx1$--$3.6$), angular fidelity falls with measured intrinsic
+dimension, $\text{angle-}\rho\approx1.09-0.157\,d$, with a rule-clustered descriptive
+interval $[-0.343,-0.094]$ four times wider than a naive point bootstrap; we read this as
+a five-family exploratory monotonic trend, not an inferential interval. The mechanism is
+the dimension-gated degeneracy of Paper~I; its rank-specific bound is consistent with, but
+does not derive, the observed decay.
+
+\paragraph{Stability across substrate evolution.} Robustness across substrate \emph{types}
+is a statement about fixed graphs; the basis also persists as a substrate \emph{evolves}.
+Embedding successive rewrite snapshots of $151$ qualifying rules on a fixed anchor set, the
+angular structure tracks the evolving geometry at least as stably as the graph's own
+geodesics on every rule resolvable at protocol scale ($143/143$ against a pre-registered
+$80\%$ bar), and over the longest time lever angular persistence declines only gently with
+emergent dimension ($-0.029$/dim), replicating independently in both arities.
+
+\section{The angular basis as a diagnostic}\label{sec:diagnostic}
+\paragraph{A two-factor screen.} A small-world coefficient $\omega$ and the
+inter-estimator dimension spread separate genuine manifolds ($\omega\le-0.50$, spread
+$\le0.51$) from strongly destroyed or non-manifold geometry ($\omega\ge+0.23$, spread
+$\ge0.77$). The low angle-$\rho$ on the rewired lattice and the Lorentzian causal set is
+thus small-world/non-manifold contamination, the predicted failure of the basis on
+non-geometry, not a failure on genuine geometry. A king-lattice rewiring sweep bounds the
+screen honestly: angle-$\rho$ collapses almost at once ($0.81\to0.47$ by $1\%$ rewiring)
+while $\omega$ does not cross zero until $\approx5\%$, so angular fidelity is itself the
+finer detector of geometric corruption in the transition band.
+
+\paragraph{Continuum survival, and a dissociation.} Refining each substrate toward the
+continuum with a sparse eigensolver ($N\in\{2,5,10,20,50\}\times10^3$) dissociates the two
+substrate families. On random geometric graphs the angular fidelity is flat-to-rising in
+$N$ (RGG $d{=}3$: $0.856\to0.912$, Spearman$(\rho,\log N)=+1.00$): refining the mesh makes
+the low modes resolve the geometry \emph{better}. The emergent $R_{3D}$ manifold instead
+\emph{decays} monotonically ($0.749\to0.654$, Spearman $-1.00$), falling below a
+pre-registered floor. A sampled manifold refines to a clean continuum; an emergent
+hypergraph, under this basis, does not. The angular basis is thus a diagnostic for whether
+a substrate's fine structure stays manifold-like under refinement, returning different
+verdicts for sampled ($2/3$ pass) and emergent ($1/1$ fail) geometry. One qualification:
+the dissociation is stated at a fixed mode budget; a spectral-gap-matched rerun inverts the
+direction, so ``clean geometry'' is a relation between mode-budget resolution and substrate
+scale---the motivation for a dimension-adaptive basis.
+
+\section{Honest negatives}\label{sec:neg}
+Two pre-registered predictions failed. \textbf{Not secretly hyperbolic:} against a
+binary-tree positive control, the tested substrates show no signature of latent hyperbolic
+geometry. \textbf{No dynamical, energy-responsive curvature:} the strongest testable claim
+of the observer-relative reading---that the coarse-grained curvature responds dynamically
+to injected energy---is a null. We report both; neither undermines the basis-level and
+diagnostic results above, and the physical interpretation is offered only as motivation.
+
+\section{Physical interpretation and outlook}\label{sec:physical}
+The decomposition ``separate scale from direction, keep the part that carries the task
+geometry'' recurs beyond graph geometry: polar-coordinate KV-cache quantization splits key
+vectors the same way, and the recurrence is evidence for the \emph{decomposition}, not for
+always discarding the radius---the boundary being exactly whether the discarded radial
+variable is nuisance for the metric preserved (the tangential-noncollapse condition of
+Paper~I). For attention keys, whose geometry depends on per-channel scale, discarding the
+radius destroys generation: scale is signal there, not nuisance. In the observer-relative
+reading of emergent-geometry programs, the coarse-graining a bounded observer performs to
+perceive geometry is a candidate for exactly this angular projection, but its strongest
+dynamical claim is the null of \S\ref{sec:neg}, so we leave that door open. The operational
+contribution stands independently: the angular basis is a substrate-agnostic diagnostic for
+low-dimensional Riemannian structure, with predictable, informative failure modes. Open
+directions: a dimension-adaptive basis that tunes mode-count and diffusion time against the
+fidelity decay; substantially more independently selected rule families to test the
+dimension trend; and evaluation against the latent manifold metric wherever coordinates
+exist.
+
+\paragraph{Reproducibility.} All pre-registration documents, experiment scripts, per-run
+result files, rule sets, and random seeds are released in the accompanying repository,
+\url{https://github.com/ahb-sjsu/the-angular-observer}. The theory these experiments test
+is Paper~I (\emph{Keep the Angle}).
+
+\begin{thebibliography}{9}
+\bibitem{keeptheangle} A.~H.~Bond. \emph{Keep the Angle: A Geometry-Preserving Basis in
+Spectral Embeddings} (Paper~I). Manuscript, 2026.
+\end{thebibliography}
+
+\end{document}

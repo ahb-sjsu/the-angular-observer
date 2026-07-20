@@ -1,0 +1,52 @@
+I read the full draft. This is a genuinely interesting paper with a clean central idea — the polar decomposition framing of von Luxburg degeneracy is elegant, and the "honest negatives" section is a credit to you. Here's my review, roughly in order of importance.
+Major issues
+1. Theorem 1 has a real technical gap. Von Luxburg–Radl–Hein prove degeneracy of the full resistance distance, and R(i,j)→1/di+1/djR(i,j) \to 1/d_i + 1/d_j
+R(i,j)→1/di​+1/dj​ is their result for the unnormalized Laplacian. Your embedding uses (a) the symmetric-normalized Laplacian and (b) only the lowest mm
+m modes. So ri2r_i^2
+ri2​ in your construction is a truncated quantity, not the self-term Lii+L^+_{ii}
+Lii+​ of the full resistance, and the "direct corollary" claim doesn't go through as stated. Your numerics (ρ(ri,1/di)=0.92\rho(r_i, 1/\sqrt{d_i}) = 0.92
+ρ(ri​,1/di​​)=0.92–0.990.99
+0.99) suggest the conclusion is right, but the proof sketch needs either: the argument for why the low-mm
+m truncation preserves the degeneracy (plausible — the high modes dominate the self-term — but that's the opposite direction from what you want, so this needs care), or a restatement of the theorem for the full embedding with the truncated case demoted to an empirical observation. Also check which of von Luxburg's theorems applies to LsymL_{\text{sym}}
+Lsym​; their normalized result has a different limiting form.
+2. "Bi-Lipschitz" conjecture, Spearman evidence. Conjecture 1 claims the angular map stays bi-Lipschitz to geodesic distance, but everything you measure is rank correlation. ρ≈0.93\rho \approx 0.93
+ρ≈0.93 is consistent with unbounded metric distortion. Either restate the conjecture in terms of rank/ordinal preservation, or add a direct distortion measurement (e.g., the ratio max⁡dangdgeo/min⁡dangdgeo\max \frac{d_{\text{ang}}}{d_{\text{geo}}} / \min \frac{d_{\text{ang}}}{d_{\text{geo}}}
+maxdgeo​dang​​/mindgeo​dang​​ over sampled pairs, tracked in nn
+n and mm
+m). Right now the strongest sentence in the abstract ("conjecture... that the angular coordinate stays bi-Lipschitz") isn't supported by the evidence type you present.
+3. The "previously justified heuristically" claim about NJW is too strong. There is prior theory on row-normalized spectral embeddings — most directly Schiebinger, Wainwright & Yu (2015), The geometry of kernelized spectral clustering (Annals of Statistics), which analyzes exactly why row normalization concentrates clusters into orthogonal directions on the sphere. Von Luxburg's spectral clustering tutorial and the consistency literature (von Luxburg, Belkin & Bousquet 2008) also bear on this. Your geodesic-preservation angle is genuinely different from the cluster-separation angle, and that's your contribution — but a referee who knows this literature will flag the framing immediately. Cite it and position against it.
+4. The Euclidean baseline beats you on two substrates, and the paper doesn't address it. In the universality table, euclid (plain 2D MDS) scores 0.95 on the king-lattice and 0.99 on the swiss-roll trajectory vs. your 0.82 and 0.93. A referee will ask: if the claim is universality, why use the angular basis on substrates where classical MDS wins? I think the true story is that MDS wins when the manifold embeds flatly in low-dimensional Euclidean space (lattice, unrolled roll) while the angle wins where topology obstructs it (torus) and the angle is the one that's uniform in mm
+m and nn
+n — but you need to say this explicitly, ideally with a sentence in §5.3.
+5. Dangling references to unexplained work. "PolarQuant," the KV-cache connection, and the "preference geometry / aversion angle" appear three times with no citation and no explanation. Same for "cultural sequential data" in §5.3 — the methods section calls it a swiss-roll trajectory and never says what the underlying data is. Either cite and give each one two sentences of substance, or cut them entirely. As written they read like teasers for a companion paper the referee can't see, and they cost you credibility in an otherwise carefully-hedged draft.
+6. No uncertainty quantification anywhere. Every ρ\rho
+ρ is a point estimate. Report the number of node pairs sampled, bootstrap CIs on the headline correlations, and error bars or a confidence band on the scaling-law fit. The scaling law especially: 20 points, mixed substrates, a bounded response variable — you hedge well in prose, but the fit needs a slope CI, and "Spearman =−0.881= -0.881
+=−0.881" is a strange statistic for a linear fit (report R2R^2
+R2 or the slope's standard error; keep Spearman as a supplementary monotonicity check if you like).
+Moderate issues
+Notation collision: dd
+d is intrinsic dimension and did_i
+di​ is node degree, and Theorem 1 uses both in the same sentence ("ri→1/dir_i \to 1/\sqrt{d_i}
+ri​→1/di​​ (did_i
+di​ the node degree)" inside a theorem gated on "dimension d≥2d \ge 2
+d≥2"). Rename degree to deg⁡(i)\deg(i)
+deg(i) or kik_i
+ki​.
+Broken cross-reference: the Intrinsic Dimension paragraph cites "the three independent estimators of §4.1," but Methods is §4 with no subsections. Use \label/\ref.
+Small-world row: you report measured d=3.0d = 3.0
+d=3.0 for a graph whose premise is that it has no manifold structure. Report the inter-estimator spread there (presumably large) — that's your own manifold-grade criterion doing its job, and it makes the "fails correctly" claim self-consistent.
+"Commute-time embedding" naming: with LsymL_{\text{sym}}
+Lsym​ and 1/λk1/\sqrt{\lambda_k}
+1/λk​​ scaling this is closer to a normalized-Laplacian eigenmap with commute-style scaling than to the standard commute embedding (which uses the unnormalized L+L^+
+L+). Worth a footnote so a picky referee doesn't call it a misnomer.
+The Wolfram framing is a venue risk. You've bounded it carefully — the discussion is honest and the curvature null is exactly the right kind of result to report. But the title's subtitle, the abstract's last sentence, and the observer-theory thread will make ML/spectral venues (JMLR, NeurIPS) nervous while the spectral content will be underappreciated at Complex Systems. My suggestion: strip observer theory from the title and abstract entirely, keep §7's second paragraph as the sole home of the interpretation, and let the substrate-universality result (which includes Wolfram-model graphs as one substrate) carry the connection. The paper is stronger as "a basis-level fact about spectral embeddings, tested on five substrates including hypergraph rewriting" than as a physics-adjacent paper.
+Minor / polish
+
+The title is a triple-decker; the italic third line can go.
+The abstract is ~230 words doing the work of 150. Cut the KV-cache sentence and the scaling-law coefficients (keep "fidelity falls roughly linearly with intrinsic dimension").
+Heavy \textbf in running prose (Contributions, Background) reads as shouting; standard paragraph headers via \paragraph{} would be calmer.
+Bibliography entries are missing volumes/pages, and the two Wolfram blog posts (2020, 2026) need URLs and access dates. Check that the 2026 piece is the correct title for what you're citing.
+"Honest Negatives" — I'd keep it, honestly. It's memorable and the content earns it. But "Negative Results" is safer for a conservative venue.
+Figures aren't in the upload, so I couldn't review them; make sure fig captions can stand alone (Fig. 1's caption currently restates the claim without axes context).
+
+The single highest-value fix is #1 — right now the one thing labeled "theorem" is the weakest link technically, which inverts the paper's rhetorical structure. Second is #2, since the conjecture is the headline.

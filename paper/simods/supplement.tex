@@ -1,0 +1,1121 @@
+\documentclass[review,supplement]{siamart220329}
+
+\usepackage{amssymb}
+\usepackage{booktabs}
+\setlength{\emergencystretch}{3em}
+
+
+\newsiamthm{conjecture}{Conjecture}
+\newsiamremark{remark}{Remark}
+\graphicspath{{figures/}}
+
+% Cross-reference the main article (resolves \ref to its theorems/sections).
+\externaldocument[][nocite]{main}
+
+\title{Keep the Angle: A Geometry-Preserving Basis in Spectral Embeddings}
+\author{Andrew H. Bond\thanks{Department of Computer Engineering, San Jos\'e
+State University, San Jos\'e, CA 95192 USA (\email{andrew.bond@sjsu.edu}, ORCID
+0009-0003-2599-6158).}}
+\headers{Keep the Angle}{A.~H.~Bond}
+
+\begin{document}
+\maketitle
+
+This supplement collects the longer proofs supporting the main article: the
+conditional graph-to-continuum transfer theorem (Section~\ref{app:proof}) and the
+truncation-uniformity results (Section~\ref{app:uniform}).\footnote{Theorem,
+corollary, lemma, equation, and section numbers carrying an ``SM'' prefix refer to
+this supplement; all other cross-references point to the main article.} It is
+unrefereed supplementary material; the main article is self-contained at the level
+of statements, with each proof here cross-referenced from the theorem it
+establishes.
+
+\section{Proof of Theorem~\ref{thm:cond}}\label{app:proof}
+
+\subsection*{Setting and notation}
+$M$ is a compact $d$-dimensional Riemannian manifold without boundary, volume
+normalized to $1$; $(\mu_k,\varphi_k)_{k\ge0}$ are the eigenpairs of its
+(positive) Laplace--Beltrami operator, $0=\mu_0<\mu_1\le\mu_2\le\cdots$, with
+$\{\varphi_k\}$ orthonormal in $L^2(M)$. Under non-uniform sampling with an
+admissible density the identical argument runs against the density-weighted
+operator that the graph Laplacian actually converges to
+\cite{garciatrillos2018,calder2022} (the $\alpha{=}1$ normalization of
+Paper~I.b restores the geometric operator), with (H1)--(H2) read for
+its eigenpairs. The continuum objects are
+\[
+F(x)=\Big(\tfrac{\varphi_k(x)}{\sqrt{\mu_k}}\Big)_{k=1}^{m},\qquad
+R(x)=\lVert F(x)\rVert,\qquad N(x)=F(x)/R(x),
+\]
+and $m$ sits at a spectral gap: $\mu_m<\mu_{m+1}$. Write
+$\Phi_m:=\max_{k\le m}\lVert\varphi_k\rVert_\infty<\infty$ (eigenfunctions on a
+smooth compact manifold are smooth). The sample is $x_1,\dots,x_n$ i.i.d.\ from
+the stated density class, $G_n$ the $\varepsilon$-graph (or $k$-NN graph) on it,
+and $(\lambda_k,v_k)$ the eigenpairs of $L_{\mathrm{sym}}$ with the empirical
+normalization $\tfrac1n\sum_i v_k(i)^2=1$; the algorithm forms
+$\Psi_i=(v_k(i)/\sqrt{\lambda_k})_{k=1}^m$ and
+$\hat u_i=\Psi_i/\lVert\Psi_i\rVert$. Alongside these, the \emph{random-walk}
+eigenvectors $v^{\mathrm{rw}}_k:=D^{-1/2}v_k$ are the eigenpairs of
+$L_{\mathrm{rw}}=D^{-1}(D-A)=D^{-1/2}L_{\mathrm{sym}}D^{1/2}$ at the \emph{same}
+eigenvalue $\lambda_k$; we take them with the coordinated normalization
+$\tfrac1n\sum_i k_i\,v^{\mathrm{rw}}_k(i)^2=1$ (the empirical degree-weighted inner
+product---which is \emph{identically} the algorithm's own $L_{\mathrm{sym}}$
+constraint $\tfrac1n\sum_i v_k(i)^2=1$ viewed through $D^{1/2}$), under which each
+$v^{\mathrm{rw}}_k$ pairs mode-for-mode with the continuum eigenfunction
+$\varphi_k$ orthonormal in the effective sampling measure (exactly $L^2(\rho)$ for
+uniform sampling or after the $\alpha{=}1$ reweighting of Paper~I.b that
+restores the geometric operator; the $\rho$-versus-$\rho^2$ distinction under raw
+non-uniform sampling is immaterial, $v^{\mathrm{rw}}_k$ being only an intermediary
+to the identical angular map)---the convention in which the $\infty$-norm
+eigenvector rates below hold. Write
+$\Psi^{\mathrm{rw}}_i=(v^{\mathrm{rw}}_k(i)/\sqrt{\lambda_k})_{k=1}^m$.
+
+\subsection*{Step 0: three invariances}
+The claim concerns only the pairwise distances $\lVert\hat u_i-\hat u_j\rVert$.
+These are invariant under (i) a global rescaling of all eigenvectors (the choice
+of normalization), (ii) a global rescaling of all eigenvalues (which rescales
+every weight $1/\sqrt{\lambda_k}$ by the same factor), and (iii) a fixed
+orthogonal transformation $Q\in O(m)$ applied to every $\Psi_i$ (then
+$\lVert Q\hat u_i-Q\hat u_j\rVert=\lVert\hat u_i-\hat u_j\rVert$). We use (i) to
+work in the empirical normalization, (ii) to apply the deterministic
+graph-to-continuum eigenvalue scaling $c_n$ of \cite{calder2022}, and (iii) to
+absorb the basis alignment of Lemma~\ref{lem:transfer}.
+
+\smallskip\noindent\emph{(iv) Exact per-node degree cancellation.} Since
+$v_k=D^{1/2}v^{\mathrm{rw}}_k$ applies the \emph{same} node factor $\sqrt{k_i}$ in
+every mode $k$, the two commute-weighted embeddings differ only by a positive
+per-node scalar,
+\[
+\Psi_i=\big(v_k(i)/\sqrt{\lambda_k}\big)_{k=1}^m
+=\sqrt{k_i}\,\big(v^{\mathrm{rw}}_k(i)/\sqrt{\lambda_k}\big)_{k=1}^m
+=\sqrt{k_i}\;\Psi^{\mathrm{rw}}_i ,
+\]
+so row normalization returns the \emph{identical} angular map
+$\hat u_i=\Psi^{\mathrm{rw}}_i/\lVert\Psi^{\mathrm{rw}}_i\rVert$---exactly, with no
+degree-ratio hypothesis. We may therefore calibrate the random-walk embedding
+$\Psi^{\mathrm{rw}}_i$, whose $\infty$-norm convergence to the continuum is
+exactly the cited theorem, and read off the angle the algorithm computes from
+$L_{\mathrm{sym}}$. This is what lets the theorem hold under non-uniform sampling:
+the node-dependent degree factor a symmetric calibration would have to control is
+cancelled by the normalization, not bounded.
+
+\subsection*{Step 1: the continuum angular map is locally bi-Lipschitz}
+\begin{lemma}\label{lem:contang}
+Under \textup{(H1)--(H2)}, for all $x,y\in M$ with $d_M(x,y)\le r_0$,
+\[
+a\,d_M(x,y)\ \le\ \lVert N(x)-N(y)\rVert\ \le\ b\,d_M(x,y),\qquad
+a:=\frac{\sqrt{L_0^{-2}-\Lambda_0^2}}{\rho^+},\quad b:=\frac{L_0}{\rho^-}.
+\]
+\end{lemma}
+\begin{proof}
+Apply the identity of Lemma~\ref{lem:norm} to $u=F(x)$, $v=F(y)$. By (H1),
+$L_0^{-2}d_M^2\le\lVert F(x)-F(y)\rVert^2\le L_0^2\,d_M^2$; by (H2),
+$(R(x)-R(y))^2\le\Lambda_0^2\,d_M^2$ and $(\rho^-)^2\le R(x)R(y)\le(\rho^+)^2$.
+The ratio in the identity is therefore at least
+$(L_0^{-2}-\Lambda_0^2)\,d_M^2/(\rho^+)^2$---positive precisely because
+$\Lambda_0<1/L_0$---and at most $L_0^2\,d_M^2/(\rho^-)^2$.
+\end{proof}
+
+Note $a\le b$: a two-sided constant satisfies $L_0^{-1}\le L_0$, so $L_0\ge1$,
+hence $\sqrt{L_0^{-2}-\Lambda_0^2}\le L_0^{-1}\le L_0$, and $\rho^-\le\rho^+$.
+
+\subsection*{Step 2: normalization is stable}
+\begin{lemma}\label{lem:normstab}
+For nonzero $u,w\in\mathbb{R}^m$,
+\[
+\Big\lVert \frac{u}{\lVert u\rVert}-\frac{w}{\lVert w\rVert}\Big\rVert
+\ \le\ \frac{2\,\lVert u-w\rVert}{\max(\lVert u\rVert,\lVert w\rVert)}.
+\]
+\end{lemma}
+\begin{proof}
+$\frac{u}{\lVert u\rVert}-\frac{w}{\lVert w\rVert}
+=\frac{u-w}{\lVert u\rVert}
++w\Big(\frac{1}{\lVert u\rVert}-\frac{1}{\lVert w\rVert}\Big)$, and the second
+term has norm $\big|\lVert w\rVert-\lVert u\rVert\big|/\lVert u\rVert
+\le\lVert u-w\rVert/\lVert u\rVert$. So the left side is at most
+$2\lVert u-w\rVert/\lVert u\rVert$; by symmetry in $u\leftrightarrow w$, also at
+most $2\lVert u-w\rVert/\lVert w\rVert$.
+\end{proof}
+
+\subsection*{Step 3: sup-norm spectral transfer}
+This is the step for which $L^2$ consistency \cite{garciatrillos2018} does not
+suffice and the $\infty$-norm rates of \cite{calder2022} are the right tool.
+Group $\mu_1\le\cdots\le\mu_m$ into blocks of equal eigenvalues (multiplets);
+because $m$ sits at a spectral gap, the last block ends exactly at $m$.
+
+\smallskip\noindent Throughout this step the calibration is carried out on the
+\emph{random-walk} eigenvectors: to keep notation light we drop the superscript
+and write $v_k,\Psi_i,\widetilde\Psi_i$ for $v^{\mathrm{rw}}_k$ and the
+corresponding random-walk commute embeddings. By invariance~(iv) the resulting
+angle is exactly the algorithm's $\hat u_i$, and the $\infty$-norm rates of
+\cite{calder2022}---stated for the unnormalized/random-walk eigenvectors---apply
+to $v_k$ directly, with no degree-ratio hypothesis.
+
+\begin{lemma}[Calibration; external sup-norm transfer]\label{lem:transfer}
+Under the sampling model of \cite{calder2022,calderlewicka2022} there are sequences
+$\epsilon_n,\delta_n\to0$---the eigenvector $L^\infty$ rate of
+\cite{calderlewicka2022} (which establishes high-probability $L^\infty$ and
+$C^{0,1}$ convergence of graph Laplacian eigenvectors to the Laplace--Beltrami
+eigenfunctions, with constants depending on the eigenvalue $\mu_m$ and hence on
+$m$; $\epsilon_n$ carries a factor $\sqrt m$), and the eigenvalue and
+gap-stability rate $\delta_n$ of \cite{calder2022}---and events $\mathcal A_n$
+with $\mathbb P(\mathcal A_n)\to1$ on which, after the eigenvalue scaling
+$\tilde\lambda_k:=\lambda_k/c_n$ of invariance (ii), there is an orthogonal
+$Q_n\in O(m)$, block-diagonal across the multiplets, with
+\[
+\max_{k\le m}\big|\tilde\lambda_k-\mu_k\big|\le\delta_n,
+\qquad
+\max_{i\le n}\big\lVert Q_n v(i)-\varphi(x_i)\big\rVert\le\epsilon_n,
+\]
+where $v(i)=(v_1(i),\dots,v_m(i))$ and
+$\varphi(x)=(\varphi_1(x),\dots,\varphi_m(x))$. Consequently, with
+$\widetilde\Psi_i:=\big(v_k(i)/\sqrt{\tilde\lambda_k}\big)_{k=1}^m$ (the same
+angle as $\Psi_i$, by invariances (i),(ii),(iv)) and provided $\delta_n\le\mu_1/2$,
+\[
+\max_{i\le n}\ \big\lVert Q_n\widetilde\Psi_i-F(x_i)\big\rVert\ \le\ E_n
+:=\frac{\epsilon_n}{\sqrt{\mu_1}}
++\frac{2\delta_n}{\mu_1^{3/2}}\,\sqrt m\,\big(\Phi_m+\epsilon_n\big)
+\ \longrightarrow\ 0 .
+\]
+In particular the graph radius inherits the continuum band:
+$\rho^--E_n\le\lVert\widetilde\Psi_i\rVert\le\rho^++E_n$ for every node $i$.
+\end{lemma}
+
+\begin{proof}
+\emph{(a) Spectral consistency.} For the unnormalized and random-walk graph
+Laplacians, \cite{calder2022} give, with probability tending to one, eigenvalue
+convergence $|\tilde\lambda_k-\mu_k|\le\delta_n$ and the gap stability that makes
+``fixed $m$ at a spectral gap'' well-posed, while \cite{calderlewicka2022}
+supplies the eigenvector consistency in $\infty$-norm with explicit rates (and an
+approximate $C^{0,1}$/gradient rate $\epsilon_n'\to0$ for the eigenvectors
+themselves, used for the cutoff in the remark below), stated per eigenvalue
+cluster. We make the block-orthogonal alignment explicit, since
+\cite{calderlewicka2022} (Theorem~2.6 with Remark~2.8) attaches to each discrete
+eigenvector $v_k$ a
+\emph{single} normalized limit eigenfunction $\tilde\varphi_k$ (their sup-norm
+rate, $\lVert v_k-\tilde\varphi_k\rVert_\infty\lesssim\mu_k\varepsilon_n$), not an
+orthonormal eigenspace basis. Within a multiplet the partners
+$\{\tilde\varphi_k\}$ need not be exactly orthonormal, but their \emph{population}
+Gram matrix $G=\big(\langle\tilde\varphi_k,\tilde\varphi_l\rangle_{L^2(\rho)}\big)$
+is $I+O(\varepsilon_n)$, routed through the discrete vectors: the $v_k$ are
+orthonormal in the empirical inner product ($\tfrac1n\sum_i v_k(i)v_l(i)=\delta_{kl}$),
+each $\tilde\varphi_k$ is sup-norm $\varepsilon_n$-close to $v_k$ on the sample, and
+empirical inner products concentrate on their $L^2(\rho)$ values at the
+eigenvector-consistency rate, so
+$\langle\tilde\varphi_k,\tilde\varphi_l\rangle_{L^2(\rho)}=\delta_{kl}+O(\varepsilon_n)$. Symmetric orthogonalization
+$G^{-1/2}=I+O(\varepsilon_n)$ therefore turns $\{\tilde\varphi_k\}$ into an exactly
+$L^2(\rho)$-orthonormal basis of the limiting eigenspace at cost $O(\varepsilon_n)$
+in sup-norm; the alignment of this basis to the reference eigenbasis
+$\{\varphi_k\}$ is the \emph{unique} block rotation $Q_n\in O(m)$ (block-diagonal
+across multiplets, the orthogonal factor in the polar decomposition of the
+cross-Gram $\langle\tilde\varphi_k,\varphi_l\rangle$)---not $G^{-1/2}$ itself, which
+is symmetric positive-definite. Each aligned discrete eigenvector is then
+$(\epsilon_n/\sqrt m)$-close in sup-norm to its partner. (Multiplicity is exactly why the alignment is block-orthogonal rather
+than a per-mode sign choice; a simple eigenvalue is the $1\times1$ block, where it
+\emph{is} a sign choice.) Collecting the $m$ per-mode bounds into the vector $v(i)$
+gives $\lVert Q_nv(i)-\varphi(x_i)\rVert\le\epsilon_n$.
+
+\emph{(b) No normalization conversion is needed.} The calibration in (a) is for
+the random-walk eigenvectors, and by the exact per-node cancellation of
+Step~0\,(iv) the graph angular map is
+$\hat u_i=\Psi^{\mathrm{rw}}_i/\lVert\Psi^{\mathrm{rw}}_i\rVert$ regardless of
+whether $L_{\mathrm{sym}}$ or $L_{\mathrm{rw}}$ is diagonalized: the algorithm's
+embedding satisfies $\Psi_i=\sqrt{k_i}\,\Psi^{\mathrm{rw}}_i$ and the positive
+scalar $\sqrt{k_i}$ cancels under row normalization. In particular no uniform
+degree concentration is invoked and no bound on the degree ratio $k_i/\bar k_n$
+is required, so the transfer is valid under non-uniform sampling; the sampling
+density enters only by fixing the limiting (weighted) operator whose
+eigenfunctions $\varphi_k$ appear in $F$, as in the Setting. (The similarity
+$L_{\mathrm{rw}}=D^{-1/2}L_{\mathrm{sym}}D^{1/2}$ that underlies
+$v^{\mathrm{sym}}_k=D^{1/2}v^{\mathrm{rw}}_k$ is exact, so the shared eigenvalue
+$\lambda_k$ used throughout is unaffected.)
+
+\emph{(c) Bookkeeping.} Let $W_\mu=\operatorname{diag}(\mu_k^{-1/2})$ and
+$\widetilde W=\operatorname{diag}(\tilde\lambda_k^{-1/2})$, so
+$F(x)=W_\mu\varphi(x)$ and $\widetilde\Psi_i=\widetilde W v(i)$. Since $W_\mu$
+is a scalar multiple of the identity on each multiplet and $Q_n$ is
+block-diagonal across the multiplets, $Q_nW_\mu=W_\mu Q_n$. Hence
+\[
+Q_n\widetilde\Psi_i-F(x_i)
+=Q_n\big(\widetilde W-W_\mu\big)v(i)
++W_\mu\big(Q_nv(i)-\varphi(x_i)\big).
+\]
+For the first term, $\delta_n\le\mu_1/2$ gives $\tilde\lambda_k\ge\mu_1/2$, so
+\[
+\big\lVert\widetilde W-W_\mu\big\rVert_{\mathrm{op}}
+=\max_{k\le m}\frac{|\mu_k-\tilde\lambda_k|}
+{\sqrt{\tilde\lambda_k\,\mu_k}\,\big(\sqrt{\tilde\lambda_k}+\sqrt{\mu_k}\big)}
+\ \le\ \frac{2\delta_n}{\mu_1^{3/2}},
+\]
+while $\lVert v(i)\rVert\le\lVert Q_nv(i)-\varphi(x_i)\rVert
++\lVert\varphi(x_i)\rVert\le\epsilon_n+\sqrt m\,\Phi_m
+\le\sqrt m\,(\Phi_m+\epsilon_n)$. For the second term,
+$\lVert W_\mu\rVert_{\mathrm{op}}=\mu_1^{-1/2}$. Adding the two bounds gives
+$E_n$. The radius statement is the reverse triangle inequality
+$\big|\lVert\widetilde\Psi_i\rVert-R(x_i)\big|
+=\big|\lVert Q_n\widetilde\Psi_i\rVert-\lVert F(x_i)\rVert\big|\le E_n$
+together with $\rho^-\le R\le\rho^+$ from (H2).
+\end{proof}
+
+\emph{General filters (proof of the calibration claim in
+Corollary~\ref{cor:filtered}).} The proof above uses only two properties of
+the weight matrix $W_\mu=\operatorname{diag}(\mu_k^{-1/2})$: it is constant on
+multiplets (hence commutes with the block-orthogonal $Q_n$), and it is
+Lipschitz in the eigenvalue on the retained window. Both hold for any positive
+Lipschitz filter $h$: replacing $W_\mu$ by
+$H:=\operatorname{diag}(h(\mu_k))$ and $\widetilde W$ by
+$\operatorname{diag}(h(\tilde\lambda_k))$, step (c) goes through verbatim with
+$\lVert\operatorname{diag}(h(\tilde\lambda_k))-H\rVert_{\mathrm{op}}
+\le L_h\delta_n$ and $\lVert H\rVert_{\mathrm{op}}\le H_m$, giving
+$E_{n,h}=H_m\epsilon_n+L_h\delta_n\sqrt m\,(\Phi_m+\epsilon_n)$ as claimed;
+the commute filter $h(\lambda)=\lambda^{-1/2}$ (with $L_h\le2\mu_1^{-3/2}$ on
+$[\mu_1/2,\infty)$ and $H_m=\mu_1^{-1/2}$) recovers the $E_n$ displayed above.
+
+\smallskip\noindent\emph{Conditional structure, and the bridge to uniformity in
+$m$.} Step~3 is \emph{external}: it composes the named rate theorems
+\cite{calder2022,calderlewicka2022} into the calibration, and the transfer of the
+continuum bi-Lipschitz constants to the graph is then the elementary
+node-uniform perturbation of Step~4 (radius floor $\lVert\widetilde\Psi_i\rVert\ge
+\rho^--E_n$; angular error $\le2E_n/\rho^-$ by Lemma~\ref{lem:normstab}; cutoff
+$\theta_n\asymp E_n/a$). Consequently Theorem~\ref{thm:cond} is
+\textbf{unconditional in $m$ for each fixed $m$}, resting only on this standard
+sup-norm spectral-transfer lemma---no self-contained spectral analysis is
+re-derived here. The one $m$-dependent seam is deliberate and worth stating
+plainly: the CGLewicka constants, hence $\epsilon_n$ and $\epsilon_n'$, depend on
+the retained eigenfunctions' Lipschitz norms and on the spectral gap at $\mu_m$,
+so the \emph{rate} at which $\theta_n\to0$ degrades as $m$ grows. Making the
+transfer \emph{uniform} in $m$---and with it (H1)---is exactly the frontier of
+Conjecture~\ref{conj:angle}; we delimit it sharply in the discussion after
+Proposition~\ref{prop:plain}, and it is filter-specific, since the $C^{0,1}$ rate
+$\epsilon_n'$ is what shrinks $\theta_n$ toward the connectivity scale (below
+which the twin obstruction lives).
+
+\subsection*{Step 4: assembly}
+\begin{proof}[Proof of Theorem~\ref{thm:cond}]
+Work on the event $\mathcal A_n$ of Lemma~\ref{lem:transfer}, with $n$ large
+enough that $E_n<\rho^-/2$ (so $\widetilde\Psi_i\ne0$ and every $\hat u_i$ is
+defined). By invariance (iii) we may compare angles through the calibrated
+embedding: writing $\hat q_i:=Q_n\widetilde\Psi_i/\lVert Q_n\widetilde\Psi_i
+\rVert=Q_n\hat u_i$, Lemma~\ref{lem:normstab} with $u=Q_n\widetilde\Psi_i$,
+$w=F(x_i)$, and $\lVert F(x_i)\rVert\ge\rho^-$ gives
+\[
+\lVert\hat q_i-N(x_i)\rVert\ \le\ \frac{2E_n}{\rho^-}
+\qquad\text{for every node }i .
+\]
+Set $\theta_n:=8E_n/(a\rho^-)\to0$, and fix a sampled pair with
+$\theta_n\le d:=d_M(x_i,x_j)\le r_0$. The pairwise angular error is at most
+$4E_n/\rho^-=(a/2)\,\theta_n\le(a/2)\,d$, so by Lemma~\ref{lem:contang}, the
+triangle inequality, and
+$\lVert\hat u_i-\hat u_j\rVert=\lVert\hat q_i-\hat q_j\rVert$,
+\[
+\lVert\hat u_i-\hat u_j\rVert\ \ge\ a\,d-\tfrac a2\,d\ =\ \tfrac a2\,d\ =\ A\,d,
+\qquad
+\lVert\hat u_i-\hat u_j\rVert\ \le\ b\,d+\tfrac a2\,d\ \le\ 2b\,d\ =\ B\,d,
+\]
+the last inequality using $a\le b$ (Step 1). Both bounds hold simultaneously
+for \emph{all} such pairs because the calibration of Lemma~\ref{lem:transfer}
+is uniform over nodes, and $\mathbb P(\mathcal A_n)\to1$.
+\end{proof}
+
+\subsection*{Step 5: from local to global (proof of Corollary~\ref{cor:global})}
+\begin{proof}[Proof of Corollary~\ref{cor:global}]
+The map $(x,y)\mapsto\lVert N(x)-N(y)\rVert$ is continuous ($F$ is continuous
+and $R\ge\rho^->0$) and, by (H3), strictly positive on the compact set
+$\{(x,y)\in M\times M: d_M(x,y)\ge r_0\}$; its minimum $c_0$ is therefore
+attained and positive. Work on the event of Lemma~\ref{lem:transfer} with $n$
+large enough that $E_n<\rho^-/2$ and $4E_n/\rho^-\le c_0/2$. For sampled pairs
+with $\theta_n\le d_M\le r_0$, Theorem~\ref{thm:cond} gives the bounds with
+$(A,B)$, hence with $(A_g,B_g)$. For sampled pairs with $d:=d_M>r_0$: the
+calibration bound $\lVert\hat q_i-N(x_i)\rVert\le2E_n/\rho^-$ of Step~4 gives
+\[
+\lVert\hat u_i-\hat u_j\rVert
+\ \ge\ \lVert N(x_i)-N(x_j)\rVert-\frac{4E_n}{\rho^-}
+\ \ge\ c_0-\frac{c_0}{2}\ =\ \frac{c_0}{2}
+\ \ge\ \frac{c_0}{2\operatorname{diam}M}\,d\ \ge\ A_g\,d,
+\]
+while unit vectors satisfy
+$\lVert\hat u_i-\hat u_j\rVert\le2\le(2/r_0)\,d\le B_g\,d$.
+\end{proof}
+
+\subsection*{Step 6: the flat torus (proof of Corollary~\ref{cor:torus})}
+\begin{proof}[Proof of Corollary~\ref{cor:torus}]
+On $M=\mathbb{R}^2/(2\pi\mathbb{Z})^2$ with volume normalized to $1$, the
+Laplace--Beltrami eigenvalues are $\lvert k\rvert^2$, $k\in\mathbb{Z}^2$: the
+first nontrivial eigenvalue $\mu=1$ has multiplicity four, spanned by the
+$L^2$-orthonormal functions $\sqrt2\cos x,\ \sqrt2\sin x,\ \sqrt2\cos y,\
+\sqrt2\sin y$, and the next eigenvalue is $2$---so $m=4$ exhausts the first
+multiplet and sits at a spectral gap. The truncated eigenmap (weights
+$1/\sqrt{\mu_k}=1$) is the Clifford embedding
+$F(x,y)=\sqrt2\,(\cos x,\sin x,\cos y,\sin y)$.
+
+\emph{(H2).} $\lVert F\rVert^2=2(\cos^2x+\sin^2x)+2(\cos^2y+\sin^2y)=4$:
+the radius is constant, $R\equiv2$, so $\Lambda_0=0<1/L_0$ and
+$\rho^-=\rho^+=2$.
+
+\emph{(H1), globally.} Using
+$(\cos a-\cos b)^2+(\sin a-\sin b)^2=4\sin^2\!\big(\tfrac{a-b}2\big)$,
+\[
+\lVert F(p)-F(q)\rVert^2
+=8\Big[\sin^2\tfrac{\Delta x}{2}+\sin^2\tfrac{\Delta y}{2}\Big],
+\qquad \Delta x,\Delta y\in[-\pi,\pi],
+\]
+while $d_M(p,q)^2=\Delta x^2+\Delta y^2$. The elementary bounds
+$\tfrac{2}{\pi}\lvert\delta\rvert\le2\lvert\sin(\delta/2)\rvert\le
+\lvert\delta\rvert$ on $[-\pi,\pi]$ give
+\[
+\frac{2\sqrt2}{\pi}\,d_M(p,q)\ \le\ \lVert F(p)-F(q)\rVert\ \le\ \sqrt2\,d_M(p,q)
+\qquad\text{for \emph{all} } p,q,
+\]
+so (H1) holds with $L_0=\sqrt2$ (indeed $L_0^{-1}=1/\sqrt2\le2\sqrt2/\pi$) and
+$r_0=\operatorname{diam}M=\pi\sqrt2$.
+
+\emph{(H3).} $N=F/2$; since the radius is constant, $N(p)=N(q)$ iff $F(p)=F(q)$
+iff $e^{\mathrm i x_p}=e^{\mathrm i x_q}$ and
+$e^{\mathrm i y_p}=e^{\mathrm i y_q}$ iff $p=q$.
+
+Because $r_0=\operatorname{diam}M$, Theorem~\ref{thm:cond} alone is already
+global, with $A=\sqrt{L_0^{-2}}/(2\rho^+)=1/(4\sqrt2)$ and
+$B=2L_0/\rho^-=\sqrt2$. The sharp continuum distortion of $N$ is the exact
+ratio range above: $\lVert N(p)-N(q)\rVert/d_M(p,q)\in[\sqrt2/\pi,\,1/\sqrt2]$,
+the ratio of whose extremes is $\pi/2$, attained along a coordinate direction at
+antipodal ($\lvert\delta\rvert=\pi$) and infinitesimal separations
+respectively. Basis-independence: any $L^2$-orthonormal basis of the $\mu=1$
+eigenspace equals $Q$ applied to the Clifford one for some $Q\in O(4)$, and
+angular pairwise distances are $Q$-invariant (Step~0, invariance (iii)).
+\end{proof}
+
+\subsection*{Step 7: the small-ball ratio law (used by Proposition~\ref{prop:rank})}
+Let $D_1,D_2$ be i.i.d.\ with the small-ball distance law
+$F(r)=(r/r_0)^d$ on $[0,r_0]$ (density $\propto r^{d-1}$, the flat
+approximation to pair distances within a geodesic ball). For $\kappa\ge1$,
+\[
+\mathbb P\big(D_2\ge\kappa D_1\big)
+=\int_0^{r_0}\!F\!\big(\tfrac{y}{\kappa}\big)\,dF(y)
+=\frac{1}{\kappa^d}\int_0^{r_0}\Big(\frac{y}{r_0}\Big)^{d}\,
+\frac{d\,y^{d-1}}{r_0^{d}}\,dy
+=\frac{1}{2\kappa^d},
+\]
+so by symmetry $\mathbb P(\max/\min\ge\kappa)=\kappa^{-d}$ and
+$\mu(\kappa)=1-\kappa^{-d}$ exactly. The rank certificate of
+Proposition~\ref{prop:rank} is thus $\tau\ge2\kappa^{-d}-1$,
+$\rho_S\ge3\kappa^{-d}-2$: exponential decay of the worst case in the
+intrinsic dimension.
+
+\subsection*{Why the resolution cutoff is necessary}
+The cutoff $\theta_n$ is forced by the statement's generality, not by the
+method. In a hard-threshold $\varepsilon$-graph, two sample points at distance
+below the bandwidth can be \emph{combinatorial twins}---identical
+neighbourhoods, hence identical rows of $A$ and equal degrees. For twins
+$i,j$ the difference $e_i-e_j$ is itself an eigenvector of
+$L_{\mathrm{sym}}$---at eigenvalue $1$ for non-adjacent twins and $1+1/k$ for
+adjacent ones---so every eigenvector at any \emph{other} eigenvalue is
+orthogonal to it and has identical entries at $i$ and $j$. In particular
+every low mode does, hence $\hat u_i=\hat u_j$ exactly while
+$d_M(x_i,x_j)>0$: no lower bound $A\,d_M$ can hold below the
+connectivity scale. (``Identical in every eigenvector'' would be literally
+false---the localized twin-difference mode itself separates them---but that
+mode sits at the top of the spectrum, far above anything the angular map
+retains.) What is improvable is the \emph{size} of $\theta_n$: our
+proof takes it at the sup-norm consistency rate $E_n$, much larger than the
+bandwidth; a $C^1$ (gradient) consistency argument---the Lipschitz regularity
+theory for graph-Laplacian eigenfunctions of \cite{calderlewicka2022} is the
+natural ingredient---would control eigenvector \emph{differences} at small
+separations directly and could shrink $\theta_n$ toward the connectivity scale,
+below which the twin obstruction is final.
+
+Two further remarks. (1) Every constant in $E_n$ depends on the fixed
+mode-count $m$ (through $\sqrt m$, $\Phi_m$, $\mu_1$, and the gap
+$\mu_{m+1}-\mu_m$); nothing here is claimed uniform in $m$. The uniformity in
+$m$ observed empirically (\S\ref{sec:verify}) corresponds to the
+uniformity of (H1) \cite{bates2014,portegies2016} and is exactly what separates
+Theorem~\ref{thm:cond} from the full Conjecture~\ref{conj:angle};
+Appendix~\ref{app:uniform} settles its continuum side by filter (uniform for
+heat, scale-dependent for commute). (2) The
+theorem is local ($d_M\le r_0$) because (H1) is; the global statement needs
+precisely the injectivity hypothesis (H3), which Corollary~\ref{cor:global}
+(Step~5) carries out---and on the flat torus (H1) is itself global, so
+Corollary~\ref{cor:torus} (Step~6) needs none of (H1)--(H3).
+
+\section{Uniformity in the truncation}\label{app:uniform}
+
+This appendix proves Theorem~\ref{thm:heat} and Proposition~\ref{prop:weyl},
+and records the growing-window graph-transfer conditions. Throughout, volume
+is normalized to $1$, $p_t$ is the heat kernel of $M$, and cutoffs are
+multiplet-closed.
+
+\subsection*{Proof of Theorem~\ref{thm:heat}}
+Let $F_t(x)=\big(e^{-t\mu_k/2}\varphi_k(x)\big)_{k\ge1}\in\ell^2$ be the
+\emph{full} heat embedding with the constant mode removed; its kernel is
+\[
+K_t(x,y):=\langle F_t(x),F_t(y)\rangle=p_t(x,y)-1 .
+\]
+
+\emph{Step 1: $N_t$ is a uniformly noncollapsing immersion for small $t$.}
+For a unit tangent vector $v\in T_xM$,
+\[
+\lVert dF_t(v)\rVert^2=\partial^v_x\partial^v_y K_t(x,y)\big|_{y=x},
+\qquad
+dR_t(v)=\frac{\partial_v K_t(x,x)}{2R_t(x)},
+\qquad R_t^2(x)=p_t(x,x)-1 .
+\]
+By the Minakshisundaram--Pleijel expansion (cf.\ \cite{berard1994}),
+$p_t(x,x)=(4\pi t)^{-d/2}\big(1+t\,\mathrm{scal}(x)/6+O(t^2)\big)$ and
+$\partial^v_x\partial^v_y p_t\big|_{y=x}=\tfrac1{2t}(4\pi t)^{-d/2}(1+O(t))$,
+both uniformly on compact $M$. The only $x$-dependence of the diagonal at this
+order is through the curvature term, so
+$\partial_v p_t(x,x)=(4\pi t)^{-d/2}\,O(t)$, whence
+$dR_t(v)^2=(4\pi t)^{-d/2}\,O(t^{2})\cdot O(1)$, which is $o$ of the
+derivative energy $\asymp t^{-1}(4\pi t)^{-d/2}$. Therefore there is
+$t_0(M)>0$ such that for $t\le t_0$ the tangential square
+$T_t(x,v)^2:=\lVert dF_t(v)\rVert^2-dR_t(v)^2$ obeys
+\[
+T_t(x,v)^2\ \ge\ c\,t^{-d/2-1},\qquad
+R_t(x)^2\asymp t^{-d/2},\qquad\text{hence}\qquad
+\lVert dN_t(v)\rVert^2=\frac{T_t(x,v)^2}{R_t(x)^2}\ \ge\ \frac{c'}{t},
+\]
+uniformly over the unit tangent bundle (the last identity is
+Proposition~\ref{prop:angdist}).
+
+\emph{Step 2: the truncation tail vanishes in $C^2$.} Eigenfunction
+H\"older/derivative norms grow only polynomially,
+$\lVert\varphi_k\rVert_{C^r}\le C\mu_k^{(d-1)/4+r/2}$ \cite{hormander1968},
+while the heat weights decay exponentially; hence
+$\lVert F_t-F_{t,m}\rVert_{C^2}\to0$ as $m\to\infty$ (tail sums
+$\sum_{k>m}e^{-t\mu_k}\mu_k^{c(d,r)}\to0$ by Weyl's law). Consequently
+$T_{t,m}\to T_t$, $R_{t,m}\to R_t$, and the $C^2$-norms of $N_{t,m}$ converge,
+all uniformly; choose $m_0(t)$ so that for $m\ge m_0(t)$,
+$T_{t,m}^2\ge\tfrac12c\,t^{-d/2-1}$, $R_{t,m}\asymp t^{-d/4}$, and
+$\sup_{m\ge m_0}\lVert N_{t,m}\rVert_{C^2}=:C_2(t)<\infty$.
+
+\emph{Step 3: from uniform immersion to uniform bi-Lipschitz.} Let
+$a_t':=\inf_{m\ge m_0}\inf_{x,\lvert v\rvert=1}\lVert dN_{t,m}(v)\rVert>0$
+from Steps 1--2. For $x,y$ with $d:=d_M(x,y)\le r_t:=a_t'/(2C_2(t))$, Taylor
+along a minimizing geodesic $\gamma$ gives
+\[
+\lVert N_{t,m}(x)-N_{t,m}(y)\rVert
+\ \ge\ \lVert dN_{t,m}(\gamma'(0))\rVert\,d-\tfrac12C_2(t)\,d^2
+\ \ge\ \Big(a_t'-\tfrac12C_2(t)\,r_t\Big)d\ \ge\ \tfrac{3a_t'}{4}\,d,
+\]
+and the mean-value bound gives
+$\lVert N_{t,m}(x)-N_{t,m}(y)\rVert\le b_t\,d$ with
+$b_t:=\sup_{m\ge m_0}\mathrm{Lip}(N_{t,m})<\infty$. All constants depend on
+$t$ and $M$ only---not on $m$. \hfill$\qed$
+
+\begin{lemma}[Differentiated pointwise Weyl law]\label{lem:dweyl}
+Let $(M,g)$ be a smooth closed Riemannian $d$-manifold with orthonormal
+Laplace eigenfunctions $\varphi_k$, eigenvalues $\mu_k$. There are constants
+$c_d,c_d'>0$ depending only on $(M,g)$ such that, uniformly in $x\in M$,
+\[
+\sum_{0<\mu_k\le\Lambda}\varphi_k(x)^2
+   \;=\; c_d\,\Lambda^{d/2}\,\bigl(1+O(\Lambda^{-1/2})\bigr),
+\qquad
+\sum_{0<\mu_k\le\Lambda}\lVert\nabla\varphi_k(x)\rVert^2
+   \;=\; c_d'\,\Lambda^{(d+2)/2}\,\bigl(1+O(\Lambda^{-1/2})\bigr),
+\]
+with spatially constant leading coefficients.
+\end{lemma}
+\begin{proof}
+Both are on-diagonal statements about the spectral projector
+$\Pi_\lambda(x,y)=\sum_{\sqrt{\mu_k}\le\lambda}\varphi_k(x)\varphi_k(y)$ at
+frequency $\lambda=\sqrt\Lambda$: the first is H\"ormander's pointwise Weyl law
+with sharp remainder \cite{hormander1968},
+$\Pi_\lambda(x,x)=\tilde c_d\lambda^{d}+O(\lambda^{d-1})$; the second is the
+mixed-derivative case $\partial_{x}\!\cdot\!\partial_{y}\Pi_\lambda(x,y)
+\big|_{y=x}=\tilde c_d'\lambda^{d+2}+O(\lambda^{d+1})$, the uniform derivative
+estimates for the spectral function on a closed manifold of \cite{binxu2004} (one
+power of $\lambda$ below the main term, uniformly on $M$; no non-self-focal
+restriction, which the finer scaling limit of \cite{canzanihanin2015} would
+carry). Substituting $\lambda=\sqrt\Lambda$
+gives the stated relative remainders.
+\end{proof}
+
+\subsection*{Proof of Proposition~\ref{prop:weyl}}
+Let $E_\Lambda(x,y)=\sum_{\mu_k\le\Lambda}\varphi_k(x)\varphi_k(y)$ be the
+spectral function. The pointwise Weyl law with uniform remainder
+\cite{hormander1968} gives $E_\Lambda(x,x)=C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})$
+with spatially constant leading coefficient, and its differentiated form
+(the uniform derivative-Weyl estimates of \cite{binxu2004}; equivalently
+Lemma~\ref{lem:dweyl}) gives, uniformly in $x$ and unit $v$,
+\[
+\partial^v_x\partial^v_y E_\Lambda(x,y)\big|_{y=x}
+=C'_d\,\Lambda^{d/2+1}\big(1+o(1)\big).
+\]
+Abel summation in the cutoff converts these into the commute-weighted sums:
+\[
+\lVert dF_\Lambda(v)\rVert^2
+=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}\big(\partial_v\varphi_k(x)\big)^2
+=c_d\,\Lambda^{d/2}\big(1+o(1)\big),
+\]
+\[
+G_\Lambda(x,x):=R_\Lambda^2(x)
+=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}\varphi_k(x)^2
+=\begin{cases}
+C_d\,\Lambda^{d/2-1}\big(1+o(1)\big), & d>2,\\[2pt]
+C_2\log\Lambda\,\big(1+o(1)\big), & d=2,
+\end{cases}
+\]
+again uniformly in $x$ (Lemma~\ref{lem:dweyl} in the commute-weighted
+normalization; Abel summation in the cutoff converts the on-diagonal projector
+asymptotics into the $\mu^{-1}$-weighted sums), with spatially constant leading
+coefficients. Because the leading coefficient of $G_\Lambda(x,x)$ is spatially
+constant, its spatial derivative has no leading term, and the differentiated
+remainder estimates of \cite{binxu2004} bound what remains,
+$\partial_vG_\Lambda(x,x)=o(\Lambda^{(d-1)/2})$ uniformly---weaker than the naive
+$o(\Lambda^{d/2-1})$ and all that is needed---so the radial term
+$dR_\Lambda(v)^2=\big(\partial_vG_\Lambda(x,x)\big)^2/\big(4G_\Lambda(x,x)\big)
+=o(\Lambda^{d/2})$ is lower order than the derivative energy. Hence
+$T_\Lambda(x,v)^2\ge c\,\Lambda^{d/2}$ for $\Lambda\ge\Lambda_0$, uniformly,
+which is the display; dividing by $R_\Lambda^2$ gives
+$\lVert dN_\Lambda\rVert\gtrsim\Lambda^{1/2}$ ($d>2$) and
+$\sqrt{\Lambda/\log\Lambda}$ ($d=2$).
+
+\emph{The $S^1$ computation, and the failure of fixed-scale uniformity.} On
+$S^1$ ($\mu=k^2$, whole eigenspaces, weights $\mu^{-1/2}=1/k$),
+\[
+F_N(x)=\Big(\tfrac{\cos kx}{k},\tfrac{\sin kx}{k}\Big)_{k=1}^{N}:\qquad
+R_N^2=\sum_{k\le N}\frac1{k^2}\ \text{(constant, bounded)},\qquad
+\lVert dF_N\rVert^2=\sum_{k\le N}1=N,
+\]
+so $\lVert dN_N\rVert=\lVert dF_N\rVert/R_N\asymp\sqrt N$ (consistent with the
+general formula: $\Lambda=N^2$, $d=1$, $T_\Lambda/R\asymp\Lambda^{1/4}$). A
+pair at distance $\sim1/N$ is stretched by $\sim\sqrt N$, so any upper
+Lipschitz constant valid on a \emph{fixed} ball $\{d\le r_0\}$ must grow like
+$\sqrt m$: no $m$-independent fixed-scale bi-Lipschitz theorem can hold for
+the commute filter, on any manifold (the same growth holds in all $d$). The
+lower bound at fixed scale, by contrast, survives on $S^1$ (project onto the
+first multiplet, whose weight is $m$-independent while $R_N$ is bounded)---the
+failure is one-sided and lives below the wavelength $\Lambda^{-1/2}$.
+\hfill$\qed$
+
+\begin{remark}[Cutoff-insensitivity]
+The conclusion of Proposition~\ref{prop:weyl} does not depend on the sharp
+spectral cutoff: replacing $\sum_{\mu_k\le\Lambda}$ by a smoothed
+Littlewood--Paley weight $\chi(\mu_k/\Lambda)$ yields the same growth orders with
+full asymptotic expansions (smoothed spectral sums admit wave-kernel expansions
+without Tauberian remainders), and on $\mathbb S^1$ the sharp-cutoff computation
+is exact with no Weyl input at all. The proposition's content---no $m$-independent
+fixed-scale upper Lipschitz constant for the commute filter---is
+cutoff-independent.
+\end{remark}
+
+\subsection*{A uniform lower angular bound on flat tori}
+\begin{proposition}[Uniform lower angular bound on flat tori]
+\label{prop:torus-lower-uniform}
+Let $T=\mathbb R^d/\Gamma$ be a fixed flat torus with dual lattice $\Gamma^*$. For
+a multiplet-closed spectral cutoff $\Lambda$, set
+\[
+F_\Lambda(x)=\Big(\tfrac{e^{i\langle\xi,x\rangle}}{\lvert\xi\rvert}\Big)_{\xi\in\Gamma^*\setminus\{0\},\ \lvert\xi\rvert^2\le\Lambda},
+\qquad
+N_\Lambda(x)=\frac{F_\Lambda(x)}{\lVert F_\Lambda(x)\rVert}
+\]
+(equivalently, pair $\xi$ with $-\xi$ and use real sine--cosine coordinates). There
+exist $\Lambda_0(T)<\infty$ and $c_T>0$ such that
+\[
+\lVert N_\Lambda(x)-N_\Lambda(y)\rVert\ \ge\ c_T\,d_T(x,y)
+\]
+for every multiplet-closed $\Lambda\ge\Lambda_0(T)$ and every $x,y\in T$; the lower
+angular Lipschitz constant is thus uniform in the mode count $m=m(\Lambda)$. For the
+standard torus $\mathbb T^d=\mathbb R^d/(2\pi\mathbb Z)^d$ one may take $\Lambda_0=1$.
+\end{proposition}
+
+\begin{proof}
+We work first on the standard torus; the general lattice is treated at the end.
+Write $R=\sqrt\Lambda$ and $\mathcal K_R=\{k\in\mathbb Z^d\setminus\{0\}:\lvert k\rvert\le R\}$.
+Because the cutoff contains complete sine--cosine pairs,
+$S_R:=\lVert F_R(x)\rVert^2=\sum_{k\in\mathcal K_R}\lvert k\rvert^{-2}$ is
+independent of $x$. If $z=x-y$ is represented in $[-\pi,\pi]^d$ then
+$d_{\mathbb T^d}(x,y)=\lvert z\rvert$ and
+\begin{equation}
+\lVert N_R(x)-N_R(y)\rVert^2=\frac{2A_R(z)}{S_R},\qquad
+A_R(z):=\sum_{k\in\mathcal K_R}\frac{1-\cos(k\cdot z)}{\lvert k\rvert^2}.
+\label{eq:sm-N}
+\end{equation}
+We prove $A_R(z)\ge c_d\lvert z\rvert^2 S_R$ with $c_d>0$ independent of $R$.
+
+\smallskip\noindent\emph{A Fourier-block estimate.} For $q\ge2$ and
+$t\in[-\pi,\pi]$ set $a_q(t):=\tfrac1q\sum_{n=q}^{2q-1}\cos(nt)$. There is an
+absolute $c>0$ with
+\begin{equation}
+1-\lvert a_q(t)\rvert\ \ge\ c\,\min\{1,\,q^2t^2\}.
+\label{eq:sm-block}
+\end{equation}
+Indeed, if $U$ is uniform on $\{q,\dots,2q-1\}$ and $\phi_q(t)=\mathbb E\,e^{iUt}$,
+then $\lvert a_q(t)\rvert\le\lvert\phi_q(t)\rvert$. When $q\lvert t\rvert\le1$, for an
+independent copy $U'$,
+\[
+1-\lvert\phi_q(t)\rvert\ \ge\ \tfrac12\big(1-\lvert\phi_q(t)\rvert^2\big)
+=\tfrac12\,\mathbb E\big[1-\cos((U-U')t)\big]\ \ge\ c\,q^2t^2,
+\]
+using $1-\cos s\ge cs^2$ for $\lvert s\rvert\le1$ and $\mathbb E(U-U')^2\asymp q^2$.
+When $q\lvert t\rvert\ge1$, the exact formula
+$\lvert\phi_q(t)\rvert=\lvert\sin(qt/2)\rvert/(q\lvert\sin(t/2)\rvert)$ is bounded by
+a universal $\rho<1$: for bounded $q$ the ratio is $<1$ on the compact locus
+$q\lvert t\rvert\ge1$, and as $q\to\infty$ it tends to $0$ unless $t\to0$, where with
+$s=qt/2\ge\tfrac12$ it equals $\lvert\sin s\rvert/s<1$. This gives \eqref{eq:sm-block}.
+
+\smallskip\noindent\emph{Lattice blocks.} Choose $j$ with
+$\lvert z_j\rvert=\lVert z\rVert_\infty$. For dyadic $q$ put
+$B_{q,j}=\{k\in\mathbb Z^d:q\le\lvert k_j\rvert<2q,\ \lvert k_\ell\rvert<q\ (\ell\ne j)\}$,
+disjoint across dyadic $q$, with $\lvert B_{q,j}\rvert\asymp_d q^d$ and
+$\lvert k\rvert^2\le(d+3)q^2$ on $B_{q,j}$. The block average of $\cos(k\cdot z)$
+factors as $a_q(z_j)\prod_{\ell\ne j}b_q(z_\ell)$ with each normalized symmetric
+Dirichlet sum $\lvert b_q\rvert\le1$, so by \eqref{eq:sm-block}
+\[
+\frac1{\lvert B_{q,j}\rvert}\sum_{k\in B_{q,j}}\big(1-\cos(k\cdot z)\big)
+\ \ge\ 1-\lvert a_q(z_j)\rvert\ \ge\ c\,\min\{1,q^2z_j^2\}.
+\]
+With $\lvert k\rvert^2\le(d+3)q^2$, $\lvert B_{q,j}\rvert\asymp q^d$, and
+$\min\{1,q^2z_j^2\}\ge\lvert z\rvert^2/(d\pi^2)$ (from $z_j^2\ge\lvert z\rvert^2/d$
+and $\lvert z\rvert\le\sqrt d\,\pi$),
+\[
+\sum_{k\in B_{q,j}}\frac{1-\cos(k\cdot z)}{\lvert k\rvert^2}
+\ \ge\ c_d\,q^{d-2}\lvert z\rvert^2.
+\]
+Every block with $q\le R/\sqrt{d+3}$ lies in $\mathcal K_R$; summing over dyadic $q$
+in that range,
+$A_R(z)\ge c_d\lvert z\rvert^2\sum_{q\ \mathrm{dyadic},\,2\le q\le R/\sqrt{d+3}}q^{d-2}$,
+while a dyadic decomposition of the lattice ball gives
+$S_R\le C_d\big(1+\sum_{q\ \mathrm{dyadic},\,q\le R}q^{d-2}\big)$. The two sums are
+comparable for large $R$---bounded for $d=1$, $\asymp\log R$ for $d=2$,
+$\asymp R^{d-2}$ for $d\ge3$---so $A_R(z)\ge c_d\lvert z\rvert^2S_R$. For the finitely
+many smaller cutoffs the first multiplet already gives
+$A_R(z)\ge\sum_{j}(1-\cos z_j)\ge c_d\lvert z\rvert^2$ with $S_R$ bounded, so the
+bound holds for all $R\ge1$. Substituting into \eqref{eq:sm-N},
+$\lVert N_R(x)-N_R(y)\rVert^2\ge c_d\lvert z\rvert^2=c_d\,d_{\mathbb T^d}(x,y)^2$.
+
+For a general flat torus, a dual-lattice basis $b_1,\dots,b_d$ and norm equivalence
+$c_T\lvert n\rvert\le\lvert\xi(n)\rvert\le C_T\lvert n\rvert$ reduce the estimate to the
+standard case in angular coordinates $\theta\in[-\pi,\pi]^d$, with constants
+depending on $T$; taking $\Lambda_0(T)$ large enough to contain a dual basis handles
+the initial cutoffs.
+\end{proof}
+
+\noindent Together with Proposition~\ref{prop:weyl} this locates the commute
+frontier exactly: $c_T\,d_T(x,y)\le\lVert N_m(x)-N_m(y)\rVert$ uniformly in $m$, while
+there is \emph{no} $m$-uniform upper bound at a fixed spatial scale, since
+$\lVert dN_m\rVert$ grows with the cutoff. The lower Lipschitz half of the metric
+conjecture is thus proved on the reference substrate family; only the scale-dependent
+upper half remains.
+
+
+\begin{remark}[Exact upper-Lipschitz divergence]\label{rem:torus-upper}
+The companion upper bound diverges, on $\mathbb T^d$ exactly and for every $d$.
+Because $S_R$ is independent of $x$, normalization produces no radial cancellation,
+so for a coordinate direction $e_j$,
+\[
+\lVert dN_R(e_j)\rVert^2=\frac1{S_R}\sum_{k\in\mathcal K_R}\frac{k_j^2}{\lvert k\rvert^2}
+=\frac{\lvert\mathcal K_R\rvert}{d\,S_R},
+\]
+using $\sum_{j=1}^d k_j^2/\lvert k\rvert^2=1$ at every lattice point. With
+$\lvert\mathcal K_R\rvert\asymp R^d$ and the orders of $S_R$ above,
+\[
+\operatorname{Lip}(N_R)\asymp
+\begin{cases}
+R^{1/2}, & d=1,\\
+R/\sqrt{\log R}, & d=2,\\
+R, & d\ge3,
+\end{cases}
+\]
+so no $R$-independent upper Lipschitz constant exists on any fixed geodesic ball.
+This is an exact obstruction, not a gap in technique, and it survives a global
+output rescaling $N_R\mapsto c_RN_R$: uniform upper control forces $c_R\to0$, which
+collapses the fixed-diameter image ($\operatorname{diam}\le2c_R\to0$) and destroys
+the lower bound. The commute map is therefore \emph{uniformly co-Lipschitz with a
+quantitatively diverging upper Lipschitz constant}; genuine two-sided uniformity
+requires a faster filter---the heat weighting (Theorem~\ref{thm:heat}), or amplitude
+$\lvert k\rvert^{-s}$ with $s>(d+2)/2$, for which the numerator above converges while
+$S_R$ tends to a positive constant.
+\end{remark}
+
+\subsection*{A spectral-filter phase diagram}
+The commute weighting is one member of the fractional family
+\[
+F_{\Lambda,s}(x)=\bigl(\mu_k^{-s/2}\varphi_k(x)\bigr)_{0<\mu_k\le\Lambda},
+\qquad
+K_{\Lambda,s}(x,y)=\sum_{0<\mu_k\le\Lambda}\mu_k^{-s}\varphi_k(x)\varphi_k(y),
+\]
+with commute at $s=1$, the plain eigenmap at $s=0$, and the heat weighting a
+rapidly decaying alternative. Weyl's law $\mu_k\asymp k^{2/d}$ separates three regimes
+by three convergence thresholds.
+
+\begin{proposition}[Filter thresholds]\label{prop:phase}
+As $\Lambda\to\infty$,
+\[
+\sum_k\mu_k^{-2s}<\infty\iff s>\tfrac d4,\qquad
+\sum_k\mu_k^{-s}<\infty\iff s>\tfrac d2,\qquad
+\sum_k\mu_k^{1-s}<\infty\iff s>\tfrac d2+1,
+\]
+controlling respectively: (i) the $L^2(M\times M)$ (Hilbert--Schmidt) limit of the
+correction kernel $K_{\Lambda,s}$---hence stability of the rank information it carries;
+(ii) the trace $\int_M\lVert F_{\Lambda,s}\rVert^2=\sum_k\mu_k^{-s}$, i.e.\ finiteness
+of the radius in the infinite embedding; and (iii) the differential energy
+$\int_M\lVert dF_{\Lambda,s}\rVert^2=\sum_k\mu_k^{1-s}$, i.e.\ a finite uniform upper
+Lipschitz constant.
+\end{proposition}
+
+\begin{proof}
+Each equivalence is Weyl's law: $\mu_k\asymp k^{2/d}$ gives $\mu_k^{-a}\asymp k^{-2a/d}$,
+and $\sum_k k^{-2a/d}<\infty\iff 2a/d>1$; take $a=2s,\,s,\,s-1$. For (i), orthonormality
+gives $\lVert K_{\Lambda,s}\rVert^2_{L^2(M\times M)}=\sum_{\mu_k\le\Lambda}\mu_k^{-2s}$,
+Cauchy in $\Lambda$ iff the sum converges. Claims (ii)--(iii) integrate
+$\lVert F\rVert^2$ and $\lVert dF\rVert^2$ over $M$.
+\end{proof}
+
+\noindent For the commute filter $s=1$ the thresholds read $d<4$, $d<2$, and $d<0$:
+\begin{center}\small
+\begin{tabular}{@{}lp{0.32\linewidth}l@{}}
+\toprule
+Property & Convergent sum & Commute ($s=1$) \\
+\midrule
+Rank kernel Hilbert--Schmidt stable & $\sum\mu_k^{-2}$ & holds for $d\le3$ \\
+Radius finite in the limit & $\sum\mu_k^{-1}$ & only $d=1$ (diverges $d\ge2$) \\
+Uniform upper Lipschitz bound & $\sum\mu_k^{0}$ & fails $\forall\,d\ge1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+This resolves three observations at once: rank stability can survive in $d=1,2,3$ (the
+empirical ``flat in $m$''); the radius changes character at $d=2$
+(Corollary~\ref{thm:radial}); and two-sided uniform metric control fails in every
+positive dimension (Proposition~\ref{prop:weyl}, and the exact torus divergence of the
+remark above). The commute filter sits at the \emph{critical} exponent for the rank
+kernel, whose stability boundary is the dimension $d=4$---a sharper structural
+prediction than the five-family linear trend of Paper~I.b. A filter with
+$s>d/2+1$ (the heat weighting, or amplitude $\mu_k^{-s/2}$ with $s>d/2+1$) restores a
+uniform two-sided bound.
+
+
+\subsection*{A rank-limit theorem on flat tori ($d\le3$)}
+On a flat torus the diagonal kernel $S_\Lambda=\lVert F_\Lambda(x)\rVert^2$ is
+independent of $x$, so the angular distance is an exact decreasing function of a single
+scalar:
+\[
+\lVert N_\Lambda(x)-N_\Lambda(y)\rVert^2=2-\frac{2\,G_\Lambda(x-y)}{S_\Lambda},
+\qquad
+G_\Lambda(z)=\sum_{0<\lvert k\rvert^2\le\Lambda}\frac{\cos(k\cdot z)}{\lvert k\rvert^2}.
+\]
+Because $S_\Lambda$ does not depend on the pair, the angular distances carry exactly
+the reverse ranking of $G_\Lambda(x-y)$---so although every distance concentrates at
+$\sqrt2$ as $\Lambda\to\infty$ (the radius diverges, $S_\Lambda\to\infty$ for
+$d\ge2$), the \emph{ordering} that rank statistics read need not degenerate.
+
+\begin{proposition}[Rank stability on flat tori]\label{prop:rank-torus}
+Let $d\le3$. Then $\sum_{k\ne0}\lvert k\rvert^{-4}<\infty$, so $G_\Lambda\to G$ in
+$L^2(\mathbb T^d)$, where $G$ is the zero-mean periodic Green's function. If $(X,Y)$ is
+drawn from an absolutely continuous pair law (uniform sampling suffices) whose induced law of $G(X-Y)$ is atomless, then the population
+Spearman and Kendall correlations between $d_{\mathbb T^d}(X,Y)$ and
+$\lVert N_\Lambda(X)-N_\Lambda(Y)\rVert$ converge to those of
+$\bigl(d_{\mathbb T^d}(X,Y),\,-G(X-Y)\bigr)$. On $\mathbb S^1$ the periodic Green's
+function is strictly monotone in geodesic separation, so the limiting rank correlation
+is exactly $1$.
+\end{proposition}
+
+\begin{proof}
+$G$ has Fourier coefficients $\lvert k\rvert^{-2}$, so
+$\lVert G_\Lambda-G\rVert^2_{L^2}=\sum_{\lvert k\rvert^2>\Lambda}\lvert k\rvert^{-4}\to0$
+exactly when $\sum_k\lvert k\rvert^{-4}<\infty$, i.e.\ $4>d$. Hence $G_\Lambda(X-Y)\to
+G(X-Y)$ in probability along the pair law. The angular distance is a fixed continuous
+strictly decreasing function of $G_\Lambda(X-Y)$ (the common factor $S_\Lambda>0$ is
+immaterial to order), so its ranks converge to those of $-G(X-Y)$; atomlessness of the
+limit law makes the Spearman and Kendall functionals continuous there, giving
+convergence. On $\mathbb S^1$, $G(\theta)=\sum_{k\ge1}\cos(k\theta)/k^2$ is strictly
+decreasing on $[0,\pi]$ (its derivative $-\sum_{k\ge1}\sin(k\theta)/k=(\theta-\pi)/2<0$
+there), so $-G$ is strictly increasing in the geodesic distance $\lvert\theta\rvert$
+and the rank correlation is $1$.
+\end{proof}
+
+\noindent This upgrades the empirical ``flat in $m$'' (\S\ref{sec:verify}) to a
+rank-stability theorem: for $d\le3$ the commute angular ranking converges to a fixed
+Green-kernel ranking---exact on $\mathbb S^1$, and a computable limiting quantity on
+$\mathbb T^2,\mathbb T^3$ (where $G$ is direction-dependent, so the limit is below $1$).
+For $d\ge4$ the kernel is not $L^2$-stable (Proposition~\ref{prop:phase}) and no such
+limit is claimed.
+
+
+\subsection*{The general Green-kernel rank limit ($d\in\{2,3\}$)}
+The flat-torus computation generalizes to every closed manifold of dimension $2$ or
+$3$, bypassing the impossible uniform upper Lipschitz bound and isolating the exact
+geometric obstruction. For independent $X,Y$ from the volume measure, define the
+\emph{Green-rank coefficient} $\rho_G(M):=\rho_S\bigl(d_M(X,Y),-G_M(X,Y)\bigr)$, where
+$G_M$ is the zero-mean Green kernel of the Laplace--Beltrami operator. Angular
+Preservation then splits into two questions: does the truncated angular ranking
+converge uniformly in $m$ to the Green-kernel ranking, and is $\rho_G(M)>0$?
+
+\begin{theorem}[Green-kernel limit of the commute angular ranking]\label{thm:green-rank-limit}
+Let $M$ be a closed connected Riemannian manifold of dimension $d\in\{2,3\}$, volume
+normalized to $1$, with Laplace--Beltrami eigenpairs $(\mu_k,\varphi_k)$. At a
+multiplet-closed cutoff $\Lambda$ set
+$G_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}\varphi_k(x)\varphi_k(y)/\mu_k$,
+$S_\Lambda(x)=G_\Lambda(x,x)$, and
+$N_\Lambda(x)=(\mu_k^{-1/2}\varphi_k(x))_{0<\mu_k\le\Lambda}/\sqrt{S_\Lambda(x)}$. Let
+$(X,Y)$ have bounded density with respect to $\mathrm{vol}\otimes\mathrm{vol}$, with
+the laws of $d_M(X,Y)$ and $G(X,Y)$ atomless, where
+$G(x,y)=\sum_{k\ge1}\varphi_k(x)\varphi_k(y)/\mu_k\in L^2(M\times M)$. Then
+\[
+\rho_S\bigl(d_M(X,Y),\ \lVert N_\Lambda(X)-N_\Lambda(Y)\rVert\bigr)\ \longrightarrow\
+\rho_S\bigl(d_M(X,Y),\ -G(X,Y)\bigr),
+\]
+and likewise for Kendall's $\tau$. Consequently, if $\rho_G(M)>0$ there are
+$\Lambda_0<\infty$ and $\rho_0>0$ with
+$\rho_S\bigl(d_M(X,Y),\lVert N_\Lambda(X)-N_\Lambda(Y)\rVert\bigr)\ge\rho_0$ for every
+multiplet-closed $\Lambda\ge\Lambda_0$: the rank form of Angular Preservation is uniform
+in the mode count beyond a finite cutoff.
+\end{theorem}
+
+\begin{proof}
+Write $C_\Lambda(x,y)=\langle N_\Lambda(x),N_\Lambda(y)\rangle=
+G_\Lambda(x,y)/\sqrt{S_\Lambda(x)S_\Lambda(y)}$; since
+$\lVert N_\Lambda(x)-N_\Lambda(y)\rVert^2=2-2C_\Lambda(x,y)$, angular distance carries the
+reverse ranking of $C_\Lambda$.
+\emph{(1) Hilbert--Schmidt limit.} The $\varphi_k\otimes\varphi_k$ are orthonormal in
+$L^2(M\times M)$, so $\lVert G_{\Lambda'}-G_\Lambda\rVert^2_{L^2}=
+\sum_{\Lambda<\mu_k\le\Lambda'}\mu_k^{-2}$; by Weyl's law $\mu_k\asymp k^{2/d}$ this
+converges iff $d<4$, so $G_\Lambda\to G$ in $L^2(M\times M)$ for $d=2,3$.
+\emph{(2) The diagonal is asymptotically constant.} The uniform pointwise Weyl law
+$\sum_{\mu_k\le L}\varphi_k(x)^2=c_dL^{d/2}+O(L^{(d-1)/2})$ and partial summation give,
+uniformly in $x$, $S_\Lambda(x)=a_2\log\Lambda+O(1)$ ($d=2$) or
+$a_3\Lambda^{1/2}+O(\log\Lambda)$ ($d=3$); writing $A_\Lambda$ for the leading term,
+$\sup_x\lvert S_\Lambda(x)/A_\Lambda-1\rvert\to0$.
+\emph{(3) Rescale.} $H_\Lambda:=A_\Lambda C_\Lambda=
+G_\Lambda\cdot A_\Lambda/\sqrt{S_\Lambda(x)S_\Lambda(y)}\to G$ in $L^2(M\times M)$ (the
+second factor $\to1$ uniformly, and $\sup_\Lambda\lVert G_\Lambda\rVert_2<\infty$).
+Multiplying $C_\Lambda$ by the positive constant $A_\Lambda$ leaves ranks unchanged, so
+$\operatorname{rank}\lVert N_\Lambda(X)-N_\Lambda(Y)\rVert=\operatorname{rank}(-H_\Lambda(X,Y))$.
+\emph{(4) Rank convergence.} A bounded pair density carries $H_\Lambda\to G$ in $L^2$ to
+convergence in probability under the law of $(X,Y)$; atomlessness of the limit makes the
+distribution functions converge, and the population Spearman/Kendall identities give
+$\rho_S(d_M,-H_\Lambda)\to\rho_S(d_M,-G)$.
+\end{proof}
+
+\begin{corollary}[Uniform rank preservation on two-point homogeneous spaces]\label{cor:two-point-rank}
+If, in addition, $M$ is compact two-point homogeneous, then $G(x,y)=g(d_M(x,y))$ with
+$g$ strictly decreasing on $(0,\operatorname{diam}M)$; hence $\rho_G(M)=1$ and
+$\rho_S\bigl(d_M(X,Y),\lVert N_\Lambda(X)-N_\Lambda(Y)\rVert\bigr)\to1$, bounded below
+uniformly beyond a finite cutoff. This proves the eventual uniform-in-$m$ rank form of
+Conjecture~\ref{conj:angle} on $S^2,S^3,\mathbb{RP}^2,\mathbb{RP}^3$ (the circle being
+the exact Fourier case above).
+\end{corollary}
+
+\begin{proof}
+Two-point homogeneity makes the invariant kernel a function of geodesic distance alone.
+With $A(r)$ the area density of a geodesic sphere, the zero-mean Green function satisfies
+$\Delta g=-1/\operatorname{vol}M$ off the pole, i.e.\
+$A(r)\,g'(r)=-1+\operatorname{vol}(M)^{-1}\int_0^r A(s)\,ds$; since
+$\int_0^r A<\operatorname{vol}M$ for $r<\operatorname{diam}M$, $g'(r)<0$, so $-G$ is
+strictly increasing in $d_M$ and the population rank correlation is $1$.
+\end{proof}
+
+\noindent\emph{Graph transfer of the shrinking signal.} The rank-carrying angular
+fluctuation has amplitude $\asymp A_\Lambda^{-1/2}$, so the growing-window transfer
+condition sharpens. With the calibration error
+$E_{n,m}=\max_i\lVert Q_n\widetilde\Psi_i-F_m(x_i)\rVert$ of Appendix~\ref{app:proof} and
+$R_m\asymp\sqrt{A_m}$, normalization stability gives
+$\bigl\lvert A_m\langle\widehat q_i,\widehat q_j\rangle-A_m\langle N_m(x_i),N_m(x_j)\rangle\bigr\rvert
+\le C\,E_{n,m}\sqrt{A_m}$. The rank-transfer condition is therefore
+$E_{n,m}\sqrt{A_m}\to0$---that is, $E_{n,m}\sqrt{\log\mu_m}\to0$ ($d=2$) or
+$E_{n,m}\,\mu_m^{1/4}\to0$ ($d=3$): graph calibration must converge \emph{faster} than
+the rank-carrying signal shrinks, sharpening the bare $E_{n,m}\to0$.
+
+\begin{conjecture}[Green-rank positivity]\label{conj:green-rank}
+For the stated geometric class and pair law,
+$\rho_G(M)=\rho_S\bigl(d_M(X,Y),-G_M(X,Y)\bigr)>0$.
+\end{conjecture}
+
+\noindent This reorganizes the frontier. The \emph{rank} component is proved: for
+$d\le3$ the commute angular ranking converges uniformly in the cutoff to the Green-kernel
+ranking (Theorem~\ref{thm:green-rank-limit}), positive and equal to $1$ on the circle,
+flat tori (with a computable coefficient), and two-point homogeneous spaces of dimension
+$\le3$ (Corollary~\ref{cor:two-point-rank}). What remains is the purely geometric
+question of Green-rank positivity, and the exact boundary is $d=4$, where
+$\sum_k\mu_k^{-2}=\infty$ and the commute Green kernel ceases to be Hilbert--Schmidt (a
+stronger filter $\mu_k^{-s/2}$, $s>d/4$, restores the limit). In one line: uniform-in-mode
+\emph{metric} control fails for the commute embedding, but uniform-in-mode \emph{rank}
+control has a Green-kernel limit below the critical dimension $d=4$, and Angular
+Preservation reduces to positivity of a geometric coefficient---settled on
+low-dimensional two-point homogeneous spaces.
+
+
+\subsection*{Proof of Proposition~\ref{prop:plain} (concentration)}
+\emph{Plain filter.} With $E_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}
+\varphi_k(x)\varphi_k(y)$ (constant mode removed),
+\[
+\big\lVert F^{(1)}_\Lambda(x)-F^{(1)}_\Lambda(y)\big\rVert^2
+=E_\Lambda(x,x)+E_\Lambda(y,y)-2E_\Lambda(x,y),
+\qquad R^{(1)}_\Lambda(x)^2=E_\Lambda(x,x).
+\]
+The pointwise Weyl law with uniform remainder \cite{hormander1968} gives
+$E_\Lambda(x,x)=C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})$ with spatially constant
+leading coefficient, and for $d_M(x,y)\ge\delta$ the off-diagonal spectral
+function obeys $\lvert E_\Lambda(x,y)\rvert=O(\Lambda^{(d-1)/2})$ uniformly,
+oscillating in the pair separation on the wavelength scale $\Lambda^{-1/2}$
+(the Bessel-type scaling limit of the spectral projector
+\cite{canzanihanin2015}). The radial difference is
+$R^{(1)}_\Lambda(x)-R^{(1)}_\Lambda(y)
+=\big(E_\Lambda(x,x)-E_\Lambda(y,y)\big)/\big(R^{(1)}_\Lambda(x)+R^{(1)}_\Lambda(y)\big)
+=O(\Lambda^{(d-1)/2-d/4})$, so its square is $O(\Lambda^{d/2-1})$. Feeding
+these into the identity of Lemma~\ref{lem:norm},
+\[
+\big\lVert N^{(1)}_\Lambda(x)-N^{(1)}_\Lambda(y)\big\rVert^2
+=\frac{2C_d\Lambda^{d/2}+O(\Lambda^{(d-1)/2})}
+{C_d\Lambda^{d/2}\big(1+O(\Lambda^{-1/2})\big)}
+=2+O\big(\Lambda^{-1/2}\big)
+\]
+uniformly over separated pairs, with pair-dependence carried by
+$-2E_\Lambda(x,y)/E_\Lambda(x,x)$. The numerator kernel oscillates with sign
+changes on the wavelength scale, so it induces no monotone ordering in $d_M$.
+Concentration by itself, however, does not force the rank correlation to zero
+(a shrinking correction can preserve order); the exact collapse of both the
+Spearman and Kendall correlations against geodesic distance is established on the
+circle---where $E_\Lambda$ is the Dirichlet kernel---in
+Theorem~\ref{thm:s1collapse} below. This is the continuum mechanism behind the
+plain-eigenmap rank separation in the weighting ablation (\S\ref{sec:ablation}).
+
+\emph{Commute filter.} The same computation with weights $\mu_k^{-1}$ replaces
+$E_\Lambda$ by $G_\Lambda(x,y)=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}
+\varphi_k(x)\varphi_k(y)$: the diagonal is $C'_d\Lambda^{d/2-1}$ ($d>2$;
+$C_2\log\Lambda$, $d=2$) with spatially constant leading coefficient
+(Step~7 of the Proposition~\ref{prop:weyl} proof), the radial term is again
+lower order, and
+\[
+\big\lVert N_\Lambda(x)-N_\Lambda(y)\big\rVert^2
+=2-\frac{2\,G_\Lambda(x,y)}{G_\Lambda(x,x)}\big(1+o(1)\big).
+\]
+The correction kernel decays like $\mu^{-1}$, and for $d\le3$ (where
+$\sum_k\mu_k^{-2}<\infty$) it converges off the diagonal, in $L^2$, to the Green's
+function of $M$---a distance-structured kernel, and on a \emph{two-point
+homogeneous} (isotropic) space a function of $d_M$ alone. For $d\ge4$ the sharp
+truncated Green kernel is no longer Hilbert--Schmidt stable and high-frequency
+oscillations can enter, so we claim no low-frequency dominance there. Both filters
+therefore concentrate at fixed scale as $\Lambda\to\infty$ (the wavelength
+story of Proposition~\ref{prop:weyl}), but the \emph{ordering} information
+that rank statistics read is carried by a coherent kernel for commute and an
+oscillatory one for plain: the ablation's rank separation, in the continuum.
+\hfill$\qed$
+
+\subsection*{Proof of Theorem~\ref{thm:s1collapse} (exact plain-filter rank collapse on $\mathbb S^1$)}
+Write $\theta=x-y$; by evenness the chord depends only on the geodesic distance
+$\lvert\theta\rvert\in[0,\pi]$. Since $\lVert F_N\rVert^2\equiv N$,
+\[
+\big\langle \widehat F_N(x),\widehat F_N(y)\big\rangle
+=\frac1N\sum_{k=1}^N\cos(k\theta),
+\qquad
+Q_N(\theta)=2-\tfrac2N Z_N(\theta),\quad
+Z_N(\theta):=\sum_{k=1}^N\cos(k\theta).
+\]
+The Dirichlet-kernel identity $1+2\sum_{k=1}^N\cos(k\theta)
+=\sin\!\big((N+\tfrac12)\theta\big)/\sin(\theta/2)$ gives, with
+$a(\theta)=1/(2\sin(\theta/2))$ and $\omega_N=N+\tfrac12$,
+\[
+W_N(\theta):=Z_N(\theta)+\tfrac12=a(\theta)\,\sin(\omega_N\theta).
+\]
+As $Q_N$ is a strictly decreasing affine function of $Z_N$, and $Z_N,W_N$ differ
+by a constant, the three share the same rank correlations with $\Theta$ up to a
+global sign; it suffices to prove $\rho_S(\Theta,W_N(\Theta))\to0$ and
+$\tau_K(\Theta,W_N(\Theta))\to0$.
+
+\emph{Step 1 (two-scale equidistribution).} Fix $\varepsilon>0$; on
+$[\varepsilon,\pi]$ the envelope $a$ is continuous and bounded. For any
+$\varphi(\theta,t)$ bounded, continuous, and $2\pi$-periodic in $t$,
+\[
+\frac1\pi\int_\varepsilon^\pi \varphi(\theta,\omega_N\theta)\,d\theta
+\;\longrightarrow\;
+\frac1\pi\int_\varepsilon^\pi \frac1{2\pi}\int_0^{2\pi}\varphi(\theta,t)\,dt\,d\theta ,
+\]
+by expanding $\varphi$ in Fourier modes in $t$: the zeroth mode is the phase
+average, and each nonzero mode is an oscillatory integral $\int_\varepsilon^\pi
+c_m(\theta)e^{im\omega_N\theta}\,d\theta\to0$ by Riemann--Lebesgue as
+$\omega_N\to\infty$. Hence $\big(\Theta,W_N(\Theta)\big)\Rightarrow
+\big(\Theta,\,a(\Theta)\sin T\big)$ with $T\sim\mathrm{Unif}[0,2\pi]$ independent
+of $\Theta$ (the removed collar $[0,\varepsilon)$ has probability
+$\varepsilon/\pi\to0$, and $a(\Theta)<\infty$ a.s.). The limit $W:=a(\Theta)\sin T$
+is atomless and symmetric, so its CDF $H$ is continuous with $H(-z)=1-H(z)$.
+
+\emph{Step 2 (Spearman).} For continuous variables the population Spearman
+coefficient is $\rho_S(U,V)=12\,\mathbb E[F_U(U)F_V(V)]-3$. With
+$F_\Theta(\Theta)=\Theta/\pi$ and $H_N$ the CDF of $W_N(\Theta)$,
+\[
+\rho_S(\Theta,W_N(\Theta))=12\,\mathbb E\!\Big[\tfrac{\Theta}{\pi}\,H_N\big(W_N(\Theta)\big)\Big]-3 .
+\]
+Weak convergence to the atomless $H$ gives $\sup_z\lvert H_N(z)-H(z)\rvert\to0$
+(P\'olya), so $H_N$ may be replaced by $H$. Step~1 then yields
+\[
+\mathbb E\!\Big[\tfrac{\Theta}{\pi}H\big(W_N(\Theta)\big)\Big]
+\longrightarrow
+\frac1\pi\int_0^\pi\frac{\theta}{\pi}\Big(\frac1{2\pi}\int_0^{2\pi}H\big(a(\theta)\sin t\big)\,dt\Big)d\theta .
+\]
+Pairing $t$ with $t+\pi$ gives $H(a\sin t)+H(-a\sin t)=1$, so the inner average is
+$\tfrac12$ and the outer integral is $\tfrac14$. Hence
+$\rho_S(\Theta,W_N(\Theta))\to12\cdot\tfrac14-3=0$, and by the affine reversal
+$\rho_S(\Theta,Q_N(\Theta))\to0$.
+
+\emph{Step 3 (Kendall).} Take independent copies $(\Theta_1,\Theta_2)$ and write
+$\tau_K=\mathbb E\big[\operatorname{sgn}(\Theta_1-\Theta_2)\,
+\operatorname{sgn}(W_N(\Theta_1)-W_N(\Theta_2))\big]$. Applying the Fourier/%
+Riemann--Lebesgue argument of Step~1 jointly, the four-tuple
+$\big(\Theta_1,\Theta_2,\omega_N\Theta_1,\omega_N\Theta_2\big)$ converges weakly to
+$(\Theta_1,\Theta_2,T_1,T_2)$ with $T_1,T_2\sim\mathrm{Unif}[0,2\pi]$ independent of
+one another and of $(\Theta_1,\Theta_2)$ (each nonzero joint Fourier mode is killed
+by integrating first in whichever variable carries nonzero frequency). The
+integrand $\operatorname{sgn}(\theta_1-\theta_2)\operatorname{sgn}(a(\theta_1)\sin
+t_1-a(\theta_2)\sin t_2)$ is bounded and its discontinuity set
+$\{\theta_1=\theta_2\}\cup\{a(\theta_1)\sin t_1=a(\theta_2)\sin t_2\}$ is null under
+the limit law, so the portmanteau theorem gives
+$\tau_K\to\mathbb E\big[\operatorname{sgn}(\Theta_1-\Theta_2)\,
+\operatorname{sgn}(a(\Theta_1)\sin T_1-a(\Theta_2)\sin T_2)\big]$. Conditioned on
+$(\Theta_1,\Theta_2)$ the inner sign is that of a difference of two independent
+atomless symmetric variables, so its expectation is $0$; hence
+$\tau_K(\Theta,W_N(\Theta))\to0$ and $\tau_K(\Theta,Q_N(\Theta))\to0$.
+\hfill$\qed$
+
+\subsection*{Graph transfer at growing $m$, and the $C^1$ route}
+For fixed $m$, Appendix~\ref{app:proof} is the complete transfer. For a
+growing spectral window $m=m(n)$, the same calibration goes through---with
+every constant carrying an $m$-subscript---whenever
+\[
+\mathcal E_n(\mu_m)\,\gamma_m^{-1}\ \longrightarrow\ 0,
+\]
+where $\gamma_m$ is the spectral gap isolating the retained block and
+$\mathcal E_n(\mu_m)$ is the graph-Laplacian consistency error on continuum
+eigenfunctions up to frequency $\mu_m$; since high-frequency eigenfunctions
+have polynomially large derivatives, $\mathcal E_n(\mu_m)$ grows polynomially
+in $\mu_m$, so $m(n)$ may grow, but not too fast. The resulting cutoff is
+$\theta_{n,m}\gtrsim E_{n,m}/(a_m\rho^-_m)$, every factor now
+$m$-dependent. Separately, the additive pairwise error of the sup-norm
+argument is what forces $\theta_n$ to sit at the spectral-rate scale; a
+$C^{0,1}$ eigenvector theory---the Lipschitz estimates of
+\cite{calderlewicka2022} are the available ingredient---would replace it by a
+multiplicative derivative-level error ($\lVert d\hat Z(v)\rVert\ge
+(1-\eta)\lVert dN(v)\rVert$ once the $C^1$ calibration error is below
+$\eta\,a_m\rho^-_m$), pushing the cutoff down to the connectivity scale
+$\varepsilon_n$---optimal, since below it combinatorial twins exist
+(Appendix~\ref{app:proof}). We state these as the conditions a growing-window
+theorem needs, not as a theorem.
+
+\begin{thebibliography}{99}
+\bibitem{bates2014} J.~Bates. The embedding dimension of Laplacian
+eigenfunction maps. \emph{Applied and Computational Harmonic Analysis},
+37(3):516--530, 2014.
+\bibitem{portegies2016} J.~W.~Portegies. Embeddings of Riemannian manifolds
+with heat kernels and eigenfunctions. \emph{Communications on Pure and Applied
+Mathematics}, 69(3):478--518, 2016.
+\bibitem{berard1994} P.~B\'erard, G.~Besson, and S.~Gallot. Embedding
+Riemannian manifolds by their heat kernel. \emph{Geometric and Functional
+Analysis (GAFA)}, 4(4):373--398, 1994.
+\bibitem{binxu2004} B.~Xu. Derivatives of the spectral function and Sobolev norms
+of eigenfunctions on a closed Riemannian manifold. \emph{Annals of Global
+Analysis and Geometry}, 26(3):231--252, 2004.
+\bibitem{calder2022} J.~Calder and N.~Garc\'ia Trillos. Improved spectral
+convergence rates for graph Laplacians on $\varepsilon$-graphs and $k$-NN graphs.
+\emph{Applied and Computational Harmonic Analysis}, 60:123--175, 2022.
+\bibitem{calderlewicka2022} J.~Calder, N.~Garc\'ia Trillos, and
+M.~Lewicka. Lipschitz regularity of graph Laplacians on random data clouds.
+\emph{SIAM Journal on Mathematical Analysis}, 54(1):1169--1222, 2022.
+\bibitem{canzanihanin2015} Y.~Canzani and B.~Hanin. Scaling limit for the
+kernel of the spectral projector and remainder estimates in the pointwise Weyl
+law. \emph{Analysis \& PDE}, 8(7):1707--1731, 2015.
+\bibitem{garciatrillos2018} N.~Garc\'ia Trillos and D.~Slep\v{c}ev. A
+variational approach to the consistency of spectral clustering. \emph{Applied
+and Computational Harmonic Analysis}, 45(2):239--281, 2018.
+\bibitem{hormander1968} L.~H\"ormander. The spectral function of an
+elliptic operator. \emph{Acta Mathematica}, 121:193--218, 1968.
+\end{thebibliography}
+
+\end{document}

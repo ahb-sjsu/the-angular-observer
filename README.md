@@ -32,6 +32,32 @@ part that carries the task geometry*, not *always keep the angle*
 interpretation of Wolfram's emergent-geometry program is developed as
 motivation and bounded honestly.
 
+## Papers
+
+The write-up is split into a theory paper and an empirical companion:
+
+- **Paper I — *Keep the Angle*** (theory): the canonical monolithic source is
+  [`paper/paper.tex`](paper/paper.tex) (generic `article`, all proofs inline as
+  appendices); the SIAM *Journal on Mathematics of Data Science* submission is the
+  derived split build in [`paper/simods/`](paper/simods/) — `main.tex` (≤20-page
+  main text) + `supplement.tex`. It contains the normalization identity, the
+  deterministic transfer theorem, the conditional graph-to-manifold result, the
+  unconditional torus/sphere instances, the **uniform lower angular bound on flat
+  tori**, the **exact upper-Lipschitz divergence**, the **spectral-filter phase
+  diagram** (critical dimension d = 4), the **Green-kernel rank-limit theorem** for
+  d ≤ 3 (rank = 1 on two-point homogeneous spaces), the filter dichotomy, and the
+  torus core/verify/ablation experiments.
+- **Paper I.b — *Keep the Angle, in Practice*** (empirical): the substrate-agnostic
+  manifold diagnostic and its failure modes, in [`paper1b/`](paper1b/) — the
+  cross-substrate benchmark, bake-off, hypergraph-rewriting emergent geometry, the
+  dimension trend, temporal stability, the two-factor screen, continuum
+  dissociation, honest negatives, and the physical interpretation.
+
+Reviewer-response experiments and reproducibility artifacts are in
+[`experiments/reviewer-response/`](experiments/reviewer-response/); every headline
+number is backed by a committed `*_result.json` and multi-draw where it matters
+(ablation, κ, core table, and the (A2) margin on the non-homogeneous swiss-roll).
+
 ## The core decomposition
 
 ```mermaid
@@ -119,7 +145,18 @@ flowchart TD
    correlation deflates to a hub tautology (partial correlation −0.14). This is
    observer theory, **not** the Einstein-tensor claim.
 
-## What is proven vs conjectured (synced to paper v0.8)
+## What is proven vs conjectured (synced to Paper I)
+
+> **Update.** The rank form is no longer only conjectural: the **Green-kernel
+> rank-limit theorem** proves that for intrinsic dimension d ≤ 3 the commute
+> angular *ranking* converges uniformly in the mode count to a fixed Green-kernel
+> ranking — exactly rank 1 on the circle and on compact two-point homogeneous
+> spaces (S², S³, ℝP², ℝP³). Angular Preservation thereby reduces to positivity of
+> a geometric *Green-rank coefficient*, with the exact obstruction at the critical
+> dimension d = 4 (the spectral-filter phase diagram). What stays conjectural is
+> two-sided *metric* uniformity (its upper half is provably false for the commute
+> filter) and Green-rank positivity on general manifolds.
+
 
 - **Proven / theorem-backed:** the radial coordinate's degeneracy for d ≥ 3
   (von Luxburg et al. 2010/2014; full diagonal transfer in paper Appendix A —
