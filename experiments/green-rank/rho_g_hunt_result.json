@@ -1,0 +1,162 @@
+{
+  "experiment": "green-rank counterexample hunt: multi-neck, asymmetric, Berger",
+  "class_": "exploratory",
+  "seed": 20260720,
+  "n_draws": 3,
+  "scipy": true,
+  "multineck": [
+    {
+      "kind": "multineck",
+      "param": 0.0,
+      "n_draws": 3,
+      "rho_G_mean": 0.977,
+      "rho_G_std": 0.0022,
+      "R_inf_mean": 0.0646,
+      "master_bound_mean": -1.9793,
+      "connected_all": true
+    },
+    {
+      "kind": "multineck",
+      "param": 0.6,
+      "n_draws": 3,
+      "rho_G_mean": 0.9353,
+      "rho_G_std": 0.0035,
+      "R_inf_mean": 0.0729,
+      "master_bound_mean": -1.9755,
+      "connected_all": true
+    },
+    {
+      "kind": "multineck",
+      "param": 0.85,
+      "n_draws": 3,
+      "rho_G_mean": 0.8841,
+      "rho_G_std": 0.0008,
+      "R_inf_mean": 0.1049,
+      "master_bound_mean": -1.9976,
+      "connected_all": true
+    },
+    {
+      "kind": "multineck",
+      "param": 0.95,
+      "n_draws": 3,
+      "rho_G_mean": 0.8486,
+      "rho_G_std": 0.0264,
+      "R_inf_mean": 0.1368,
+      "master_bound_mean": -2.0,
+      "connected_all": true
+    }
+  ],
+  "asymmetric": [
+    {
+      "kind": "asym",
+      "param": 0.0,
+      "n_draws": 3,
+      "rho_G_mean": 0.9824,
+      "rho_G_std": 0.0032,
+      "R_inf_mean": 0.1676,
+      "master_bound_mean": -2.0,
+      "connected_all": true
+    },
+    {
+      "kind": "asym",
+      "param": 0.6,
+      "n_draws": 3,
+      "rho_G_mean": 0.9222,
+      "rho_G_std": 0.0116,
+      "R_inf_mean": 0.1027,
+      "master_bound_mean": -1.9993,
+      "connected_all": true
+    },
+    {
+      "kind": "asym",
+      "param": 0.85,
+      "n_draws": 3,
+      "rho_G_mean": 0.8233,
+      "rho_G_std": 0.0172,
+      "R_inf_mean": 0.1091,
+      "master_bound_mean": -1.9981,
+      "connected_all": true
+    },
+    {
+      "kind": "asym",
+      "param": 0.95,
+      "n_draws": 3,
+      "rho_G_mean": 0.7892,
+      "rho_G_std": 0.0123,
+      "R_inf_mean": 0.122,
+      "master_bound_mean": -2.0,
+      "connected_all": true
+    }
+  ],
+  "berger": [
+    {
+      "kind": "berger",
+      "param": 1.0,
+      "n_draws": 3,
+      "rho_G_mean": 0.9819,
+      "rho_G_std": 0.0012,
+      "R_inf_mean": 0.0319,
+      "master_bound_mean": -1.9995,
+      "connected_all": true
+    },
+    {
+      "kind": "berger",
+      "param": 0.7,
+      "n_draws": 3,
+      "rho_G_mean": 0.9664,
+      "rho_G_std": 0.0018,
+      "R_inf_mean": 0.0311,
+      "master_bound_mean": -1.9979,
+      "connected_all": true
+    },
+    {
+      "kind": "berger",
+      "param": 0.4,
+      "n_draws": 3,
+      "rho_G_mean": 0.9658,
+      "rho_G_std": 0.0015,
+      "R_inf_mean": 0.0295,
+      "master_bound_mean": -1.9968,
+      "connected_all": true
+    },
+    {
+      "kind": "berger",
+      "param": 0.2,
+      "n_draws": 3,
+      "rho_G_mean": 0.9723,
+      "rho_G_std": 0.0016,
+      "R_inf_mean": 0.026,
+      "master_bound_mean": -1.9848,
+      "connected_all": true
+    },
+    {
+      "kind": "berger",
+      "param": 0.1,
+      "n_draws": 3,
+      "rho_G_mean": 0.9852,
+      "rho_G_std": 0.002,
+      "R_inf_mean": 0.0295,
+      "master_bound_mean": -1.9844,
+      "connected_all": true
+    },
+    {
+      "kind": "berger",
+      "param": 0.05,
+      "n_draws": 3,
+      "rho_G_mean": 0.9881,
+      "rho_G_std": 0.0008,
+      "R_inf_mean": 0.0361,
+      "master_bound_mean": -1.976,
+      "connected_all": true
+    }
+  ],
+  "berger_control_round_S3": {
+    "rho_G": 0.9819,
+    "trustworthy": true
+  },
+  "findings": {
+    "lowest_rho_G": 0.7892,
+    "counterexample_found": false,
+    "note": "counterexample requires rho_G <= 0 (mu_Psi(2||R||)>=1/3)."
+  }
+}

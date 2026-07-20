@@ -1,0 +1,87 @@
+{
+  "experiment": "green-rank rho_G on surfaces of revolution (sphere control + dumbbells)",
+  "class_": "exploratory",
+  "method": "discrete graph-Laplacian pinv (Green) + Dijkstra (geodesic), intrinsic",
+  "seed": 20260720,
+  "n_draws": 5,
+  "scipy": true,
+  "control_round_sphere": {
+    "kind": "sphere",
+    "param": null,
+    "n_draws": 5,
+    "rho_G_mean": 0.9912,
+    "rho_G_std": 0.0016,
+    "R_inf_mean": 0.0569,
+    "master_bound_mean": -1.9355,
+    "connected_all": true
+  },
+  "method_trustworthy": true,
+  "findings": {
+    "no_counterexample": true,
+    "inhomogeneity_lowers_rho_G": true,
+    "rho_G_plateaus_positive": true,
+    "note": "Neck closing drives rho_G from ~0.98 to ~0.80 (mechanism: ||R|| grows), stays positive & plateaus -> no counterexample; Green-rank positivity open."
+  },
+  "dumbbells": [
+    {
+      "kind": "dumbbell",
+      "param": 0.0,
+      "n_draws": 5,
+      "rho_G_mean": 0.9796,
+      "rho_G_std": 0.004,
+      "R_inf_mean": 0.0685,
+      "master_bound_mean": -1.9784,
+      "connected_all": true
+    },
+    {
+      "kind": "dumbbell",
+      "param": 0.3,
+      "n_draws": 5,
+      "rho_G_mean": 0.9431,
+      "rho_G_std": 0.0027,
+      "R_inf_mean": 0.0553,
+      "master_bound_mean": -1.9384,
+      "connected_all": true
+    },
+    {
+      "kind": "dumbbell",
+      "param": 0.6,
+      "n_draws": 5,
+      "rho_G_mean": 0.8837,
+      "rho_G_std": 0.0088,
+      "R_inf_mean": 0.0706,
+      "master_bound_mean": -1.9782,
+      "connected_all": true
+    },
+    {
+      "kind": "dumbbell",
+      "param": 0.8,
+      "n_draws": 5,
+      "rho_G_mean": 0.8408,
+      "rho_G_std": 0.0097,
+      "R_inf_mean": 0.0953,
+      "master_bound_mean": -1.9987,
+      "connected_all": true
+    },
+    {
+      "kind": "dumbbell",
+      "param": 0.9,
+      "n_draws": 5,
+      "rho_G_mean": 0.828,
+      "rho_G_std": 0.0085,
+      "R_inf_mean": 0.1254,
+      "master_bound_mean": -2.0,
+      "connected_all": true
+    },
+    {
+      "kind": "dumbbell",
+      "param": 0.95,
+      "n_draws": 5,
+      "rho_G_mean": 0.8258,
+      "rho_G_std": 0.0186,
+      "R_inf_mean": 0.1697,
+      "master_bound_mean": -2.0,
+      "connected_all": true
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "experiment": "green-rank hunt: sphere with a thin topological handle (shortcut)",
+  "class_": "exploratory",
+  "seed": 20260720,
+  "n_draws": 3,
+  "scipy": true,
+  "control_plain_sphere": {
+    "rho_G": 0.9916,
+    "std": 0.0008,
+    "trustworthy": true
+  },
+  "handles": [
+    {
+      "delta": 0.6,
+      "n_draws": 3,
+      "n_handle": 512,
+      "rho_G_mean": 0.9687,
+      "rho_G_std": 0.0012,
+      "R_inf_mean": 0.0388,
+      "master_bound_mean": -1.9569,
+      "connected_all": true
+    },
+    {
+      "delta": 0.4,
+      "n_draws": 3,
+      "n_handle": 394,
+      "rho_G_mean": 0.9676,
+      "rho_G_std": 0.0031,
+      "R_inf_mean": 0.0406,
+      "master_bound_mean": -1.9689,
+      "connected_all": true
+    },
+    {
+      "delta": 0.25,
+      "n_draws": 3,
+      "n_handle": 263,
+      "rho_G_mean": 0.9747,
+      "rho_G_std": 0.0008,
+      "R_inf_mean": 0.0366,
+      "master_bound_mean": -1.9463,
+      "connected_all": true
+    },
+    {
+      "delta": 0.15,
+      "n_draws": 3,
+      "n_handle": 162,
+      "rho_G_mean": 0.9717,
+      "rho_G_std": 0.0103,
+      "R_inf_mean": 0.0738,
+      "master_bound_mean": -2.0,
+      "connected_all": true
+    },
+    {
+      "delta": 0.08,
+      "n_draws": 3,
+      "n_handle": 87,
+      "rho_G_mean": 0.968,
+      "rho_G_std": 0.0212,
+      "R_inf_mean": 0.242,
+      "master_bound_mean": -2.0,
+      "connected_all": true
+    }
+  ],
+  "findings": {
+    "lowest_rho_G_handle": 0.9676,
+    "counterexample_found": false,
+    "note": "thinner handle (smaller delta) = stronger geodesic/resistance decoupling; counterexample requires rho_G <= 0."
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "experiment": "green-rank rho_G on deformed flat tori",
+  "class_": "exploratory",
+  "method": "rho_S(d_M, -G_Lambda) via SM2.7 truncated-kernel limit; plane-wave sums",
+  "seed": 20260720,
+  "n_draws": 5,
+  "findings": {
+    "no_counterexample": true,
+    "rho_G_rises_to_1_under_thinning": true,
+    "master_inequality_holds_all_draws": true
+  },
+  "note": "Homogeneous family; supports Thm 'Master inequality', finds no counterexample; does NOT prove Green-rank positivity (open, see green-rank-positivity.tex).",
+  "rows": [
+    {
+      "aspect": 1.0,
+      "n_draws": 5,
+      "rho_G_mean": 0.9882,
+      "rho_G_std": 0.0003,
+      "R_inf_mean": 0.009,
+      "master_bound_mean": 0.008,
+      "master_inequality_holds_all_draws": true,
+      "lambda_convergence": {
+        "0.25": 0.984285079078501,
+        "0.5": 0.9882425742571004,
+        "1.0": 0.9879971849496006
+      }
+    },
+    {
+      "aspect": 1.5,
+      "n_draws": 5,
+      "rho_G_mean": 0.9874,
+      "rho_G_std": 0.0002,
+      "R_inf_mean": 0.0478,
+      "master_bound_mean": -0.7483,
+      "master_inequality_holds_all_draws": true,
+      "lambda_convergence": {
+        "0.25": 0.9861736333458786,
+        "0.5": 0.9871079977463758,
+        "1.0": 0.9874034953278029
+      }
+    },
+    {
+      "aspect": 2.0,
+      "n_draws": 5,
+      "rho_G_mean": 0.9969,
+      "rho_G_std": 0.0,
+      "R_inf_mean": 0.0633,
+      "master_bound_mean": -0.4078,
+      "master_inequality_holds_all_draws": true,
+      "lambda_convergence": {
+        "0.25": 0.9966925465805901,
+        "0.5": 0.9969024994647722,
+        "1.0": 0.9969434572461946
+      }
+    },
+    {
+      "aspect": 3.0,
+      "n_draws": 5,
+      "rho_G_mean": 0.9997,
+      "rho_G_std": 0.0,
+      "R_inf_mean": 0.075,
+      "master_bound_mean": 0.1206,
+      "master_inequality_holds_all_draws": true,
+      "lambda_convergence": {
+        "0.25": 0.9996260245589331,
+        "0.5": 0.9996716058716568,
+        "1.0": 0.999680083386331
+      }
+    },
+    {
+      "aspect": 5.0,
+      "n_draws": 5,
+      "rho_G_mean": 1.0,
+      "rho_G_std": 0.0,
+      "R_inf_mean": 0.0823,
+      "master_bound_mean": 0.5813,
+      "master_inequality_holds_all_draws": true,
+      "lambda_convergence": {
+        "0.25": 0.9999827582972459,
+        "0.5": 0.9999836407370392,
+        "1.0": 0.9999809610144667
+      }
+    },
+    {
+      "aspect": 8.0,
+      "n_draws": 5,
+      "rho_G_mean": 1.0,
+      "rho_G_std": 0.0,
+      "R_inf_mean": 0.0664,
+      "master_bound_mean": 0.8385,
+      "master_inequality_holds_all_draws": true,
+      "lambda_convergence": {
+        "0.25": 0.9999980357897061,
+        "0.5": 0.9999987607937596,
+        "1.0": 0.9999986610949299
+      }
+    }
+  ]
+}
