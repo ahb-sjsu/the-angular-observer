@@ -102,8 +102,8 @@ Angle-only low-mode Laplacian coarse-graining preserves graph geodesics
 | king-lattice | 2 | 0.82 | 0.01 |
 | swiss-roll embedding trajectory | 2 | 0.93 | 0.01 |
 | **emergent Wolfram-model manifold (R_3D)** | **2.07 ± 0.01** | **0.82 ± 0.01** | 0.01 |
-| causal set (Lorentzian) | 3.9 ✗ | ties MDS | 0.01 |
-| small-world (geometry destroyed) | 3.0 ✗ | 0.45 | 0.00 |
+| causal set (Lorentzian) | 2.9–10.7 ✗ | 0.57 | 0.01 |
+| small-world (geometry destroyed) | 3.6–4.3 ✗ | 0.45 | 0.00 |
 
 The control fails everywhere required; the metric degrades exactly where geometry
 is Lorentzian or destroyed. It is a *geometry detector*, not a magic wand.
@@ -116,7 +116,7 @@ flowchart TD
     R1 --> EM["emergent geometry<br/>(arity-2/3 rewriting)"]
     EM --> D2["clean 2D:<br/>borrowed + evolved rules"]
     R1 --> U["universality:<br/>lattice / swiss-roll / torus"]
-    D2 --> LAW["scaling law:<br/>rho ~ const - 0.157 x dim"]
+    D2 --> LAW["exploratory trend:<br/>rho ~ 1.09 - 0.157 x dim"]
     U --> LAW
     LAW --> T["Keep-the-Angle Theorem<br/>(von Luxburg degeneracy)"]
     R1 --> NEG["honest negatives:<br/>hyperbolic rejected / curvature null"]
@@ -137,9 +137,10 @@ flowchart TD
    degeneracy (effective resistance → 1/dᵢ + 1/dⱼ for d ≥ 2, so radius → 1/√dᵢ =
    degree noise; ρ(radius, degree) = 0.92–0.99). The angle deletes exactly that.
    Dimension-gated: clean at 3D, marginal at 2D, correctly absent at 1D.
-4. **A scaling law** (`library.py`). Across 20 independent emergent manifolds
-   (d ≈ 1–3.6), observer fidelity falls linearly with emergent dimension:
-   **angle-ρ ≈ const − 0.157·d, Spearman −0.881.**
+4. **An exploratory dimension trend** (`library.py`). Across 20 emergent manifolds
+   from five rule families (d ≈ 1–3.6), angular fidelity falls with emergent
+   dimension — **angle-ρ ≈ 1.09 − 0.157·d** — reported as a five-family exploratory
+   trend (rule-clustered), not an inferential law.
 5. **The honest boundary** (`curvature.py`). Emergent curvature is **not**
    dynamical beyond graph structure. A spectacular raw −0.98 curvature/activity
    correlation deflates to a hub tautology (partial correlation −0.14). This is
@@ -166,18 +167,19 @@ flowchart TD
   Thm 6/8, Cor 10); uniform-in-truncation angular bi-Lipschitzness for
   **heat-filtered** eigenmaps (Thm 12); and the plain-eigenmap rank collapse
   (Prop 14).
-- **Refuted (self-correction in v0.8):** the old strong form — "the angular
-  coordinate stays bi-Lipschitz to geodesic distance uniformly in mode-count"
-  at fixed scale — is **false** for the commute weighting: high modes raise
-  the local angular speed like √Λ (paper Prop 13; exact on S¹). The correct
-  uniform metric object is scale-dependent (above the spectral wavelength
-  Λ^(−1/2)), which remains open.
-- **Empirically strong conjecture (the surviving form):** the angular
-  coordinate stays **rank-faithful** to geodesic distance uniformly in
-  mode-count and N — flatness in m is rank stability under a fixed observer
-  budget, not an m-independent metric claim. Reduced at fixed m to explicit
-  chart hypotheses (H1)–(H3) plus a distance-ratio condition (paper §3.1).
-  Stated explicitly in `theorem.md`.
+- **Refuted (self-correction):** the old strong form — "the angular coordinate
+  stays bi-Lipschitz to geodesic distance uniformly in mode-count" at fixed scale —
+  is **false** for the commute weighting: high modes raise the local angular speed
+  like √Λ (exact on S¹), and the exact upper-Lipschitz constant diverges like
+  R (d ≥ 3) / R/√log R (d = 2). Two-sided *metric* uniformity is impossible; only
+  the scale-dependent form could survive.
+- **Rank form — now proved below d = 4** (previously the surviving conjecture): the
+  angular *ranking* stays faithful uniformly in the mode count. The **Green-kernel
+  rank-limit theorem** proves that for d ≤ 3 it converges to a fixed Green-kernel
+  ranking — exactly rank 1 on the circle and on two-point homogeneous spaces
+  (S², S³, ℝP², ℝP³). What remains conjectural is *Green-rank positivity* on general
+  manifolds; the exact obstruction sits at the critical dimension d = 4 (the
+  spectral-filter phase diagram).
 - **Negative results kept, not hidden:** the hyperbolic-reframe hypothesis was
   tested with controls and **rejected** (`hyperbolic.py`); the dynamical-curvature
   test is a clean null (`curvature.py`).
@@ -202,7 +204,7 @@ python -m pip install numpy scipy         # only dependencies
 python rung0_validate.py                  # estimators vs ground truth
 python rung1c_polar.py                    # the angle-vs-magnitude result
 python theorem_verify.py                  # angle-flat vs full-decays-with-N
-python library.py                         # the scaling law
+python library.py                         # the exploratory dimension trend
 ```
 
 ## Citation

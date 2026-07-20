@@ -186,6 +186,17 @@ commute form (pairs above the spectral wavelength Λ^(−1/2)).
 
 ## 4. What is proven vs. conjectured (honest ledger)
 
+> **Update (Paper I).** The rank-faithful form is no longer only conjectural. The
+> **Green-kernel rank-limit theorem** proves that for intrinsic dimension d ≤ 3 the
+> commute angular *ranking* converges uniformly in the mode count to a fixed
+> Green-kernel ranking — exactly rank 1 on the circle and on compact two-point
+> homogeneous spaces (S², S³, ℝP², ℝP³). Angular Preservation reduces to positivity
+> of a geometric *Green-rank coefficient*, with the exact obstruction at the
+> critical dimension d = 4 (spectral-filter phase diagram). The "CONJECTURE" row
+> below is thus **proved for d ≤ 3**; what remains open is Green-rank positivity on
+> general manifolds and the two-sided *metric* form (whose upper half is false for
+> the commute filter).
+
 | statement | status |
 |---|---|
 | Commute spectral identity (1), `‖Ψ_i−Ψ_j‖²=R(i,j)` | **proven** (textbook) |
