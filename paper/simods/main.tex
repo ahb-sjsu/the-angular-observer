@@ -1,37 +1,20 @@
-\documentclass[11pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
+\documentclass[review]{siamart220329}
+
+\usepackage{amssymb}
 \usepackage{booktabs}
-\usepackage{graphicx}
-\usepackage{caption}
 \usepackage{xcolor}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
-% ---- Revision marking -------------------------------------------------------
-% Revision marks ACCEPTED as of v0.8 (referee recommendation): ... is now
-% the identity and the {\color{teal}...} block wrappers are stripped. The full
-% marked history is in git (through commit 0f39ee5). Deletions remain noted in
-%   \newcommand{\rev}[1]{\textcolor{teal}{#1}}
 \newcommand{\rev}[1]{#1}
-% -----------------------------------------------------------------------------
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{conjecture}[theorem]{Conjecture}
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
+\newsiamthm{conjecture}{Conjecture}
+\newsiamremark{remark}{Remark}
 \graphicspath{{figures/}}
 
-\title{\textbf{Keep the Angle}\\[2pt]
-\large A Geometry-Preserving Basis in Spectral Embeddings}
-\author{Andrew H. Bond\\
-Department of Computer Engineering, San Jos\'e State University\\
-\texttt{andrew.bond@sjsu.edu} ~\textbar~ ORCID: 0009-0003-2599-6158}
-\date{Working draft --- v0.8}
+\title{Keep the Angle: A Geometry-Preserving Basis in Spectral Embeddings}
+\author{Andrew H. Bond\thanks{Department of Computer Engineering, San Jos\'e
+State University, San Jos\'e, CA 95192 USA (\email{andrew.bond@sjsu.edu}, ORCID
+0009-0003-2599-6158).}}
+\headers{Keep the Angle}{A.~H.~Bond}
 
 \begin{document}
 \maketitle
@@ -61,6 +44,16 @@ manifold samples, and hypergraph-rewriting graphs---and fails where geometry
 does; its fidelity shows an exploratory decreasing trend with dimension.
 Uniformity of the metric constants in the mode-count is the central open problem.
 \end{abstract}
+
+\begin{keywords}
+spectral embedding, commute-time (resistance) distance, row normalization,
+spectral clustering, geodesic distance, intrinsic dimension, Laplacian eigenmaps
+\end{keywords}
+
+\begin{AMS}
+05C50, 58J50, 62H30, 05C81, 68T09
+\end{AMS}
+
 
 \section{Introduction}
 Spectral embeddings---Laplacian eigenmaps \cite{belkin2003}, diffusion and

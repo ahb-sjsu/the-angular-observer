@@ -1,0 +1,149 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\begin{document}
+
+\hfill Andrew H. Bond\\
+\hfill Department of Computer Engineering\\
+\hfill San Jos\'e State University\\
+\hfill \texttt{andrew.bond@sjsu.edu} \textbullet\ ORCID 0009-0003-2599-6158
+
+\bigskip
+To the Editors, \emph{SIAM Journal on Mathematics of Data Science}
+
+\bigskip
+Dear Editors,
+
+Please consider the enclosed manuscript, ``Keep the Angle: A Geometry-Preserving
+Basis in Spectral Embeddings,'' for publication in \emph{SIMODS}.
+
+\textbf{Summary.} The commute-time (resistance) embedding built from the low
+eigenvectors of a graph Laplacian degenerates on large graphs (von~Luxburg--Radl--Hein).
+We show the geometry does not vanish but is carried by the \emph{angular}
+coordinate---the row-normalization of Ng--Jordan--Weiss spectral clustering,
+here given a metric-geometric rather than a cluster-separation reading. The
+contribution is organized as four claims: (1) an exact normalization identity
+locating the mechanism in \emph{tangential noncollapse}, and a deterministic
+angular-transfer theorem; (2) a conditional graph-to-continuum transfer, carried
+by the random-walk eigenvectors and the sup-norm eigenvector rates of
+Calder--Garc\'ia Trillos--Lewicka, together with an \emph{unconditional}
+bi-Lipschitz statement on the flat torus; (3) a filter dichotomy---uniform-in-truncation
+for the heat filter, scale-dependent for the commute filter, with an exact
+rank-collapse theorem for the plain filter on the circle; and (4) a controlled
+empirical study across five substrate families. We believe the topic---when and
+why row-normalized spectral embeddings recover intrinsic geodesic order---is
+squarely within the journal's scope.
+
+\textbf{Originality and exclusivity.} This manuscript is original, has not been
+published, and is not under review at any other journal or conference. We intend
+to post it as a preprint, consistent with SIAM policy.
+
+\textbf{Related work by the author (overlap disclosure).} In the interest of full
+transparency we note two of the author's own companion artifacts that the
+manuscript cites for context, and which are \emph{not} overlapping submissions:
+\begin{itemize}[nosep,leftmargin=1.4em]
+  \item \emph{Observation Theory: geometry, distortion, and reliability as
+  properties of observation} (technical report / preprint, Zenodo
+  \texttt{10.5281/zenodo.21423315}). This is a broader, consumer-relative
+  framework; the present paper uses only its ``tangential-noncollapse (A2)''
+  vocabulary as an organizing label and shares no theorem with it.
+  \item \emph{TurboQuant-Pro} (open-source software and accompanying technical
+  note). Cited once, as a concrete boundary example (per-vector angular
+  quantization of attention \emph{keys} fails because scale is signal there).
+  It is a software project, not a journal submission.
+\end{itemize}
+Neither is submitted or accepted elsewhere; copies can be provided to the editors
+and referees on request.
+
+\textbf{Revision note.} The manuscript underwent detailed pre-submission review;
+the principal changes are summarized in the point-by-point response below, and the
+two new results (the $S^1$ rank-collapse theorem and the random-walk transfer
+repair) were subjected to an independent cold re-derivation before submission.
+
+Thank you for your consideration.
+
+\bigskip
+Sincerely,\\
+Andrew H. Bond
+
+\newpage
+\begin{center}\large\textbf{Response to review}\end{center}
+
+We are grateful for the careful reading. Below we address each major point; the
+verdict was \emph{major revision}, and every item is now resolved. Section and
+label references are to the revised manuscript.
+
+\textbf{1. Omitted prior use of the normalization.} We now cite Sharma--Horaud--Mateus
+(2012), who apply unit-hypersphere normalization directly to the commute-time
+embedding for shape registration, and we reframe the novelty accordingly: the
+normalization is not new; the metric-geometric account of \emph{when its angular
+distances recover intrinsic geodesic order} is our contribution (\S1).
+
+\textbf{2. Proposition 14 did not prove rank collapse.} Correct---distance
+concentration does not imply rank collapse. We split the result into an honest
+general-manifold \emph{concentration} proposition and a new \emph{exact} theorem
+(Theorem, \texttt{thm:s1collapse}) proving that on $S^1$ both Spearman and Kendall
+correlation with geodesic distance vanish, via the Dirichlet kernel and two-scale
+equidistribution. This is materially stronger than weakening the claim.
+
+\textbf{3. Theorem 8 normalization gap ($L_{\mathrm{sym}}$ vs.\ $L_{\mathrm{rw}}$).}
+Adopted the suggested repair. The angular map is invariant to the exact per-node
+factor $\sqrt{d_i}$ ($\Psi_i^{\mathrm{sym}}=\sqrt{d_i}\,\Psi_i^{\mathrm{rw}}$), so
+we carry the sup-norm transfer on the random-walk eigenvectors---for which the
+cited rates are stated---and read off the algorithm's $L_{\mathrm{sym}}$ angle by
+exact cancellation. No degree-concentration hypothesis is needed; the theorem now
+holds under non-uniform sampling. Step~3 is written as an external lemma
+(\texttt{lem:transfer}) composing named rate theorems (Calder--Garc\'ia Trillos
+for eigenvalue/gap stability; Calder--Garc\'ia Trillos--Lewicka for the $L^\infty$
+and $C^{0,1}$ eigenvector rates), making the theorem unconditional in $m$ at each
+fixed $m$; the $m$-dependence of those constants is stated explicitly as the
+bridge to the open problem.
+
+\textbf{4. The central conjecture was quantified too broadly.} Conjecture is now
+scoped to an admissible mode schedule (multiplet-closed $m$ at a spectral gap,
+$m\ge m_0(M)$, the spectral-window condition for growing $m$, pairs above the
+resolution scale), with ``uniform'' meaning a bound over that family. We name the
+hypothesis \texttt{(H1)-uniform}, prove its two endpoints (unconditional on the
+torus; a continuum theorem for the heat filter, with the commute filter shown
+\emph{not} m-uniform at fixed scale), and state the single sharp open problem---a
+gap-uniform lower bound on the smallest singular value of the truncated-eigenmap
+Jacobian (\texttt{conj:sigmamin})---whose resolution closes the metric form.
+
+\textbf{5. Sliding between two embeddings; $d\ge3$ vs $d\ge2$.} We now state the
+radial claim at three fixed levels and never mix them: proved for the full
+unnormalized embedding at $d\ge3$; empirical for the truncated normalized radius
+the algorithm computes ($\rho\approx0.79$--$0.87$ vs.\ $0.98$ for the full
+radius); borderline at $d=2$. A ``Status of the radial claim'' block records that
+the gap between the proved and empirical levels is exactly the truncation, which
+no theorem here bridges.
+
+\textbf{6. Proposition 13 remainder.} We supply the required differentiated
+pointwise Weyl law as a displayed lemma (\texttt{lem:dweyl}), citing H\"ormander
+for the on-diagonal projector and Canzani--Hanin for the mixed-derivative
+remainder (both already in the bibliography), and add a cutoff-insensitivity
+remark noting the $S^1$ case needs no Weyl input.
+
+\textbf{7. The ``scaling law'' is not a law.} Retitled to ``an exploratory
+dimension--fidelity trend.'' The five rule-level summaries are now the primary
+table; the twenty-point fit is presented as a descriptive trend line with its
+rule-clustered CI, and Proposition (rank) is repositioned as \emph{consistent
+with, and not deriving,} the trend.
+
+\textbf{8. Methods too compressed; graph vs.\ manifold; replication.} Added a
+per-section protocol table; we report both the measured dimension $d_G$ and the
+ground-truth $d_M$ where it exists, noting the finite-sample estimator bias shifts
+the axis but not the ordering; and the headline uncertainty is reported over
+independent graph draws (pair-resampling intervals are labeled as optimistic
+floors).
+
+\textbf{Additional comments.} Observer-theory and Wolfram framing are removed from
+the title and abstract and confined to a single discussion paragraph; the abstract
+is rewritten to $\le250$ words with references spelled out; terminology is
+softened from ``basis'' to ``representation'' where literally apt; the figure
+caption/text discrepancies are reconciled and min--max ranges are labeled as
+ranges rather than confidence intervals.
+
+\end{document}
