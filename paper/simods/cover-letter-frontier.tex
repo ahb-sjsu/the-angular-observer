@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\begin{document}
+
+\hfill Andrew H. Bond\\
+\hfill Department of Computer Engineering\\
+\hfill San Jos\'e State University\\
+\hfill \texttt{andrew.bond@sjsu.edu} \textbullet\ ORCID 0009-0003-2599-6158
+
+\bigskip
+To the Editors, \emph{SIAM Journal on Mathematics of Data Science}
+
+\bigskip
+Dear Editors,
+
+Please consider the enclosed manuscript, ``Toward the Angular-Preservation Theorem:
+Reductions, a Non-Radiality Calculus, and the Green-Rank Frontier,'' as a companion to my
+submission ``Keep the Angle: A Geometry-Preserving Basis in Spectral Embeddings'' (Paper~I).
+I am writing in the first instance to give the editors the \emph{context} in which this
+follow-up sits relative to that paper, and to make its relationship to Paper~I fully
+transparent.
+
+\textbf{The relationship to Paper~I.} Paper~I proves that the geometry a large graph
+Laplacian appears to lose to the commute-time collapse survives in the \emph{angular}
+coordinate of the spectral embedding, and it isolates one central open statement---the rank
+form of \emph{Angular Preservation}---which it reduces, for intrinsic dimension $d\le3$, to
+two ingredients: a graph-to-continuum rank transfer and \emph{Green-rank positivity}
+($\rho_G>0$, a positivity property of the Green kernel's rank correlation with distance).
+Paper~I states these as a conjecture and a conjecture, respectively, and explicitly does not
+attempt them. The present manuscript takes up exactly those two open items and moves them
+toward theorems. It therefore \emph{depends on} Paper~I for its framework, definitions, and
+the Green-kernel rank-limit theorem it builds upon, and it \emph{shares no theorem} with
+Paper~I: where Paper~I conjectures, this paper proves, deletes hypotheses, or reduces to an
+explicit geometric quantity. The two are a paper and its theoretical sequel, not overlapping
+submissions.
+
+\textbf{What the follow-up establishes.} Briefly: (i) the auxiliary hypotheses (H3) and
+atomlessness of Paper~I's conditional results are deleted outright; (ii) the transfer's
+anti-concentration hypothesis, false in the bounded-density form stated informally in the
+program's notes, is proved in the operative \emph{modulus} form for every real-analytic
+metric; (iii) a non-radiality calculus reduces Green-rank positivity to a single
+\emph{scale-invariant} index of the Green kernel; (iv) that index is bounded geometrically---
+it is the within-shell variance of the heat kernel, vanishing on two-point homogeneous
+spaces, finite exactly for $d\le3$, with a quantitative $\eta^{2/3}$ perturbative openness
+rate---leaving one named curvature-anisotropy amplitude as the sole non-explicit constant;
+and (v) the whole chain is carried past the critical dimension four by a fractional filter,
+with the exact symmetric-space anchor proved in every dimension. Green-rank positivity is
+thereby established on an increasing hierarchy of explicit classes, and reduced in general to
+one geometric coefficient; a numerical counterexample hunt across four geometry families (in
+the public repository) finds none.
+
+\textbf{On timing and how the editors might use this.} I recognize that a follow-up is
+ordinarily considered after the primary paper; I am submitting the context now so that the
+relationship is on the record and the editors may decide how to proceed---whether to hold
+this manuscript pending Paper~I's disposition, to review it in parallel, or to treat it as a
+standalone contribution to the Green-kernel/spectral-embedding literature (it is written to be
+read alongside Paper~I but is self-contained at the level of statements). I defer entirely to
+the editors' preference.
+
+\textbf{Originality and exclusivity.} This manuscript is original, has not been published, and
+is not under review at any other journal or conference. Its only overlap with prior work is
+its dependence on Paper~I, disclosed above; it shares no theorem with any other submission. I
+intend to post it as a preprint, consistent with SIAM policy.
+
+\textbf{Preparation and status, stated candidly.} The manuscript was prepared under a
+registration-and-independent-verification discipline: every theorem carries a written proof
+and a fresh-context adversarial re-derivation, and that process caught and corrected several
+errors during preparation (a parametrix integrability condition, an optimization step, a
+curvature coefficient, among others). I want to be forthright that this regime is not a
+substitute for refereeing or machine-checked proof, and that the results are largely
+\emph{explicit-class} statements reducing the conjecture rather than a full resolution of it;
+one geometric constant, and the heat-kernel bound of Part~IV in particular, would benefit from
+an expert reading. I have tried throughout to make claims only at the confidence their
+verification supports, and to carry the open problems and the honest limits into the text
+rather than around them.
+
+Thank you for your consideration, and for allowing me to place this work in its proper
+relation to the paper it follows.
+
+\bigskip
+Sincerely,\\
+Andrew H. Bond
+
+\end{document}

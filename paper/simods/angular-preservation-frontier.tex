@@ -1,0 +1,200 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[margin=1.1in]{geometry}
+\allowdisplaybreaks
+% Theorem environments (shared counter across the whole paper)
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+% Macro union across the assembled notes
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Hess}{\operatorname{Hess}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\dM}{d_M}
+\newcommand{\rhoG}{\rho_G}
+\newcommand{\Rem}{R}
+\newcommand{\NL}{N_\Lambda}
+\newcommand{\E}{\mathbb E}
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\Tr}{Tr}
+
+\title{Toward the Angular-Preservation Theorem:\\
+Reductions, a Non-Radiality Calculus, and the Green-Rank Frontier}
+\author{Andrew H. Bond\\
+\small Department of Computer Engineering, San Jos\'e State University\\
+\small \texttt{andrew.bond@sjsu.edu} \ \textbullet\ \ ORCID 0009-0003-2599-6158}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is a companion to ``Keep the Angle: A Geometry-Preserving Basis in Spectral
+Embeddings'' (Paper~I). Paper~I reduces the rank form of \emph{Angular Preservation}---the
+conjecture that row-normalized spectral embeddings keep pairwise angular distances
+rank-faithful to geodesic distance---for intrinsic dimension $d\le3$, to two ingredients: a
+graph-to-continuum \emph{rank transfer} and \emph{Green-rank positivity}
+$\rho_G(M)=\rho_S(d_M(X,Y),-G_M(X,Y))>0$, where $G_M$ is the zero-mean Green kernel. Here we
+move both toward theorems. We (i) delete the auxiliary hypotheses (H3) and atomlessness from
+Paper~I's conditional results; (ii) prove that the transfer's anti-concentration hypothesis,
+false in its bounded-density form, holds in the operative \emph{modulus} form for every
+real-analytic metric; (iii) develop a \emph{non-radiality calculus} that reduces Green-rank
+positivity to a single scale-invariant index of the Green kernel, via a master inequality
+$\rho_G\ge1-12\,\phi\lVert R\rVert_\infty$ and its distributional refinement
+$\rho_G\ge1-18(\phi^2V)^{1/3}$; (iv) bound that index geometrically, identifying it with the
+\emph{within-shell variance of the heat kernel}---which vanishes on two-point homogeneous
+spaces, is finite exactly for $d\le3$, and yields a quantitative $\eta^{2/3}$ perturbative
+openness rate---leaving one named curvature-anisotropy amplitude as the sole non-explicit
+constant; and (v) carry the whole chain past the critical dimension via a fractional filter,
+proving the exact symmetric-space anchor ($\rho_G=1$) in \emph{every} dimension by heat-kernel
+subordination. A numerical counterexample hunt across four geometry families (the public
+repository) finds none. Green-rank positivity is thereby proved on an increasing hierarchy of
+explicit classes and reduced, in general, to one geometric quantity.
+
+\smallskip
+\noindent\emph{Verification note.} The results were developed and checked under a
+registration-and-independent-verification discipline: every theorem carries a written proof
+and a fresh-context adversarial re-derivation, and that process caught and corrected several
+errors during preparation. This is not a substitute for human refereeing or machine-checked
+proof, and the heat-kernel bound of \S\ref{sec:l2}, in particular, would benefit from an
+expert reading; statements are made at the confidence their verification supports.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+Paper~I (``Keep the Angle'') shows that the geometry a large graph Laplacian appears to lose
+to the commute-time collapse survives in the \emph{angular} coordinate of the spectral
+embedding, and conjectures \emph{Angular Preservation}: row-normalization keeps pairwise
+angular distances rank-faithful to geodesic distance, uniformly in the mode count. For
+$d\le3$ the paper reduces the rank form to a chain,
+\[
+\text{(graph angular ranking)}\ \xRightarrow{\ \text{rank transfer}\ }\
+\text{(continuum angular ranking)}\ \xRightarrow{\ \text{Green-kernel rank limit}\ }\
+\rho_G(M)>0,
+\]
+the last step being the Green-kernel rank-limit theorem, which sends the truncated commute
+angular ranking to the ranking of the zero-mean Green kernel $G_M$, and leaves open two
+things: the graph-level \emph{rank transfer} (governed by a calibration error and an
+anti-concentration hypothesis) and \emph{Green-rank positivity},
+$\rho_G(M):=\rho_S\bigl(d_M(X,Y),-G_M(X,Y)\bigr)>0$ for $(X,Y)$ i.i.d.\ from the volume.
+
+This companion collects and extends the reductions of both. Its contributions, by part:
+
+\begin{itemize}
+\item \textbf{Part~\ref{sec:reductions} (reductions and the transfer hypothesis).} We show
+(H3), the injectivity hypothesis of Paper~I's conditional theorem, is not independent---it
+follows from (H1)--(H2) under an explicit pinching condition with a quantitative angular gap;
+and that the atomlessness assumptions of the rank-limit results are automatic under a bounded
+pair density. We then prove the graph-level \emph{rank transfer} needs neither bi-Lipschitz
+geometry nor a resolution cutoff---only calibration plus anti-concentration---and rederive
+the sharpened growing-window threshold $E_n\sqrt{A_m}\to0$ by an independent route.
+
+\item \textbf{Part~\ref{sec:ac} (the anti-concentration hypothesis).} The transfer's
+anti-concentration hypothesis (AC), stated as a bounded density, is \emph{false}---a
+nondegenerate saddle forces a logarithmic (van Hove) divergence, guaranteed on any closed
+surface of nonpositive Euler characteristic. We isolate the \emph{modulus} form (AC$'$) the
+transfer proof actually consumes and prove it for every real-analytic metric, via a uniform
+\L ojasiewicz sublevel estimate made uniform over the analytic family by o-minimality.
+
+\item \textbf{Part~\ref{sec:positivity} (a non-radiality calculus).} We reduce Green-rank
+positivity to a single quantity. A \emph{master inequality} $\rho_G\ge1-12\,\phi_\Psi
+\lVert R\rVert_\infty$ controls the rank deficit by the sup-norm non-radiality of $-G$ against
+its best monotone-radial profile; a \emph{distributional refinement} $\rho_G\ge1-18
+(\phi_\Psi^2 V)^{1/3}$ replaces the sup by the $L^2$ non-radiality $V$, with the index
+$\phi_\Psi^2 V$ dimensionless (scale-invariant)---as a bound on a rank correlation must be.
+Two-point homogeneous spaces are the exact ($R\equiv0$) anchor.
+
+\item \textbf{Part~\ref{sec:l2} (the geometric bound).} We identify the $L^2$ non-radiality
+with the \emph{within-distance-shell variance of the Green kernel}, and via the heat
+representation with the integrated shell-variance of the heat kernel: it vanishes on
+two-point homogeneous spaces, is finite \emph{exactly} for $d\le3$ (the same critical
+dimension four, now as an integrability threshold), has an explicit spectral-gap tail, and is
+$O(\lVert g-g_0\rVert_{C^2}^2)$ near any symmetric metric---so $\rho_G\ge1-C\eta^{2/3}\to1$, a
+\emph{quantitative} form of Paper~I's qualitative openness. One named curvature-anisotropy
+amplitude remains the sole non-explicit constant.
+
+\item \textbf{Part~\ref{sec:fractional} (past the critical dimension).} For $d\ge4$ the
+commute Green kernel leaves $L^2$; a fractional filter $\mu_k^{-s/2}$, $s>d/4$, restores the
+whole chain, and heat-kernel subordination proves the exact anchor---fractional Green-rank
+$=1$ on all rank-one symmetric spaces---in \emph{every} dimension.
+\end{itemize}
+
+The upshot (\S\ref{sec:frontier}): Green-rank positivity is proved exactly on two-point
+homogeneous spaces (all dimensions), quantitatively on their $C^2$-neighborhoods, and on the
+explicit near-radial / $L^2$-near-radial classes; in general it is reduced to positivity of a
+single geometric coefficient, with a numerical counterexample hunt (four families) finding
+none. Notation follows Paper~I and its supplement throughout; the phrase ``companion note''
+in the assembled parts below refers to the other parts of this paper.
+
+\section{Reductions and the transfer hypothesis}\label{sec:reductions}
+\input{_sec_reductions}
+
+\section{The anti-concentration hypothesis (AC$'$)}\label{sec:ac}
+\input{_sec_ac}
+
+\section{A non-radiality calculus for Green-rank positivity}\label{sec:positivity}
+\input{_sec_master}
+
+\section{A geometric bound: the heat-kernel shell-variance}\label{sec:l2}
+\input{_sec_l2}
+
+\section{Past the critical dimension: the fractional filter}\label{sec:fractional}
+\input{_sec_fractional}
+
+\section{Standing facts, the frontier, and open problems}\label{sec:frontier}
+
+\noindent\textbf{Standing facts.} The proofs draw on the following standard tools, cited at
+point of use: the level-set/coarea lemmas and \L ojasiewicz sublevel estimates
+(Evans--Gariepy; van den Dries, o-minimality; Comte--Lion--Rolin); cut-locus and heat-kernel
+regularity (Sakai; Minakshisundaram--Pleijel; the Green-function parametrix, Aubin); norm
+resolvent convergence of uniformly comparable forms (Kato); the uniform pointwise Weyl law
+(H\"ormander); the spectral-gap lower bound under a Ricci lower bound and diameter
+(Li--Yau; Zhong--Yang); Daniels' inequality and U-statistic consistency for grade
+correlations (Daniels~1950; Hoeffding~1948); and the Duhamel heat-kernel perturbation
+estimate. None is load-bearing beyond its stated role.
+
+\medskip
+\noindent\textbf{What is now reduced to what.} For $d\le3$, Angular Preservation (rank form)
+is implied by: (i) the rank transfer, which holds under calibration $E_n\to0$
+(resp.\ $E_n\sqrt{A_m}\to0$ at a growing cutoff) and (AC$'$)---the latter proved for
+real-analytic metrics (Part~\ref{sec:ac}); and (ii) Green-rank positivity, reduced to a
+single scale-invariant non-radiality index (Part~\ref{sec:positivity}), itself the
+heat-kernel shell-variance, which vanishes on two-point homogeneous spaces and is controlled
+by an explicit spectral-gap tail and one curvature-anisotropy amplitude
+(Part~\ref{sec:l2}). Hypotheses (H3) and atomlessness are deleted outright
+(Part~\ref{sec:reductions}); the critical dimension is crossed by the fractional filter
+(Part~\ref{sec:fractional}).
+
+\medskip
+\noindent\textbf{A numerical counterexample hunt.} Green-rank positivity may be false on
+extreme geometries; the master inequality gives any counterexample the exact target
+$\rho_G\le0$. A registered numerical hunt (public repository,
+\texttt{experiments/green-rank}) computes $\rho_G$ across four geometry families---deformed
+flat tori, thin-neck surfaces of revolution, Berger spheres, and topological handles---each
+with a control validating the discrete pipeline. None yields a counterexample: $\rho_G$
+never drops below $\approx0.79$, and the two candidates the theory flags (thin necks and
+Berger spheres) both clear. The homogeneous families rise to $\rho_G=1$; inhomogeneity lowers
+$\rho_G$ but plateaus, consistent with the shell-variance staying bounded. This is
+accumulating evidence, not proof.
+
+\medskip
+\noindent\textbf{Open, in order of expected difficulty.} (a) Prove (AC$'$) at fixed cutoff
+for generic \emph{smooth} (non-analytic) metrics---a positive-measure level set is the only
+obstruction. (b) Make the curvature-anisotropy amplitude of Part~\ref{sec:l2} explicit in
+$(K,D,i_0,\sup\lVert\nabla\Ric\rVert)$, promoting the leading-order estimate to a bound
+uniform in the head time-interval; this converts the named-$\mathcal A$ class into a closed
+curvature/diameter theorem. (c) Green-rank positivity beyond the perturbative and near-radial
+regimes---whether the plateau observed numerically reflects a universal lower bound
+$\rho_G\ge c>0$ for surfaces, a statement strictly stronger than positivity. (d) The general
+$d\ge4$ positivity for the fractional filter---the same question one level up, with the exact
+anchor already in hand.
+
+\end{document}
