@@ -251,6 +251,90 @@ $4\phi_0\lVert\Rem_0\rVert_\infty$, and the first inequality of Theorem~\ref{thm
 well-spread pairwise-distance spectrum tolerate proportionally larger non-radiality.
 \end{remark}
 
+\section{A distributional refinement: the $L^2$ non-radiality bound}
+
+The master inequality controls $\rhoG$ through $\lVert\Rem\rVert_\infty$, the \emph{sup}
+non-radiality. This is loose when $-G$ deviates from radial on only a small fraction of
+pairs: a short thin handle joining two distant regions makes $\lVert\Rem\rVert_\infty$ large
+(the cross-handle pairs reverse) yet moves $\rhoG$ negligibly, because those pairs are rare.
+The refinement below replaces the sup by the \emph{$L^2$} non-radiality, which is
+distribution-aware and, as it happens, scale-invariant---matching the fact that $\rhoG$ is a
+rank correlation.
+
+\begin{definition}
+For a monotone radial profile $\Psi$ with remainder $\Rem=-G-\Psi\circ\dM$, the \emph{$L^2$
+non-radiality} is $V_\Psi:=\mathbb E[\Rem(X,Y)^2]$ and the \emph{non-radiality index} is
+$\iota_\Psi:=\phi_\Psi^2\,V_\Psi$, with $\phi_\Psi$ the density bound of $\Psi(W)$,
+$W=\dM(X,Y)$. The index is dimensionless: $\phi_\Psi$ has units $[\Psi]^{-1}$ and $V_\Psi$
+units $[\Psi]^2$, so $\iota_\Psi$ is invariant under scaling the metric.
+\end{definition}
+
+\begin{theorem}[Distributional master inequality]\label{thm:dist}
+For every monotone radial profile $\Psi$ with $\phi_\Psi<\infty$ and $V_\Psi<\infty$,
+\[
+\rhoG(M)\ \ge\ 1-18\,\bigl(\phi_\Psi^2\,V_\Psi\bigr)^{1/3}\ =\ 1-18\,\iota_\Psi^{1/3}.
+\]
+Hence $\rhoG(M)>0$ whenever $\iota_\Psi<18^{-3}$; and $V_\Psi=0$ (radial $-G$) gives
+$\rhoG=1$.
+\end{theorem}
+
+\begin{proof}
+As in Theorem~\ref{thm:master}, $\rhoG\ge1-3p$ with $p$ the discordance probability, and a
+discordant pair-of-pairs with $d_P<d_Q$ forces
+$\Psi(d_Q)-\Psi(d_P)<\Rem_P-\Rem_Q\le\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert$; by symmetry
+$p\le\mathbb P\bigl(\lvert\Psi(d_P)-\Psi(d_Q)\rvert<\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\bigr)$.
+Fix $\tau>0$. Since
+$\{\lvert\Psi(d_P)-\Psi(d_Q)\rvert<\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\}
+\subseteq\{\lvert\Psi(d_P)-\Psi(d_Q)\rvert<\tau\}\cup\{\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\ge\tau\}$,
+\[
+p\ \le\ \mu_\Psi(\tau)+\mathbb P\bigl(\lvert\Rem_P\rvert+\lvert\Rem_Q\rvert\ge\tau\bigr)
+\ \le\ 2\phi_\Psi\tau+2\,\mathbb P\bigl(\lvert\Rem\rvert\ge\tfrac\tau2\bigr),
+\]
+using $\mu_\Psi(\tau)\le2\phi_\Psi\tau$ (Theorem~\ref{thm:master}) and a union bound with
+$\Rem_P,\Rem_Q$ i.i.d. Chebyshev gives
+$\mathbb P(\lvert\Rem\rvert\ge\tau/2)\le4V_\Psi/\tau^2$, so
+$p\le2\phi_\Psi\tau+8V_\Psi/\tau^2$ and $\rhoG\ge1-6\phi_\Psi\tau-24V_\Psi/\tau^2$.
+Minimizing over $\tau$ at $\tau_\star=2(V_\Psi/\phi_\Psi)^{1/3}$ gives
+$6\phi_\Psi\tau_\star+24V_\Psi/\tau_\star^2=18(\phi_\Psi^2V_\Psi)^{1/3}$.
+\end{proof}
+
+\begin{remark}[Why it beats the sup bound]
+Always $V_\Psi\le\lVert\Rem\rVert_\infty^2$; the two bounds are complementary---take whichever
+is larger. Because of the cube-root exponent, the sup-norm master bound $1-12\phi_\Psi
+\lVert\Rem\rVert_\infty$ is the better one in the \emph{uniformly small} regime
+($\phi_\Psi\lVert\Rem\rVert_\infty\ll1$), while Theorem~\ref{thm:dist} is \emph{strictly}
+better exactly when the non-radiality is \emph{concentrated}, $V_\Psi\ll\lVert\Rem\rVert_\infty^2$.
+If $-G$ is non-radial by an amount $\asymp1$ on a fraction $\varepsilon$ of pairs and
+$\approx0$ elsewhere, then $\lVert\Rem\rVert_\infty\asymp1$ (the sup bound is vacuous) while
+$V_\Psi\asymp\varepsilon$, so $\iota_\Psi^{1/3}\asymp\varepsilon^{1/3}\to0$: the $L^2$ bound
+stays sharp. This is exactly the thin-handle regime of the numerical hunt
+(\texttt{experiments/green-rank}): the handle spikes $\lVert\Rem\rVert_\infty$ but leaves
+$V_\Psi$ tiny, and $\rhoG$ stays near $1$---whereas a macroscopic bottleneck (a dumbbell
+neck) raises $V_\Psi$ over an $\Omega(1)$ fraction of pairs and genuinely lowers $\rhoG$.
+The $L^2$ index is the quantity the experiments track.
+\end{remark}
+
+\begin{remark}[The constant, and the honest numerical bound]
+The factor $18$ comes from Chebyshev and is not sharp; controlling
+$\mathbb P(\lvert\Rem\rvert\ge t)$ by a higher moment or by the actual tail of $\Rem$
+improves it, and the pre-optimization form $\rhoG\ge1-6\phi_\Psi\tau-24V_\Psi/\tau^2$ (or
+the master $\rhoG\ge1-3\mu_\Psi(2\lVert\Rem\rVert_\infty)$) is the one to evaluate on a
+sample. The value of Theorem~\ref{thm:dist} is the \emph{quantity}: a scale-invariant,
+distribution-aware non-radiality index that a sup-norm cannot express.
+\end{remark}
+
+\begin{remark}[Toward a geometric class]
+Both factors are expected to admit geometric bounds: $\phi_\Psi\le\Phi(K,D,i_0)$ from the bounded density
+of the pairwise-distance law under $\Ric\ge-(d-1)K$, $\diam\le D$, $\mathrm{inj}\ge i_0$
+(volume comparison), and $V_\Psi\le V(K,D,i_0,\mu_1)$ from the $L^2$ non-radiality of the
+Green kernel (its deviation from the best radial profile, controlled by heat-kernel
+anisotropy under the same bounds). Hence $\rhoG\ge c(K,D,i_0)>0$ on the class
+$\{\iota_\Psi<18^{-3}\}$---a strictly larger class than the sup-norm near-radial one of
+Theorem~\ref{thm:nearradial}, and the one the plateau in the numerical hunt (no family below
+$\rhoG\approx0.79$) suggests is broad. Making $V(K,D,i_0,\mu_1)$ explicit is the quantitative
+frontier item (a).
+\end{remark}
+
 \section{Standing assumptions and the frontier}\label{sec:frontier}
 
 \noindent\textbf{Imported facts.} (1) Green-function parametrix on a closed manifold:
