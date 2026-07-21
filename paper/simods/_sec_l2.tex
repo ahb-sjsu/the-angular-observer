@@ -206,45 +206,58 @@ applied to $\Psi^\star$, which is a monotone profile with $\phi_{\Psi^\star}<\in
 under \textup{(A$^\star$)}.
 \end{proof}
 
-\begin{corollary}[Perturbative $\eta^{2/3}$ rate]\label{cor:pert}
-Let $g_0$ be a two-point homogeneous metric ($\vol=1$) and $g$ a metric with
-$\lVert g-g_0\rVert_{C^2}\le\eta$ small. Then $V_{\min}(g)\le C(g_0)\,\eta^2$, with $C(g_0)$
-the standard parabolic-perturbation constant of $g_0$, and hence
-$\rhoG(g)\ge1-18\,\bigl(\phi_0^2C(g_0)\bigr)^{1/3}\eta^{2/3}\to1$ as $\eta\to0$, quantifying
-the perturbative openness theorem in the $L^2$ index.
+\begin{corollary}[Perturbative $\eta^{2/3}$ rate, $d\le3$]\label{cor:pert}
+Let $g_0$ be a two-point homogeneous metric of dimension $d\le3$ ($\vol=1$) and $g$ a
+volume-normalized metric with $\eta:=\lVert g-g_0\rVert_{C^2}\le\eta_0$ small. Then
+$V_{\min}(g)\le C(g_0)\,\eta^2$, and---provided the admissibility constant $\phi_{\Psi^\star_g}$
+of (A$^\star$) stays uniformly bounded near $g_0$---%
+$\rhoG(g)\ge1-C'(g_0)\,\eta^{2/3}\to1$ as $\eta\to0$, quantifying the perturbative openness
+theorem in the $L^2$ index.
 \end{corollary}
 
 \begin{proof}
 By Remark~\ref{rem:astar}, (A$^\star$) holds for $g$ near $g_0$, so $V_{\min}(g)$ is
 admissible. Since $g_0$ is two-point homogeneous, $\delta_t^{g_0}\equiv0$, so
-$\mathcal N^g(t)=\lVert\delta_t^g\rVert_2=\lVert(I-P^g_{\mathrm{rad}})p_t^g
--(I-P^{g_0}_{\mathrm{rad}})p_t^{g_0}\rVert_2$; adding and subtracting,
-\[
-\mathcal N^g(t)\ \le\ \underbrace{\lVert p_t^g-p_t^{g_0}\rVert_2}_{\text{(I)}}
-\ +\ \underbrace{\lVert(P^g_{\mathrm{rad}}-P^{g_0}_{\mathrm{rad}})p_t^{g_0}\rVert_2}_{\text{(II)}}.
-\]
-For (II): $\lVert d^g-d^{g_0}\rVert_\infty=O(\eta)$ (the metric is $C^0$-$O(\eta)$-close), so
-the shell-centering conditional expectations differ by $O(\eta)$ applied to the radial-regular
-$p_t^{g_0}$, giving (II)$\le C\eta\,(Z^{g_0}(2t)-1)^{1/2}$. For (I): the parabolic (Duhamel)
-perturbation estimate---$p_t^g-p_t^{g_0}=-\int_0^t p^g_{t-s}(\Delta_g-\Delta_{g_0})p^{g_0}_s\,ds$
-with $\Delta_g-\Delta_{g_0}$ of order two and coefficients $O(\lVert g-g_0\rVert_{C^1})$---gives
-(I)$\le C\eta\,(Z^{g_0}(c t)-1)^{1/2}$ (standard parabolic perturbation; \S\ref{sec:frontier}).
-Both envelopes are $\asymp t^{-d/4}$
-as $t\to0$ (integrable for $d\le3$) and decay like $e^{-c\mu_1(g_0)t}$ as $t\to\infty$; hence
-$V_{\min}(g)^{1/2}=\int_0^\infty\mathcal N^g(t)\,dt\le C(g_0)^{1/2}\eta$. This uses only the
-leading Duhamel bound---not smoothness of the higher heat coefficients $u_j$, which
-$\lVert g-g_0\rVert_{C^2}$ does not control.
+$\mathcal N^g(t)=\lVert\delta_t^g\rVert_2\le
+\underbrace{\lVert p_t^g-p_t^{g_0}\rVert_2}_{\text{(I)}}+
+\underbrace{\lVert(I-P^g_{\mathrm{rad}})p_t^{g_0}\rVert_2}_{\text{(II)}}$.
+
+\emph{(I) parabolic perturbation.} Conjugate both heat semigroups to the fixed space
+$L^2(M,\vol_{g_0})$; the resulting nonnegative self-adjoint operators $A_g,A_0$ obey
+$\lVert A_g-A_0\rVert_{H^1\to H^{-1}}\le C\eta$. For $0<t\le1$ split Duhamel at $t/2$, placing
+the Hilbert--Schmidt smoothing on the \emph{long} factor on each half:
+$\lVert e^{-(t-s)A_g}(A_g-A_0)e^{-sA_0}\rVert_{\mathfrak S_2}\le C\eta\,(t-s)^{-\frac12-\frac d4}s^{-\frac12}$
+for $s<\tfrac t2$, and symmetrically $C\eta\,(t-s)^{-\frac12}s^{-\frac12-\frac d4}$ for
+$s>\tfrac t2$; integrating, $\lVert e^{-tA_g}-e^{-tA_0}\rVert_{\mathfrak S_2}\le C\eta\,t^{-d/4}$,
+and the $O(\eta)$ volume-density change in the conjugation is of the same order, so
+(I)$\le C\eta\,t^{-d/4}$ for $0<t\le1$; for $t\ge1$, spectral-gap stability gives
+(I)$\le C\eta(1+t)e^{-ct}$.
+
+\emph{(II) change of shells.} As $g_0$ is homogeneous, $p_t^{g_0}=q_t\circ d^{g_0}$, and since
+$P^g_{\mathrm{rad}}$ is the best $L^2$ radial approximant,
+(II)$\le\lVert q_t\circ d^{g_0}-q_t\circ d^g\rVert_2$. The \emph{relative} comparability
+$\lvert d^g-d^{g_0}\rvert\le C\eta\,d^{g_0}$ (\S\ref{sec:reductions}, Step~1) with the radial
+gradient bound $\lvert q_t'(r)\rvert\le Ct^{-(d+1)/2}e^{-r^2/(Ct)}$ and the mean value theorem
+give, in $g_0$-polar coordinates,
+$\lVert q_t\circ d^{g_0}-q_t\circ d^g\rVert_2^2\le C\eta^2 t^{-d-1}\!\int_0^D r^{d+1}e^{-r^2/(Ct)}dr
+\le C\eta^2 t^{-d/2}$, i.e.\ (II)$\le C\eta\,t^{-d/4}$ for $0<t\le1$ (and $\le C\eta e^{-ct}$ for
+$t\ge1$).
+
+\emph{Assemble.} $\mathcal N^g(t)\le C\eta\,t^{-d/4}$ on $(0,1]$ (integrable since $d\le3$) and
+$\le C\eta(1+t)e^{-ct}$ on $[1,\infty)$; hence $V_{\min}(g)^{1/2}=\int_0^\infty\mathcal N^g\le
+C(g_0)\eta$, and the distributional master inequality gives
+$\rhoG(g)\ge1-18(\phi_{\Psi^\star_g}^2V_{\min}(g))^{1/3}\ge1-C'(g_0)\eta^{2/3}$.
 \end{proof}
 
-\begin{remark}[Status: proof under revision per expert review]\label{rem:pert-status}
-Expert review identifies two gaps in the proof as written, both fixable and being repaired:
-(I) the naive Duhamel bound is \emph{not} integrable at $s\to0$
-($\lVert(\Delta_g-\Delta_{g_0})p^{g_0}_s\rVert_2\asymp\eta\,s^{-1-d/4}$) and needs a half-time
-split ($\int_0^{t/2}$ and $\int_{t/2}^t$ handled separately) or a direct parametrix
-comparison; (II) the shell-projection difference must be controlled by the \emph{relative}
-distance bound $\lvert d_g-d_{g_0}\rvert\le C\eta\,d_{g_0}$ (the Step-1 metric comparability of
-\S\ref{sec:reductions}), not the absolute $\lVert d_g-d_{g_0}\rVert_\infty=O(\eta)$, which
-leaves a divergent $t^{-1/2}$ from the Gaussian derivative. The conclusion
-$V_{\min}(g)\le C(g_0)\eta^2$ is expected to survive; the repaired argument is to be supplied.
+\begin{remark}[Why $t^{-d/4}$, and the limit of this route]\label{rem:pert-scope}
+The full heat-kernel difference has size $\lVert p_t^g-p_t^{g_0}\rVert_2\asymp\eta\,t^{-d/4}$
+---a perturbation of the principal symbol changes the leading Gaussian by a relative $O(\eta)$,
+with no extra factor of $t$---which is integrable exactly for $d\le3$, whence the dimension
+restriction. The sharper shell-centered scale $\mathcal N^g(t)\asymp\eta\,t^{1-d/4}$ (which
+would extend the bound to $d<8$) is \emph{not} produced by the triangle split above: that split
+replaces $(I-P^g_{\mathrm{rad}})p_t^g$ by a full difference plus a shell change and so destroys
+the radial cancellation; obtaining it would require a direct estimate of
+$(I-P^g_{\mathrm{rad}})p_t^g$. Since the Green-rank chain operates at $d\le3$, the $t^{-d/4}$
+envelope suffices.
 \end{remark}
 

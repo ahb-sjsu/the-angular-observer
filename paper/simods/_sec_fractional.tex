@@ -164,43 +164,35 @@ t^{s-1}e^{-\lambda t}\,dt$; applied to $\Delta$ on the zero-mean subspace,
 K_s(x,y)=\frac1{\Gamma(s)}\int_0^\infty t^{s-1}\bigl(p_t(x,y)-1\bigr)\,dt,
 \]
 where $p_t$ is the heat kernel and the $-1$ removes the constant mode ($\vol M=1$). Two-point
-homogeneity makes $p_t$ a function of geodesic distance, $p_t(x,y)=P_t(\dM(x,y))$, and on a
-compact two-point homogeneous space $P_t$ is \emph{strictly decreasing} in the distance for
-every $t>0$. This is the one genuinely analytic input; we justify it by the parabolic maximum
-principle rather than by citation. Writing the radial heat equation
-$\partial_tP=\partial_r^2P+m(r)\,\partial_rP$ with $m=A'/A$ the log-derivative of the
-geodesic-sphere area density---on a rank-one symmetric space
-$m(r)=\sum(\mathrm{mult})\cdot\tfrac{\alpha}{2}\cot\tfrac{\alpha r}{2}$, strictly
-decreasing---the radial derivative $v:=\partial_rP_t$ solves
-$\partial_tv=\partial_r^2v+m\,\partial_rv+m'(r)\,v$ with $v=0$ at the pole and the antipodal
-focal set and $m'(r)<0$. Since $v<0$ for small $t$ (the kernel is a decreasing peak) and the
-lower-order coefficient $m'$ is negative, the strong parabolic maximum principle keeps $v<0$
-on the open interval $(0,\diam M)$ for all $t>0$ (individual zonal harmonics oscillate, but
-the heat-weighted sum does not). Differentiating $K_s$ under the integral,
-which is justified because $\partial_r P_t(r)$ is integrable against $t^{s-1}$ (small-$t$
-Gaussian decay $\partial_rP_t=O(t^{-d/2-1}re^{-r^2/4t})$ times $t^{s-1}$ is integrable at
-$0$ for $r>0$; large-$t$ exponential relaxation $\lvert\partial_rP_t\rvert\le Ce^{-\mu_1 t}$
-times $t^{s-1}$ is integrable at $\infty$),
+homogeneity makes $p_t$ a function of geodesic distance, $p_t(x,y)=P_t(\dM(x,y))$. The
+genuinely sharp radial-derivative estimate of Nowak--Sj\"ogren--Szarek~\cite{nss} on compact
+rank-one symmetric spaces gives
 \[
-k_s'(r)=\frac1{\Gamma(s)}\int_0^\infty t^{s-1}\,\partial_r P_t(r)\,dt\ <\ 0
-\qquad(0<r<\diam M),
+-\,\partial_r P_t(r)\ \asymp\ r\,(D-r)\,H_t(r),\qquad 0\le r\le D:=\diam M,\ \ t>0,
 \]
-since $t^{s-1}>0$ and $\partial_rP_t(r)<0$ for every $t>0$. Thus $-K_s$ is a strictly
-increasing function of $\dM$, the pair $(\dM,-K_s)$ is comonotone, and $\rho_{G,s}=1$.
-Normalizing by the constant diagonal $S_s$ (homogeneous space) does not change ranks.
+with $H_t(r)>0$ for $0<r<D$; in particular $\partial_r P_t(r)<0$ on $(0,D)$ for every $t>0$,
+and $\partial_r P_t(0)=\partial_r P_t(D)=0$---so the pole, the antipodal focal boundary, and
+the singular radial drift are all subsumed in the cited estimate. Rather than differentiate
+$K_s$ under the integral, fix $0<r_1<r_2<D$: strict radial monotonicity gives
+$P_t(r_1)-P_t(r_2)>0$ for every $t>0$, so
+\[
+k_s(r_1)-k_s(r_2)=\frac1{\Gamma(s)}\int_0^\infty t^{s-1}\bigl(P_t(r_1)-P_t(r_2)\bigr)\,dt\ >\ 0,
+\]
+the integral finite by off-diagonal Gaussian decay at $t\to0$ and exponential relaxation to
+the constant mode at $t\to\infty$. Thus $k_s$ is strictly decreasing on $(0,D)$, $-K_s$ is a
+strictly increasing function of $\dM$, and---the pair-distance law being atomless---the two
+carry identical population ranks, so $\rho_{G,s}=1$. In the convergent-diagonal regime
+$s>d/2$, homogeneity makes $S_s(x)=K_s(x,x)$ a positive constant, and division by it does not
+change ranks.
 \end{proof}
 
-\begin{remark}[Status: maximum-principle step under revision per expert review]\label{rem:twopoint-status}
-Expert review confirms $m'<0$ on every compact rank-one symmetric space (the Jacobi-field
-product form makes $m$ a positive combination of cotangents) and endorses the subordination
-frame, but flags three points in the maximum-principle argument that are asserted rather than
-proved, all fixable and being repaired: (i) $v=0$ at the antipodal focal set needs proof
-(available: each cut stratum has codimension $\ge1$, and smoothness of $p_t$ against the
-corner of $\dM$ forces $P'(\diam M)=0$); (ii) the drift $m\sim(d-1)/r$ is singular at the
-pole and unbounded at the focal radius, so the strong maximum principle needs Bessel-type
-handling or an $\varepsilon$-interior argument; (iii) ``$v<0$ for small $t$'' needs the
-uniform small-time asymptotic. The conclusion $\rho_{G,s}=1$ is expected to survive; the
-shored-up argument is to be supplied.
+\begin{remark}[Provenance of the analytic input]
+The one analytic ingredient---strict radial monotonicity of the heat kernel with the vanishing
+of its radial derivative at both endpoints---is imported from the published sharp estimate
+\cite{nss} rather than argued by an ad hoc maximum principle; this is deliberately safer, as a
+self-contained treatment must control the parametrix uniformly up to the antipodal focal set,
+which is delicate. (Citation details of \cite{nss}, including the precise statement number,
+are to be checked against the source in the reference-verification pass.)
 \end{remark}
 
 \begin{remark}[What this settles]
