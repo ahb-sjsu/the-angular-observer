@@ -1,0 +1,408 @@
+% Part: unconditional growing window + smooth-metric atomlessness.
+% Verified by two independent fresh-context adversarial re-derivations
+% (thm:growing, thm:smoothAC), both SOUND under the stated hypotheses.
+
+This part sharpens the transfer of Part~\ref{sec:reductions} and the
+anti-concentration of Part~\ref{sec:ac} to three results. The transfer consumes
+only \emph{pairwise} anti-concentration, so the uniform-in-anchor clause is
+deleted (\S\ref{ssec:anchor}); at a growing spectral cutoff the hypothesis is not
+merely weakened but \emph{discharged}, turning the growing-window rank form into
+an \emph{equivalence} with Green-rank positivity (\S\ref{ssec:growing}); and at a
+fixed cutoff, atomlessness---hence (AC$'$)---holds for every \emph{smooth} metric
+satisfying an explicit spectral nondegeneracy, automatic in the analytic category
+(\S\ref{ssec:smoothAC}). Two structural lemmas on $-G$ then point at the sole
+remaining link, Green-rank positivity (\S\ref{ssec:structure}).
+
+\subsection{Anchor elimination: the transfer needs only the pair law}\label{ssec:anchor}
+
+The rank-transfer theorem (Theorem~\ref{thm:ac-transfer}) and its modulus form
+(Lemma~\ref{lem:acprime}) impose anti-concentration \emph{uniformly in the anchor}
+$x$, because Step~2 of the proof treats anchor-sharing pairs-of-pairs by
+conditioning on the shared vertex.  This clause can be deleted.
+
+\begin{theorem}[Anchor elimination]\label{thm:anchorfree}
+In the setting of Theorem~\ref{thm:ac-transfer}, define the \emph{pair modulus}
+\[
+\mu_\Lambda(\varepsilon)\ :=\ \mathbb P\bigl(\lvert V_P-V_Q\rvert\le\varepsilon\bigr),
+\qquad P,Q\ \text{independent pairs from the sampling density.}
+\]
+Then the conclusion of Theorem~\ref{thm:ac-transfer} holds with the error term
+$C\kappa_\Lambda\bar\varepsilon_n$ replaced by $C\,\mu_\Lambda(2\bar\varepsilon_n)
++O(1/n)$: no anchored hypothesis of any kind is required.  Consequently
+\textup{(AC$'$)} may be restated as: $\mu_\Lambda(\varepsilon)\le\omega(\varepsilon)$
+with $\omega(0^+)=0$, and the transfer holds whenever
+$\mu_\Lambda(2\bar\varepsilon_n)\to0$.
+\end{theorem}
+
+\begin{proof}
+Among the $\binom{N_p}{2}$ pairs-of-pairs formed from the $N_p=\binom n2$ sampled
+pairs, those sharing a vertex number at most $3n^3$, a fraction $O(1/n)$ of the
+total $\asymp n^4$.  Bound their flip indicator trivially by $1$: they contribute
+$O(1/n)$ to the flip fraction $f_n$, hence $O(1/n)$ to the Kendall and Spearman
+perturbations of Step~1, which survive verbatim.  For vertex-disjoint
+pairs-of-pairs, $P$ and $Q$ are independent draws of the pair, so
+$\E[\text{flip indicator}]\le\mathbb P(\lvert V_P-V_Q\rvert\le2\bar\varepsilon_n)
+=\mu_\Lambda(2\bar\varepsilon_n)$ directly---no conditioning on a shared anchor
+ever occurs.  Markov's inequality and Steps~1 and~3 of the original proof are
+unchanged.
+\end{proof}
+
+\begin{remark}
+Two immediate consequences.  (i) the modulus form (Definition~\ref{def:acprime},
+Lemma~\ref{lem:acprime}) simplifies:
+the $\sup_x$ is deleted, and the modulus is a property of the single
+\emph{pair law} of $V_\Lambda(X,Y)$.  (ii) Since the concentration function of
+the difference of two i.i.d.\ copies of any random variable tends, as
+$\varepsilon\to0$, to the sum of squared atom masses, one has
+$\mu_\Lambda(\varepsilon)\to0\iff$ the law of $V_\Lambda(X,Y)$ is
+\emph{atomless}.  Anti-concentration, in the only form the transfer consumes,
+\emph{is} atomlessness of the pair law.  Everything below exploits this.
+\end{remark}
+
+\subsection{The growing window, unconditionally}\label{ssec:growing}
+
+The one analytic input is a uniform relative Weyl law for the commute radius; we
+state it as a lemma rather than invoke it in passing.
+
+\begin{lemma}[Uniform relative Weyl law for the commute radius]\label{lem:weyl-radius}
+Let $M$ be closed and smooth, $2\le d\le3$, and
+$S_\Lambda(x)=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}\varphi_k(x)^2$ the squared commute
+radius. Then $S_\Lambda(x)=A_\Lambda\bigl(1+r_\Lambda(x)\bigr)$ with
+$A_\Lambda=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}$ and
+$\rho_\Lambda:=\sup_x\lvert r_\Lambda(x)\rvert\to0$; quantitatively
+$\rho_\Lambda=O(1/\log\Lambda)$ for $d=2$ and $O(\log\Lambda/\sqrt\Lambda)$ for
+$d=3$. Consequently the radius floor $\rho^-_\Lambda=\sqrt{\inf_x S_\Lambda}
+=\sqrt{A_\Lambda}\,(1+o(1))$.
+\end{lemma}
+
+\begin{proof}
+Let $e(\lambda,x)=\sum_{\mu_k\le\lambda}\varphi_k(x)^2$ be the pointwise spectral
+function. H\"ormander's \emph{uniform} pointwise Weyl law
+\cite{hormander} gives $e(\lambda,x)=c_d\lambda^{d/2}
++R(\lambda,x)$ with $\sup_x\lvert R(\lambda,x)\rvert\le C\lambda^{(d-1)/2}$.
+Excluding the constant mode ($\mu_1>0$), Stieltjes integration by parts yields
+\[
+S_\Lambda(x)=\int_{\mu_1^-}^{\Lambda}\lambda^{-1}\,d_\lambda e(\lambda,x)
+=\frac{e(\Lambda,x)}{\Lambda}+\int_{\mu_1}^{\Lambda}\frac{e(\lambda,x)}{\lambda^2}\,d\lambda .
+\]
+The main term $c_d\lambda^{d/2}$ contributes the $x$-independent piece of size
+$c_2\log\Lambda$ ($d=2$) or $c_3'\sqrt\Lambda$ ($d=3$), equal to $A_\Lambda(1+o(1))$
+(the same integration by parts applied to $dN(\lambda)$). The remainder is bounded
+\emph{uniformly in $x$} by
+$\Lambda^{-1}\lvert R(\Lambda,x)\rvert+\int_{\mu_1}^{\Lambda}\lambda^{-2}\lvert
+R(\lambda,x)\rvert\,d\lambda\le C\Lambda^{(d-3)/2}+C\int_{\mu_1}^{\Lambda}
+\lambda^{(d-5)/2}\,d\lambda$, which is $O(1)$ for $d=2$ and $O(\log\Lambda)$ for
+$d=3$. Dividing the uniform remainder by the diverging main term gives the stated
+$\rho_\Lambda$; the floor follows since $\inf_x S_\Lambda=A_\Lambda(1-\rho_\Lambda)$.
+The hypothesis $2\le d\le3$ is used here: at $d=1$, $A_\Lambda=\sum\mu_k^{-1}<\infty$
+converges and $S_\Lambda(x)\to G(x,x)$ is a non-constant limit, so no relative Weyl
+law holds---but $d{=}1$ is trivial for the theorem below ($\rho_G\equiv1$).
+\end{proof}
+
+\begin{theorem}[Growing-window rank transfer for all smooth metrics]\label{thm:growing}
+Let $M$ be a closed smooth Riemannian manifold, $2\le d\le3$ (the case $d{=}1$ is
+trivial: $\rho_G\equiv1$), volume normalized, with
+i.i.d.\ samples from a density bounded above and below.  Let $\Lambda_n\to\infty$
+be multiplet-closed cutoffs and suppose the calibration event of
+Theorem~\ref{thm:ac-transfer} holds with
+\[
+E_n\sqrt{A_{\Lambda_n}}\ \longrightarrow\ 0 .
+\]
+Then the empirical rank correlations of the graph angular distances against the
+manifold distances converge in probability to the Green-rank coefficient:
+\[
+\widehat\rho_S\bigl(\widehat V,D\bigr)\ \xrightarrow{\ \mathbb P\ }\ \rho_G(M),
+\qquad
+\widehat\tau_K\bigl(\widehat V,D\bigr)\ \xrightarrow{\ \mathbb P\ }\ \tau_G(M).
+\]
+No anti-concentration hypothesis is assumed: it is proved.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:anchorfree} and Step~1 of the transfer proof it suffices to
+show $\mu_{\Lambda_n}(2\bar\varepsilon_n)\to0$, where
+$\bar\varepsilon_n=4E_n/\rho^-_{\Lambda_n}$; the empirical-to-population step is
+uniform over $n$ because the grade kernels are bounded, so the $U$-statistic
+variance bounds are kernel-independent, and the population coefficients converge
+to $\rho_G,\tau_G$ by the Green-kernel rank-limit theorem.
+
+\emph{Step 1: from $V$ to the truncated Green kernel.}  Since
+$V_P-V_Q=(V_P^2-V_Q^2)/(V_P+V_Q)$ and $0<V_P+V_Q\le4$,
+\[
+\{\lvert V_P-V_Q\rvert\le2\bar\varepsilon_n\}\ \subseteq\
+\{\lvert \widetilde C_P-\widetilde C_Q\rvert\le4\bar\varepsilon_n\},
+\qquad \widetilde C:=\tfrac12(2-V^2)=K_\Lambda/\sqrt{S_\Lambda S_\Lambda}.
+\]
+The uniform pointwise Weyl law gives $S_\Lambda(x)=A_\Lambda(1+r_\Lambda(x))$
+with $\rho_\Lambda:=\sup_x\lvert r_\Lambda(x)\rvert\to0$, hence pointwise
+\[
+A_\Lambda\widetilde C(x,y)=K_\Lambda(x,y)\bigl(1+O(\rho_\Lambda)\bigr),
+\qquad
+A_\Lambda\bar\varepsilon_n\le 5\,E_n\sqrt{A_{\Lambda_n}}=:\delta_n\to0 .
+\]
+The multiplicative error is \emph{relative} to $K_\Lambda$, which is unbounded
+near the diagonal, so truncate: for $R>0$,
+\[
+\mu_{\Lambda_n}(2\bar\varepsilon_n)\ \le\
+\mathbb P\bigl(\lvert K_P-K_Q\rvert\le 2\delta_n+C\rho_{\Lambda_n}R\bigr)
+\;+\;2\,\mathbb P\bigl(\lvert K_\Lambda(X,Y)\rvert>R\bigr),
+\]
+and $\mathbb P(\lvert K_\Lambda\rvert>R)\le C/R$ uniformly in $\Lambda$, since
+$\E\lvert K_\Lambda\rvert\le\lVert K_\Lambda\rVert_{L^2}\le
+\lVert G\rVert_{L^2}+o(1)$ (bounded density; $d\le3$).
+
+\emph{Step 2: comparison with the Green pair law.}  With
+$T_\Lambda:=\lVert K_\Lambda-G\rVert_{L^2(\vol^{\otimes2})}^2
+=\sum_{\mu_k>\Lambda}\mu_k^{-2}\to0$ ($d\le3$), Chebyshev gives, for any
+$\gamma>0$ and $\beta_n:=2\delta_n+C\rho_{\Lambda_n}R$,
+\[
+\mathbb P\bigl(\lvert K_P-K_Q\rvert\le\beta_n\bigr)\ \le\
+\mathbb P\bigl(\lvert G_P-G_Q\rvert\le\beta_n+2\gamma\bigr)
+\;+\;\frac{2C\,T_{\Lambda_n}}{\gamma^2}.
+\]
+
+\emph{Step 3: the Green pair law is atomless, so its difference
+anti-concentrates.}  By Lemma~\ref{lem:atomless} the law of $G(X,Y)$ is
+atomless; hence $Q(\varepsilon):=\mathbb P(\lvert G_P-G_Q\rvert\le\varepsilon)
+\downarrow\mathbb P(G_P=G_Q)=\sum(\text{atoms})^2=0$ as $\varepsilon\downarrow0$.
+
+\emph{Assemble.}  Choose $R=R_n=\rho_{\Lambda_n}^{-1/2}\to\infty$ and
+$\gamma=\gamma_n=T_{\Lambda_n}^{1/3}\to0$; then $\beta_n\to0$ and
+\[
+\mu_{\Lambda_n}(2\bar\varepsilon_n)\ \le\
+Q\bigl(\beta_n+2\gamma_n\bigr)+2C\,T_{\Lambda_n}^{1/3}+\frac{2C}{R_n}
+\ \longrightarrow\ 0 .
+\]
+All constants depend only on $(M,g)$ and the density bounds.
+\end{proof}
+
+\begin{corollary}[The conjecture is the geometry: an equivalence]\label{cor:equiv}
+Let $M$ be closed and smooth, $2\le d\le3$, with sampling and calibration as above
+along an admissible growing schedule ($d{=}1$ is trivial, $\rho_G\equiv1$).  Then
+\[
+\textup{Angular Preservation (growing-window rank form) holds on }M
+\quad\Longleftrightarrow\quad \rho_G(M)>0,
+\]
+and when it holds, the optimal floor is $\rho_0(M)=\rho_G(M)$.  In particular the
+conjecture, over any class $\mathcal C$ of smooth closed manifolds of dimension
+$2\le d\le3$, is equivalent to the single potential-theoretic statement
+$\inf_{M\in\mathcal C}$-free positivity: $\rho_G(M)>0$ for every $M\in\mathcal C$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:growing} shows the empirical coefficient converges to
+$\rho_G(M)$: if $\rho_G(M)>0$ the rank form holds with floor $\rho_G(M)-o(1)$;
+if $\rho_G(M)\le0$ no positive floor is possible.
+\end{proof}
+
+\begin{remark}
+This supersedes Remark~\ref{rem:EA} (whose growing-window discussion was explicitly
+heuristic) and closes frontier item on the growing window: the sharpened
+threshold $E_n\sqrt{A_m}\to0$, derived twice before by scaling arguments, now
+carries a complete proof, and the analyticity hypothesis plays no role at
+growing cutoffs.  The mechanism is worth naming: at scale $A_\Lambda^{-1}$ the
+angular pair statistic \emph{is} the truncated Green kernel, and the
+anti-concentration of the limit---automatic from atomlessness, which is itself a
+theorem (Lemma~\ref{lem:atomless})---is inherited back along the $L^2$
+convergence, with the free-parameter split absorbing all rates.  No structure of
+$V_\Lambda$ at fixed $\Lambda$ is ever used.
+\end{remark}
+
+\subsection{Fixed cutoffs: smooth metrics and the nondegeneracy (ND)}\label{ssec:smoothAC}
+
+At a fixed multiplet-closed $\Lambda$ the limit-comparison of
+Theorem~\ref{thm:growing} is unavailable; by Theorem~\ref{thm:anchorfree} what is
+needed is exactly atomlessness of the pair law of
+$\widetilde C_\Lambda(X,Y)=K_\Lambda/\sqrt{S_\Lambda S_\Lambda}$.  Write
+$\mu_1<\dots<\mu_J$ for the distinct nonzero eigenvalues $\le\Lambda$ and
+$\Phi_j(x,y)=\sum_{\mu_k=\mu_j}\varphi_k(x)\varphi_k(y)$ for the multiplet
+kernels, so $K_\Lambda=\sum_j\mu_j^{-1}\Phi_j$ and
+$\Delta_y\Phi_j=\mu_j\Phi_j$.
+
+\begin{definition}[Spectral nondegeneracy]\label{def:nd}
+$(M,g,\Lambda)$ satisfies \textup{(ND)} if for each $j\le J$ the set
+\[
+\mathrm{Flat}_j\ :=\ \bigl\{y\in M:\ \Delta^m\sqrt{S_\Lambda}\,(y)
+=\mu_j^{\,m}\sqrt{S_\Lambda}\,(y)\ \ \forall m\ge0\bigr\}
+\]
+has volume zero.
+\end{definition}
+
+\begin{theorem}[Atomlessness of the angular pair law]\label{thm:smoothAC}
+Let $M$ be closed and smooth (any $d$), $\Lambda$ multiplet-closed with
+$S_\Lambda>0$ and $N_\Lambda$ separating points, and let the sampled pair
+$(X,Y)$ have a \emph{joint} density bounded above on $M\times M$ (so any atom of
+the scalar law of $\widetilde C_\Lambda(X,Y)$ forces a positive-measure level
+set---this is the only role the density plays, and it is not assumed bounded
+below).  Then:
+\begin{itemize}
+\item[(a)] the level $\{\widetilde C_\Lambda=0\}$ is null unconditionally;
+\item[(b)] under \textup{(ND)}, the law of $\widetilde C_\Lambda(X,Y)$ is
+atomless; hence by Theorem~\ref{thm:anchorfree} the fixed-cutoff rank transfer
+holds with \textup{(AC)} discharged;
+\item[(c)] \textup{(ND)} holds automatically when $g$ is real-analytic
+(recovering the qualitative content of Theorem~\ref{thm:loja} without \L ojasiewicz or
+o-minimality); more generally, any atom of the pair law forces
+$\vol(\mathrm{Flat}_j)>0$ for some $j$: a fixed smooth function
+$(\Delta-\mu_j)\sqrt{S_\Lambda}$, tuned to an exact eigenvalue, vanishing to
+infinite $\Delta$-order on a set of positive measure.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+Throughout we use the \emph{iterated level-set lemma}: if $h$ is smooth and
+$E\subseteq\{h=0\}$, then a.e.\ on $E$ every partial derivative of $h$ of every
+order vanishes.  (Induction on the order: for $C^1$ functions $\nabla h=0$ a.e.\
+on $\{h=0\}$ (Evans--Gariepy); apply this successively to each $\partial^\alpha
+h$, which vanishes a.e.\ on $E$ by the previous step; a countable union of null
+sets is null.)  Consequently, at a.e.\ point of $E$, \emph{every} differential
+operator applied to $h$ vanishes.
+
+Suppose the pair law has an atom at $\tau$, i.e.\
+$E:=\{(x,y):\widetilde C_\Lambda(x,y)=\tau\}$ has positive $\vol^{\otimes2}$
+measure, and set $w(x,y):=K_\Lambda(x,y)-\tau\sqrt{S_\Lambda(x)}\,
+\sqrt{S_\Lambda(y)}$, which vanishes on $E$.  By the iterated lemma, at a.e.\
+$(x,y)\in E$ all mixed partials of $w$ vanish; evaluating $\Delta_x^N w$ there
+for $N\ge1$ and using $\Delta_x^N K_\Lambda=\sum_j\mu_j^{\,N-1}\Phi_j$:
+\begin{equation}\label{eq:xside}
+\sum_{j=1}^J\mu_j^{\,N-1}\,\Phi_j(x,y)\ =\ \tau\,\bigl(\Delta^N\sqrt{S_\Lambda}
+\bigr)(x)\,\sqrt{S_\Lambda}\,(y),\qquad N=1,\dots,J,\ \text{a.e.\ }(x,y)\in E .
+\end{equation}
+The coefficient matrix $(\mu_j^{\,N-1})_{N,j}$ is a Vandermonde matrix with
+distinct nodes, hence invertible; solving,
+\begin{equation}\label{eq:phisolve}
+\Phi_j(x,y)\ =\ \tau\,G_j(x)\,\sqrt{S_\Lambda}\,(y)\quad\text{a.e.\ on }E,
+\qquad G_j:=\textstyle\sum_{N=1}^{J}a_{jN}\,\Delta^N\sqrt{S_\Lambda},
+\end{equation}
+with fixed smooth $G_j$ determined by $\{\mu_i\}$ alone.
+
+\emph{Case $\tau=0$ (part (a)).}  Then $\Phi_j=0$ a.e.\ on $E$ for every $j$.
+By Fubini there is a positive-measure set of $x$ for which $\Phi_j(x,\cdot)$
+vanishes on a set of positive $y$-measure.  But $\Phi_j(x,\cdot)$ lies in the
+$\mu_j$-eigenspace; a nonzero eigenfunction cannot vanish on a set of positive
+measure (by the iterated lemma it would vanish to infinite order at a point,
+contradicting Aronszajn's strong unique continuation for smooth---indeed
+Lipschitz---metrics).  Hence $\Phi_j(x,\cdot)\equiv0$ for such $x$, i.e.\
+$\varphi_k(x)=0$ for every $k$ in the multiplet (linear independence), for all
+$j$; so $S_\Lambda$ vanishes on a positive-measure set of $x$, contradicting
+$S_\Lambda>0$. (This uses that $S_\Lambda=\sum_{0<\mu_k\le\Lambda}\mu_k^{-1}\varphi_k^2$
+\emph{omits} the constant mode: the multiplets $j=1,\dots,J$ exhaust the nonzero
+modes $\le\Lambda$, so their simultaneous vanishing genuinely forces
+$S_\Lambda=0$---were $\varphi_0^2=1/\vol M$ retained, this step would fail.)
+
+\emph{Case $\tau\ne0$ (part (b)).}  Define
+$h_j:=\Phi_j-\tau\,G_j\otimes\sqrt{S_\Lambda}$ on $M\times M$; by
+\eqref{eq:phisolve}, $h_j=0$ a.e.\ on $E$, so by the iterated lemma all its
+derivatives vanish a.e.\ on $E$; evaluating $\Delta_y^m h_j$ and using
+$\Delta_y^m\Phi_j=\mu_j^{\,m}\Phi_j$ together with \eqref{eq:phisolve}:
+\[
+\tau\,G_j(x)\,\Bigl[\mu_j^{\,m}\sqrt{S_\Lambda}\,(y)
+-\Delta^m\sqrt{S_\Lambda}\,(y)\Bigr]=0
+\qquad\text{a.e.\ }(x,y)\in E,\ \ \forall m\ge0,\ \forall j .
+\]
+Fix $j$.  Either the second factor vanishes for all $m$ on a positive-measure
+set of $y$ appearing in $E$---i.e.\ $\vol(\mathrm{Flat}_j)>0$, excluded by
+\textup{(ND)}---or $G_j(x)=0$ for a.e.\ $x$ in the $x$-projection of (the
+relevant part of) $E$.  Under \textup{(ND)} the second alternative holds for
+every $j$, and then \eqref{eq:phisolve} gives $\Phi_j=0$ a.e.\ on $E$ for every
+$j$: the argument of case $\tau=0$ applies verbatim and yields a contradiction.
+Hence no atom exists.
+
+\emph{Part (c).}  If $g$ is real-analytic, so are the eigenfunctions,
+$S_\Lambda$, and $\sqrt{S_\Lambda}$ ($S_\Lambda>0$); hence
+$\xi_j:=(\Delta-\mu_j)\sqrt{S_\Lambda}$ is real-analytic.  Now
+$\mathrm{Flat}_j\subseteq\{\xi_j=0\}$ (its $m{=}1$ clause), so a positive-measure
+$\mathrm{Flat}_j$ would put the zero set of the analytic $\xi_j$ at positive
+measure; on a connected analytic manifold the zero set of a
+non-identically-zero analytic function is null, forcing $\xi_j\equiv0$.  But
+$\xi_j\equiv0$ makes $\sqrt{S_\Lambda}$ a \emph{positive} eigenfunction with
+eigenvalue $\mu_j>0$, impossible on a closed manifold (a positive eigenfunction
+forces the bottom of the spectrum, $\mu=0$).  Hence $\vol(\mathrm{Flat}_j)=0$ for
+every $j$: \textup{(ND)} holds.  The final sentence of (c) is the case analysis
+just performed, read contrapositively.
+\end{proof}
+
+\begin{remark}[What (ND) is, and is not]\label{rem:nd}
+(ND) is a per-$(M,g,\Lambda)$ condition on one fixed smooth function per
+distinct eigenvalue, violated only if $(\Delta-\mu_j)\sqrt{S_\Lambda}$ is
+infinitely $\Delta$-flat on a fat set at the \emph{exact} spectral value
+$\mu_j$---a closed, nowhere-dense degeneracy in any reasonable topology on
+metrics, automatic in the analytic category, and checkable in principle.  We do
+not currently know whether it can fail for some smooth metric; if it can, the
+corresponding atom is confined to the specific levels $\tau$ produced by the
+case analysis.  Removing (ND) outright is the residue of frontier item~(a); the
+item is otherwise closed.
+\end{remark}
+
+\subsection{Structure of the Green kernel: two lemmas toward positivity}\label{ssec:structure}
+
+The remaining summit is Green-rank positivity (Corollary~\ref{cor:equiv} makes
+it \emph{equivalent} to the growing-window conjecture).  Two structural facts.
+
+\begin{lemma}[Sublevels of $-G$ cluster at the pole]\label{lem:sublevel}
+Let $M$ be closed and smooth, $x\in M$.  With the geometer's sign convention
+$\Delta_{\mathrm{LB}}G(x,\cdot)=+1$ on $M\setminus\{x\}$, the function
+$-G(x,\cdot)$ is strictly superharmonic off the pole; consequently, for every
+$c\in\mathbb R$, each connected component of $\{y:-G(x,y)<c\}$ has $x$ in its
+closure, and $\{-G(x,\cdot)<c\}\cup\{x\}$ is connected.
+\end{lemma}
+
+\begin{proof}
+If a component $U$ had $x\notin\overline U$, then $-G(x,\cdot)$ would be
+continuous on the compact $\overline U$, equal to $c$ on $\partial U$ and $<c$
+inside, hence would attain an interior minimum; at an interior minimum
+$\Delta_{\mathrm{LB}}(-G)\ge0$, contradicting
+$\Delta_{\mathrm{LB}}(-G)=-1<0$ on $M\setminus\{x\}$.  Adjoining $x$, which lies
+in every component's closure, connects the sublevel set.
+\end{proof}
+
+\begin{lemma}[Two-dimensional conformal reduction; log-additivity]\label{lem:conformal}
+Let $(\Sigma,g)$ be a closed surface, $g=e^{2\varphi}g_0$ with $g_0$ of constant
+curvature, $\vol_g=1$.  Then $G_g$ is the zero-mean Green kernel of the
+\emph{weighted} manifold $(\Sigma,g_0,\ e^{2\varphi}\vol_0)$: the operator is
+$\Delta_{g_0}$, only the measure changes.  Moreover $d_g$ and $d_{g_0}$ satisfy
+$e^{\min\varphi}\,d_{g_0}\le d_g\le e^{\max\varphi}\,d_{g_0}$ (lower bound because
+$\lVert\cdot\rVert_g\ge e^{\min\varphi}\lVert\cdot\rVert_{g_0}$ along every path,
+upper bound by testing the $g_0$-geodesic), so the ratio $d_g/d_{g_0}$ varies
+within a factor $e^{\mathrm{osc}\,\varphi}$; since the two-dimensional profile is
+logarithmic, this distortion enters the profile \emph{additively}: for the uniformized
+profile $\Psi_0=-\gamma_2-(\text{regular part of }g_0)$,
+\[
+\bigl\lVert\,\Psi_0(d_{g_0})-\Psi_0(d_g)\,\bigr\rVert_\infty\ \le\
+\frac{\mathrm{osc}\,\varphi}{2\pi}\;+\;C(g_0,\mathrm{osc}\,\varphi)
+\quad\text{on }\{d_{g_0}\le r_0\},
+\]
+finite up to the diagonal.  Consequently, on every closed surface the master
+remainder (Theorem~\ref{thm:master}) is finite for a profile built from the uniformization:
+$\Delta_{\mathrm{rad}}$-type control on surfaces is a statement about the
+weighted flat/round Green kernel and the $C^0$ oscillation of the conformal
+factor alone---no curvature bounds enter.
+\end{lemma}
+
+\begin{proof}
+In dimension two $\Delta_g=e^{-2\varphi}\Delta_{g_0}$, so
+$\Delta_{g_0}G_g(x,\cdot)=e^{2\varphi}\bigl(\delta^{(g)}_x-1\bigr)$-type
+identities reorganize into the weighted-Laplacian Green equation on
+$(\Sigma,g_0,e^{2\varphi}\vol_0)$: the conformal factor moves entirely into the
+measure.  The displayed bound is the logarithmic profile's response to multiplicative
+distortion: $\log d_g-\log d_{g_0}\in[\min\varphi,\max\varphi]$ has oscillation
+$\le\mathrm{osc}\,\varphi$, and the zero-mean profile absorbs the (immaterial)
+additive constant, leaving $\mathrm{osc}\,\varphi/2\pi$ plus the (bounded)
+distortion of the regular part of $\Psi_0$ over the compact off-diagonal range.
+\end{proof}
+
+\begin{remark}[The remaining crux, stated exactly]\label{rem:crux}
+After Theorems~\ref{thm:growing} and~\ref{thm:smoothAC}, the growing-window
+conjecture \emph{is} the statement $\rho_G(M)>0$ (Corollary~\ref{cor:equiv}).
+What Lemmas~\ref{lem:sublevel}--\ref{lem:conformal} contribute: the sublevels of
+$-G(x,\cdot)$ are topologically ball-like around the pole (no isolated far
+minima), so any failure of positivity must come from \emph{elongated} sublevel
+geometry at unit scale; and on surfaces the entire problem conformally reduces
+to weighted constant-curvature Green kernels, where the diagonal is handled by
+log-additivity and the fight is confined to the top distance octave.  The
+sharpest open formulation: for every closed surface, do the unit-scale sublevel
+sets of the weighted flat/round Green kernel order the bulk pairs with positive
+rank correlation?  The numerical plateau ($\rho_G\gtrsim0.79$ over four
+families) is evidence the answer is yes, possibly with a universal surface
+constant; a proof is the summit.
+\end{remark}

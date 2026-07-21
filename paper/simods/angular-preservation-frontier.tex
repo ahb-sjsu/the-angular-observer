@@ -31,7 +31,7 @@ Reductions, a Non-Radiality Calculus, and the Green-Rank Frontier}
 \author{Andrew H. Bond\\
 \small Department of Computer Engineering, San Jos\'e State University\\
 \small \texttt{andrew.bond@sjsu.edu} \ \textbullet\ \ ORCID 0009-0003-2599-6158}
-\date{}
+\date{Working draft --- v2}
 
 \begin{document}
 \maketitle
@@ -44,9 +44,13 @@ rank-faithful to geodesic distance---for intrinsic dimension $d\le3$, to two ing
 graph-to-continuum \emph{rank transfer} and \emph{Green-rank positivity}
 $\rho_G(M)=\rho_S(d_M(X,Y),-G_M(X,Y))>0$, where $G_M$ is the zero-mean Green kernel. Here we
 move both toward theorems. We (i) delete the auxiliary hypotheses (H3) and atomlessness from
-Paper~I's conditional results; (ii) prove that the transfer's anti-concentration hypothesis,
-false in its bounded-density form, holds in the operative \emph{modulus} form for every
-real-analytic metric; (iii) develop a \emph{non-radiality calculus} that reduces Green-rank
+Paper~I's conditional results and reduce the graph-level rank transfer to \emph{pairwise}
+anti-concentration alone; (ii) at a growing spectral cutoff \emph{discharge} even that
+hypothesis---the graph angular ranking converges to $\rho_G(M)$ under calibration alone, so
+Angular Preservation (growing-window rank form) is \emph{equivalent} to Green-rank positivity
+$\rho_G(M)>0$---while at a fixed cutoff the operative \emph{modulus} form (AC$'$), false as a
+bounded density, holds for every real-analytic metric and for every \emph{smooth} metric under
+an explicit spectral nondegeneracy (ND); (iii) develop a \emph{non-radiality calculus} that reduces Green-rank
 positivity to a single scale-invariant index of the Green kernel, via a master inequality
 $\rho_G\ge1-12\,\phi\lVert R\rVert_\infty$ and its distributional refinement
 $\rho_G\ge1-18(\phi^2V)^{1/3}$; (iv) bound that index geometrically, identifying it with the
@@ -91,7 +95,9 @@ things: the graph-level \emph{rank transfer} (governed by a calibration error an
 anti-concentration hypothesis) and \emph{Green-rank positivity},
 $\rho_G(M):=\rho_S\bigl(d_M(X,Y),-G_M(X,Y)\bigr)>0$ for $(X,Y)$ i.i.d.\ from the volume.
 
-This companion collects and extends the reductions of both. Its contributions, by part:
+This companion collects and extends the reductions of both; at a growing spectral cutoff it
+closes the transfer outright (Part~\ref{sec:summit}), leaving Green-rank positivity as the sole
+open link. Its contributions, by part:
 
 \begin{itemize}
 \item \textbf{Part~\ref{sec:reductions} (reductions and the transfer hypothesis).} We show
@@ -108,6 +114,16 @@ nondegenerate saddle forces a logarithmic (van Hove) divergence, guaranteed on a
 surface of nonpositive Euler characteristic. We isolate the \emph{modulus} form (AC$'$) the
 transfer proof actually consumes and prove it for every real-analytic metric, via a uniform
 \L ojasiewicz sublevel estimate made uniform over the analytic family by o-minimality.
+
+\item \textbf{Part~\ref{sec:summit} (the unconditional growing window).} The transfer consumes
+only \emph{pairwise} anti-concentration, so its uniform-in-anchor clause is deleted. At a
+growing spectral cutoff the hypothesis is \emph{discharged}: along admissible schedules the
+graph angular ranking converges in probability to $\rho_G(M)$ with nothing assumed beyond
+calibration, so the growing-window rank form of Angular Preservation is \emph{equivalent} to
+$\rho_G(M)>0$---the conjecture \emph{is} the geometry. At a fixed cutoff, atomlessness of the
+angular pair law---hence (AC$'$)---holds for every \emph{smooth} metric under an explicit
+spectral nondegeneracy (ND), automatic in the analytic category; whether (ND) can fail for
+some smooth metric is the sole residual.
 
 \item \textbf{Part~\ref{sec:positivity} (a non-radiality calculus).} We reduce Green-rank
 positivity to a single quantity. A \emph{master inequality} $\rho_G\ge1-12\,\phi_\Psi
@@ -147,6 +163,9 @@ in the assembled parts below refers to the other parts of this paper.
 \section{The anti-concentration hypothesis (AC$'$)}\label{sec:ac}
 \input{_sec_ac}
 
+\section{The unconditional growing window and smooth-metric atomlessness}\label{sec:summit}
+\input{summit}
+
 \section{A non-radiality calculus for Green-rank positivity}\label{sec:positivity}
 \input{_sec_master}
 
@@ -174,16 +193,19 @@ with the graph-Laplacian convergence rates of \cite{calder,gtslepcev}. None is l
 beyond its stated role.
 
 \medskip
-\noindent\textbf{What is now reduced to what.} For $d\le3$, Angular Preservation (rank form)
-is implied by: (i) the rank transfer, which holds under calibration $E_n\to0$
-(resp.\ $E_n\sqrt{A_m}\to0$ at a growing cutoff) and (AC$'$)---the latter proved for
-real-analytic metrics (Part~\ref{sec:ac}); and (ii) Green-rank positivity, reduced to a
+\noindent\textbf{What is now reduced to what.} For $2\le d\le3$, Angular Preservation (rank
+form) is implied by: (i) the rank transfer, which at a \emph{fixed} cutoff needs calibration
+$E_n\to0$ and (AC$'$)---proved for real-analytic metrics (Part~\ref{sec:ac}) and, more
+generally, for smooth metrics under the spectral nondegeneracy (ND) (Part~\ref{sec:summit})---%
+and which at a \emph{growing} cutoff ($E_n\sqrt{A_m}\to0$) needs \emph{only} calibration,
+(AC$'$) being discharged; and (ii) Green-rank positivity, reduced to a
 single scale-invariant non-radiality index (Part~\ref{sec:positivity}), itself the
 heat-kernel shell-variance, which vanishes on two-point homogeneous spaces and is controlled
 by an explicit spectral-gap tail and one curvature-anisotropy amplitude
-(Part~\ref{sec:l2}). Hypotheses (H3) and atomlessness are deleted outright
-(Part~\ref{sec:reductions}); the critical dimension is crossed by the fractional filter
-(Part~\ref{sec:fractional}).
+(Part~\ref{sec:l2}). Consequently the \emph{growing-window} rank form is not merely implied by
+but \emph{equivalent} to $\rho_G(M)>0$ (Part~\ref{sec:summit}). Hypotheses (H3) and
+atomlessness are deleted outright (Part~\ref{sec:reductions}); the critical dimension is
+crossed by the fractional filter (Part~\ref{sec:fractional}).
 
 \medskip
 \noindent\textbf{A numerical counterexample hunt.} Green-rank positivity may be false on
@@ -198,9 +220,11 @@ $\rho_G$ but plateaus, consistent with the shell-variance staying bounded. This 
 accumulating evidence, not proof.
 
 \medskip
-\noindent\textbf{Open, in order of expected difficulty.} (a) Prove (AC$'$) at fixed cutoff
-for generic \emph{smooth} (non-analytic) metrics---a positive-measure level set is the only
-obstruction. (b) Make the curvature-anisotropy amplitude of Part~\ref{sec:l2} explicit in
+\noindent\textbf{Open, in order of expected difficulty.} (a) Remove (ND): decide whether the
+spectral nondegeneracy of Part~\ref{sec:summit}---which already yields fixed-cutoff (AC$'$) for
+all smooth metrics---can fail for any smooth metric. The sole obstruction is a positive-measure
+set on which $(\Delta-\mu_j)\sqrt{S_\Lambda}$ is infinitely $\Delta$-flat at the exact
+eigenvalue $\mu_j$; it is absent in the analytic category. (b) Make the curvature-anisotropy amplitude of Part~\ref{sec:l2} explicit in
 $(K,D,i_0,\sup\lVert\nabla\Ric\rVert)$, promoting the leading-order estimate to a bound
 uniform in the head time-interval; this converts the named-$\mathcal A$ class into a closed
 curvature/diameter theorem. (c) Green-rank positivity beyond the perturbative and near-radial
