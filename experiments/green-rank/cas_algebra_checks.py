@@ -13,6 +13,9 @@ Checks:
   4. Parametrix L^p window (d/2, d/(d-2)) nonempty iff d in {2,3}.
   5. Perturbative half-time-split Duhamel envelope integrates to t^{-d/4}; shell-change (II)
      integrand gives t^{-d/2} (=> t^{-d/4}); both integrable on (0,1] iff d<=3.
+  6. modulus-form master inequality (errata E1): min C1*tau^theta + 8V/tau^2 at
+     tau*=(16V/(C1 theta))^{1/(theta+2)}; theta=1 recovers 18(phi^2 V)^{1/3}; rate
+     exponent 2theta/(theta+2) = 2/3 (spheres) / 2/5 (projective anchors).
 """
 import sympy as sp
 
@@ -70,6 +73,20 @@ def main():
     II2 = texp(-d - 1, 2)
     check("(II) integrand^2 exponent", sp.simplify(II2), -d / 2)
     print("     => N^g(t) ~ eta t^{-d/4}; int_0^1 finite iff d<=3.")
+
+    print("=== 6. modulus-form master inequality (errata E1) ===")
+    C1, th = sp.symbols('C1 theta', positive=True)
+    gm = C1 * tau ** th + 8 * V / tau ** 2
+    tsm = [c for c in sp.solve(sp.diff(gm, tau), tau) if c.is_real is not False][0]
+    check("modulus tau*", sp.simplify(tsm), (16 * V / (C1 * th)) ** (1 / (th + 2)))
+    # theta=1, C1=2phi recovers 18(phi^2 V)^{1/3}
+    g1 = 6 * phi * tau + 24 * V / tau ** 2  # = 3*(2 phi tau + 8V/tau^2), the rho_G>=1-3p form
+    t1 = [c for c in sp.solve(sp.diff(g1, tau), tau) if c.is_real is not False][0]
+    check("theta=1 recovers 18", sp.simplify(g1.subs(tau, t1) / (phi ** 2 * V) ** sp.Rational(1, 3)), sp.Integer(18))
+    # rate exponent 2*theta/(theta+2): 2/3 at theta=1, 2/5 at theta=1/2
+    check("rate exponent theta=1", 2 * sp.Integer(1) / (sp.Integer(1) + 2), sp.Rational(2, 3))
+    check("rate exponent theta=1/2", 2 * sp.Rational(1, 2) / (sp.Rational(1, 2) + 2), sp.Rational(2, 5))
+    print("     => spheres eta^{2/3}; projective spaces eta^{2/5}")
 
     print("\nALL SYMBOLIC CHECKS PASSED.")
 

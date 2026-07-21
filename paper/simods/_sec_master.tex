@@ -311,3 +311,35 @@ $\rhoG\approx0.79$) suggests is broad. Making $V(K,D,i_0,\mu_1)$ explicit is the
 frontier item (a).
 \end{remark}
 
+\begin{theorem}[Distributional master inequality, modulus form]\label{thm:modmaster}
+Let $\Psi$ be a monotone radial profile with remainder $\Rem$, $V_\Psi=\E[\Rem^2]<\infty$, and
+suppose the pair modulus obeys $\mu_\Psi(\varepsilon)\le C_1\varepsilon^\theta+C_2$ for some
+$\theta\in(0,1]$ and all $\varepsilon>0$ (the constant slack $C_2\ge0$ absorbs range
+mismatches under perturbation). Then for every $\tau>0$,
+\[
+\rhoG(M)\ \ge\ 1-3\Bigl[\,C_1\tau^\theta+\tfrac{8V_\Psi}{\tau^2}\,\Bigr]-3C_2,
+\]
+and optimizing at $\tau=(16V_\Psi/(C_1\theta))^{1/(\theta+2)}$,
+\[
+\rhoG(M)\ \ge\ 1-c(\theta)\,C_1^{2/(\theta+2)}\,V_\Psi^{\theta/(\theta+2)}-3C_2 .
+\]
+For $\theta=1$ (a Lipschitz modulus, i.e.\ bounded density with $C_1=2\phi_\Psi$, $C_2=0$)
+this recovers Theorem~\ref{thm:dist}, $\rhoG\ge1-18(\phi_\Psi^2V_\Psi)^{1/3}$, exactly.
+\end{theorem}
+
+\begin{proof}
+As in Theorem~\ref{thm:dist}, $p\le\mu_\Psi(\tau)+2\,\mathbb P(\lvert\Rem\rvert\ge\tau/2)\le
+C_1\tau^\theta+C_2+8V_\Psi/\tau^2$ by Chebyshev, and $\rhoG\ge1-3p$; minimize in $\tau$.
+\end{proof}
+
+\begin{remark}[Why the modulus form is needed]\label{rem:modneeded}
+The bounded-density hypothesis of Theorem~\ref{thm:dist} ($\phi_\Psi<\infty$) can fail \emph{at}
+the exact symmetric anchors: on $\mathbb{RP}^d$ the codimension-one cut locus forces
+$\phi_{\Psi^\star}=\infty$ (Lemma~\ref{lem:anchormod} and the admissibility discussion of
+\S\ref{sec:l2}). Since $\mu_\Psi(\varepsilon)\to0$ always holds by atomlessness
+(Lemma~\ref{lem:atomless}), the modulus form applies where the density form cannot---at the
+cost of a $\theta$-dependent exponent, the density form being the $\theta=1$ case. This is the
+non-radiality-calculus analogue of the (AC)$\to$(AC$'$) lesson of \S\ref{sec:ac}: a bounded
+density is the wrong hypothesis; the modulus is the right one.
+\end{remark}
+

@@ -317,10 +317,11 @@ establishes this substitution and proves (AC$'$) for every real-analytic metric;
 
 \begin{proof}
 Write $N_p=\binom n2$ for the number of pairs, $V_P$ for the continuum value of pair
-$P$ and $\widehat V_P$ for the graph value; ties are handled by the usual $\sgn$
-conventions and occur with probability zero on the continuum side
-(Lemma~\ref{lem:atomless} applies to $V$ through its strictly monotone relation to the
-kernel $C_\Lambda$? --- not needed: we only use that flips are counted, see below).
+$P$ and $\widehat V_P$ for the graph value. Ties in $V$ are harmless: a tied pair
+$\lvert V_P-V_Q\rvert=0\le2\bar\varepsilon_n$ already lies inside the flip event that Step~1
+counts, provided both rankings use one fixed tie-breaking (midrank) convention; and the
+empirical-to-population step, read in the midrank convention, converges because the limit
+(Green) law is atomless (Lemma~\ref{lem:atomless}).
 
 \emph{Step 1: perturbation flips few comparisons.} For a pair-of-pairs $\{P,Q\}$, the
 comparison $\sgn(\widehat V_P-\widehat V_Q)$ can differ from $\sgn(V_P-V_Q)$ only if

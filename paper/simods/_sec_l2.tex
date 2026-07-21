@@ -51,13 +51,34 @@ the distributional master inequality. We isolate this as
 \noindent\textbf{(A$^\star$)}\quad \emph{$r\mapsto\E[G\mid\dM=r]$ is strictly decreasing on
 $(0,\diam M)$, with $\phi_{\Psi^\star}<\infty$.}
 \smallskip
-By the Proposition, (A$^\star$) holds near the diagonal unconditionally; and it holds on a
-$C^2$-neighborhood of any two-point homogeneous metric, where $\E[G\mid\dM]=g(\dM)$ is
-strictly decreasing (Paper~I) and strict monotonicity plus $\phi<\infty$ persist under small
-$C^2$ perturbation. It is a checkable, measurable condition (evaluate the shell-mean of $G$).
-Away from these regimes it is a hypothesis; where it fails one falls back on the fixed
-parametrix profile at the cost of losing the vanishing on two-point homogeneous spaces.
+By the Proposition, (A$^\star$) holds near the diagonal unconditionally. Its
+\emph{bounded-density} form, however, can fail even \emph{at} a two-point homogeneous anchor:
+on the round spheres $S^2,S^3$ it holds, but on the projective spaces
+$\mathbb{RP}^2,\mathbb{RP}^3$ the codimension-one cut locus forces $\phi_{\Psi^\star}=\infty$
+(Lemma~\ref{lem:anchormod}), so no $C^2$-neighborhood can restore it. The right condition is
+the \emph{modulus} form: $\mu_{\Psi^\star}(\varepsilon)\to0$ (automatic by atomlessness,
+Lemma~\ref{lem:atomless}), quantified as $\mu_{\Psi^\star}(\varepsilon)\le C_1\varepsilon^\theta
++C_2$, which feeds the modulus-form master inequality (Theorem~\ref{thm:modmaster}) with
+$\theta=1$ on the spheres and $\theta=\tfrac12$ on the projective spaces
+(Lemma~\ref{lem:anchormod}). It is checkable and measurable (evaluate the concentration
+function of $\Psi^\star(W)$). We keep the density-form (A$^\star$) as the clean $\theta=1$
+statement where it holds, and route the projective and perturbed cases through the modulus
+form---the non-radiality analogue of the (AC)$\to$(AC$'$) correction of \S\ref{sec:ac}.
 \end{remark}
+
+\begin{lemma}[Moduli at the symmetric anchors]\label{lem:anchormod}
+On a two-point homogeneous space $\Psi^\star=-k_0$ exactly, and the flux identity (Paper~I)
+gives $k_0'(r)=-(1-V(r))/A(r)$ ($A$ the geodesic-sphere area, $V(r)=\vol B_r$), so
+$f_{\Psi^\star(W)}(s)=f_W(r)/\lvert k_0'(r)\rvert=A(r)^2/(1-V(r))$ at $s=\Psi^\star(r)$ (near
+$r=0$ this is $\asymp r^{2(d-1)}$, matching Lemma~\ref{lem:parametrix}). On $S^d$,
+$A\asymp(\pi-r)^{d-1}$ and $1-V\asymp(\pi-r)^d$, so the density $\asymp(\pi-r)^{d-2}$ is bounded
+for $d\in\{2,3\}$ and $\mu_{\Psi^\star}(\varepsilon)\le C\varepsilon$ ($\theta=1$). On
+$\mathbb{RP}^d$ the cut locus has codimension one, so $A(r)\to A(D)>0$ while
+$1-V(r)\asymp A(D)(D-r)$, giving density $\asymp(D-r)^{-1}\to\infty$, i.e.\
+$\phi_{\Psi^\star}=\infty$; yet the top-of-range window
+$s_{\max}-\Psi^\star(r)=\int_r^D(1-V)/A\asymp(D-r)^2/2$ has $W$-mass $\asymp\sqrt\varepsilon$, so
+$\mu_{\Psi^\star}(\varepsilon)\le C\varepsilon+C\sqrt\varepsilon$ ($\theta=\tfrac12$).
+\end{lemma}
 
 \section{Heat representation: the shell-variance of the heat kernel}
 
@@ -148,11 +169,14 @@ For $d<8$, $\displaystyle\int_0^{t_0}\mathcal N(t)\,dt\le\mathcal A\int_0^{t_0}t
 ($\mathcal N(t)\asymp t^{1-d/4}$ near $0$, so $t^{d/4-1}\mathcal N(t)$ is bounded there, and
 $\mathcal N$ is continuous on the compact $(0,t_0]$) and $\mathcal A=0$ on two-point
 homogeneous spaces (there $\mathcal N\equiv0$). Its \emph{small-time} limit
-$\lim_{t\to0}t^{d/4-1}\mathcal N(t)$ equals the shell-oscillation of the
-Minakshisundaram--Pleijel amplitude $u_0(x,y)=\det(d\exp)^{-1/2}$---the variation of the
-Jacobi/curvature data along equal-length geodesics, $O(\sup\lVert\nabla\Ric\rVert$ and the
-sectional-curvature variation$)$, vanishing when the curvature is isotropic and parallel (the
-locally symmetric case). The \emph{sup} $\mathcal A$, however, is generically dominated by
+$\lim_{t\to0}t^{d/4-1}\mathcal N(t)$ equals the combined shell-oscillation of the
+Minakshisundaram--Pleijel amplitudes $u_0\oplus u_1$ (both enter at the same order: the
+non-radial part of $u_0=\det(d\exp)^{-1/2}$ is $O(r^2)\cdot$anisotropy with $r^2\sim t$, and the
+$u_1t$ term is $O(1)\cdot t$)---the variation of the Jacobi/curvature data along equal-length
+geodesics, $O(\sup\lVert\nabla\Ric\rVert$ and the sectional-curvature variation$)$, vanishing
+exactly when the space is \emph{two-point homogeneous} (\emph{not} merely locally symmetric: on
+$S^2\times S^1$, locally symmetric, $\Ric(\dot\gamma,\dot\gamma)$ varies with direction, so
+$u_0$ oscillates on shells). The \emph{sup} $\mathcal A$, however, is generically dominated by
 $t\approx t_0$---a spectral (heat-kernel non-radiality) quantity, $\Theta(1)$ for a
 non-symmetric metric---not by its small-time limit; making it curvature-explicit uniformly in
 $t\le t_0$ is the frontier item, not claimed here.
@@ -201,18 +225,24 @@ anisotropy amplitude $\mathcal A$.
 
 \begin{proof}
 Sum Lemmas~\ref{lem:head} and~\ref{lem:tail} into Lemma~\ref{lem:reduce}. (i) is
-$\mathcal A=0$ and $\mathcal N\equiv0$; (ii) is the distributional inequality (Theorem~\ref{thm:dist})
-applied to $\Psi^\star$, which is a monotone profile with $\phi_{\Psi^\star}<\infty$ exactly
-under \textup{(A$^\star$)}.
+$\mathcal A=0$ and $\mathcal N\equiv0$; (ii) is the distributional inequality applied to
+$\Psi^\star$---in the density form (Theorem~\ref{thm:dist}) where (A$^\star$) holds, and in the
+modulus form (Theorem~\ref{thm:modmaster}) where $\phi_{\Psi^\star}=\infty$, e.g.\ the
+projective anchors (Lemma~\ref{lem:anchormod}).
 \end{proof}
 
-\begin{corollary}[Perturbative $\eta^{2/3}$ rate, $d\le3$]\label{cor:pert}
+\begin{corollary}[Perturbative openness rate, $d\le3$]\label{cor:pert}
 Let $g_0$ be a two-point homogeneous metric of dimension $d\le3$ ($\vol=1$) and $g$ a
 volume-normalized metric with $\eta:=\lVert g-g_0\rVert_{C^2}\le\eta_0$ small. Then
-$V_{\min}(g)\le C(g_0)\,\eta^2$, and---provided the admissibility constant $\phi_{\Psi^\star_g}$
-of (A$^\star$) stays uniformly bounded near $g_0$---%
-$\rhoG(g)\ge1-C'(g_0)\,\eta^{2/3}\to1$ as $\eta\to0$, quantifying the perturbative openness
-theorem in the $L^2$ index.
+$V_{\min}(g)\le C(g_0)\,\eta^2$, and
+\[
+\rhoG(g)\ge1-C'(g_0)\,\eta^{2/3}\ \ (\text{near }S^2,S^3),\qquad
+\rhoG(g)\ge1-C'(g_0)\,\eta^{2/5}\ \ (\text{near }\mathbb{RP}^2,\mathbb{RP}^3),
+\]
+both $\to1$ as $\eta\to0$; the exponent degrades only at the codimension-one projective
+(focal) anchors, where the density form of (A$^\star$) fails and the modulus form (with
+$\theta=\tfrac12$) is used. This quantifies the perturbative openness theorem in the $L^2$
+index.
 \end{corollary}
 
 \begin{proof}
@@ -230,8 +260,11 @@ $\lVert e^{-(t-s)A_g}(A_g-A_0)e^{-sA_0}\rVert_{\mathfrak S_2}\le C\eta\,(t-s)^{-
 for $s<\tfrac t2$, and symmetrically $C\eta\,(t-s)^{-\frac12}s^{-\frac12-\frac d4}$ for
 $s>\tfrac t2$; integrating, $\lVert e^{-tA_g}-e^{-tA_0}\rVert_{\mathfrak S_2}\le C\eta\,t^{-d/4}$,
 and the $O(\eta)$ volume-density change in the conjugation is of the same order, so
-(I)$\le C\eta\,t^{-d/4}$ for $0<t\le1$; for $t\ge1$, spectral-gap stability gives
-(I)$\le C\eta(1+t)e^{-ct}$.
+(I)$\le C\eta\,t^{-d/4}$ for $0<t\le1$; for $t\ge1$, on the mean-zero subspace both semigroups
+contract at rate $e^{-\mu_1(g_0)t/2}$, and the unit-step recursion
+$d_t\le e^{-c(t-1)}d_1+e^{-c}d_{t-1}$ with $d_1\le C\eta$ (the head bound at $t=1$) gives
+(I)$\le C\eta\,t\,e^{-c(t-1)}$ (the conjugated ground states differ by $O(\eta)$ and the
+constant modes cancel after undoing the conjugation).
 
 \emph{(II) change of shells.} As $g_0$ is homogeneous, $p_t^{g_0}=q_t\circ d^{g_0}$, and since
 $P^g_{\mathrm{rad}}$ is the best $L^2$ radial approximant,
@@ -244,9 +277,15 @@ $\lVert q_t\circ d^{g_0}-q_t\circ d^g\rVert_2^2\le C\eta^2 t^{-d-1}\!\int_0^D r^
 $t\ge1$).
 
 \emph{Assemble.} $\mathcal N^g(t)\le C\eta\,t^{-d/4}$ on $(0,1]$ (integrable since $d\le3$) and
-$\le C\eta(1+t)e^{-ct}$ on $[1,\infty)$; hence $V_{\min}(g)^{1/2}=\int_0^\infty\mathcal N^g\le
-C(g_0)\eta$, and the distributional master inequality gives
-$\rhoG(g)\ge1-18(\phi_{\Psi^\star_g}^2V_{\min}(g))^{1/3}\ge1-C'(g_0)\eta^{2/3}$.
+$\le C\eta\,t\,e^{-ct}$ on $[1,\infty)$; hence $V_{\min}(g)^{1/2}=\int_0^\infty\mathcal N^g\le
+C(g_0)\eta$, so $V_{\min}(g)\le C(g_0)\eta^2$. Finally feed $V_{\min}(g)$ to the modulus-form
+master inequality (Theorem~\ref{thm:modmaster}) with the transported anchor profile $\Psi=-k_0$
+evaluated on $d_g$ (extended linearly past $D_{g_0}$; the range-mismatch slack is $C_2=O(\eta)$,
+lower order), whose modulus is that of Lemma~\ref{lem:anchormod} up to the volume-comparable
+change of the pair law: $\theta=1$ near $S^2,S^3$ and $\theta=\tfrac12$ near
+$\mathbb{RP}^2,\mathbb{RP}^3$. Since the rate exponent is $2\theta/(\theta+2)$ (from
+$V_{\min}\asymp\eta^2$), this gives $\rhoG(g)\ge1-C'(g_0)\eta^{2/3}$ near the spheres and
+$\ge1-C'(g_0)\eta^{2/5}$ near the projective spaces.
 \end{proof}
 
 \begin{remark}[Why $t^{-d/4}$, and the limit of this route]\label{rem:pert-scope}
