@@ -23,19 +23,24 @@ by the distance-conditional mean $\Psi^\star(r)=-\E[G(X,Y)\mid\dM(X,Y)=r]$, and
 \[
 V_{\min}:=V_{\Psi^\star}=\E\bigl[\Var(G(X,Y)\mid\dM(X,Y))\bigr].
 \]
-Near the diagonal $\Psi^\star$ is strictly increasing with $\phi_{\Psi^\star}<\infty$; its
-global admissibility is condition~\textup{(A$^\star$)} below.
+Near the diagonal $\Psi^\star$ is strictly increasing (the $-\gamma_d$ singularity dominates
+the bounded regular part); its finite anti-concentration $\phi_{\Psi^\star}<\infty$ and its
+global monotonicity are carried by condition~\textup{(A$^\star$)} below.
 \end{proposition}
 
 \begin{proof}
 For fixed $r$ the map $c\mapsto\E[(-G-c)^2\mid\dM=r]$ is minimized at $c=\E[-G\mid\dM=r]$
 with minimal value $\Var(-G\mid\dM=r)=\Var(G\mid\dM=r)$; averaging over the law of $\dM(X,Y)$
 gives the claim (the standard $L^2$-projection onto $\sigma(\dM)$). For the near-diagonal
-regularity: writing $G=\gamma_d\circ\dM+h$ (parametrix lemma, \S\ref{sec:positivity}),
-$\E[G\mid\dM=r]=\gamma_d(r)+\E[h\mid\dM=r]$ with $h$ bounded, so
-$\Psi^\star=-\gamma_d-\E[h\mid\dM=\cdot]$ has the strictly \emph{increasing} singular part
-$-\gamma_d$ (as $\gamma_d$ decreases in $r$) dominating a bounded correction; the
-$\phi_{\Psi^\star}<\infty$ computation is then the parametrix change-of-variables verbatim.
+monotonicity: writing $G=\gamma_d\circ\dM+h$ (parametrix lemma, \S\ref{sec:positivity}) with
+$h$ bounded, $\Psi^\star=-\gamma_d-\E[h\mid\dM=\cdot]$; for $0<r_1<r_2$ small,
+$\Psi^\star(r_2)-\Psi^\star(r_1)=\bigl(\gamma_d(r_1)-\gamma_d(r_2)\bigr)-\bigl(\E[h\mid r_2]
+-\E[h\mid r_1]\bigr)$, and the first term (positive, unbounded as $r_1\to0$) dominates the
+second ($\le2\lVert h\rVert_\infty$) below a threshold, so $\Psi^\star$ is strictly
+increasing there---using only boundedness of $h$. The finite anti-concentration
+$\phi_{\Psi^\star}<\infty$, however, requires control of $\tfrac{d}{dr}\E[h\mid\dM=r]$, which
+the parametrix regularity ($h\in C^{0,\alpha}$) does not supply; it is therefore folded into
+(A$^\star$).
 \end{proof}
 
 \begin{remark}[The admissibility condition (A$^\star$)]\label{rem:astar}
@@ -230,4 +235,16 @@ $V_{\min}(g)^{1/2}=\int_0^\infty\mathcal N^g(t)\,dt\le C(g_0)^{1/2}\eta$. This u
 leading Duhamel bound---not smoothness of the higher heat coefficients $u_j$, which
 $\lVert g-g_0\rVert_{C^2}$ does not control.
 \end{proof}
+
+\begin{remark}[Status: proof under revision per expert review]\label{rem:pert-status}
+Expert review identifies two gaps in the proof as written, both fixable and being repaired:
+(I) the naive Duhamel bound is \emph{not} integrable at $s\to0$
+($\lVert(\Delta_g-\Delta_{g_0})p^{g_0}_s\rVert_2\asymp\eta\,s^{-1-d/4}$) and needs a half-time
+split ($\int_0^{t/2}$ and $\int_{t/2}^t$ handled separately) or a direct parametrix
+comparison; (II) the shell-projection difference must be controlled by the \emph{relative}
+distance bound $\lvert d_g-d_{g_0}\rvert\le C\eta\,d_{g_0}$ (the Step-1 metric comparability of
+\S\ref{sec:reductions}), not the absolute $\lVert d_g-d_{g_0}\rVert_\infty=O(\eta)$, which
+leaves a divergent $t^{-1/2}$ from the Gaussian derivative. The conclusion
+$V_{\min}(g)\le C(g_0)\eta^2$ is expected to survive; the repaired argument is to be supplied.
+\end{remark}
 
