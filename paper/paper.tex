@@ -25,7 +25,7 @@
 \author{Andrew H. Bond\\
 Department of Computer Engineering, San Jos\'e State University\\
 \texttt{andrew.bond@sjsu.edu} ~\textbar~ ORCID: 0009-0003-2599-6158}
-\date{Working draft --- v0.8}
+\date{Working draft --- v0.9}
 
 \begin{document}
 \maketitle
@@ -47,7 +47,11 @@ turn purely radial---rather than in radius constancy; from it we prove a
 deterministic angular-transfer theorem, a conditional graph-to-manifold result
 (carried by the random-walk eigenvectors and the sup-norm eigenvector rates of
 Calder, Garc\'ia Trillos, and Lewicka), and an \emph{unconditional} bi-Lipschitz
-statement on the flat torus. The radial claim is stated at three levels: proved
+statement on an entire class of homogeneous spaces---flat tori, round spheres,
+and every isotropy-irreducible homogeneous space---where Takahashi's
+minimal-immersion theorem makes the normalized eigenmap an isometric immersion
+into a sphere, closing both structural hypotheses and leaving only injectivity.
+The radial claim is stated at three levels: proved
 for the full embedding at intrinsic dimension $d\ge3$, empirical for the
 truncated radius the algorithm computes, and borderline at $d=2$. Uniformity of
 the metric constants in the mode count fails for the commute filter, but the
@@ -140,6 +144,7 @@ Graph transfer at fixed $m$ & proved, cond.\ (H1)--(H2) & Thm.~\ref{thm:cond} \\
 Global form & cond.\ (H3) & Cor.~\ref{cor:global} \\
 Flat torus, $m=4$ & proved, uncond. & Cor.~\ref{cor:torus} \\
 Round sphere, $m=d+1$ & proved, uncond. & Cor.~\ref{cor:sphere} \\
+Isotropy-irred.\ homog.\ space & proved, uncond.\ (H1)--(H2) & Thm.~\ref{thm:takahashi} \\
 Distortion $\Rightarrow$ rank & proved & Prop.~\ref{prop:rank} \\
 Heat filter, uniform in $m$ & proved (continuum) & Thm.~\ref{thm:heat} \\
 Commute \emph{upper}, fixed-scale unif. & refuted (exact $\mathbb S^1$) & Prop.~\ref{prop:weyl} \\
@@ -696,9 +701,62 @@ unconditionally---a second constant-curvature instance ($\mathbb{T}^d$ likewise
 extends to $m=2d$).
 \end{corollary}
 
-\noindent More generally, on any compact homogeneous space transitivity makes the
-radius constant at every multiplet-closed cutoff, so (H2) holds automatically and
-the metric conjecture reduces there to (H1) and (H3) alone.
+\noindent More generally, homogeneity does more than fix the radius: on the right
+class it supplies (H1) as well, \emph{unconditionally}, through a classical
+minimal-immersion identity. This promotes the two constant-curvature corollaries
+to instances of a single theorem, and turns ``reduces to (H1) and (H3)'' into
+``(H1)--(H2) hold, and only (H3) can fail.''
+
+\begin{theorem}[Standard eigenmaps of homogeneous spaces are isometric immersions; Takahashi]\label{thm:takahashi}
+Let $M=G/K$ be a compact Riemannian homogeneous space, $\lambda>0$ a
+Laplace--Beltrami eigenvalue with eigenspace $V_\lambda$ of dimension $m$, and
+$F=(\varphi_1,\dots,\varphi_m)$ an $L^2$-orthonormal eigenmap of $V_\lambda$ (the
+multiplet-closed cutoff at $\lambda$). Call $V_\lambda$ \emph{$\lambda$-standard}
+if the pullback tensor $\sum_k d\varphi_k\otimes d\varphi_k=c_\lambda\,g$ for a
+constant $c_\lambda>0$. Then:
+\begin{enumerate}\itemsep2pt
+\item[\textup{(a)}] $\lVert F\rVert^2=\sum_k\varphi_k^2\equiv r_\lambda^2$ is
+constant---the function is $G$-invariant---so \textup{\textbf{(H2) holds exactly}}
+($\Lambda_0=0$, $\rho^-=\rho^+=r_\lambda$), and $F$ maps $M$ into the sphere of
+radius $r_\lambda$;
+\item[\textup{(b)}] $\lambda$-standardness says $dF$ is a similarity of ratio
+$\sqrt{c_\lambda}$ at every point, so $N:=F/r_\lambda$ is a homothetic isometric
+immersion of $\big(M,(c_\lambda/r_\lambda^2)g\big)$ into the unit sphere
+$S^{m-1}$---Takahashi's standard minimal immersion \cite{takahashi1966}. Hence for
+every $x,y$ whose images subtend spherical arc $\le\pi$ (in particular wherever
+$N$ is injective along the connecting geodesic), the chord/arc law
+$2\sin(\theta/2)\in[\tfrac2\pi\theta,\theta]$ gives
+\[
+\frac2\pi\frac{\sqrt{c_\lambda}}{r_\lambda}\,d_M(x,y)\ \le\
+\lVert N(x)-N(y)\rVert\ \le\ \frac{\sqrt{c_\lambda}}{r_\lambda}\,d_M(x,y),
+\]
+i.e.\ \textup{\textbf{(H1) holds at fixed scale}} with $L_0=r_\lambda/\sqrt{c_\lambda}$,
+globally where $N$ is injective.
+\end{enumerate}
+Two structural conditions certify $\lambda$-standardness with no computation:
+\textup{(i)} $M$ \emph{isotropy-irreducible} (the isotropy representation of $K$
+on $T_oM$ is $\mathbb R$-irreducible \cite{wolf1968}), for which \emph{every}
+eigenspace is standard, since the only $G$-invariant symmetric $2$-tensors are
+then multiples of $g$; \textup{(ii)} Riemannian products of such factors at a
+joint eigenvalue---the flat torus $\mathbb T^d=(S^1)^d$ at its first shell.
+Consequently, whenever $N$ is in addition injective \textup{(H3)}---automatic for
+the $\ell{=}1$ eigenspace of $S^d$ and the first shell of $\mathbb T^d$---the
+hypotheses of Theorem~\ref{thm:cond} and Corollary~\ref{cor:global} are met
+\emph{unconditionally}: with high probability as $n\to\infty$ the graph angular
+map of an $\varepsilon$-graph or $k$-NN sample is globally bi-Lipschitz to
+geodesic distance above the resolution scale $\theta_n$, with sharp continuum
+angular distortion $\pi/2$. Corollaries~\ref{cor:sphere} ($S^d$: $N=\mathrm{id}$,
+$c_\lambda/r_\lambda^2=1$) and~\ref{cor:torus} ($\mathbb T^d$: $c_\lambda=2$,
+$r_\lambda=2$) are its two constant-curvature instances (proof:
+Appendix~\ref{app:proof}, Step~6b).
+\end{theorem}
+
+\noindent The theorem is the honest ceiling of the homogeneous mechanism: it
+closes (H1)--(H2) for an entire class by reducing them to Takahashi's 1966
+identity, and isolates (H3)---injectivity of the standard immersion---as the only
+residue, genuinely open past the first eigenspace (higher $\ell$ on $S^d$ give
+immersed, self-intersecting minimal submanifolds). It does not touch the
+uniform-in-$m$ frontier: each instance is at a \emph{single} fixed multiplet.
 
 \paragraph{From metric to rank.} The conjecture's currency is rank
 (Spearman); the theorems' is distortion. The bridge is elementary and
@@ -1091,7 +1149,16 @@ which never collapses (Proposition~\ref{prop:sigmamin}). Also open: extending Co
 the truncated, normalized radius used in practice; synthesizing clean manifolds
 above $d\approx2$; a dimension-adaptive basis that tunes mode-count and diffusion
 time against the fidelity decay; and whether the diagnostic transfers to learned
-representations (a preliminary probe is in the repository).
+representations (a preliminary probe is in the repository). Two directions merit an
+explicit flag. The rank limit is proved for $d\le3$; at $d\ge4$ the commute Green
+kernel ceases to be Hilbert--Schmidt stable (Proposition~\ref{prop:phase}), so
+extending the angular-transfer guarantee to higher-dimensional manifolds requires a
+stronger filter ($\mu_k^{-s/2}$, $s>d/4$) or localized spectral regularization to
+prevent tangential collapse. And the radial degeneracy analyzed here parallels the
+\emph{oversmoothing} pathology of deep graph neural networks, where node
+representations collapse to indistinguishable points; the angular-preservation view
+suggests projecting learned GNN features onto a directional basis as a comparable
+mitigation.
 
 \paragraph{Reproducibility.} The confirming experiments of this paper---the torus
 core result and controls, the theorem verification, the weighting ablation, and the
@@ -1534,6 +1601,57 @@ antipodal ($\lvert\delta\rvert=\pi$) and infinitesimal separations
 respectively. Basis-independence: any $L^2$-orthonormal basis of the $\mu=1$
 eigenspace equals $Q$ applied to the Clifford one for some $Q\in O(4)$, and
 angular pairwise distances are $Q$-invariant (Step~0, invariance (iii)).
+\end{proof}
+
+\subsection*{Step 6b: the homogeneous instance (proof of Theorem~\ref{thm:takahashi})}
+\begin{proof}[Proof of Theorem~\ref{thm:takahashi}]
+\emph{(a) Constant radius.} The function $S(x)=\sum_k\varphi_k(x)^2$ is
+independent of the chosen $L^2$-orthonormal basis of $V_\lambda$ (an $O(m)$
+change of basis leaves $\sum_k\varphi_k^2$ fixed). Since $G$ acts on $M$ by
+isometries it permutes eigenspaces, so $g^*V_\lambda=V_\lambda$ for every
+$g\in G$, and $g$ acts on $V_\lambda$ as an $L^2$-orthogonal map; hence
+$S(g\cdot x)=S(x)$. Transitivity of $G$ then forces $S\equiv r_\lambda^2$
+constant, and $S>0$ because a nonzero eigenfunction cannot vanish on an open set.
+So $\lVert F\rVert\equiv r_\lambda$ and $F(M)\subset r_\lambda\,S^{m-1}$: (H2)
+holds with $\Lambda_0=0$, $\rho^\pm=r_\lambda$.
+
+\emph{(b) Homothety and the bi-Lipschitz constant.} By hypothesis
+$\sum_k d\varphi_k\otimes d\varphi_k=c_\lambda g$, i.e.\ for every tangent $v$,
+$\lVert dF(v)\rVert^2=\sum_k(d\varphi_k(v))^2=c_\lambda\lVert v\rVert_g^2$; thus
+$F$ is a similarity of constant ratio $\sqrt{c_\lambda}$ and
+$N=F/r_\lambda\colon(M,g)\to S^{m-1}$ has $\lVert dN(v)\rVert^2
+=(c_\lambda/r_\lambda^2)\lVert v\rVert_g^2$. Therefore $N$ is an isometric
+immersion of the rescaled manifold $\big(M,(c_\lambda/r_\lambda^2)g\big)$ into the
+unit sphere, and $\Delta_g\varphi_k=\lambda\varphi_k$ makes it a \emph{minimal}
+immersion in Takahashi's sense \cite{takahashi1966} (the mean curvature vector of
+$F$ in $\mathbb R^m$ is $-\lambda F$, normal to the sphere). Along any geodesic of
+$(M,g)$ the $N$-image is a curve on $S^{m-1}$ of speed $\sqrt{c_\lambda}/r_\lambda$
+times arclength, so points at geodesic separation $d_M(x,y)$ whose images subtend
+spherical arc $\theta=(\sqrt{c_\lambda}/r_\lambda)\,d_M(x,y)\le\pi$ have Euclidean
+chord $\lVert N(x)-N(y)\rVert=2\sin(\theta/2)$. The elementary bound
+$2\sin(\theta/2)\in[\tfrac2\pi\theta,\theta]$ on $[0,\pi]$ gives the displayed
+two-sided estimate, hence (H1) with $L_0=r_\lambda/\sqrt{c_\lambda}$ on the region
+where $N$ is injective (globally, if $N$ embeds).
+
+\emph{(c) The two structural sufficient conditions.} The tensor
+$T:=\sum_k d\varphi_k\otimes d\varphi_k$ is basis-free and $G$-invariant (same
+argument as $S$), so it is an invariant symmetric $2$-tensor. If the isotropy
+representation of $K$ on $T_oM$ is $\mathbb R$-irreducible, Schur's lemma leaves a
+one-dimensional space of invariant symmetric $2$-tensors, spanned by $g$; hence
+$T=c_\lambda g$ and every eigenspace is $\lambda$-standard \cite{wolf1968}. For a
+Riemannian product $M=M_1\times\cdots\times M_r$ of standard factors and a joint
+eigenvalue, $T=\bigoplus_i c^{(i)}g_i$; when the factors are congruent (e.g.\
+equal circles in $\mathbb T^d$) the $c^{(i)}$ coincide and $T=c_\lambda g$.
+
+\emph{Instances.} On $S^d\subset\mathbb R^{d+1}$ the $\ell{=}1$ eigenspace
+($\lambda=d$) has $F\propto(x_0,\dots,x_d)$, $N=\mathrm{id}$,
+$c_\lambda/r_\lambda^2=1$, recovering Corollary~\ref{cor:sphere} with the sharp
+$[2/\pi,1]$. On $\mathbb T^d=\mathbb R^d/(2\pi\mathbb Z)^d$ the first shell
+($\lambda=1$, $m=2d$) has $F=\sqrt2(\cos x_i,\sin x_i)_i$, and
+$\sum_k d\varphi_k\otimes d\varphi_k=2\sum_i dx_i^2=2g$, so $c_\lambda=2$,
+$r_\lambda=\sqrt{2d}$; for $d=2$ this is the Clifford embedding of
+Corollary~\ref{cor:torus} ($r_\lambda=2$). In both, $N$ is injective, so the
+graph-transfer conclusion is unconditional.
 \end{proof}
 
 \subsection*{Step 7: the small-ball ratio law (used by Proposition~\ref{prop:rank})}
@@ -2314,12 +2432,17 @@ registration using spectral graph embedding and probabilistic matching. In
 O.~L\'ezoray and L.~Grady, editors, \emph{Image Processing and Analysis with
 Graphs: Theory and Practice}, pp.~441--474. CRC Press, 2012.
 \url{https://arxiv.org/abs/2106.11166}.
+\bibitem{takahashi1966} T.~Takahashi. Minimal immersions of Riemannian
+manifolds. \emph{Journal of the Mathematical Society of Japan},
+18(4):380--385, 1966.
 \bibitem{vonluxburg2008} U.~von~Luxburg, M.~Belkin, and O.~Bousquet.
 Consistency of spectral clustering. \emph{Annals of Statistics},
 36(2):555--586, 2008.
 \bibitem{vonluxburg2014} U.~von~Luxburg, A.~Radl, and M.~Hein. Hitting and
 commute times in large random neighborhood graphs. \emph{JMLR},
 15:1751--1798, 2014.
+\bibitem{wolf1968} J.~A.~Wolf. The geometry and structure of isotropy
+irreducible homogeneous spaces. \emph{Acta Mathematica}, 120:59--148, 1968.
 \bibitem{wolfram2020} S.~Wolfram. Finally we may have a path to the fundamental
 theory of physics\ldots and it's beautiful. Writings blog, April 2020.
 \url{https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/}. Accessed July 2026.
